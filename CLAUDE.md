@@ -12,7 +12,7 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 - **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
 - Verified by `ternary60/theory/existence_quadruple.py`: exact at n = 24, and Rust |Index| = 24 on explicit chains at n = 36, 48, 60, 72, 84 (log complete; codes in `ternary60/codes/quad_index24_len*.txt`).
 - Independently re-verified by `ternary60/theory/paper_check.py` from the paper's definitions, with sign-exact Index = +24 at n = 24 and n = 36 (information-set enumeration).
-- **Divisibility half now has a finite, elementary proof** (notes §2 Step 1′, `design_poisson.py`): Poisson on F₃ⁿ for g_ij gives G_ij(C) = −G_ij(C)/3, hence the signed 2-design (◆) and 24 | Index with no modular forms.
+- **Divisibility half now has a finite, elementary proof** (notes §2 Step 1′, `design_poisson.py`): Poisson on F₃ⁿ for g_ij gives G_ij(C) = −G_ij(C)/3, hence the signed 2-design (◆) and 24 | Index with no modular forms. Critically checked (`divisibility_check.py`); all variants written up in `paper/divisibility.tex`.
 - Earlier results in §5.1 still stand: Thm 5.4 (mod 48), Prop 5.5, Lemma 5.6, Thm 5.7 (the s = 0 case of Lemma 5.8), Lemmas 5.2–5.3. The seed search (`existence_seed_search.py`) is no longer needed.
 
 ## Next steps

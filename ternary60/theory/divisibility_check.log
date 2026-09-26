@@ -1,0 +1,30 @@
+1 exact one-coordinate transforms: φ̂ = (i√3)φ True; (1_≠0)^ = 3δ₀ − 1 True; (i√3)² = (-3, 0) (= −3)
+2 n = 12 Golay (24 maximal words): ĝ_ij(u) = −3^5·g_ij(u) pointwise on C, brute force in Z[ω]: 2187/2187 (pairs [(0, 1), (2, 7), (5, 11)]); G_ij(C) = [0, 0, 0]
+2 n = 12 code2 (16 maximal words): ĝ_ij(u) = −3^5·g_ij(u) pointwise on C, brute force in Z[ω]: 2187/2187 (pairs [(0, 1), (2, 7), (5, 11)]); G_ij(C) = [0, 0, 0]
+2 n = 12 random (16 maximal words): ĝ_ij(u) = −3^5·g_ij(u) pointwise on C, brute force in Z[ω]: 2187/2187 (pairs [(0, 1), (2, 7), (5, 11)]); G_ij(C) = [0, 0, 0]
+3 non-self-orthogonal 6-dim C ⊂ F₃¹² (40): general Poisson 3G(C^⊥) = −[G(C) − 2(A₀ₙ+Aₙ₀) + 4A₀₀] exact on 40/40; correction terms nonzero on 40; G(C^⊥) ≠ 0 on 28 (C^⊥ has maximal words on 39)
+4 Golay: Σ_F s ε_aε_bε_cε_d = −W_K on 495/495 4-sets; values {-8: 165, 8: 330}; Index = 24
+4 code2: Σ_F s ε_aε_bε_cε_d = −W_K on 495/495 4-sets; values {0: 414, 16: 81}; Index = 0
+4 random n = 24 #0: Σ_F s ε_aε_bε_cε_d = −W_K on 25/25 random 4-sets; values {-16: 8, 0: 10, 16: 5, 32: 2}; Index = 0
+4 random n = 24 #1: Σ_F s ε_aε_bε_cε_d = −W_K on 25/25 random 4-sets; values {-32: 1, -16: 5, 0: 8, 16: 8, 32: 3}; Index = 0
+5 n = 24 code with Index 24 (72 maximal): max_i<j |Σ s ε_iε_j| = 0; Σ_(ε0=ε1=ε2) s = 6 (Index/4 = 6, even: True); Step 3 (identity, 9|LHS, |x|², v₃=1) for y = 0, e₁, −e₁: [(True, True, 24, True), (True, True, 27, False), (True, True, 39, True)]
+5 n = 24 code with Index 24 (88 maximal): max_i<j |Σ s ε_iε_j| = 0; Σ_(ε0=ε1=ε2) s = 6 (Index/4 = 6, even: True); Step 3 (identity, 9|LHS, |x|², v₃=1) for y = 0, e₁, −e₁: [(True, True, 24, True), (True, True, 39, True), (True, True, 27, False)]
+5 n = 24 code with Index 24 (88 maximal): max_i<j |Σ s ε_iε_j| = 0; Σ_(ε0=ε1=ε2) s = 6 (Index/4 = 6, even: True); Step 3 (identity, 9|LHS, |x|², v₃=1) for y = 0, e₁, −e₁: [(True, True, 24, True), (True, True, 39, True), (True, True, 27, False)]
+6 Golay: 24 maximal words, 12 up to sign, all even: True; HHᵀ = 12I: True
+7 rust design 36: P(17): n=36 maximal=888 I=-744  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-744  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 36: random(seed=11,i=0): n=36 maximal=544 I=0  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=0  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 36: random(seed=11,i=1): n=36 maximal=488 I=-24  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-24  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 36: random(seed=11,i=2): n=36 maximal=544 I=-96  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-96  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 36: random(seed=11,i=3): n=36 maximal=592 I=192  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=192  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 36: SUMMARY design n=36: all hold = true
+7 rust design 48: P(23): n=48 maximal=96 I=96  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=96  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 48: XQR(47): n=48 maximal=96 I=96  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=96  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 48: random(seed=11,i=0): n=48 maximal=2920 I=168  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=168  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 48: random(seed=11,i=1): n=48 maximal=2936 I=-168  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-168  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 48: random(seed=11,i=2): n=48 maximal=2960 I=192  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=192  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 48: SUMMARY design n=48: all hold = true
+7 rust design 60: P(29): n=60 maximal=41184 I=21696  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=21696  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 60: XQR(59): n=60 maximal=41184 I=41184  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=41184  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 60: random(seed=11,i=0): n=60 maximal=16720 I=-96  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-96  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 60: random(seed=11,i=1): n=60 maximal=17064 I=456  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=456  step3 ok=true  => DESIGN IDENTITY HOLDS
+7 rust design 60: SUMMARY design n=60: all hold = true

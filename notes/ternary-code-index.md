@@ -133,7 +133,17 @@ Notation.
 - *Why it works while Proof I needs neighbours.* f is a Fourier eigenfunction with eigenvalue 3^{n/2}, so Poisson over C only returns F(C) = F(C). Replacing φ by the indicator at two coordinates changes the eigenvalue by the factor −1/3 on everything C can contain, and a fixed point of x ↦ −x/3 is 0.
 - *Neighbour form.* The same computation for D = C ∩ C′ (dim n/2 − 1) gives G_ij(D^⊥) = −G_ij(D), hence G_ij(C) + G_ij(C′) = 0. G_ij(D) itself is usually nonzero.
 - [V: `design_poisson.py`] the ĝ formula by brute force at n = 4, 8; G_ij(C) = 0 and the Poisson identity exactly on random codes at n = 12, 24; G(D^⊥) = −G(D) and G(C) + G(C′) = 0 on random neighbour pairs at n = 12 (1980/1980; G(D) ≠ 0 in 1108) and n = 24 (48/48).
-- *Literature.* Not checked. Step 1 above (the modular proof) stays as an independent derivation.
+- *Literature.* Step 1′ is an evaluation of the MacWilliams-type identity for the complete weight enumerator split at {i, j} (complete Jacobi polynomials: Ozeki, Math. Proc. Camb. Phil. Soc. 121 (1997); Chakraborty–Miezaki, Des. Codes Cryptogr. 90 (2022)). A web search (2026-09-26) found neither (◆) nor its use for the index; it was not systematic. Step 1 above (the modular proof) stays as an independent derivation.
+- **Critical check (2026-09-26) [V: `theory/divisibility_check.py`, log beside it]. Verdict: correct.**
+  - Re-derived by hand: the lift and sign conventions, the one-coordinate transforms, Poisson over C = C^⊥, the weight argument, and Steps 2–3. The sign of (i√3)^{n−2} is irrelevant (G = ±G/3), so 4 | n is not even used.
+  - The crux, ĝ_ij = −3^{n/2−1}·g_ij pointwise on C, checked by brute force in exact ℤ[ω] (no product formula) on every codeword of Golay, code2 and a random code at n = 12, three pairs each (2187/2187 each).
+  - Hypotheses are needed: for 40 random non-self-orthogonal 6-dim codes at n = 12, the general Poisson identity with correction terms holds exactly, the corrections are nonzero on all 40, and G(C^⊥) ≠ 0 on 28.
+  - The conclusion and Steps 2–3 exactly: n = 24 (Python, three codes with Index 24), n = 36, 48, 60 (Rust `design`, incl. P(17), P(23), XQR(47), P(29), XQR(59)).
+- **Four marked coordinates [P; V: `divisibility_check.py` part 4].** The same computation with K = {a,b,c,d} has correction terms from codewords of weight n − 3 whose three zeros lie in K (factor 2³·(−1) = −8), and gives
+      **Σ_F s(ε)ε_aε_bε_cε_d = −W_K,   W_K = Σ_{u∈C, zeros of u = three points of K} ∏_{k∉K} φ(u_k).**
+  - Checked on all 495 four-sets for Golay (values ±8, never 0) and code2, and on 50 four-sets at n = 24.
+  - So weight-(n−3) codewords are exactly the obstruction to a signed 4-design; this explains the "not a 4-design" remark in Step 2.
+- Write-up of all variants: `paper/divisibility.tex` (routes 0, A, B, C, C′).
 
 **Step 2 (8 | Index).**
 - For distinct a, b, c, [ε_a = ε_b = ε_c] = (1 + ε_aε_b + ε_bε_c + ε_aε_c)/4. With (◆) this gives Σ_{ε∈F, ε_a=ε_b=ε_c} s(ε) = Index/4.
