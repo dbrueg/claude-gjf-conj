@@ -11,6 +11,7 @@
 \newtheorem*{thmA}{Theorem A}
 \newtheorem*{thmB}{Theorem B}
 \newtheorem*{thmC}{Theorem C}
+\newtheorem*{thmD}{Theorem D}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
@@ -42,7 +43,10 @@ ternary code with an automorphism $g$ satisfying $g^4=-1$ has index divisible by
 same cyclic-orbifold method cannot reach $k\equiv0\pmod8$. We then compute the 't~Hooft anomaly of
 a quaternion group $Q_8$ of code automorphisms: by a reduction to free fermions it is $3k$ times a
 class of order $8$, so it vanishes exactly when $8\mid k$. Orbifolding by $Q_8$ answers the question
-for $k\equiv8,16\pmod{24}$, leaving only $k\equiv0\pmod{24}$.
+for $k\equiv8,16\pmod{24}$. Finally we describe $Q_8$-invariant codes as $\mathbb F_3^2\otimes U$ with $U$
+Lagrangian, which makes their index computable at length $72$. An obstruction seen at length $36$
+disappears there, and a seed found at length $72$ gives a $Q_8\times\mathbb Z/3$-equivariant chain whose
+orbifolds have index $1$ for $k\equiv0\pmod{24}$. So the Main Question has a positive answer for every $k$.
 \end{abstract}
 \maketitle
 
@@ -113,7 +117,17 @@ non-anomalous if and only if $8\mid k$. Codes of index $\pm24$ with such a $Q_8$
 $k\equiv0\pmod4$, so the Main Question also has a positive answer for $k\equiv8,16\pmod{24}$.
 \end{thmC}
 
-Only $k\equiv0\pmod{24}$ remains open.
+For $k\equiv0\pmod{24}$ we add an order-$3$ element to $Q_8$. At length $36$ a vanishing twined count forces
+the index to be divisible by $72$, but this is special to length $36$. At length $72$ a computer search,
+made feasible by describing $Q_8$-invariant codes as $\F^2\otimes U$ with $U$ Lagrangian (\S\ref{sec:morita}),
+finds a suitable seed:
+
+\begin{thmD}
+For every $k\equiv0\pmod{12}$, $k\ge12$, there is an explicit self-dual ternary code of length $12k$ and
+index $24$ with $G=Q_8\times\mathbb Z/3\subseteq\Aut(C)$, where $J^2=K^2=-1$ and the order-$3$ element $h$ is
+fixed-point-free with vanishing twined count. For $k\equiv0\pmod{24}$ the orbifold $V_{\Lambda(C)}/\!\!/G$ has
+index $1$. Hence the Main Question has a positive answer for every $k$.
+\end{thmD}
 
 \section{Partial quadrupling}\label{sec:Q}
 
@@ -347,12 +361,77 @@ is $24/8=3$.
 \end{proof}
 
 For $k\equiv0\pmod{24}$ the same reasoning applies to $Q_8\times\mathbb Z/3$, with the order-$3$
-element fixed-point-free and balanced: the anomaly vanishes (Theorem~\ref{thm:q8}, \cite{GJF} for
+element $h$ fixed-point-free and balanced: the anomaly vanishes (Theorem~\ref{thm:q8}, \cite{GJF} for
 the $\mathbb Z/3$ part, coprimality for mixed terms), and the orbifold would have index $1$. What is
-missing is a suitable code, and there may be none: in $272$ random $Q_8\times\mathbb Z/3$-invariant
-self-dual codes of length $36$, a vanishing twined count always came with index divisible by $72$,
-and equivariant chains from such codes ($\approx290$ codes, all $19$ admissible block systems)
-never produced index $\pm24$ with $T_h=0$. We leave $k\equiv0\pmod{24}$ open.
+missing is a suitable code.
+
+\subsection{Morita form}\label{sec:morita}
+The following description makes $Q_8$-invariant codes computable well beyond direct enumeration.
+Let $A=\F\langle i,j\rangle$ be the quaternion algebra over $\F$, identified with $M_2(\F)$ by
+$i\mapsto\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$,
+$j\mapsto\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$.
+
+\begin{lemma}\label{lem:morita}
+Let $Q_8=\langle J,K\rangle$ act on $\F^{4r}$ by signed permutations with $J^2=K^2=-1$. After a
+monomial change of coordinates each of the $r$ orbits is $A$ with the coordinates of $a+bi+cj+dk$,
+$Q_8$ acts by left multiplication, and the dot product is the polar form of the norm $\det$.
+Consequently the $Q_8$-invariant codes are exactly
+\[
+C=\F^2\otimes U=\{X\in M_{2\times 2r}(\F):\text{both rows of }X\text{ lie in }U\},\qquad U\subseteq\F^{2r},
+\]
+and $C$ is self-dual if and only if $U$ is Lagrangian for $\Omega=\bigoplus_b\omega_b$,
+$\omega(x,y)=x_0y_1-x_1y_0$. A block $X_b$ has weight $4$ if and only if $X_b\in SL_2(\F)\setminus Q_8$, and
+then $f(X_b)=\varphi(\psi(X_b))$, where $\psi\colon SL_2(\F)\to\mathbb Z/3$ is the abelianisation.
+\end{lemma}
+
+\begin{proof}
+The orbit module is induced from the sign character of $\{\pm1\}$, i.e.\ $\F[Q_8]/(1+z)\cong A$;
+submodules of $A^r$ are $\F^2\otimes U$ by Morita equivalence, and on them the polar form of the
+norm is $\langle X,Y\rangle=-(\Omega(x_1,y_2)-\Omega(x_2,y_1))$. The norm of an element of $\F^4$ is
+its weight mod $3$; the norm-one elements form $SL_2(\F)=Q_8\cup\{(\pm1\pm i\pm j\pm k)/2\}$ with
+$1/2=-1$, and $f$ is $Q_8$-bi-invariant with opposite signs on the two nontrivial cosets.
+\end{proof}
+
+Left multiplication by $SL_2(\F)$ preserves $C$, acts freely on the codewords all of whose blocks
+lie in $SL_2(\F)$, and shifts every $\psi(X_b)$ by the same amount. Hence
+\[
+\Index(C)=8\sum_\Pi\sum_{s\in\F}\prod_b\varphi(\psi_b(\Pi)+s),
+\]
+the sum running over these orbits, each represented by its unique element with $X_{b_0}=1$. The same holds for $R_\sigma$ when $\sigma$ consists of
+$Q_8$-orbits, with the block weight equal to $(-2,1,1)$ as a function of $\psi$. Enumerating these
+representatives costs $3^{r-2}$ linear solves; at length $72$ this takes seconds, whereas $C$ has $3^{36}$ words.
+
+With $h$ added, $h$-invariant Lagrangians are submodules over $R=\F[\mathbb Z/3]=\F[u]/u^3$. The free
+ones are $U=R\cdot\{e_i+u(A_1f)_i+u^2((A_1+S)f)_i\}$ over a Lagrangian $\bar U=\langle e\rangle$ of
+$\F^{2k}$, with $A_1$ skew and $S$ symmetric, and then $T_h=\Index(\F^2\otimes\bar U)$. For non-free $U$,
+Poisson summation gives $72\mid T_h$. At length $36$ we found (by exhaustive and random checks at lengths $12$,
+$24$, $36$) the exact law $\Index\equiv T_h\cdot A_1(P)^2\pmod{72}$ for free $U$, where $P\subseteq\bar U$
+is spanned by the three lines of $\bar U$ vanishing on one block. So at length $36$ a vanishing twined
+count forces $72\mid\Index$, and equivariant chains seeded there cannot reach index $\pm24$ with $T_h=0$.
+\emph{This is special to length $36$}: at length $72$ there are $Q_8\times\mathbb Z/3$-invariant self-dual
+codes with $T_h=0$ and $\Index=-3840\not\equiv0\pmod{72}$, and one with $T_h=0$ and $\Index=24$. A chain
+seeded at length $72$ with a $G$-stable system of six orbit blocks reaches every $k\equiv0\pmod{24}$ with
+$\Index=R_\sigma$ and $T_h=R_{\bar\sigma}(D)$ (Lemma~\ref{lem:fix}).
+
+\subsection{Proof of Theorem D}\label{sec:D}
+A random search over free lifts of Lagrangians $\bar U$ whose collapsed code has $R_{\bar\sigma}=0$ for all
+fifteen systems of two $h$-triples found, after about $7000$ systems, a Lagrangian $U\subseteq\F^{36}$
+(free over $R$) such that $E=\F^2\otimes U$ satisfies
+\[
+R_\sigma(E)=24,\qquad R_{\bar\sigma}(D)=0,\qquad \Index(E)=-1608,\qquad T_h(E)=0,
+\]
+for $\sigma$ the six orbit blocks of two $h$-triples. Here $R_\sigma(E)$ was computed by the good-plane
+enumeration with two different normalisations and by a second implementation, and $R_{\bar\sigma}(D)$ by
+enumerating the length-$24$ code $D$. Lemma~\ref{lem:eq} with $G=Q_8\times\langle h\rangle$, refining the
+$G$-orbit of one step-$1$ block at each step, gives $G$-invariant self-dual codes of lengths
+$144,288,432,\dots$, i.e.\ every $k\equiv0\pmod{12}$ with $k\ge12$. Their index is $R_\sigma(E)=24$
+\cite[Lemma~5.8]{BR} and their twined count is $R_{\bar\sigma}(D)=0$ (Lemma~\ref{lem:fix}); $J^2=K^2=-1$ and
+the cycle shape $3^{4k}$ of $h$ are inherited. For $24\mid k$ the $G$-action is non-anomalous: the $Q_8$ part
+by Theorem~\ref{thm:q8}, the $\mathbb Z/3$ part by \cite{GJF}, and mixed terms vanish since the orders are
+coprime. Every abelian subgroup of $G$ is cyclic. Those containing $-1$ have vanishing twisted-twined indices,
+and the only other nontrivial one is $\langle h\rangle$, with $T_h=0$. So the orbifold has index $24/24=1$, and
+it is $\mathcal N=1$ since $G$ fixes the supercurrent.
+\qed
 
 \begin{remark}[Verification]
 All statements were checked by computer. The chains of \S\ref{sec:J} and \S\ref{sec:z12} were built
@@ -366,8 +445,12 @@ of lengths $36$ and $72$ have automorphism groups of $2$-power order, so they do
 condition (2); the one of length $48$ does satisfy Theorem~\ref{thm:gjf} with an element $J$,
 $J^2=-1$. For Theorem~\ref{thm:q8}: on the $Q_8$-invariant codes of lengths $24$, $48$ and $96$
 every coordinate orbit carries an invariant tetracode and their sum is a $Q_8$-invariant self-dual
-code; the eta invariants were evaluated in exact rational arithmetic. Code and data are available
-at [repository].
+code; the eta invariants were evaluated in exact rational arithmetic. The good-plane enumeration of
+\S\ref{sec:morita} agrees sign-exactly with direct enumeration at lengths $12$, $24$, $36$, and in absolute
+value with an independent index algorithm at length $72$. For Theorem~D the chain was built explicitly to
+lengths $144$ and $288$: self-duality, invariance under $J,K,h$, the relations, and the cycle shape of $h$
+at both lengths, and $T_h=0$ at length $144$ by computing the index of the collapsed fixed code. Code and
+data are available at [repository].
 \end{remark}
 
 \appendix

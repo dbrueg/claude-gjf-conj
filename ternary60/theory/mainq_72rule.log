@@ -1,0 +1,12 @@
+1 sl2words vs rsigma (index and a random orbit-block R_σ), n = 12, 24, 36: 18/18 agree sign-exactly
+2 k = 1 (all 4·3 free lifts): (S, Index) counts {(0, 0): 4, (1, 24): 4, (2, -24): 4}
+2 k = 2 (all 40 Lagrangians × 81 free lifts): split Ū: I/24 ≡ −A₁² mod 3 on 1296/1296; non-split Ū: I ≡ 0 mod 72 on 1944/1944
+3 k = 3, Golay-type Ū: B_s(P) = 0 for s = 0, 1, 2 and dim span(B_s) = 2: True on 8 Ū
+3 k = 3, Ū with T=-24, kernel lines 3: law holds on 80 lifts
+3 k = 3, Ū with T=0, kernel lines 3: law holds on 160 lifts
+3 k = 3, Ū with T=24, kernel lines 3: law holds on 240 lifts
+4 k = 3: 150 random codes; (β, T mod 72, I mod 72) counts {(0, 0, 0): 63, (0, 24, 0): 6, (0, 24, 24): 17, (0, 48, 0): 11, (0, 48, 48): 19, (1, 0, 0): 33, (2, 0, 0): 1}
+4   violations of 'T ≡ 0 mod 72 ⇒ I ≡ 0 mod 72': 0; β ≥ 1 always has T ≡ I ≡ 0 mod 72: True
+4 k = 6: 30 random codes; (β, T mod 72, I mod 72) counts {(0, 0, 0): 8, (0, 0, 48): 5, (0, 24, 0): 3, (0, 24, 24): 1, (0, 48, 0): 5, (0, 48, 24): 2, (0, 48, 48): 2, (1, 0, 0): 4}
+4   violations of 'T ≡ 0 mod 72 ⇒ I ≡ 0 mod 72': 5; β ≥ 1 always has T ≡ I ≡ 0 mod 72: True
+4   saved q8z3_len72_T0.txt: T_h = 0, Index = -3840 (sl2words, sign-exact), |Index| = 3840 (ternary60 index); Index mod 72 = 48

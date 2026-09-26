@@ -23,7 +23,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 notes/ternary-code-index.md   the notes (read §0, then §5.1)
 notes/main-question.md        GJF's Main Question: code automorphisms, equivariant chains, the g⁴ = −1 obstruction
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
-paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k with 8 ∤ k, and the obstruction
+paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k (Theorems A–D), and the obstruction
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 notes/tmf-context.md          TMF background
 lean/                         Lean 4 + Mathlib: both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
@@ -31,10 +31,13 @@ CLAUDE.md                     working instructions and handoff for Claude Code s
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
                               `| words <file> <w>` (all codewords of weight ≤ w) `| rsigma <file> <blocks>` (R_σ, sign-exact, any linear code)
+                              `| sl2words <U-file> <b0> [systems]` (Q₈-invariant codes F₃²⊗U: good planes, index and orbit-block R_σ, sign-exact; notes main-question §9)
   codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60,
                               quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
                               gjf_ex57_len{12,…,60}: GJF's Example 5.7 codes (from their TeX); z12seed_len36_*: seeds (mainq_seed_search.py)
                               jchain_len<n> (+ .J.txt), z12chain_len<n> (+ .g.txt), q8chain_len<n>: the equivariant chains (row 1 permutation, row 2 signs 1/2)
+                              q8z3_len72_T0 (+ .U.txt): Q₈ × ℤ/3-invariant code with T_h = 0 and Index −3840 ≢ 0 mod 72 (refutes the 72-rule)
+                              q8z3_seed72 (+ .U.txt), q8z3_chain_len{144,288} (+ .gens.txt): the Q₈ × ℤ/3 chain for k ≡ 0 mod 24 (index 24, T_h = 0)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
                               divisibility_check.py: critical check of the finite proof (log beside it)
@@ -44,7 +47,11 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_jchain.py, mainq_z12chain.py, mainq_seed_search.py, mainq_obstruction.py: Main Question checks (logs beside them)
                               mainq_automorphisms.py: automorphism groups via nauty (needs $DREADNAUT; scripts/build_nauty.sh)
                               mainq_q8chain.py, mainq_q8_anomaly.py: Q₈-equivariant chain; the Q₈ anomaly (reduction checks, eta invariants)
-                              mainq_q8z3.py: Q₈ × ℤ/3 codes (the observed 72 | Index rule behind the open case k ≡ 0 mod 24)
+                              mainq_q8z3.py: Q₈ × ℤ/3 codes at n = 36 (the 72 | Index rule seen there)
+                              mainq_morita.py: Q₈-invariant codes as F₃² ⊗ U (Morita form), h-invariant Lagrangians, free lifts over F₃[u]/u³
+                              mainq_72rule.py: the 72-rule: exact laws at n = 12, 24, 36 and counterexamples at n = 72 (log beside it)
+                              mainq_q8z3_seed72.py: search for length-72 seeds of a Q₈ × ℤ/3 chain to k ≡ 0 mod 24 (log beside it)
+                              mainq_q8z3_chain24.py: the seed and its chain to n = 144, 288 (Main Question for k ≡ 0 mod 24; log beside it)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
 scripts/build_nauty.sh        builds nauty's dreadnaut into tools/ (gitignored), for mainq_automorphisms.py
@@ -65,6 +72,8 @@ python3 paper_check.py               # every computable claim of paper/index24.t
 python3 mainq_jchain.py              # J-chain: m = 4 (≈ 2 min)
 python3 mainq_z12chain.py            # ℤ/12 chains: m = 3, 6, 12 (≈ 30 min; the n = 144 twined count dominates)
 python3 mainq_obstruction.py         # g⁴ = −1 ⇒ 48 | Index, and the four-code identity (≈ 20 min)
+python3 mainq_72rule.py              # the 72-rule: laws at n ≤ 36, counterexamples at n = 72 (≈ 10 min)
+python3 mainq_q8z3_chain24.py        # k ≡ 0 mod 24: the length-72 seed and its chain to n = 288 (≈ 15 min)
 ```
 
 Lean (formal proof of 24 | Index; toolchain and Mathlib-cache setup in CLAUDE.md):

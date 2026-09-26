@@ -1,0 +1,5 @@
+1 seed U: Lagrangian True, h-invariant True, free over F_3[u]/u^3 True; E = F_3^2 (x) U self-dual True; J, K, h in Aut(E) True; relations True; h cycle shape 3^24
+1 Index(E) = -1608 (sl2words), |Index(E)| = 1608 (ternary60 index); R_σ(E) = 24 (b0 = 0), 24 (b0 = 9), 24 (older enumeration)  [29s]
+1 collapsed fixed code D (length 24, self-dual True): T_h(E) = Index(D) = 0, R_σ̄(D) = 0 (direct enumeration)
+2 n = 144 (k = 12): self-dual True, J, K, h in Aut True, relations True, h fixed-point-free True (cycle shape 3^48); next system 12 blocks; collapsed fixed code: length 48, self-dual True, |T_h| = 0 (ternary60 index); Index = R_σ(E) = 24 and T_h = R_σ̄(D) = 0 by [I Lemma 5.8], Lemma 4.3  [9s]
+2 n = 288 (k = 24): self-dual True, J, K, h in Aut True, relations True, h fixed-point-free True (cycle shape 3^96); next system 12 blocks; Index = R_σ(E) = 24 and T_h = R_σ̄(D) = 0 by [I Lemma 5.8], Lemma 4.3  [129s]

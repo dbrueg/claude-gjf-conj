@@ -9,14 +9,19 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
 ## 0. Summary
 
 - **GJF's Main Question** asks for a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24) for every k. GJF answer k ≤ 5, via Thm 5.6: orbifold the code VOA V_{Λ(C)} of an index-24 code C by an automorphism g of order m = gcd(k,24) with (1) g^{m/2} = −1 and (2) g^{m/3} a balanced fixed-point-free order-3 map (§1).
-- **Answered here for every k with 24 ∤ k** (§2, §4, §8), modulo GJF Thm 5.6 and Thm 4.2 [T] and [I Thm 5.9]; previously k ≤ 5.
+- **Answered here for every k** (§2, §4, §8, §10), modulo GJF Thm 5.6 and Thm 4.2 [T] and [I Thm 5.9]; previously k ≤ 5.
   - gcd(k,24) ∈ {1, 2}: any index-24 code from [I], with g = 1 or g = −1 (Cor 2.1).
   - gcd(k,24) = 4: a J-equivariant version of [I]'s construction, seeded by J ∈ Aut(Golay) with J² = −1 (Thm 4.2).
   - gcd(k,24) ∈ {3, 6, 12}: a ℤ/12-equivariant version, seeded by one length-36 code found by GJF's search method; the twined count of the order-3 part is carried along by Lemma 4.3 (Thm 4.4).
 - **Our [I Thm 5.9] codes as they stand** (§3): the length-48 code satisfies Thm 5.6 (it has J with J² = −1); the lengths-36 and 72 codes do not (their automorphism groups are 2-groups). So the symmetry has to be built in, which §4 does.
 - **Obstruction** (§5): if g ∈ Aut(C) has g⁴ = −1 then 48 | Index(C). So Thm 5.6 can never be applied when 8 | k (m ∈ {8, 24}). The proof uses a new Hermitian four-code identity (◇). The quaternion group Q₈ escapes the obstruction and would give index 3 if its action is non-anomalous [C].
 - **Q₈ anomaly** (§8): for Q₈ ⊂ Aut(C) with centre −1 the anomaly is 3k·a with a of order 8 (reduction to free fermions in the regular representation; eta invariants on S³/Q₈ give 5/8). So Q₈ is non-anomalous iff 8 | k, and the Q₈-chain codes answer the Main Question for **k ≡ 8, 16 mod 24** (index 3).
-- **Open**: only **k ≡ 0 mod 24** (index 1). Q₈ × ℤ/3 is non-anomalous there, but in all samples T_h = 0 forces 72 | Index, which would block this route too (§8.1, [C]). An independent check of GJF's anomaly analysis is not attempted here.
+- **k ≡ 0 mod 24 (index 1)** (§9, §10): answered with G = Q₈ × ℤ/3, which is non-anomalous there.
+  - At length 36, T_h = 0 forces 72 | Index (the "72-rule", §8.1), which blocks chains seeded at k = 3. **The rule is false at length 72** (§9).
+  - A length-72 seed with R_σ = 24 and R_σ̄(D) = 0, found by a targeted search, gives a G-equivariant chain with Index 24 and T_h = 0 at every k ≡ 0 mod 12, k ≥ 12. So V//G has index 1 for k ≡ 0 mod 24 (Thm 10.1).
+  - **So the Main Question has a positive answer for every k** (Cor 10.2), modulo the cited results and caveats.
+  - An independent check of GJF's anomaly analysis is not attempted here.
+- **Morita form** (§9): Q₈-invariant codes are F₃² ⊗ U with U Lagrangian in F₃^{2r}. Maximal words are SL₂(F₃)-blocks, and the index is a sum over "good planes" of U weighted by ψ: SL₂(F₃) → ℤ/3. This gives a sign-exact index at length 72 in seconds (`ternary60 sl2words`).
 
 --------------------------------------------------------------------------------------------
 
@@ -142,7 +147,7 @@ so T_h is constant along an h-equivariant chain.
 | 6, 18 | 6 | 4 | ℤ/12-chain A, g² (Thm 4.4) | [P; V] |
 | 12 | 12 | 2 | ℤ/12-chain A, g (Thm 4.4) | [P; V] |
 | 8, 16 | 8 | 3 | cyclic route impossible (Thm 5.1); Q₈ chain + Q₈ non-anomalous for 8 \| k (Thm 8.1, Cor 8.2) | [P; V] |
-| 0 | 24 | 1 | cyclic route impossible (Thm 5.1); Q₈ × ℤ/3 non-anomalous, but T_h = 0 seems to force 72 \| Index (§8.1) | open |
+| 0 | 24 | 1 | cyclic route impossible (Thm 5.1); Q₈ × ℤ/3-chain from a length-72 seed (§9, Thm 10.1) | [P; V] |
 
 "[P]" here means: proved here given GJF Thm 5.6 [T] (including its anomaly analysis) and [I Thm 5.9] (not yet independently read).
 
@@ -154,6 +159,9 @@ Verification [V]:
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
 - `mainq_automorphisms.py` (log, needs nauty): §3.
+- `mainq_72rule.py` (log): §9 (sl2words vs rsigma; the exact laws at n = 12, 24, 36; counterexamples to the 72-rule at n = 72).
+- `mainq_q8z3_seed72.py` (log): §9.4 (seed search statistics; the chain pipeline in the Morita layout).
+- `mainq_q8z3_chain24.py` (log): §10 (the seed, R_σ = 24 three ways, R_σ̄(D) = 0; the chain at n = 144, 288).
 - The four-code identity and Lemma 4.3 are local/Poisson identities; all numerics are sign-exact where stated (Rust `rsigma` enumerates the code, no sign normalisation).
 
 ## 7. Remarks and further directions
@@ -208,15 +216,92 @@ Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-actio
 - *Twisted sectors.* All abelian subgroups of G are cyclic; the nontrivial ones not containing −1 are ⟨h⟩, whose twined index T_h vanishes. So the index would be 24/24 = 1.
 - *What is needed.* A G-invariant seed with Index ±24 and T_h = 0, and a G-stable block system of the right size.
 
-### 8.1 Q₈ × ℤ/3: a second apparent obstruction [C; V: `mainq_q8z3.py`, log beside it]
+### 8.1 Q₈ × ℤ/3: the "72-rule" — true at length 36, false at length 72 [V: `mainq_q8z3.py`, `mainq_72rule.py`, logs beside them]
 
 Setting: 36 coordinates in nine Q₈-orbits, with h fixed-point-free, of order 3, commuting with Q₈, and cycling the Q₈-orbits in three triples. Because h is fixed-point-free, every block orbit has size divisible by 3, so k mod 3 is invariant. After the first step the increments are multiples of 12, because a step-1 block has a G-orbit of size 6. From k = 3 one therefore needs b₀ = 9, i.e. every coordinate in blocks; then k runs through 12, 24, 36, ….
-- **Observed rule.** In 272 random G-invariant codes: T_h = 0 or ±72 always comes with Index ≡ 0 mod 72, and T_h = ±24 with Index ≡ 0 or T_h mod 72.
+- **Observed rule at n = 36.** In 272 random G-invariant codes: T_h = 0 or ±72 always comes with Index ≡ 0 mod 72, and T_h = ±24 with Index ≡ 0 or T_h mod 72.
   - In orbit terms: G acts on maximal words with orbits of size 8 (h-fixed) and 24 (free), so Index = T_h + 24X with X the signed count of free orbits. The rule says X ≡ 0 or −T_h/24 mod 3.
-  - If the rule holds at every length, then Index ≠ ±24 whenever T_h = 0, and **the Q₈ × ℤ/3 orbifold can never have index 1**: a second obstruction, alongside Theorem 5.1.
 - **Consistent chain search.** There are 19 G-stable 9-block systems. On about 290 random codes with Index ≡ 24 mod 48 (exploratory runs plus the logged run), every system with R_σ̄(D) = 0 had |R_σ| ≥ 72, and 72 occurs. Such a chain would have T_h = 0 and Index R_σ, so this is what the rule predicts.
-- **Not proved.** A proof might imitate Theorem 5.1 with a ℤ/3-equivariant neighbour identity. Heuristically: orbifolding by h (non-anomalous at k = 3) leaves a Q₈-symmetric theory with Q₈-anomaly 9a = a ≠ 0, which may force extra divisibility of its index (cf. GJF Question 0.3, equivariant TMF).
-- **If the rule is a theorem, what is left for k ≡ 0 mod 24:**
-  - nonzero twisted sectors ([H] of §7: index (Index + 8T_h)/24, e.g. (Index, T_h) = (−216, 24) gives −1, and the rule allows this);
-  - other groups of order divisible by 24 with all abelian subgroups cyclic (SL₂(F₃) acts on 4 points with a fixed point, so its order-3 elements have fixed coordinates and fall outside GJF's cycle-shape condition; binary octahedral 2O; Q₁₆ × ℤ/3, …);
-  - constructions other than orbifolds of code SVOAs.
+- **Update (later session): the rule is false in general (§9).** At n = 72 (k = 6), 5 of 30 random G-invariant codes violate it; `ternary60/codes/q8z3_len72_T0.txt` has T_h = 0 and Index = −3840 ≡ 48 mod 72, and one random code even has Index = 24 with T_h = 0. At n = 36 the rule is explained by an exact law (§9.3). So it is **not** an obstruction to k ≡ 0 mod 24: it only says that chains seeded at k = 3 (whose index is R_σ of the seed) cannot work. Seeds at k = 6 are not constrained this way (§9.4).
+- (Superseded heuristics: an h-orbifold argument for extra divisibility; the fallback list of other groups. Both are moot now.)
+
+--------------------------------------------------------------------------------------------
+
+## 9. Q₈-invariant codes in Morita form; the 72-rule fails at n = 72 (2026-09-26, later session)
+
+Code: `ternary60/theory/mainq_morita.py` (library), `mainq_72rule.py` (log beside it), Rust `ternary60 sl2words`.
+
+### 9.1 Morita form and a fast index for Q₈-invariant codes
+
+**Lemma 9.1 (Morita form) [P; V].** Let Q₈ = ⟨J, K⟩ act on F₃^{4r} by signed permutations with J² = K² = −1 (so r orbits of size 4).
+- After a monomial change of coordinates, each orbit is the quaternion algebra A = F₃⟨i, j⟩ in the coordinates (a, b, c, d) of a + bi + cj + dk, with Q₈ acting by left multiplication, and the dot product is the norm form. *Proof:* the orbit module is Ind_{⟨−1⟩}^{Q₈}(sign) = F₃[Q₈]/(1 + z) = A, with basis the images of 1, i, j, k.
+- A ≅ M₂(F₃) via i ↦ [[0,1],[−1,0]], j ↦ [[1,1],[1,−1]]; the norm is det, and its polar form is ⟨X, Y⟩ = −tr(X adj Y).
+- **Q₈-invariant codes are exactly C = F₃² ⊗ U** := {X ∈ M_{2×2r}(F₃) : both rows of X lie in U}, U ⊂ F₃^{2r} (block b = coordinates 2b, 2b+1), since A-submodules of A^r are F₃² ⊗ U (Morita). On C the form is ⟨X, Y⟩ = −(Ω(x₁, y₂) − Ω(x₂, y₁)) with Ω = ⊕_b ω_b, ω(x, y) = x₀y₁ − x₁y₀. **So C is self-dual iff U is Lagrangian for Ω.**
+- **Weights.** Norm ≡ weight mod 3 on F₃⁴. The weight-4 elements of A are the 16 norm-1 elements outside Q₈, and the weight-1 elements are Q₈: SL₂(F₃) ≅ 2T = Q₈ ∪ {(±1 ± i ± j ± k)/2}, and 1/2 = −1 in F₃. The weight f₄ = Π φ(coordinates) is Q₈-bi-invariant and takes opposite signs on the two nontrivial cosets, so **f₄(X) = φ(ψ(X)) with ψ: SL₂(F₃) → ℤ/3 the abelianisation** (and f₄ = 0 off SL₂∖Q₈).
+- [V: `mainq_morita.py` checks ψ is a homomorphism and f₄ = φ∘ψ; J, K, h are automorphisms of F₃² ⊗ U with J² = K² = −1, JK = −KJ.]
+
+**Corollary 9.2 (index via good planes) [P; V].** Call X ∈ C an SL₂-word if every block X_b ∈ SL₂(F₃). Left multiplication by SL₂(F₃) preserves C, acts freely on SL₂-words, and shifts every ψ_b by ψ(g). Hence
+      **Index(C) = 8 Σ_Π Σ_{s∈F₃} Π_b φ(ψ_b(Π) + s),**
+with Π running over the SL₂-orbits of SL₂-words ("good planes" of U), each represented by its unique basis with X_{b₀} = 1. The same holds for R_σ of [I Lemma 5.8] when σ consists of Q₈-orbit blocks, with φ replaced on σ by the λ-weight, which is (−2, 1, 1) as a function of ψ (weight 1 ⇔ X_b ∈ Q₈).
+- `ternary60 sl2words` enumerates normalised SL₂-words: x₁ runs over an affine subspace of U of dimension r − 2, and x₂ is found by linear algebra. At n = 72 there are about 5.8·10⁶ good planes and a run takes 5 s. Direct enumeration (3³⁶ words) is impossible there, and `ternary60 index` gives only |Index|.
+- [V: `mainq_72rule.py` Part 1] sign-exact agreement with `rsigma` for the index and random orbit-block R_σ, n = 12, 24, 36 (18/18). At n = 72, |Index| agrees with `ternary60 index`.
+
+### 9.2 Adding h: modules over R = F₃[ℤ/3]
+
+h permutes the blocks in triples (3s + t ↦ 3s + t + 1). So F₃^{2r} = F₃^{2k} ⊗ R with R = F₃[t]/(t³ − 1) = F₃[u]/u³, u = t − 1. **G-invariant self-dual codes ↔ Lagrangian R-submodules U**, of type R^α ⊕ (R/u²)^β ⊕ (R/u)^β with α + β = k.
+- **Free U (β = 0) [P].** U = R·{e_i + u(A₁f)_i + u²((A₁ + S)f)_i}. Here Ū = span(e) is a Lagrangian of F₃^{2k}, f is a dual Lagrangian basis, A₁ is skew and S symmetric. This is the Hermitian condition for t ↦ t⁻¹, which acts by u ↦ −u + u². The collapsed fixed code is F₃² ⊗ Ū, so **T_h = Index(F₃² ⊗ Ū)**, and T_h ≠ 0 needs 3 | k.
+- **Non-free U (β ≥ 1) [P].** The collapsed fixed code D is co-isotropic with dim D − 2k = 2β, so Poisson gives **T_h = 9^β·F(D^⊥) ∈ 72ℤ**, using 8 | F(D^⊥) from the free Q₈-action.
+- **Gauge symmetries [P].** h_s (multiplication by t on triple s only) is a coordinate permutation that maps U to another lift of Ū, with A₁ ↦ A₁ + B_s, B_s = ω_s|_Ū. The reflection t ↦ t⁻¹ gives A₁ ↦ −A₁. Both preserve Index and T_h.
+
+### 9.3 Exact laws for the index mod 72 [V: `mainq_72rule.py` Parts 2–3]
+
+Write a := Index/24 mod 3 and t := T_h/24.
+- **k = 1** (all 12 free lifts): Index = 24·S. So S = 0 gives the tetracode³ and S = ±1 gives the Golay code.
+- **k = 2** (all 40 × 81 free lifts): a ≡ −A₁² if Ū = ℓ₁ ⊕ ℓ₂ is split (collapsed code = two tetracodes), and a ≡ 0 otherwise.
+- **k = 3** (480 sampled lifts over 12 random Ū): **a ≡ t·A₁(P)²**. Here P ⊂ Ū is the plane spanned by the three lines Ū ∩ {zero on block s} (Golay type, t = ±1), and a ≡ 0 when t = 0.
+  - A₁(P)² ∈ {0, 1} is well defined, and A₁(P) is exactly the gauge invariant of A₁: span(B_s) is the annihilator of P.
+  - This is the 72-rule for free U at n = 36, sign-exact: Index ≡ T_h·A₁(P)² mod 72.
+  - Non-free U had T_h ≡ Index ≡ 0 mod 72 in every sample.
+- **k = 6: the rule fails** (Part 4). Among 30 random codes, 5 have T_h ≡ 0 but Index ≢ 0 mod 72, e.g. T_h = 0 with Index = −3840 (saved as `ternary60/codes/q8z3_len72_T0.txt`, U in `….U.txt`; |Index| re-checked with `ternary60 index`). Non-free U again always had Index ≡ 0 mod 72 [C for all k].
+- Proofs of the k = 3 law (and of "β ≥ 1 ⇒ 72 | Index") are open. They are no longer needed for the Main Question.
+
+### 9.4 Back to k ≡ 0 mod 24: seeds at k = 6
+
+Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k = 6 with a G-stable system σ of b₀ = 6 Q₈-orbit blocks (two h-triples). It reaches k = 12, 24, 36, … and so every k ≡ 0 mod 24. Along it, Index = R_σ(seed) [I Lemma 5.8] and T_h = R_σ̄(D) (Lemma 4.3).
+- **What is needed:** a G-invariant self-dual code of length 72 and two h-triples σ with R_σ = ±24 and R_σ̄(D) = 0. Then the orbifold by Q₈ × ℤ/3 would have index 1 at every k ≡ 0 mod 24, which would answer the last open class.
+- b₀ = 18 (every orbit a block, straight to k = 24) is hopeless: |R_σ| ~ 10⁷–10⁸.
+- [V] Pipeline check in the Morita layout: from k = 3 seeds and one h-triple, |Index(Q_σ E)| = |R_σ(E)| and T_h(Q_σ E) = R_σ̄(D) at n = 72.
+- **Search** [V: `mainq_q8z3_seed72.py`, log beside it; longer exploratory runs in the session scratchpad].
+  - Random free codes: about 2.5 of the 15 systems per code have R_σ̄(D) = 0, and on those R_σ is spread over {0, 24, 48} mod 72. So nothing forces 72 | R_σ, unlike at k = 3.
+  - The magnitudes are large, typically |R_σ| ~ 10⁴–10⁵.
+  - Targeted: reductions Ū whose collapsed code has R_σ̄ = 0 for all 15 systems, with random lifts (A₁, S). This makes every system admissible, about 3 s per code.
+  - Split Ū (collapsed code = six tetracodes) is useless: there all R_σ ≡ 0 mod 72, as at k = 3.
+  - **A seed was found (§10)** after about 7000 targeted systems (466 lifts over 14 reductions), consistent with the heuristic density ~2·10⁻⁴ of |R_σ| = 24.
+
+--------------------------------------------------------------------------------------------
+
+## 10. The Main Question for k ≡ 0 mod 24 (2026-09-26, later session) [V: `mainq_q8z3_chain24.py`, log beside it]
+
+**Seed [V].** `ternary60/codes/q8z3_seed72.U.txt`: a Lagrangian U ⊂ F₃³⁶, h-invariant and free over R. E = F₃² ⊗ U (length 72, `q8z3_seed72.txt`) is self-dual, with G = Q₈ × ⟨h⟩ ⊂ Aut(E) as in §9: J² = K² = −1, JK = −KJ, h³ = 1 commuting with J, K, and h of cycle shape 3²⁴.
+- Index(E) = −1608 (sl2words, sign-exact; |Index| confirmed by `ternary60 index`). T_h(E) = 0.
+- σ = the six Q₈-orbit blocks of h-triples 0 and 1. **R_σ(E) = +24**: sl2words with normalisation block 0, with block 9, and by the older enumeration all agree.
+- **R_σ̄(D) = 0** on the collapsed fixed code D (length 24, self-dual), by direct enumeration (rsigma, independent of sl2words).
+
+**Theorem 10.1 [P, given T: GJF Thm 4.2 (orbifolds by non-anomalous groups) and their Frame-shape anomaly for ℤ/3; I Lemma 5.8, Thm 5.9; Lemma 4.1, 4.3; Thm 8.1; V].** For every k ≡ 0 mod 12 with k ≥ 12 there is a self-dual ternary code C_k of length 12k with Index(C_k) = 24, G = Q₈ × ℤ/3 ⊂ Aut(C_k) of the type above (J² = K² = −1, h fixed-point-free of cycle shape 3^{4k}), and T_h(C_k) = 0. For k ≡ 0 mod 24, V_{Λ(C_k)}//G is a holomorphic N=1 SVOA of central charge 12k and **index 1**. So the Main Question has a positive answer for gcd(k, 24) = 24.
+- *Construction.* Lemma 4.1 with G, starting from (E, σ) and refining the G-orbit of one step-1 block at each step (12 blocks, +12 in k). Lengths are 72 + 72 = 144 (k = 12), then 288 (k = 24), 432, …; k runs over all multiples of 12 from 12 on.
+- *Invariants.* Index(C_k) = R_σ(E) = 24 at every step [I Lemma 5.8]. T_h(C_k) = R_σ̄(D) = 0 (Lemma 4.3), with the collapsed systems carried along in the same way.
+- *Anomaly.* It vanishes for 24 | k: the Q₈ part is 3k·a = 0 since 8 | k (Thm 8.1); the ℤ/3 part is zero since 3 | k (GJF); mixed terms vanish by coprimality.
+- *Twisted sectors.* Every abelian subgroup of G is cyclic. Those containing −1 have vanishing twisted–twined indices, since −1 fixes no maximal codeword; the only other nontrivial one is ⟨h⟩, with T_h = 0. So the index is Index(C_k)/|G| = 24/24 = 1. The orbifold is N=1 because G fixes the supercurrent. □
+- [V: `mainq_q8z3_chain24.py`, log beside it]
+  - At n = 144 and n = 288: self-duality, J, K, h ∈ Aut, the relations, and h fixed-point-free.
+  - At n = 144: T_h = 0 directly (`ternary60 index` on the collapsed fixed code, length 48).
+  - Index = 24 at n = 144, 288 is by [I Lemma 5.8]; direct computation is out of reach (3⁷² words; sl2words would need 3³⁴ steps).
+  - Codes: `ternary60/codes/q8z3_chain_len{144,288}.txt` (+ `.gens.txt`).
+
+**Corollary 10.2 (the Main Question) [P, given the same T and I].** Together with §2, §4 and §8: **for every k ≥ 1 there is a holomorphic N=1 SVOA of central charge 12k and index 24/gcd(k, 24)**, the TMF minimum. The sources by residue class:
+- gcd(k, 24) ∈ {1, 2}: [I Thm 5.9], with g = 1 or −1.
+- gcd = 4: the J-chain (Thm 4.2).
+- gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).
+- gcd = 8: the Q₈-chain (Cor 8.2).
+- gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
+- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on the coprime-gauging step of Thm 8.1, and on [I] (not yet independently read). It still needs a literature check and a second reader.

@@ -1,0 +1,6 @@
+1 60 random free codes: 122 systems with R_σ̄(D) = 0; R_σ mod 72: {0: 62, 24: 23, 48: 37}; smallest |R_σ|: [888, 2808, 5640, 6912, 7152, 7200, 7608, 7920]; hits 0; 2 reductions with R_σ̄ ≡ 0 [349s]
+2 200 free lifts over 2 reductions (all 15 systems admissible): R_σ mod 72 {0: 1403, 24: 920, 48: 677}; smallest |R_σ|: [72, 144, 168, 216, 240, 264, 288, 336]; hits 0 [1166s]
+3 k = 3 seed, σ = triple 2: R_σ = 1056, |Index(Q_σ E)| = 1056; R_σ̄(D) = -24, T_h = -24; self-dual True, G-invariant True; next system has 12 blocks
+3 k = 3 seed, σ = triple 1: R_σ = -1752, |Index(Q_σ E)| = 1752; R_σ̄(D) = -24, T_h = -24; self-dual True, G-invariant True; next system has 12 blocks
+3 k = 3 seed, σ = triple 0: R_σ = -24, |Index(Q_σ E)| = 24; R_σ̄(D) = 48, T_h = 48; self-dual True, G-invariant True; next system has 12 blocks
+3 pipeline consistent on 3/3

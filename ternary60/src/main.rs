@@ -1366,6 +1366,563 @@ fn rsigma(code: &Code, blocks: &[Vec<usize>], threads: usize) -> i128 {
     total
 }
 
+// ------------------------------------------------------------------------------------------
+// Q8-invariant codes C = F_3^2 ⊗ U (notes/main-question.md §9): SL2-words and ψ-configurations
+// ------------------------------------------------------------------------------------------
+
+/// ψ(X) for X = [[p0, p1], [q0, q1]] ∈ M_2(F_3), indexed by p0 + 3 p1 + 9 q0 + 27 q1: the
+/// abelianisation SL_2(F_3) → Z/3 normalised so that the quaternion-coordinate weight f_4(X) equals
+/// φ(ψ(X)) (ψ = 0 on Q_8); 255 marks det X ≠ 1. Generated and checked in mainq_sl2words.py.
+const PSI_TAB: [u8; 81] = [
+    255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 2, 1, 255, 255,
+    255, 0, 1, 2, 255, 255, 255, 255, 0, 255, 255, 2, 255, 255, 1, 255, 255, 1, 255, 255, 255, 0,
+    2, 255, 255, 255, 2, 255, 1, 255, 255, 255, 255, 0, 255, 255, 0, 255, 255, 1, 255, 255, 2, 255,
+    255, 2, 255, 0, 255, 1, 255, 255, 255, 255, 1, 2, 255, 255, 255, 0, 255,
+];
+
+#[inline(always)]
+fn w_get(v: W, i: usize) -> u8 {
+    if (v.a >> i) & 1 == 1 {
+        1
+    } else if (v.b >> i) & 1 == 1 {
+        2
+    } else {
+        0
+    }
+}
+
+#[inline(always)]
+fn w_neg(v: W) -> W {
+    W { a: v.b, b: v.a }
+}
+
+/// The per-block symplectic products ω_b(x_b, y_b) = x_{2b} y_{2b+1} − x_{2b+1} y_{2b}, returned on the
+/// even bit positions 2b; `sy` must be swap(y) (see `sl2_swap`).
+#[inline(always)]
+fn sl2_omega(x: W, sy: W, even: u64) -> W {
+    let one = (x.a & sy.a) | (x.b & sy.b);
+    let two = (x.a & sy.b) | (x.b & sy.a);
+    let e = W { a: one & even, b: two & even };
+    let o = W { a: (one >> 1) & even, b: (two >> 1) & even };
+    e.add(o)
+}
+
+/// swap(y): position 2b ← y_{2b+1}, position 2b+1 ← −y_{2b}.
+fn sl2_swap(y: W, even: u64) -> W {
+    W {
+        a: ((y.a >> 1) & even) | ((y.b & even) << 1),
+        b: ((y.b >> 1) & even) | ((y.a & even) << 1),
+    }
+}
+
+/// Σ_{s ∈ F_3} Π_b ρ_b(ψ_b + s) for a ψ-configuration (pa = blocks with ψ = 1, pb = ψ = 2) and a system
+/// mask sm: ρ = λ-weight (−2, 1, 1) on σ, φ = (0, −1, 1) elsewhere.
+#[inline(always)]
+fn sl2_weight(pa: u64, pb: u64, full: u64, sm: u64) -> i128 {
+    // classes: p0 (ψ = 0), pa (ψ = 1), pb (ψ = 2); shift sh sends class v to v + sh. A term survives
+    // only if the class sent to 0 has no block outside σ; it contributes (−2)^{#its blocks in σ}
+    // times (−1)^{#blocks outside σ sent to 1}.
+    let p0 = full & !(pa | pb);
+    let out = full & !sm;
+    let term = |z: u64, one: u64| -> i128 {
+        if z & out != 0 {
+            return 0;
+        }
+        let e = (z & sm).count_ones();
+        let mut w: i128 = 1i128 << e;
+        if e % 2 == 1 {
+            w = -w;
+        }
+        if (one & out).count_ones() % 2 == 1 {
+            -w
+        } else {
+            w
+        }
+    };
+    term(p0, pa) + term(pb, p0) + term(pa, pb)
+}
+
+/// Per-thread accumulator of R_σ for a list of systems (sl2words).
+struct Acc<'a> {
+    tot: Vec<i128>,
+    count: u64,
+    systems: &'a [u64],
+    full: u64,
+}
+
+/// Normalised SL2-words of C = F_3^2 ⊗ U: pairs (x1, x2) ∈ U² with [x1_b; x2_b] ∈ SL_2(F_3) for every
+/// block b and [x1_{b0}; x2_{b0}] = identity (one per good plane). Returns the histogram of
+/// ψ-configurations (ψ_b)_b, bitsliced as (blocks with ψ = 1, blocks with ψ = 2).
+fn sl2words(urows: &[V], r: usize, b0: usize, threads: usize, systems: &[u64]) -> (HashMap<(u64, u64), u64>, Vec<i128>, u64) {
+    let len = 2 * r;
+    assert!(len <= 64);
+    // move columns 2b0, 2b0+1 to the front so that rref pivots there first
+    let mut order: Vec<usize> = vec![2 * b0, 2 * b0 + 1];
+    order.extend((0..len).filter(|&c| c != 2 * b0 && c != 2 * b0 + 1));
+    let mut perm = vec![0usize; len];
+    for (j, &c) in order.iter().enumerate() {
+        perm[c] = j;
+    }
+    let mut inv = vec![0usize; len];
+    for (i, &p) in perm.iter().enumerate() {
+        inv[p] = i;
+    }
+    let prows: Vec<V> = urows.iter().map(|v| v.permute(&perm)).collect();
+    let (rows, piv) = rref(len, &prows);
+    assert_eq!(rows.len(), r, "U must have dimension r");
+    if !(piv.len() >= 2 && piv[0] == 0 && piv[1] == 1) {
+        // the projection of U to block b0 is not onto: no block matrix there is invertible
+        return (HashMap::new(), vec![0; systems.len()], 0);
+    }
+    let to_w = |v: &V| -> W {
+        let y = v.permute(&inv);
+        W { a: y.a as u64, b: y.b as u64 }
+    };
+    let u1 = to_w(&rows[0]);
+    let u2 = to_w(&rows[1]);
+    let ks: Vec<W> = rows[2..].iter().map(|v| to_w(v)).collect();
+    let m = ks.len();
+    let mut even: u64 = 0;
+    for b in 0..r {
+        even |= 1u64 << (2 * b);
+    }
+    let su2 = sl2_swap(u2, even);
+    let sks: Vec<W> = ks.iter().map(|&k| sl2_swap(k, even)).collect();
+    let ones_rhs = W { a: even, b: 0 };
+    // parallelise over the first t digits
+    let t = std::cmp::min(4, m);
+    let ntasks = 3usize.pow(t as u32);
+    let next = AtomicUsize::new(0);
+    let result: Mutex<HashMap<(u64, u64), u64>> = Mutex::new(HashMap::new());
+    let totals: Mutex<(Vec<i128>, u64)> = Mutex::new((vec![0i128; systems.len()], 0));
+    let full: u64 = if r == 64 { !0 } else { (1u64 << r) - 1 };
+    thread::scope(|sc| {
+        for _ in 0..threads {
+            sc.spawn(|| {
+                let mut hist: HashMap<(u64, u64), u64> = HashMap::new();
+                let mut acc = Acc { tot: vec![0i128; systems.len()], count: 0, systems, full };
+                loop {
+                    let task = next.fetch_add(1, Ordering::Relaxed);
+                    if task >= ntasks {
+                        break;
+                    }
+                    let mut x = u1;
+                    let mut tt = task;
+                    for j in 0..t {
+                        match tt % 3 {
+                            1 => x = x.add(ks[j]),
+                            2 => x = x.sub(ks[j]),
+                            _ => {}
+                        }
+                        tt /= 3;
+                    }
+                    // iterative DFS over digits t..m
+                    fn dfs(level: usize, x: W, ks: &[W], sks: &[W], su2: W, u2: W, even: u64,
+                           rhs1: W, nb: usize, hist: &mut HashMap<(u64, u64), u64>, acc: &mut Acc) {
+                        if level < ks.len() {
+                            dfs(level + 1, x, ks, sks, su2, u2, even, rhs1, nb, hist, acc);
+                            dfs(level + 1, x.add(ks[level]), ks, sks, su2, u2, even, rhs1, nb, hist, acc);
+                            dfs(level + 1, x.sub(ks[level]), ks, sks, su2, u2, even, rhs1, nb, hist, acc);
+                            return;
+                        }
+                        let sup = x.a | x.b;
+                        if ((sup | (sup >> 1)) & even) != even {
+                            return;
+                        }
+                        // solve Σ_j d_j ω(x, k_j) = 1 − ω(x, u2) on blocks ≠ b0
+                        let m = ks.len();
+                        let mut vecs: Vec<W> = sks.iter().map(|&s| sl2_omega(x, s, even)).collect();
+                        let mut coef: Vec<W> = (0..m).map(|j| W { a: 1u64 << j, b: 0 }).collect();
+                        let mut tgt = rhs1.sub(sl2_omega(x, su2, even));
+                        let mut tcoef = W::ZERO;
+                        let mut rank = 0usize;
+                        let mut kernel: Vec<W> = Vec::new();
+                        let mut used = vec![false; m];
+                        // Gaussian elimination over bit positions
+                        let mut pos_mask = even;
+                        while pos_mask != 0 {
+                            let p = pos_mask.trailing_zeros() as usize;
+                            pos_mask &= pos_mask - 1;
+                            let mut piv_j = None;
+                            for j in 0..m {
+                                if !used[j] && w_get(vecs[j], p) != 0 {
+                                    piv_j = Some(j);
+                                    break;
+                                }
+                            }
+                            let Some(pj) = piv_j else { continue };
+                            used[pj] = true;
+                            rank += 1;
+                            if w_get(vecs[pj], p) == 2 {
+                                vecs[pj] = w_neg(vecs[pj]);
+                                coef[pj] = w_neg(coef[pj]);
+                            }
+                            let pv = vecs[pj];
+                            let pc = coef[pj];
+                            for j in 0..m {
+                                if j != pj {
+                                    match w_get(vecs[j], p) {
+                                        1 => { vecs[j] = vecs[j].sub(pv); coef[j] = coef[j].sub(pc); }
+                                        2 => { vecs[j] = vecs[j].add(pv); coef[j] = coef[j].add(pc); }
+                                        _ => {}
+                                    }
+                                }
+                            }
+                            match w_get(tgt, p) {
+                                1 => { tgt = tgt.sub(pv); tcoef = tcoef.add(pc); }
+                                2 => { tgt = tgt.add(pv); tcoef = tcoef.sub(pc); }
+                                _ => {}
+                            }
+                        }
+                        if (tgt.a | tgt.b) != 0 {
+                            return;
+                        }
+                        for j in 0..m {
+                            if !used[j] {
+                                kernel.push(coef[j]);
+                            }
+                        }
+                        let _ = rank;
+                        // all solutions d = tcoef + span(kernel)
+                        let nk = kernel.len();
+                        let total = 3usize.pow(nk as u32);
+                        for idx in 0..total {
+                            let mut d = tcoef;
+                            let mut q = idx;
+                            for kv in kernel.iter() {
+                                match q % 3 {
+                                    1 => d = d.add(*kv),
+                                    2 => d = d.sub(*kv),
+                                    _ => {}
+                                }
+                                q /= 3;
+                            }
+                            let mut x2 = u2;
+                            for j in 0..m {
+                                match w_get(d, j) {
+                                    1 => x2 = x2.add(ks[j]),
+                                    2 => x2 = x2.sub(ks[j]),
+                                    _ => {}
+                                }
+                            }
+                            let mut pa: u64 = 0;
+                            let mut pb: u64 = 0;
+                            for b in 0..nb {
+                                let i0 = w_get(x, 2 * b) as usize;
+                                let i1 = w_get(x, 2 * b + 1) as usize;
+                                let j0 = w_get(x2, 2 * b) as usize;
+                                let j1 = w_get(x2, 2 * b + 1) as usize;
+                                let ps = PSI_TAB[i0 + 3 * i1 + 9 * j0 + 27 * j1];
+                                debug_assert!(ps != 255);
+                                if ps == 1 {
+                                    pa |= 1u64 << b;
+                                } else if ps == 2 {
+                                    pb |= 1u64 << b;
+                                }
+                            }
+                            if acc.systems.is_empty() {
+                                *hist.entry((pa, pb)).or_insert(0) += 1;
+                            } else {
+                                acc.count += 1;
+                                for (si, &sm) in acc.systems.iter().enumerate() {
+                                    acc.tot[si] += sl2_weight(pa, pb, acc.full, sm);
+                                }
+                            }
+                        }
+                    }
+                    dfs(t, x, &ks, &sks, su2, u2, even, ones_rhs, r, &mut hist, &mut acc);
+                }
+                let mut res = result.lock().unwrap();
+                for (key, c) in hist {
+                    *res.entry(key).or_insert(0) += c;
+                }
+                let mut tt = totals.lock().unwrap();
+                for (a, b) in tt.0.iter_mut().zip(acc.tot.iter()) {
+                    *a += *b;
+                }
+                tt.1 += acc.count;
+            });
+        }
+    });
+    let (tot, cnt) = totals.into_inner().unwrap();
+    (result.into_inner().unwrap(), tot, cnt)
+}
+
+/// Faster version of `sl2words` (systems mode only): the linear system for x2 is assembled from
+/// per-block lookup tables and solved row-wise, and the DFS over x1 prunes blocks whose two
+/// coordinates are pivots of already decided digits and vanish. Same output as `sl2words`.
+fn sl2words_fast(urows: &[V], r: usize, b0: usize, threads: usize, systems: &[u64]) -> (Vec<i128>, u64) {
+    let len = 2 * r;
+    assert!(len <= 64);
+    let mut order: Vec<usize> = vec![2 * b0, 2 * b0 + 1];
+    order.extend((0..len).filter(|&c| c != 2 * b0 && c != 2 * b0 + 1));
+    let mut perm = vec![0usize; len];
+    for (j, &c) in order.iter().enumerate() {
+        perm[c] = j;
+    }
+    let mut inv = vec![0usize; len];
+    for (i, &p) in perm.iter().enumerate() {
+        inv[p] = i;
+    }
+    let prows: Vec<V> = urows.iter().map(|v| v.permute(&perm)).collect();
+    let (rows, piv) = rref(len, &prows);
+    assert_eq!(rows.len(), r, "U must have dimension r");
+    if !(piv.len() >= 2 && piv[0] == 0 && piv[1] == 1) {
+        return (vec![0; systems.len()], 0);
+    }
+    let to_w = |v: &V| -> W {
+        let y = v.permute(&inv);
+        W { a: y.a as u64, b: y.b as u64 }
+    };
+    let u1 = to_w(&rows[0]);
+    let u2 = to_w(&rows[1]);
+    let ks: Vec<W> = rows[2..].iter().map(|v| to_w(v)).collect();
+    let m = ks.len();
+    assert!(m + 1 <= 64);
+    // pivot column (natural layout) of each k_j, and the level at which each block is decided
+    let pcol: Vec<usize> = (0..m).map(|j| inv[piv[j + 2]]).collect();
+    let mut owner = vec![usize::MAX; len];
+    for (j, &c) in pcol.iter().enumerate() {
+        owner[c] = j;
+    }
+    let mut decided_at: Vec<Vec<usize>> = vec![Vec::new(); m + 1];
+    for b in 0..r {
+        if b == b0 {
+            continue;
+        }
+        let (o0, o1) = (owner[2 * b], owner[2 * b + 1]);
+        if o0 != usize::MAX && o1 != usize::MAX {
+            decided_at[o0.max(o1) + 1].push(b);
+        }
+    }
+    let tr = |v: W, i: usize| -> usize { (((v.a >> i) & 1) + 2 * ((v.b >> i) & 1)) as usize };
+    // row tables: for block b and x1_b = (α, β): row over d (bits 0..m−1) and rhs at bit m
+    let mut rowtab: Vec<[W; 9]> = vec![[W::ZERO; 9]; r];
+    for b in 0..r {
+        for code in 0..9usize {
+            let (al, be) = ((code % 3) as u8, (code / 3) as u8);
+            let mut row = W::ZERO;
+            for (j, kj) in ks.iter().enumerate() {
+                let v = (al as i32 * tr(*kj, 2 * b + 1) as i32 - be as i32 * tr(*kj, 2 * b) as i32).rem_euclid(3);
+                match v {
+                    1 => row.a |= 1u64 << j,
+                    2 => row.b |= 1u64 << j,
+                    _ => {}
+                }
+            }
+            let rhs = (1 - (al as i32 * tr(u2, 2 * b + 1) as i32 - be as i32 * tr(u2, 2 * b) as i32)).rem_euclid(3);
+            match rhs {
+                1 => row.a |= 1u64 << m,
+                2 => row.b |= 1u64 << m,
+                _ => {}
+            }
+            rowtab[b][code] = row;
+        }
+    }
+    let mut even: u64 = 0;
+    for b in 0..r {
+        even |= 1u64 << (2 * b);
+    }
+    let full: u64 = if r == 64 { !0 } else { (1u64 << r) - 1 };
+    let t = std::cmp::min(4, m);
+    let ntasks = 3usize.pow(t as u32);
+    let next = AtomicUsize::new(0);
+    let totals: Mutex<(Vec<i128>, u64)> = Mutex::new((vec![0i128; systems.len()], 0));
+    struct Ctx<'a> {
+        ks: &'a [W],
+        u2: W,
+        even: u64,
+        r: usize,
+        b0: usize,
+        m: usize,
+        rowtab: &'a [[W; 9]],
+        decided_at: &'a [Vec<usize>],
+        systems: &'a [u64],
+        full: u64,
+    }
+    fn leaf(x: W, c: &Ctx, tot: &mut [i128], count: &mut u64) {
+        let sup = x.a | x.b;
+        if ((sup | (sup >> 1)) & c.even) != c.even {
+            return;
+        }
+        let m = c.m;
+        let mut rows: [W; 64] = [W::ZERO; 64];
+        let mut nr = 0usize;
+        for b in 0..c.r {
+            if b == c.b0 {
+                continue;
+            }
+            let code = (((x.a >> (2 * b)) & 1) + 2 * ((x.b >> (2 * b)) & 1)
+                + 3 * (((x.a >> (2 * b + 1)) & 1) + 2 * ((x.b >> (2 * b + 1)) & 1))) as usize;
+            rows[nr] = c.rowtab[b][code];
+            nr += 1;
+        }
+        // Gaussian elimination (RREF) on bits 0..m−1
+        let mut rank = 0usize;
+        let mut pivcol = [usize::MAX; 64];
+        let mut is_piv = 0u64;
+        for col in 0..m {
+            let bit = 1u64 << col;
+            let mut sel = usize::MAX;
+            for i in rank..nr {
+                if (rows[i].a | rows[i].b) & bit != 0 {
+                    sel = i;
+                    break;
+                }
+            }
+            if sel == usize::MAX {
+                continue;
+            }
+            rows.swap(rank, sel);
+            if rows[rank].b & bit != 0 {
+                rows[rank] = W { a: rows[rank].b, b: rows[rank].a };
+            }
+            let pr = rows[rank];
+            for i in 0..nr {
+                if i != rank {
+                    if rows[i].a & bit != 0 {
+                        rows[i] = rows[i].sub(pr);
+                    } else if rows[i].b & bit != 0 {
+                        rows[i] = rows[i].add(pr);
+                    }
+                }
+            }
+            pivcol[rank] = col;
+            is_piv |= bit;
+            rank += 1;
+        }
+        let rbit = 1u64 << m;
+        let vmask = rbit - 1;
+        for i in rank..nr {
+            if (rows[i].a | rows[i].b) & rbit != 0 && (rows[i].a | rows[i].b) & vmask == 0 {
+                return;
+            }
+        }
+        // particular solution and kernel basis
+        let mut d0 = W::ZERO;
+        for i in 0..rank {
+            let bit = 1u64 << pivcol[i];
+            if rows[i].a & rbit != 0 {
+                d0.a |= bit;
+            } else if rows[i].b & rbit != 0 {
+                d0.b |= bit;
+            }
+        }
+        let mut kern: Vec<W> = Vec::new();
+        for f in 0..m {
+            if is_piv & (1u64 << f) != 0 {
+                continue;
+            }
+            let mut kv = W { a: 1u64 << f, b: 0 };
+            for i in 0..rank {
+                let bit = 1u64 << pivcol[i];
+                // d_pivot = −coef_f
+                if rows[i].a & (1u64 << f) != 0 {
+                    kv.b |= bit;
+                } else if rows[i].b & (1u64 << f) != 0 {
+                    kv.a |= bit;
+                }
+            }
+            kern.push(kv);
+        }
+        let nsol = 3usize.pow(kern.len() as u32);
+        for idx in 0..nsol {
+            let mut d = d0;
+            let mut q = idx;
+            for kv in kern.iter() {
+                match q % 3 {
+                    1 => d = d.add(*kv),
+                    2 => d = d.sub(*kv),
+                    _ => {}
+                }
+                q /= 3;
+            }
+            let mut x2 = c.u2;
+            for j in 0..m {
+                let bit = 1u64 << j;
+                if d.a & bit != 0 {
+                    x2 = x2.add(c.ks[j]);
+                } else if d.b & bit != 0 {
+                    x2 = x2.sub(c.ks[j]);
+                }
+            }
+            let mut pa = 0u64;
+            let mut pb = 0u64;
+            for b in 0..c.r {
+                let i0 = 2 * b;
+                let i1 = i0 + 1;
+                let t4 = |v: W, i: usize| -> usize { (((v.a >> i) & 1) + 2 * ((v.b >> i) & 1)) as usize };
+                let ps = PSI_TAB[t4(x, i0) + 3 * t4(x, i1) + 9 * t4(x2, i0) + 27 * t4(x2, i1)];
+                if ps == 1 {
+                    pa |= 1u64 << b;
+                } else if ps == 2 {
+                    pb |= 1u64 << b;
+                }
+            }
+            *count += 1;
+            for (si, &sm) in c.systems.iter().enumerate() {
+                tot[si] += sl2_weight(pa, pb, c.full, sm);
+            }
+        }
+    }
+    fn dfs(level: usize, x: W, c: &Ctx, tot: &mut [i128], count: &mut u64) {
+        for &b in c.decided_at[level].iter() {
+            let sup = x.a | x.b;
+            if (sup >> (2 * b)) & 3 == 0 {
+                return;
+            }
+        }
+        if level == c.m {
+            leaf(x, c, tot, count);
+            return;
+        }
+        dfs(level + 1, x, c, tot, count);
+        dfs(level + 1, x.add(c.ks[level]), c, tot, count);
+        dfs(level + 1, x.sub(c.ks[level]), c, tot, count);
+    }
+    let ctx = Ctx { ks: &ks, u2, even, r, b0, m, rowtab: &rowtab, decided_at: &decided_at, systems, full };
+    thread::scope(|sc| {
+        for _ in 0..threads {
+            sc.spawn(|| {
+                let mut tot = vec![0i128; systems.len()];
+                let mut count = 0u64;
+                loop {
+                    let task = next.fetch_add(1, Ordering::Relaxed);
+                    if task >= ntasks {
+                        break;
+                    }
+                    // digits 0..t fixed by the task; replay the pruning checks for those levels
+                    let mut x = u1;
+                    let mut tt = task;
+                    let mut dead = false;
+                    for j in 0..t {
+                        for &b in ctx.decided_at[j].iter() {
+                            if ((x.a | x.b) >> (2 * b)) & 3 == 0 {
+                                dead = true;
+                            }
+                        }
+                        match tt % 3 {
+                            1 => x = x.add(ks[j]),
+                            2 => x = x.sub(ks[j]),
+                            _ => {}
+                        }
+                        tt /= 3;
+                    }
+                    if !dead {
+                        dfs(t, x, &ctx, &mut tot, &mut count);
+                    }
+                }
+                let mut g = totals.lock().unwrap();
+                for (a, b) in g.0.iter_mut().zip(tot.iter()) {
+                    *a += *b;
+                }
+                g.1 += count;
+            });
+        }
+    });
+    totals.into_inner().unwrap()
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let th = threads();
@@ -1379,6 +1936,47 @@ fn main() {
             let blocks: Vec<Vec<usize>> = if args[3] == "-" { vec![] } else {
                 args[3].split(';').map(|b| b.split(',').map(|x| x.parse().unwrap()).collect()).collect() };
             println!("R={}", rsigma(&c, &blocks, th));
+        }
+        "sl2words" => {
+            // sl2words <U-file> <b0>: ψ-histogram of normalised SL2-words of F_3^2 ⊗ U (rows of U have
+            // length 2r; block b = coordinates 2b, 2b+1). Output: "<ψ string> <count>" per line.
+            let txt = fs::read_to_string(&args[2]).expect("read");
+            let urows: Vec<V> = txt.lines().filter(|l| !l.trim().is_empty()).map(|l| V::from_str(l.trim())).collect();
+            let len = txt.lines().find(|l| !l.trim().is_empty()).unwrap().trim().len();
+            let r = len / 2;
+            let b0: usize = args.get(3).map(|x| x.parse().unwrap()).unwrap_or(0);
+            if let Some(sysfile) = args.get(4) {
+                // one system per line (block indices separated by commas; "-" = no blocks):
+                // R_σ = 8 Σ_{planes} Σ_{s ∈ F_3} Π_b ρ_b(ψ_b + s), ρ = λ-weight (−2, 1, 1) on σ, φ elsewhere
+                let systxt = fs::read_to_string(sysfile).expect("read systems");
+                let systems: Vec<u64> = systxt.lines().filter(|l| !l.trim().is_empty()).map(|l| {
+                    let l = l.trim();
+                    if l == "-" { 0u64 } else { l.split(',').fold(0u64, |m, x| m | (1u64 << x.parse::<usize>().unwrap())) }
+                }).collect();
+                let (tot, cnt) = if env::var("SL2_SLOW").is_ok() {
+                    let (_h, t, c) = sl2words(&urows, r, b0, th, &systems);
+                    (t, c)
+                } else {
+                    sl2words_fast(&urows, r, b0, th, &systems)
+                };
+                eprintln!("planes={}", cnt);
+                for (si, t) in tot.iter().enumerate() {
+                    println!("R {} {}", si, 8 * t);
+                }
+                return;
+            }
+            let (hist, _t, _c) = sl2words(&urows, r, b0, th, &[]);
+            let mut s = String::new();
+            let mut tot: u64 = 0;
+            for ((pa, pb), c) in hist.iter() {
+                for b in 0..r {
+                    s.push(if (pa >> b) & 1 == 1 { '1' } else if (pb >> b) & 1 == 1 { '2' } else { '0' });
+                }
+                s.push_str(&format!(" {}\n", c));
+                tot += c;
+            }
+            eprintln!("planes={} configurations={}", tot, hist.len());
+            print!("{}", s);
         }
         "words" => {
             // words <file> <wmax>: all codewords of weight <= wmax, one per line

@@ -37,7 +37,7 @@ GJF = D. Gaiotto, T. Johnson-Freyd, *Holomorphic SCFTs with small index*, Canad.
 - **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n. **Formally verified in Lean 4** (`lean/GJF/Divisibility.lean`, §2 Step 1′); the formal statement needs n ≥ 1.
 - **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84, and re-derived from the paper's definitions with independent code, sign-exact at n = 36 (`paper_check.py`). Web literature check found no prior solution; not yet checked by a second (human) reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
 
-**GJF's Main Question** (index 24/gcd(k,24) at c = 12k) is treated in `notes/main-question.md`: answered for all k with 8 ∤ k; for 8 | k GJF's cyclic-orbifold route is provably impossible.
+**GJF's Main Question** (index 24/gcd(k,24) at c = 12k) is treated in `notes/main-question.md`: **answered for every k** (8 ∤ k by GJF's cyclic orbifolds of equivariant chains; for 8 | k the cyclic route is provably impossible, and Q₈, resp. Q₈ × ℤ/3 from a length-72 seed, is used instead), modulo GJF's orbifold and anomaly theorems.
 
 **Consequences.**
 - Every 3-framed SCFT V_{Λ(C)} (c = n = 12k, N=1 structure from the code) satisfies the TMF-predicted divisibility 24/gcd(24,k) | Index, so ob = 0 in Cok_{24k}.
