@@ -1,0 +1,7 @@
+1 T_h =  -72: Index mod 144 ∈ {0: 2, 72: 4}
+1 T_h =  -24: Index mod 144 ∈ {0: 10, 48: 14, 72: 10, 120: 10}
+1 T_h =    0: Index mod 144 ∈ {0: 104, 72: 75}
+1 T_h =   24: Index mod 144 ∈ {0: 6, 24: 8, 72: 8, 96: 19}
+1 T_h =   72: Index mod 144 ∈ {0: 1, 72: 1}
+1 272 codes; rule 'T ≡ 0 mod 72 ⇒ 72 | Index; T = ±24 ⇒ Index ≡ 0 or T mod 72' holds on all: True
+2 19 G-stable 9-block systems; 40 codes with Index ≡ 24 mod 48; 220 systems with R_σ̄(D) = 0; min |R_σ| among them = 72  [234s]

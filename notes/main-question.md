@@ -9,13 +9,14 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
 ## 0. Summary
 
 - **GJF's Main Question** asks for a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24) for every k. GJF answer k ≤ 5, via Thm 5.6: orbifold the code VOA V_{Λ(C)} of an index-24 code C by an automorphism g of order m = gcd(k,24) with (1) g^{m/2} = −1 and (2) g^{m/3} a balanced fixed-point-free order-3 map (§1).
-- **Answered here for every k with 8 ∤ k** (§2, §4), modulo GJF Thm 5.6 [T] and [I Thm 5.9]; previously k ≤ 5.
+- **Answered here for every k with 24 ∤ k** (§2, §4, §8), modulo GJF Thm 5.6 and Thm 4.2 [T] and [I Thm 5.9]; previously k ≤ 5.
   - gcd(k,24) ∈ {1, 2}: any index-24 code from [I], with g = 1 or g = −1 (Cor 2.1).
   - gcd(k,24) = 4: a J-equivariant version of [I]'s construction, seeded by J ∈ Aut(Golay) with J² = −1 (Thm 4.2).
   - gcd(k,24) ∈ {3, 6, 12}: a ℤ/12-equivariant version, seeded by one length-36 code found by GJF's search method; the twined count of the order-3 part is carried along by Lemma 4.3 (Thm 4.4).
 - **Our [I Thm 5.9] codes as they stand** (§3): the length-48 code satisfies Thm 5.6 (it has J with J² = −1); the lengths-36 and 72 codes do not (their automorphism groups are 2-groups). So the symmetry has to be built in, which §4 does.
 - **Obstruction** (§5): if g ∈ Aut(C) has g⁴ = −1 then 48 | Index(C). So Thm 5.6 can never be applied when 8 | k (m ∈ {8, 24}). The proof uses a new Hermitian four-code identity (◇). The quaternion group Q₈ escapes the obstruction and would give index 3 if its action is non-anomalous [C].
-- **Open**: k ≡ 0, 8, 16 mod 24 (needs a non-cyclic group such as Q₈, or another idea); an independent check of GJF's anomaly analysis is not attempted here.
+- **Q₈ anomaly** (§8): for Q₈ ⊂ Aut(C) with centre −1 the anomaly is 3k·a with a of order 8 (reduction to free fermions in the regular representation; eta invariants on S³/Q₈ give 5/8). So Q₈ is non-anomalous iff 8 | k, and the Q₈-chain codes answer the Main Question for **k ≡ 8, 16 mod 24** (index 3).
+- **Open**: only **k ≡ 0 mod 24** (index 1). Q₈ × ℤ/3 is non-anomalous there, but in all samples T_h = 0 forces 72 | Index, which would block this route too (§8.1, [C]). An independent check of GJF's anomaly analysis is not attempted here.
 
 --------------------------------------------------------------------------------------------
 
@@ -140,8 +141,8 @@ so T_h is constant along an h-equivariant chain.
 | 3, 9, 15, 21 | 3 | 8 | ℤ/12-chain B, and the seed itself for k = 3 (Thm 4.4) | [P; V] |
 | 6, 18 | 6 | 4 | ℤ/12-chain A, g² (Thm 4.4) | [P; V] |
 | 12 | 12 | 2 | ℤ/12-chain A, g (Thm 4.4) | [P; V] |
-| 8, 16 | 8 | 3 | cyclic route impossible (Thm 5.1); Q₈-invariant index-24 codes exist (Q₈ chain), orbifold index 3 if non-anomalous | [C] |
-| 0 | 24 | 1 | cyclic route impossible (Thm 5.1); Q₈ × ℤ/3 route open | [C] |
+| 8, 16 | 8 | 3 | cyclic route impossible (Thm 5.1); Q₈ chain + Q₈ non-anomalous for 8 \| k (Thm 8.1, Cor 8.2) | [P; V] |
+| 0 | 24 | 1 | cyclic route impossible (Thm 5.1); Q₈ × ℤ/3 non-anomalous, but T_h = 0 seems to force 72 \| Index (§8.1) | open |
 
 "[P]" here means: proved here given GJF Thm 5.6 [T] (including its anomaly analysis) and [I Thm 5.9] (not yet independently read).
 
@@ -151,6 +152,7 @@ Verification [V]:
 - `mainq_seed_search.py` (log): the seed search (8 of 300 random g-invariant codes are seeds; Index 0 is the most common value) and the good block systems (R_σ = ±24, R_σ̄(D) = 0): seed 3 has 2 of 45 (b = 3) and 3 of 405 (b = 6); seed 4 has 5 of 45 and 2 of 405. (Exploratory runs found 2–3 good b = 6 systems on seeds 1 and 2 as well.)
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
+- `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
 - `mainq_automorphisms.py` (log, needs nauty): §3.
 - The four-code identity and Lemma 4.3 are local/Poisson identities; all numerics are sign-exact where stated (Rust `rsigma` enumerates the code, no sign normalisation).
 
@@ -160,3 +162,61 @@ Verification [V]:
 - **Trace formula for T_h [P; V].** For h of order 3 (a permutation after a sign change) with a fixed and b 3-cycles, let π(C) be the code of orbit sums (fixed coordinates kept, each 3-cycle summed), N = a + b, d = dim π(C). Then the collapsed fixed code is π(C)^⊥, and Poisson gives **T_h = ±3^{N/2 − d} · i^N · F(π(C))**. Checked on all order-3 elements of Aut(Golay) (T = 6 for shape 3³1³, T = 0 for 3⁴) and of the length-24 chain code (`mainq_common.twined_count_trace`). For fixed-point-free h, N = 4k and π(C) ⊂ π(C)^⊥ = D is self-orthogonal, so d ≤ 2k. If d < 2k then T_h ∈ 2·3^{2k−d}ℤ (F(π(C)) is even, x ↔ −x); if d = 2k then D is self-dual and T_h = Index(D) ∈ 24ℤ when 3 | k. Either way T_h ≡ 0 mod 3 for 3 | k.
 - **Fixed points.** An order-3 element with fixed coordinates cannot stabilise a block with an invariant split (a 3-cycle on 4 points preserves no perfect matching), so it gives nothing new for the chains.
 - **Literature.** GJF is the only source found for the Main Question; the citation search of [I §5.1(f‴)] is still open, and the same caveat applies here.
+
+--------------------------------------------------------------------------------------------
+
+## 8. The Q₈ anomaly (2026-09-26, later session)
+
+Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-action on a 2d fermionic theory (for G acting by even automorphisms, symmetry G × ℤ₂^F). GJF use restricted supercohomology rSH³(G); a class that vanishes in A(G) vanishes there too.
+
+**Theorem 8.1 [P, modulo the coprime-gauging step; V].** Let C be self-dual of length n = 12k and Q₈ = ⟨J, K⟩ ⊂ Aut(C) with J² = K² = −1 (so the centre acts as −1). Then the anomaly of the Q₈-action on V_{Λ(C)} is **3k·a**, where a ∈ A(Q₈) is the anomaly of Q₈ acting on 8 Majorana fermions in the real regular representation. **a has order exactly 8.** So the action is non-anomalous iff **8 | k**.
+
+*Proof.*
+- **Step 0 (orbits).** J² = −1 means J fixes no coordinate, and likewise K and JK. So V₄ = Q₈/±1 acts freely on coordinates: there are n/4 = 3k orbits of size 4.
+- **Step 1 (reduction to a model code) [P modulo standard orbifold facts].** On each orbit O choose a Q₈-invariant tetracode T_O. This is always possible: each of the 8 sign patterns of a Q₈ action on 4 coordinates preserves exactly 4 tetracodes [V]. Put C₀ = ⊕_O T_O.
+  - Let W be a Q₈-stable complement of C ∩ C₀ in C₀ (Maschke; 8 is prime to 3). Then C₀ = (C ∩ W^⊥) + W, the multi-neighbour of C along W ([I §5.1(d)]). So V_{Λ(C₀)} = V_{Λ(C)}//Ŵ, where Ŵ ≅ W is a 3-group acting by phases ω^{⟨w,·⟩} and normalised by Q₈.
+  - Put Γ = Ŵ ⋊ Q₈. BQ₈ → BΓ is a ℤ₍₂₎-homology equivalence, so the 2-primary part of Γ's anomaly is inflated from Γ/Ŵ = Q₈ and equals Q₈'s anomaly on V_{Λ(C)}. Gauging the odd-order normal subgroup Ŵ leaves this inflated part unchanged, so Q₈ has the same anomaly on V_{Λ(C₀)} (with the induced action).
+  - The induced action agrees with GJF's on the frame V_{√3ℤ}^{⊗n}. Two actions agreeing on the frame differ by a cocycle Q₈ → Ĉ₀, a 3-group, so they are conjugate (H¹ = 0).
+- **Step 2 (free fermions) [P].** Λ(T) ≅ ℤ⁴ (the only odd unimodular lattice of rank 4), so V_{Λ(C₀)} = ⊗_O V_{ℤ⁴} = ⊗_O Fer(8), with Q₈ acting factor by factor.
+  - An automorphism of Fer(8) is determined by its action on the weight-½ space, which is spanned by the e^{t/√3}, t ∈ T∖0.
+  - Q₈ permutes these up to sign, and freely: every nontrivial subgroup contains −1, and −t ≠ t. So the character is regular, and V_{½} ≅ Reg = 1 ⊕ χ_i ⊕ χ_j ⊕ χ_k ⊕ H as orthogonal real representations (H = the 4-dim quaternionic irreducible).
+  - Hence the anomaly is 3k·a with a := A(Fer(Reg)).
+- **Step 3 (8a = 0) [P, T].** Anomalies add under tensor products, so a = A(χ_i) + A(χ_j) + A(χ_k) + A(H).
+  - A(χ) = χ*ν, where ν ∈ A(ℤ/2) ≅ ℤ/8 is the class of one Majorana odd under ℤ/2 (Kitaev).
+  - A(H) = ρ_H*κ, where ρ_H: Q₈ → SU(2)_L ⊂ SO(4) and κ is the anomaly of SU(2)_L on 4 Majoranas (SO(4)₁ = SU(2)₁ × SU(2)₁). This is level-1 Chern–Simons, a bosonic class c₂ ∈ H⁴(BSU(2); ℤ), so ρ_H*κ is the image of ρ_H*c₂ ∈ H⁴(BQ₈; ℤ) = ℤ/8.
+  - So 8a = 0.
+- **Step 4 (order exactly 8; cross-check) [V: `mainq_q8_anomaly.py`, log beside it].**
+  - For chiral Majoranas in a real representation ρ, on a spherical space form M = S³/Γ (Γ ⊂ SU(2), spin structure ε: Γ → ±1), the anomaly is A_ρ(M) = ½(η(ρ) − dim ρ·η(1)) mod 1. Here η(ρ) = −(1/|Γ|)Σ_{g≠1} ε(g)χ_ρ(g)/(2 − tr g) (Donnelly's equivariant formula).
+  - Calibration: one Majorana odd under ℤ/2 on RP³ gives 1/8, 7/8, the Kitaev generator.
+  - Results, all spin structures:
+
+    | M | A_{χ_i}, A_{χ_j}, A_{χ_k} | A_H | A_Reg |
+    |---|---|---|---|
+    | RP³ = S³/⟨−1⟩ | 0 | 1/2 | 1/2 |
+    | S³/⟨i⟩ (and ⟨j⟩, ⟨k⟩) | 0, 1/4 or 3/4 | 3/4 | 1/4 |
+    | S³/Q₈ | 1/4 or 3/4 or 0 | 7/8 | **5/8** |
+
+  - So a has order 8. 3k·a vanishes on these space forms exactly when 8 | k. Its restrictions vanish exactly when 2 | k (on ⟨−1⟩) and when 4 | k (on ℤ/4), which is GJF's anomaly clause "m | k" of Thm 5.6 for m = 2, 4: an independent check of the normalisation.
+- **TMF consistency.** When 8 ∤ k and 4 | k, a non-anomalous Q₈ would give index 3, but TMF demands 24/gcd(k,24) ∈ {6, 2} | index. The theorem says Q₈ is anomalous exactly there. □
+
+**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4) and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
+- *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □
+- Checked explicitly at k = 8 (n = 96): Q₈-invariance, J² = K² = −1, JK = −KJ, self-duality; Index = 24 by [I Lemma 5.8].
+
+**k ≡ 0 mod 24 (m = 24, index 1).** Use G = Q₈ × ℤ/3 with h of order 3, fixed-point-free and balanced (T_h = 0).
+- *Anomaly.* It vanishes for 24 | k: the Q₈ part by Theorem 8.1, the ℤ/3 part by GJF's Frame-shape computation (3 | k), and the mixed part by coprimality.
+- *Twisted sectors.* All abelian subgroups of G are cyclic; the nontrivial ones not containing −1 are ⟨h⟩, whose twined index T_h vanishes. So the index would be 24/24 = 1.
+- *What is needed.* A G-invariant seed with Index ±24 and T_h = 0, and a G-stable block system of the right size.
+
+### 8.1 Q₈ × ℤ/3: a second apparent obstruction [C; V: `mainq_q8z3.py`, log beside it]
+
+Setting: 36 coordinates in nine Q₈-orbits, with h fixed-point-free, of order 3, commuting with Q₈, and cycling the Q₈-orbits in three triples. Because h is fixed-point-free, every block orbit has size divisible by 3, so k mod 3 is invariant. After the first step the increments are multiples of 12, because a step-1 block has a G-orbit of size 6. From k = 3 one therefore needs b₀ = 9, i.e. every coordinate in blocks; then k runs through 12, 24, 36, ….
+- **Observed rule.** In 272 random G-invariant codes: T_h = 0 or ±72 always comes with Index ≡ 0 mod 72, and T_h = ±24 with Index ≡ 0 or T_h mod 72.
+  - In orbit terms: G acts on maximal words with orbits of size 8 (h-fixed) and 24 (free), so Index = T_h + 24X with X the signed count of free orbits. The rule says X ≡ 0 or −T_h/24 mod 3.
+  - If the rule holds at every length, then Index ≠ ±24 whenever T_h = 0, and **the Q₈ × ℤ/3 orbifold can never have index 1**: a second obstruction, alongside Theorem 5.1.
+- **Consistent chain search.** There are 19 G-stable 9-block systems. On about 290 random codes with Index ≡ 24 mod 48 (exploratory runs plus the logged run), every system with R_σ̄(D) = 0 had |R_σ| ≥ 72, and 72 occurs. Such a chain would have T_h = 0 and Index R_σ, so this is what the rule predicts.
+- **Not proved.** A proof might imitate Theorem 5.1 with a ℤ/3-equivariant neighbour identity. Heuristically: orbifolding by h (non-anomalous at k = 3) leaves a Q₈-symmetric theory with Q₈-anomaly 9a = a ≠ 0, which may force extra divisibility of its index (cf. GJF Question 0.3, equivariant TMF).
+- **If the rule is a theorem, what is left for k ≡ 0 mod 24:**
+  - nonzero twisted sectors ([H] of §7: index (Index + 8T_h)/24, e.g. (Index, T_h) = (−216, 24) gives −1, and the rule allows this);
+  - other groups of order divisible by 24 with all abelian subgroups cyclic (SL₂(F₃) acts on 4 points with a fixed point, so its order-3 elements have fixed coordinates and fall outside GJF's cycle-shape condition; binary octahedral 2O; Q₁₆ × ℤ/3, …);
+  - constructions other than orbifolds of code SVOAs.

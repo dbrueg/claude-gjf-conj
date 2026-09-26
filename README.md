@@ -12,7 +12,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 |---|---|---|
 | 24 \| Index for all codes (divisibility half) | **proved** and **formally verified in Lean 4** (`lean/GJF/Divisibility.lean`; positive length). Several proofs; the shortest is one Poisson summation (notes §2 Step 1′). Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
 | index-24 code at every length 12k (existence half) | **proved for all k** and **formally verified in Lean 4** (`lean/GJF/Existence.lean`), by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
-| GJF **Main Question** (a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24)) | **answered for every k with 8 ∤ k** via GJF Thm 5.6, by building the needed code automorphism into the construction (J-chain from Golay; ℤ/12-chain from one searched length-36 seed). For 8 \| k the cyclic route is impossible: g⁴ = −1 forces 48 \| Index. | `notes/main-question.md` |
+| GJF **Main Question** (a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24)) | **answered for every k with 24 ∤ k**. For 8 ∤ k via GJF Thm 5.6, by building the needed code automorphism into the construction (J-chain from Golay; ℤ/12-chain from one searched length-36 seed). For 8 \| k the cyclic route is impossible (g⁴ = −1 forces 48 \| Index), but a quaternion group Q₈ works: its anomaly is 3k times a class of order 8, so it vanishes for 8 \| k (k ≡ 8, 16 mod 24, index 3). Open: k ≡ 0 mod 24. | `notes/main-question.md` |
 | by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
 **How the existence proof works.** For a code E and a set σ of b disjoint 4-blocks, R_σ(E) weights each codeword by φ on the coordinates outside the blocks and by λ = (0, −2, 0, 0, 1)(|c ∩ β|) on each block. Hadamard-doubling the blocks twice against tetracodes gives a self-dual code of length m + 12b and index R_σ(E), and it carries a new 2-block system with the same R. Starting from Golay with b = 1 or b = 2 gives every length 12k.
@@ -34,7 +34,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
   codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60,
                               quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
                               gjf_ex57_len{12,…,60}: GJF's Example 5.7 codes (from their TeX); z12seed_len36_*: seeds (mainq_seed_search.py)
-                              jchain_len<n> (+ .J.txt), z12chain_len<n> (+ .g.txt): the equivariant chains (row 1 permutation, row 2 signs 1/2)
+                              jchain_len<n> (+ .J.txt), z12chain_len<n> (+ .g.txt), q8chain_len<n>: the equivariant chains (row 1 permutation, row 2 signs 1/2)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
                               divisibility_check.py: critical check of the finite proof (log beside it)
@@ -43,6 +43,8 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_common.py, mainq_equivariant.py: monomial maps, fixed codes, twined counts; equivariant Q_σ
                               mainq_jchain.py, mainq_z12chain.py, mainq_seed_search.py, mainq_obstruction.py: Main Question checks (logs beside them)
                               mainq_automorphisms.py: automorphism groups via nauty (needs $DREADNAUT; scripts/build_nauty.sh)
+                              mainq_q8chain.py, mainq_q8_anomaly.py: Q₈-equivariant chain; the Q₈ anomaly (reduction checks, eta invariants)
+                              mainq_q8z3.py: Q₈ × ℤ/3 codes (the observed 72 | Index rule behind the open case k ≡ 0 mod 24)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
 scripts/build_nauty.sh        builds nauty's dreadnaut into tools/ (gitignored), for mainq_automorphisms.py

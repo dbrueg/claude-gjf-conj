@@ -1,0 +1,13 @@
+1 Q₈ actions on 4 coordinates (J, K with J² = K² = −1, JK = −KJ): 8 sign patterns, invariant tetracodes per pattern: [4]
+1 q8chain_len24 (k = 2): centre −1 True; orbit sizes [4] (6 orbits = 3k); invariant tetracode on every orbit True; C₀ = their sum is self-dual True and Q₈-invariant True; Q₈ free on nonzero tetracode words True
+1 q8chain_len48 (k = 4): centre −1 True; orbit sizes [4] (12 orbits = 3k); invariant tetracode on every orbit True; C₀ = their sum is self-dual True and Q₈-invariant True; Q₈ free on nonzero tetracode words True
+1 q8chain_len96 (k = 8): centre −1 True; orbit sizes [4] (24 orbits = 3k); invariant tetracode on every orbit True; C₀ = their sum is self-dual True and Q₈-invariant True; Q₈ free on nonzero tetracode words True
+2 calibration: one Majorana odd under ℤ/2, on RP³ with its two spin structures: A = [Fraction(1, 8), Fraction(7, 8)] (order 8: the Kitaev generator)
+2 RP³ = S³/<−1>: ε=(1, 1): A_chi_i = 0, A_chi_j = 0, A_chi_k = 0, A_H = 1/2, A_Reg = 1/2; ε=(1, -1): A_chi_i = 0, A_chi_j = 0, A_chi_k = 0, A_H = 1/2, A_Reg = 1/2
+2 S³/<i>: ε=(1, 1, 1, 1): A_chi_i = 0, A_chi_j = 1/4, A_chi_k = 1/4, A_H = 3/4, A_Reg = 1/4; ε=(1, -1, 1, -1): A_chi_i = 0, A_chi_j = 3/4, A_chi_k = 3/4, A_H = 3/4, A_Reg = 1/4
+2 S³/<j>: ε=(1, 1, 1, 1): A_chi_i = 1/4, A_chi_j = 0, A_chi_k = 1/4, A_H = 3/4, A_Reg = 1/4; ε=(1, -1, 1, -1): A_chi_i = 3/4, A_chi_j = 0, A_chi_k = 3/4, A_H = 3/4, A_Reg = 1/4
+2 S³/<k>: ε=(1, 1, 1, 1): A_chi_i = 1/4, A_chi_j = 1/4, A_chi_k = 0, A_H = 3/4, A_Reg = 1/4; ε=(1, -1, 1, -1): A_chi_i = 3/4, A_chi_j = 3/4, A_chi_k = 0, A_H = 3/4, A_Reg = 1/4
+2 S³/Q₈: ε=(1, 1, 1, 1, 1, 1, 1, 1): A_chi_i = 1/4, A_chi_j = 1/4, A_chi_k = 1/4, A_H = 7/8, A_Reg = 5/8; ε=(1, 1, -1, -1, 1, 1, -1, -1): A_chi_i = 3/4, A_chi_j = 0, A_chi_k = 0, A_H = 7/8, A_Reg = 5/8; ε=(1, -1, 1, -1, 1, -1, 1, -1): A_chi_i = 0, A_chi_j = 3/4, A_chi_k = 0, A_H = 7/8, A_Reg = 5/8; ε=(1, -1, -1, 1, 1, -1, -1, 1): A_chi_i = 0, A_chi_j = 0, A_chi_k = 3/4, A_H = 7/8, A_Reg = 5/8
+2 3k·A_Reg vanishes on all these space forms exactly for k ∈ [8, 16, 24, 32, 40, 48] (1 ≤ k ≤ 48): i.e. 8 | k
+2   restriction to the cyclic subgroup of RP³ = S³/<−1>: vanishes exactly for k ∈ [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] (= multiples of 2; GJF Thm 5.6: m | k with m = 2)
+2   restriction to the cyclic subgroup of S³/<i>: vanishes exactly for k ∈ [4, 8, 12, 16, 20, 24] (= multiples of 4; GJF Thm 5.6: m | k with m = 4)
