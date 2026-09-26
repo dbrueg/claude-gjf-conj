@@ -6,33 +6,18 @@ Read `notes/ternary-code-index.md` first: §0 for the results, then §5.1 for th
 
 Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code of index exactly ±24 at every length 12k. The divisibility half (24 | Index) is already proved (notes §1–2).
 
-## Where things stand (end of 2026-09-26 session)
+## Where things stand (2026-09-26, later session)
 
-**Proved**, all in §5.1:
-- **Theorem 5.7.** Index-24 codes exist at every length 12·2^j. The chain is E₀ = Golay with a partition σ₀ satisfying h ∈ {0, 6}, then E_{j+1} = H(E_j ⊕ σ_jT), where σ_{j+1} refines σ_j.
-- **Lemma 5.6** (refinement invariance) is the engine of Theorem 5.7.
-- **Theorem 5.4.** Doubling preserves Index mod 48.
-- **Proposition 5.5.** The numbers of even and of odd maximal codewords are each ≡ 0 mod 8.
-- **Lemmas 5.2 and 5.3.** Obstructions (72 | Index; 24·gcd | Index) that rule out many naive constructions.
+**Both halves of Conj 1.4 are now proved here** (pending literature check and independent reading).
+- **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
+- Verified by `ternary60/theory/existence_quadruple.py`: exact at n = 24, and Rust |Index| = 24 on explicit chains at n = 36, 48, 60, 72, 84.
+- Earlier results in §5.1 still stand: Thm 5.4 (mod 48), Prop 5.5, Lemma 5.6, Thm 5.7 (the s = 0 case of Lemma 5.8), Lemmas 5.2–5.3. The seed search (`existence_seed_search.py`) is no longer needed.
 
-**Covered lengths.** k ∈ {2^j} ∪ {3, 5}. **First open case: k = 6** (n = 72), then k = 7, 9, 10, 11, 12, ….
+## Next steps
 
-**Reduction.** For each odd k₀ ≥ 3 we need:
-1. an index-24 code at length 12k₀, and
-2. a *seed* (E, σ) at length 12k₀ with S_σ(E) = ±24.
-A seed gives all lengths 12k₀·2^j with j ≥ 1. E must have Index ≡ 24 mod 48 (Theorem 5.4).
-
-## Next steps, most promising first
-
-1. **Seed at length 36.** This would give k = 6, 12, 24, …. Run `ternary60/theory/existence_seed_search.py`.
-   - About 10 s per σ, estimated hit rate about 0.5%. Found seeds are appended to `ternary60/runs/seeds.txt`.
-   - 160 random σ have been tried with no hit (all S ≡ 24 mod 48; standard deviation about 7,800; smallest |S| = 120).
-   - Consider a local search over σ that swaps coordinates between blocks, instead of pure random sampling.
-   - A hit is itself the Rust index of the n = 72 doubled code. All longer lengths 72·2^j then follow from Lemma 5.6, with no further computation (Rust cannot reach n ≥ 96 anyway).
-2. **Seed at length 60.** This needs S_σ(E) for |E| = 60 without enumerating the n = 120 doubled code, e.g. a DP/meet-in-the-middle over blocks using Λ = ∏ λ(|c ∩ b|). Only words meeting every block in 1 or 4 points count.
-3. **Direct index-24 codes at 12·(odd) for k₀ ≥ 7** (n = 84 is feasible in Rust at about 10 min per code). Alternatively, look for an operation that preserves S_σ and changes the length by an odd factor or by +12. §5.1(f″) records why Hadamard-type moves only double.
-4. **Prove the [C] in §5.1(d):** 72 | Index(C_W) whenever dim W < the number of components.
-5. **Literature check** before any claim: are Prop 5.5, Lemma 5.6 or Thm 5.7 known? Also consider contacting Johnson-Freyd (notes §5 item 4).
+1. **Literature check** of Lemma 5.6/5.8, Thm 5.7/5.9 and Prop 5.5. Then consider contacting Johnson-Freyd (notes §5 item 4).
+2. An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36 (ℤ[ω] sums or a sign-aware Rust count).
+3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
 
 ## Conventions
 

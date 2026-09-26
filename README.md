@@ -11,12 +11,10 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 | part | status | where |
 |---|---|---|
 | 24 \| Index for all codes (divisibility half) | **proved**, two proofs. Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
-| index-24 code at every length 12k (existence half) | **proved for k = 2^j** by explicit Hadamard doubling from the Golay code (Thm 5.7). Known for k ≤ 5 (GJF Ex 5.7). **Open** otherwise; the first open case is k = 6. | notes §5.1(f″) |
-| by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). | notes §5.1 |
+| index-24 code at every length 12k (existence half) | **proved for all k** by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Awaiting literature check and independent reading. | notes §5.1(f‴) |
+| by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
-**Reduction of the open cases.** For each odd k₀ ≥ 3 two things are needed:
-1. An index-24 code at length 12k₀ (known for k₀ = 3, 5).
-2. A *seed*: a length-12k₀ code E and a 4-block partition σ with S_σ(E) = Index(H(E ⊕ σT)) = ±24. A seed gives every length 12k₀·2^j with j ≥ 1.
+**How the existence proof works.** For a code E and a set σ of b disjoint 4-blocks, R_σ(E) weights each codeword by φ on the coordinates outside the blocks and by λ = (0, −2, 0, 0, 1)(|c ∩ β|) on each block. Hadamard-doubling the blocks twice against tetracodes gives a self-dual code of length m + 12b and index R_σ(E), and it carries a new 2-block system with the same R. Starting from Golay with b = 1 or b = 2 gives every length 12k.
 
 ## Layout
 
@@ -26,7 +24,8 @@ notes/tmf-context.md          TMF background
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
-  codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60
+  codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60,
+                              quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
@@ -41,7 +40,7 @@ cd ternary60 && cargo build --release && ./target/release/ternary60 selftest
 cd theory
 python3 existence_refinement.py      # Lemma 5.6 + Theorem 5.7 checks (~minutes)
 python3 existence_mod48.py           # Thm 5.4 + Prop 5.5 checks (~15 min)
-python3 existence_seed_search.py --code ../codes/P17.txt --tries 300 --seed 1   # next open step
+python3 existence_quadruple.py       # Lemma 5.8 + Theorem 5.9: index 24 at every length (≈ 30 min; --no84 skips n = 84)
 ```
 
 Python scripts are stdlib only; numpy was not available on the original machine. Check scripts write `<script>.log` beside themselves.
