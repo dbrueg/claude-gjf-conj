@@ -1,0 +1,325 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{mainq}{Main Question}
+\newtheorem*{thmA}{Theorem A}
+\newtheorem*{thmB}{Theorem B}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\F}{\mathbb{F}_3}
+\newcommand{\Fn}{\mathbb{F}_9}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\Index}{\operatorname{Index}}
+\newcommand{\Aut}{\operatorname{Aut}}
+
+\title{Ternary codes with symmetry and holomorphic SCFTs of minimal index}
+\author{[Draft --- authors to be added]}
+\date{Draft, 26 September 2026}
+
+\begin{document}
+\begin{abstract}
+Gaiotto and Johnson-Freyd asked whether for every $k$ there is a holomorphic $\mathcal N=1$
+vertex operator superalgebra of central charge $12k$ whose supersymmetric index is
+$24/\gcd(k,24)$, the smallest value allowed by topological modular forms. They answered this for
+$k\le5$ by orbifolding the SVOA of a self-dual ternary code of index $24$ by a code automorphism
+of order $\gcd(k,24)$ with prescribed properties, the codes being found by computer search.
+We make the partial-quadrupling construction of index-$24$ codes equivariant: it commutes with
+code automorphisms that permute its blocks, and the twined index of an order-$3$ automorphism is
+carried along as a block-weighted index of a collapsed fixed code. Starting from the Golay code
+and from one computer-found code of length $36$ with a symmetry of order $12$, we obtain for
+every $k$ not divisible by $8$ an explicit code and automorphism satisfying their hypotheses.
+This answers the question for all $k\not\equiv0\pmod 8$. Conversely, we show that a self-dual
+ternary code with an automorphism $g$ satisfying $g^4=-1$ has index divisible by $48$, so the
+same cyclic-orbifold method cannot reach $k\equiv0\pmod8$.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+A self-dual ternary code $C\subseteq\F^n$ determines a holomorphic $\mathcal N=1$ SVOA
+$V_{\Lambda(C)}$ of central charge $n$ \cite{GJF}. Its supersymmetric (Ramond--Ramond) index is
+\[
+\Index(C)=\#\{\text{even maximal codewords}\}-\#\{\text{odd maximal codewords}\},
+\]
+where a codeword is maximal if it has no zero entry and its parity is that of the number of entries
+equal to $1$. The index is defined up to sign (negating a coordinate negates it), and is $0$
+unless $12\mid n$. Put $\varphi(0)=0$, $\varphi(1)=-1$, $\varphi(2)=1$ and
+$f(x)=\prod_i\varphi(x_i)$, so that $\Index(C)=\sum_{c\in C}f(c)$; for any subset
+$X\subseteq\F^n$ write $F(X)=\sum_{x\in X}f(x)$.
+
+By the Stolz--Teichner programme and the computation of the image of $\pi_{24k}\mathrm{TMF}\to
+\mathrm{MF}_{12k}$ \cite{Hopkins}, the index of a holomorphic $\mathcal N=1$ SCFT of central charge
+$12k$ should be divisible by $24/\gcd(k,24)$. Gaiotto and Johnson-Freyd ask for the converse:
+
+\begin{mainq}[{\cite{GJF}}]
+For each $k$, does there exist a holomorphic $\mathcal N=1$ VOA with central charge $12k$ and
+supersymmetric index $24/\gcd(k,24)$?
+\end{mainq}
+
+Their tool is the following theorem. The automorphism group $\Aut(C)$ is taken inside the group
+$2^n{:}S_n$ of signed coordinate permutations; it always contains $-1$.
+
+\begin{theorem}[{\cite[Thm.~5.6]{GJF}}]\label{thm:gjf}
+Let $C$ be self-dual of length $12k$ with $\Index(C)=24$, put $m=\gcd(24,k)$, and let
+$g\in\Aut(C)$ have order $m$. Suppose that (1) if $m$ is even then $g^{m/2}=-1$; and (2) if
+$3\mid m$ then $g^{m/3}$ fixes as many even as odd maximal codewords and permutes the coordinates
+in $3$-cycles only. Then $g$ lifts to a non-anomalous automorphism of $V_{\Lambda(C)}$ and the
+orbifold $V_{\Lambda(C)}/\!\!/\langle g\rangle$ has index $24/m$.
+\end{theorem}
+
+Negating one coordinate of $C$ and conjugating $g$ by that sign change preserves the hypotheses
+on $g$ (the parity of every maximal codeword flips at once) and negates the index, so
+$\Index(C)=\pm24$ suffices. With codes found by computer search, this answers the Main Question for $k\le5$
+\cite[Ex.~5.7]{GJF}. In \cite{BR} we constructed self-dual codes of index $24$ in every length
+$12k$ by a \emph{partial quadrupling} $Q_\sigma$ (recalled in \S\ref{sec:Q}). Here we show how to
+build the required automorphism into that construction.
+
+\begin{thmA}
+For every $k\ge1$ with $8\nmid k$ there is an explicit self-dual ternary code $C$ of length $12k$
+with $\Index(C)=\pm24$ and an automorphism $g$ satisfying the hypotheses of
+Theorem~\ref{thm:gjf}. Hence the Main Question has a positive answer for all $k\not\equiv0\pmod8$.
+\end{thmA}
+
+The residue classes $\gcd(k,24)\in\{1,2\}$ need nothing new (\S\ref{sec:small}); $\gcd(k,24)=4$
+uses an automorphism $J$ of the Golay code with $J^2=-1$ (\S\ref{sec:J}); $\gcd(k,24)\in\{3,6,12\}$
+uses one code of length $36$ with an automorphism of order $12$, found by the method of
+\cite{GJF} (\S\ref{sec:z12}). The remaining classes $k\equiv0,8,16\pmod{24}$ are out of reach of
+Theorem~\ref{thm:gjf}:
+
+\begin{thmB}
+Let $C$ be a self-dual ternary code of length $12k$ with an automorphism $g$ such that
+$g^4=-1$. Then $48\mid\Index(C)$, and $\Index(C)=0$ if $k$ is odd. In particular, when $8\mid k$
+no code of index $24$ admits an automorphism as in Theorem~\ref{thm:gjf}.
+\end{thmB}
+
+Indeed for $m\in\{8,24\}$ condition (1) asks for $g^{m/2}=-1$, and then $h=g^{m/8}$ satisfies
+$h^4=-1$. We comment on non-cyclic groups in Remark~\ref{rem:q8}.
+
+\section{Partial quadrupling}\label{sec:Q}
+
+Let $T\subseteq\F^4$ be the tetracode and $\lambda(0,1,2,3,4)=(0,-2,0,0,1)$. A \emph{block
+system} $\sigma$ on a coordinate set $X$ is a set of disjoint $4$-subsets (blocks), each split
+into two pairs; the other coordinates are singletons. For a code $E\subseteq\F^X$ put
+$R_\sigma(E)=\sum_{e\in E}\prod_{i\ \mathrm{singleton}}\varphi(e_i)\prod_{\beta\in\sigma}
+\lambda(\wt(e|_\beta))$. For $E$ self-dual of length $m$ and $|\sigma|=b$, the code
+$Q_\sigma(E)\subseteq\F^{m+12b}$ is defined in \cite[Def.~6]{BR}: a block $\beta=\{p,q\}\sqcup\{r,s\}$
+receives new coordinates $\beta^*$ carrying a copy of $T$, each pair $(i,i^*)$ is glued by
+$h(x,y)=(x+y,x-y)$, the \emph{step-one blocks} $\{p,p^*,q,q^*\}$ and $\{r,r^*,s,s^*\}$ receive new
+coordinates ${}^{**}$ carrying copies of $T$, and each pair $(y,y^{**})$ is glued by $h$ again.
+$Q_\sigma(E)$ is self-dual, and for every set $\mathcal B$ of step-one blocks, each split into two
+pairs $\{y_1,y_2\}\sqcup\{y_3,y_4\}$ and refined into $\{y_1,y_1^{**},y_2,y_2^{**}\}$ and
+$\{y_3,y_3^{**},y_4,y_4^{**}\}$, the resulting block system $\sigma''$ satisfies
+\begin{equation}\label{eq:main}
+\Index(Q_\sigma(E))=R_\sigma(E),\qquad R_{\sigma''}(Q_\sigma(E))=R_\sigma(E)
+\end{equation}
+\cite[Lemma~8]{BR}. The proof of \eqref{eq:main} sums over the tetracode variables block by
+block, so both identities hold with $\Index$ replaced by $F$ for \emph{any} linear code $E$,
+self-dual or not.
+
+\section{Equivariance}\label{sec:eq}
+
+\begin{lemma}\label{lem:eq}
+Let $G\subseteq\Aut(E)$ be a finite group that permutes the blocks of $\sigma$ and maps split
+pairs to split pairs. Extend each $g\in G$ to the new coordinates by letting $i^*$ follow $i$ with
+the same sign: if $g(e_i)=\pm e_{j}$ then $g(e_{i^*})=\pm e_{j^*}$, and likewise for ${}^{**}$.
+Choose the tetracodes $G$-equivariantly: on one block of each $G$-orbit a copy of $T$ invariant
+under the stabiliser, and its transports elsewhere. Then $G\subseteq\Aut(Q_\sigma(E))$; the
+extension preserves orders, relations $g^j=-1$, and cycle lengths; and if $\mathcal B$ and its
+splits are $G$-stable, then $\sigma''$ is $G$-stable.
+\end{lemma}
+
+\begin{proof}
+On a glued pair $(i,i^*)$ the extended $g$ acts by a common sign, which commutes with $h$. So the
+two gluing maps commute with $G$, and $Q_\sigma(E)$ is the image of the $G$-invariant code
+$E\oplus T^b\oplus T^{2b}$. The remaining statements follow from the definition of the extension.
+\end{proof}
+
+A stabiliser-invariant copy of $T$ exists in the cases we need. If $J$ swaps $p\leftrightarrow q$
+and $r\leftrightarrow s$ with $J^2=-1$, say $J(e_0)=e_1$, $J(e_1)=-e_0$, $J(e_2)=e_3$,
+$J(e_3)=-e_2$, then the tetracode spanned by $(1,1,1,0)$ and $(0,1,2,2)$ is $J$-invariant. An element
+of order $3$ without fixed coordinates stabilises no block, since $3\nmid4$. In particular, in
+the presence of such an element all block orbits have size divisible by $3$, so $b\equiv0\pmod3$
+and $k\bmod 3$ is unchanged along the construction.
+
+\begin{lemma}\label{lem:fix}
+Let $h\in G$ have order $3$ and no fixed coordinate, and let $T_h(C)=\sum_{x\in C,\ hx=x}f(x)$.
+Collapsing $h$-fixed vectors to one coordinate per $h$-orbit, let $D$ be the collapsed fixed code of
+$E$ and $\bar\sigma$ the collapsed block system (one block per $h$-orbit of blocks). Then
+\[
+T_h(Q_\sigma(E))=R_{\bar\sigma}(D),\qquad
+T_h(Q_{\sigma''}(Q_\sigma(E)))=R_{\bar\sigma}(D)\quad\text{for $G$-stable $\sigma''$.}
+\]
+\end{lemma}
+
+\begin{proof}
+After a diagonal sign change, which multiplies $\Index$ and $T_h$ by the same sign, $h$ permutes
+coordinates. An $h$-fixed vector is constant on $h$-orbits, and $\varphi^3=\varphi$, so collapsing
+preserves $f$. Since $Q_\sigma(E)$ is the $G$-equivariant image of $E\oplus T^b\oplus T^{2b}$, its
+fixed vectors are the images of fixed vectors; the fixed vectors of an $h$-transported triple of
+tetracodes form one tetracode after collapsing, and the gluing maps commute with collapsing. Hence
+the collapsed fixed code of $Q_\sigma(E)$ is $Q_{\bar\sigma}(D)$, and \eqref{eq:main} for the
+(possibly non-self-dual) code $D$ gives both identities.
+\end{proof}
+
+\section{Proof of Theorem A}
+
+\subsection{\texorpdfstring{$\gcd(k,24)\in\{1,2\}$}{gcd(k,24) in \{1,2\}}}\label{sec:small}
+Take any code of length $12k$ and index $\pm24$ from \cite{BR}. For $m=1$ take $g=1$; for $m=2$
+take $g=-1$, which fixes no maximal codeword.
+
+\subsection{\texorpdfstring{$\gcd(k,24)=4$}{gcd(k,24)=4}}\label{sec:J}
+Label the Golay code $G_{12}$ as in \cite{BR}. The signed permutation
+\[
+J=(0\ 1)(2\ 3)(4\ 5)(6\ 7)(8\ 9)(10\ 11),\qquad
+\text{signs }(-,+,-,+,+,-,-,+,+,-,-,+),
+\]
+meaning $J(e_i)=s_ie_{J(i)}$, lies in $\Aut(G_{12})$ and satisfies $J^2=-1$ (it is one of $792$
+such elements of $\Aut(G_{12})\cong2.M_{12}$). The block $\beta=\{0,1\}\sqcup\{2,3\}$ is
+$J$-stable with $J$-stable pairs, and $R_\beta(G_{12})=24$. Apply Lemma~\ref{lem:eq} with
+$G=\langle J\rangle$. The two step-one blocks are $J$-stable; refine one of them, split into two
+$J$-stable pairs $\{p,J p\}\sqcup\{p^*,(Jp)^*\}$. The result is a system of two $J$-stable blocks
+with $J$-stable pairs, and the construction iterates, adding $24$ coordinates per step. By
+\eqref{eq:main} and Lemma~\ref{lem:eq} we get, for every even $k$, a self-dual code of length
+$12k$ with $\Index=\pm24$ and $J\in\Aut$ with $J^2=-1$. For $\gcd(k,24)=4$, $J$ has order
+$4=m$ and $J^{m/2}=-1$, so Theorem~\ref{thm:gjf} applies.
+
+\subsection{\texorpdfstring{$\gcd(k,24)\in\{3,6,12\}$}{gcd(k,24) in \{3,6,12\}}}\label{sec:z12}
+On $36$ coordinates let $g$ be the product of the six signed $6$-cycles
+$e_{6j+i}\mapsto e_{6j+i+1}$ ($0\le i<5$), $e_{6j+5}\mapsto-e_{6j}$. Then $g$ has order $12$,
+$g^6=-1$, $J=g^3$ pairs the coordinates within each $6$-cycle, and $h=g^4$ has order $3$ with
+cycle shape $3^{12}$. Following the search method of \cite{GJF} (random $g$-invariant self-dual
+codes, keeping those with index $\pm24$ and $T_h=0$), we found the code $E_{36}$ of
+Appendix~\ref{app:seed}, with $\Index(E_{36})=24$ and $T_h(E_{36})=0$; its collapsed fixed code
+$D$ has length $12$ and dimension $6$.
+
+A $g$-stable block is a union of two $J$-pairs from different $6$-cycles; its $h$-orbit is a
+$g$-stable system of three blocks. For the systems
+\[
+\sigma_3=\{(24,27|30,33),(28,25|34,31),(26,29|32,35)\}
+\]
+(a block $(a,b|c,d)$ is split as $\{a,b\}\sqcup\{c,d\}$) and
+\begin{align*}
+\sigma_6&=\sigma_3'\cup\{(12,15|25,28),(16,13|29,26),(14,17|27,24)\},\\
+\sigma_3'&=\{(0,3|7,10),(4,1|11,8),(2,5|9,6)\},
+\end{align*}
+direct enumeration gives $R_{\sigma_3}(E_{36})=R_{\sigma_6}(E_{36})=-24$ and
+$R_{\bar\sigma_3}(D)=R_{\bar\sigma_6}(D)=0$. Apply Lemma~\ref{lem:eq} with $G=\langle g\rangle$,
+refining at each step one $h$-orbit of $J$-stable step-one blocks with $J$-stable splits; this
+yields a $g$-stable system of six blocks and adds $72$ coordinates. Starting from $\sigma_3$ we
+reach every $k\equiv0\pmod6$, from $\sigma_6$ every odd multiple of $3$ other than $3$, and $k=3$ is
+$E_{36}$ itself. By \eqref{eq:main} and Lemmas~\ref{lem:eq} and~\ref{lem:fix}, every code in these
+chains has $\Index=\pm24$, contains $g$ with $g^6=-1$ and all cycles of length $6$, and has
+$T_h=0$. Theorem~\ref{thm:gjf} then applies with $h$ for $m=3$, with $g^2$ for $m=6$
+($(g^2)^3=-1$, $(g^2)^2=h$), and with $g$ for $m=12$. \qed
+
+\section{Proof of Theorem B}
+
+The condition $g^4=-1$ forces every coordinate cycle of $g$ to have length $4$ and an odd number
+of sign changes. For a maximal $x$ we get $f(gx)=(-1)^{\#\mathrm{cycles}}f(x)=(-1)^{3k}f(x)$, so
+for odd $k$ the index vanishes. Let $k$ be even. Then $f\circ g=f$, and $\langle g\rangle$ acts freely on
+nonzero vectors, since every nontrivial subgroup of $\langle g\rangle\cong\mathbb Z/8$ contains
+$g^4=-1$. Hence $F(X)\in8\mathbb Z$ for every $g$-invariant
+$X\subseteq\F^{12k}\setminus\{0\}$.
+
+\emph{Structure.} Over $\F$, $x^4+1=(x^2+x+2)(x^2+2x+2)$. On each $4$-cycle the space $\F^4$
+splits as $V_+\oplus V_-$, the kernels of the two factors evaluated at $g$. Each is Lagrangian,
+and they are dual to each other. Hence $g$-invariant self-dual codes are exactly the codes
+$C=C_+\oplus C_-$ with $C_+\subseteq V_+^{3k}\cong\Fn^{3k}$ an arbitrary $\Fn$-subspace and $C_-$ its
+annihilator in $V_-^{3k}$.
+
+\emph{A four-code identity.} $J$ makes $C$ an $\Fn$-space ($J=$ multiplication by
+$\sqrt{-1}$), and the ternary form is the real part of a Hermitian form. Let $D\subseteq C$ be
+$J$-invariant of codimension $2$. Then $D^\perp/D$ is a Hermitian hyperbolic plane over $\Fn$. Its
+$32$ nonzero isotropic vectors form exactly four isotropic $\Fn$-lines, so exactly four
+$J$-invariant self-dual codes $C_1,\dots,C_4$ contain $D$. Every maximal vector is isotropic, and
+Poisson summation with $\hat f=3^{n/2}f$ gives $F(D^\perp)=9F(D)$. Hence
+\begin{equation}\label{eq:four}
+\Index(C_1)+\Index(C_2)+\Index(C_3)+\Index(C_4)=12\,F(D).
+\end{equation}
+
+\emph{Induction.} Let $D_+\subset C_+$ be an $\Fn$-hyperplane and $D=D_+\oplus C_-$. Then
+$D^\perp/D=L_+\oplus L_-$ is the sum of the two $g$-eigenlines, so $C_1=C$ and
+$C_2=D_+\oplus D_+^{\circ}$ are the $g$-invariant codes through $D$ ($D_+^\circ$ the annihilator of
+$D_+$ in $V_-^{3k}$), while $g$, which acts on $L_\pm$ by the
+two square roots $\pm\lambda\in\Fn$ of $J=\sqrt{-1}$, maps the isotropic line $\Fn(u+u')$
+($u\in L_+$, $u'\in L_-$) to the isotropic line $\Fn(u-u')$ and so swaps $C_3$ and $C_4$. As $g$
+preserves $f$, $\Index(C_3)=\Index(C_4)\in24\mathbb Z$ \cite{GJF,BR}; and $F(D)\in8\mathbb Z$.
+Now \eqref{eq:four} gives $\Index(C)+\Index(C_2)\equiv0\pmod{48}$. Removing one dimension of $C_+$
+at a time reaches $C_+=0$, i.e.\ $C=V_-^{3k}$, a direct sum of tetracodes with index $0$. Hence
+$48\mid\Index(C)$. \qed
+
+\begin{remark}\label{rem:q8}
+Theorem B concerns cyclic groups. The quaternion group $Q_8=\langle J,K\rangle$ with
+$J^2=K^2=-1$, $JK=-KJ$ has no element of order $8$, and random $Q_8$-invariant self-dual codes do
+reach index $\pm24$ (e.g.\ $27$ of $100$ at length $24$). Lemma~\ref{lem:eq} applies to $Q_8$ as
+well: from such a code of length $24$ with a $Q_8$-stable two-block system of value $R=24$ we
+obtain $Q_8$-invariant codes of index $\pm24$ at every $k\equiv0\pmod4$ (checked explicitly up
+to length $96$). In $Q_8$ every commuting pair generates a
+cyclic group, and every nontrivial one contains $-1$, which fixes no maximal codeword. So the
+twisted-sector argument of \cite{GJF} gives index $24/8=3$ for $V_{\Lambda(C)}/\!\!/Q_8$,
+\emph{provided the $Q_8$-action is non-anomalous}. Its restrictions to the cyclic subgroups are
+non-anomalous when $4\mid k$, but these restrictions need not detect the full anomaly. Deciding
+this would settle $k\equiv8,16\pmod{24}$; similarly $Q_8\times\mathbb Z/3$ for $k\equiv0\pmod{24}$.
+\end{remark}
+
+\begin{remark}[Verification]
+All statements were checked by computer. The chains of \S\ref{sec:J} and \S\ref{sec:z12} were built
+explicitly up to lengths $144$ and $108$: invariance, $g^6=-1$ (resp.\ $J^2=-1$), cycle shapes and
+self-duality at every step; $|\Index|=24$ at lengths $48$ and $72$; and $T_h=0$ by enumerating the
+fixed codes at lengths $72$, $108$ and $144$. Identity \eqref{eq:four} was checked sign-exactly on random configurations at length $24$, the
+induction step at lengths $24$ and $48$, and $48\mid\Index$ on random codes with $g^4=-1$ at lengths
+$24$ to $72$.
+Automorphism groups were computed with nauty/Traces \cite{nauty}: the index-$24$ codes of \cite{BR}
+of lengths $36$ and $72$ have automorphism groups of $2$-power order, so they do not satisfy
+condition (2); the one of length $48$ does satisfy Theorem~\ref{thm:gjf} with an element $J$,
+$J^2=-1$. Code and data are available at [repository].
+\end{remark}
+
+\appendix
+\section{\texorpdfstring{The seed code $E_{36}$}{The seed code E36}}\label{app:seed}
+Generator matrix of $E_{36}$ (coordinates $0,\dots,35$, entries in $\{0,1,2\}$):
+{\footnotesize
+\begin{verbatim}
+100000000000000000101201221101112102
+010000000000000000210120222110111210
+001000000000000000021012022211011121
+000100000000000000102101202221201112
+000010000000000000210210220222120111
+000001000000000000021021122022212011
+000000100000000000101222200220000211
+000000010000000000110122020022200021
+000000001000000000111012102002220002
+000000000100000000111101110200122000
+000000000010000000211110011020012200
+000000000001000000021111001102001220
+000000000000100000112012221112122212
+000000000000010000111201122111112221
+000000000000001000211120212211211222
+000000000000000100021112221221121122
+000000000000000010102111222122112112
+000000000000000001210211122212111211
+\end{verbatim}
+}
+
+\begin{thebibliography}{9}
+\bibitem{BR}
+[Authors], \emph{Self-dual ternary codes of index 24 in every length $12k$}, draft (2026);
+\texttt{paper/index24.tex} in [repository].
+\bibitem{GJF}
+D.~Gaiotto and T.~Johnson-Freyd, \emph{Holomorphic SCFTs with small index},
+Canad.\ J.\ Math.\ \textbf{74} (2022), 573--601; arXiv:1811.00589.
+\bibitem{Hopkins}
+M.~J.~Hopkins, \emph{Algebraic topology and modular forms}, Proc.\ ICM Beijing 2002, Vol.~I, 291--317.
+\bibitem{nauty}
+B.~D.~McKay and A.~Piperno, \emph{Practical graph isomorphism, II},
+J.\ Symbolic Comput.\ \textbf{60} (2014), 94--112.
+\end{thebibliography}
+\end{document}

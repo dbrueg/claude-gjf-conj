@@ -1,0 +1,13 @@
+Golay (n = 12, k = 1): weight ≤ 6 words span; |Aut| = 190080 (closure 190080); Thm 5.6 element types {'g12': 15840, 'g6': 2640, 'h': 2640, 'J': 792}  [7s]
+quad_index24_len24 (n = 24, k = 2): weight ≤ 9 words span; |Aut| = 3072 (closure 3072); Thm 5.6 element types {'g12': 512, 'J': 256, 'g6': 128, 'h': 128}  [0s]
+quad_index24_len36 (n = 36, k = 3): weight ≤ 12 words span; |Aut| = 256 (closure 256); Thm 5.6 element types {}  [1s]
+quad_index24_len48 (n = 48, k = 4): weight ≤ 12 words span; |Aut| = 196608 (closure 196608); Thm 5.6 element types {'g12': 16384, 'J': 2816, 'g6': 2048, 'h': 2048}  [501s]
+quad_index24_len60 (n = 60, k = 5): weight ≤ 12 words span; |Aut| = 8192 (closure 8192); Thm 5.6 element types {}  [3s]
+quad_index24_len72 (n = 72, k = 6): words of weight ≤ 12 have rank 34 of 36; |Aut(W₁₂)| = 33554432, a power of 2: True  ⇒ Aut(C) ⊂ Aut(W₁₂) is a 2-group, no element of order 3
+gjf_ex57_len24 (n = 24, k = 2): weight ≤ 6 words span; |Aut| = 384 (closure 384); Thm 5.6 element types {'J': 48, 'h': 32, 'g6': 32}  [0s]
+gjf_ex57_len36 (n = 36, k = 3): weight ≤ 9 words span; |Aut| = 6 (closure 6); Thm 5.6 element types {'h': 2, 'g6': 2}  [0s]
+gjf_ex57_len48 (n = 48, k = 4): weight ≤ 12 words span; |Aut| = 4 (closure 4); Thm 5.6 element types {'J': 2}  [0s]
+gjf_ex57_len60 (n = 60, k = 5): weight ≤ 12 words span; |Aut| = 2 (closure 2); Thm 5.6 element types {}  [1s]
+jchain_len24 (n = 24, k = 2): weight ≤ 9 words span; |Aut| = 3072 (closure 3072); Thm 5.6 element types {'g6': 128, 'h': 128, 'g12': 512, 'J': 256}  [1s]
+jchain_len48 (n = 48, k = 4): weight ≤ 12 words span; |Aut| = 49152 (closure 49152); Thm 5.6 element types {'g12': 8192, 'J': 2560, 'g6': 512, 'h': 512}  [124s]
+z12seed_len36_3 (n = 36, k = 3): weight ≤ 9 words span; |Aut| = 12 (closure 12); Thm 5.6 element types {'g6': 2, 'g12': 4, 'J': 2, 'h': 2}  [0s]

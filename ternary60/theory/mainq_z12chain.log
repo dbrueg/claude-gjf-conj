@@ -1,0 +1,12 @@
+== chain A: σ = [(24, 27, 30, 33), (28, 25, 34, 31), (26, 29, 32, 35)] (b = 3)
+1 seed z12seed_len36_3.txt: g ∈ Aut True, ord g = 12, g⁶ = −1 True; Index = 24 (sign-exact); T_h = 0
+1 σ = [(24, 27, 30, 33), (28, 25, 34, 31), (26, 29, 32, 35)]: R_σ(E) = -24; collapsed D: length 12, dim 6, σ̄ = [(8, 9, 10, 11)], R_σ̄(D) = 0
+2 n = 72 (k = 6): self-dual True, g ∈ Aut True, ord g = 12, g⁶ = −1 True, cycle shape [6]; |Index| = 24 (Rust); T_h = 0 (fixed code enumerated); next b = 6
+3   m = 6: element g^2 of order 6; condition 1 True; cycle-shape part of condition 2 True
+2 n = 144 (k = 12): self-dual True, g ∈ Aut True, ord g = 12, g⁶ = −1 True, cycle shape [6]; Index = R_σ(seed) by Lemma 5.8 of [I] (not computed); T_h = 0 (fixed code enumerated); next b = 6
+3   m = 12: element g^1 of order 12; condition 1 True; cycle-shape part of condition 2 True
+== chain B: σ = [(0, 3, 7, 10), (4, 1, 11, 8), (2, 5, 9, 6), (12, 15, 25, 28), (16, 13, 29, 26), (14, 17, 27, 24)] (b = 6)
+1 seed z12seed_len36_3.txt: g ∈ Aut True, ord g = 12, g⁶ = −1 True; Index = 24 (sign-exact); T_h = 0
+1 σ = [(0, 3, 7, 10), (4, 1, 11, 8), (2, 5, 9, 6), (12, 15, 25, 28), (16, 13, 29, 26), (14, 17, 27, 24)]: R_σ(E) = -24; collapsed D: length 12, dim 6, σ̄ = [(0, 1, 2, 3), (4, 5, 8, 9)], R_σ̄(D) = 0
+2 n = 108 (k = 9): self-dual True, g ∈ Aut True, ord g = 12, g⁶ = −1 True, cycle shape [6]; Index = R_σ(seed) by Lemma 5.8 of [I] (not computed); T_h = 0 (fixed code enumerated); next b = 6
+3   m = 3: element g^4 of order 3; condition 1 True; cycle-shape part of condition 2 True

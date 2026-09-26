@@ -15,11 +15,18 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 - **Divisibility half now has a finite, elementary proof** (notes §2 Step 1′, `design_poisson.py`): Poisson on F₃ⁿ for g_ij gives G_ij(C) = −G_ij(C)/3, hence the signed 2-design (◆) and 24 | Index with no modular forms.
 - Earlier results in §5.1 still stand: Thm 5.4 (mod 48), Prop 5.5, Lemma 5.6, Thm 5.7 (the s = 0 case of Lemma 5.8), Lemmas 5.2–5.3. The seed search (`existence_seed_search.py`) is no longer needed.
 
+**GJF's Main Question** (index 24/gcd(k,24) at c = 12k; notes `notes/main-question.md`, paper draft `paper/main-question.tex`), 2026-09-26, later session:
+- Answered for every k with 8 ∤ k, via GJF Thm 5.6 with the automorphism built into an *equivariant* partial quadrupling (Lemma 4.1): a J-chain from Golay (J² = −1) for gcd = 4, and ℤ/12-chains from a searched length-36 seed for gcd ∈ {3, 6, 12}. The twined count of the order-3 part propagates as R_σ̄ of the collapsed fixed code (Lemma 4.3). gcd ∈ {1, 2} is immediate.
+- Obstruction (Thm 5.1): g⁴ = −1 in Aut(C) ⇒ 48 | Index, via a Hermitian four-code identity (◇). So Thm 5.6 never applies when 8 | k. Q₈ escapes this: Q₈-equivariant chains give Q₈-invariant index-24 codes at every k ≡ 0 mod 4, and the orbifold would have index 3 if the Q₈ action is non-anomalous (the open point).
+- The Thm 5.9 chain codes themselves: n = 48 has the needed J; n = 36, 72 have 2-group automorphism groups (no order-3 symmetry).
+- `mainq_automorphisms.py` needs nauty's `dreadnaut` (`scripts/build_nauty.sh`); everything else is stdlib Python + the Rust binary (new subcommands `words`, `rsigma`).
+
 ## Next steps
 
 1. **Citation search** for GJF (Google Scholar "Cited by" / INSPIRE, by hand in a browser: Scholar shows a CAPTCHA to the cloud session, and INSPIRE/Semantic Scholar are blocked). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
 2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review is in `paper/review-2026-09-26.md`, and its wording edits are applied (author and repository placeholders remain). Still wanted: a reading by a second person.
 3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
+4. Main Question for k ≡ 0 mod 8: compute the 't Hooft anomaly of the Q₈ (resp. Q₈ × ℤ/3) action on V_{Λ(C)} (notes/main-question.md §5). Q₈-invariant index-24 codes already exist at every k ≡ 0 mod 4 (`mainq_q8chain.py`); for k ≡ 0 mod 24 a Q₈ × ℤ/3 seed with T_h = 0 would still have to be found. Also: an independent reading of GJF's anomaly analysis for Thm 5.6, which the Main-Question results rely on.
 
 ## Conventions
 

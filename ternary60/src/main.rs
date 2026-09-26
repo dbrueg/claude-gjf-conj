@@ -1245,12 +1245,155 @@ fn selftest() {
     println!("[selftest] ALL SELFTESTS PASSED");
 }
 
+
+/// All codewords of weight 1..=wmax (both signs) of a self-dual code, via two complementary
+/// information sets: a word of weight w has weight <= w/2 on one of them.
+fn low_weight_words(code: &Code, wmax: u32) -> Vec<V> {
+    let n = code.n;
+    let (_, piv) = rref(n, &code.rows);
+    let rest: Vec<usize> = (0..n).filter(|c| !piv.contains(c)).collect();
+    let mut out: std::collections::HashSet<(u128, u128)> = std::collections::HashSet::new();
+    for order in [piv.iter().chain(rest.iter()).cloned().collect::<Vec<usize>>(),
+                  rest.iter().chain(piv.iter()).cloned().collect::<Vec<usize>>()] {
+        // perm: old coordinate order[j] -> new coordinate j
+        let mut perm = vec![0usize; n];
+        for (j, &c) in order.iter().enumerate() {
+            perm[c] = j;
+        }
+        let pc = code.permute(&perm);
+        let (rows, p2) = rref(n, &pc.rows);
+        assert_eq!(p2.len() * 2, n, "not an information set");
+        let mut inv = vec![0usize; n];
+        for (i, &q) in perm.iter().enumerate() {
+            inv[q] = i;
+        }
+        let t = (wmax / 2) as usize;
+        // depth-first over subsets of rows with signs
+        fn rec(rows: &[V], start: usize, left: usize, cur: V, wmax: u32, inv: &[usize],
+               out: &mut std::collections::HashSet<(u128, u128)>) {
+            for i in start..rows.len() {
+                for sgn in [false, true] {
+                    let r = if sgn { rows[i].neg() } else { rows[i] };
+                    let x = cur.add(r);
+                    if x.wt() <= wmax {
+                        let y = x.permute(inv);
+                        out.insert((y.a, y.b));
+                    }
+                    if left > 1 {
+                        rec(rows, i + 1, left - 1, x, wmax, inv, out);
+                    }
+                }
+            }
+        }
+        rec(&rows, 0, t, V::ZERO, wmax, &inv, &mut out);
+    }
+    let mut v: Vec<V> = out.into_iter().map(|(a, b)| V { a, b }).collect();
+    v.sort_by_key(|x| (x.wt(), x.a, x.b));
+    v
+}
+
+/// R_σ(E) = Σ_{c∈E} Π_{singletons} φ(c_i) Π_{blocks} λ(|supp c ∩ β|), φ = (0,−1,1), λ = (0,−2,0,0,1),
+/// by full enumeration of E (meet in the middle over the generator rows; E need not be self-dual).
+fn rsigma(code: &Code, blocks: &[Vec<usize>], threads: usize) -> i128 {
+    let n = code.n;
+    let rows = &code.rows;
+    let k = rows.len();
+    let k1 = k / 2;
+    let span_of = |rs: &[V]| -> Vec<V> {
+        let mut out = vec![V::ZERO];
+        for r in rs {
+            let mut nx = Vec::with_capacity(out.len() * 3);
+            for &x in &out {
+                nx.push(x);
+                nx.push(x.add(*r));
+                nx.push(x.add(r.neg()));
+            }
+            out = nx;
+        }
+        out
+    };
+    let a = span_of(&rows[..k1]);
+    let b = span_of(&rows[k1..]);
+    let mut bmask: Vec<u128> = Vec::new();
+    let mut inb: u128 = 0;
+    for bl in blocks {
+        let mut m = 0u128;
+        for &i in bl {
+            m |= 1u128 << i;
+        }
+        inb |= m;
+        bmask.push(m);
+    }
+    let smask = mask(n) & !inb;
+    let chunk = (a.len() + threads - 1) / threads;
+    let total: i128 = std::thread::scope(|sc| {
+        let mut hs = Vec::new();
+        for t in 0..threads {
+            let a = &a;
+            let b = &b;
+            let bmask = &bmask;
+            hs.push(sc.spawn(move || {
+                let mut acc: i128 = 0;
+                let lo = t * chunk;
+                let hi = ((t + 1) * chunk).min(a.len());
+                for i in lo..hi {
+                    let x0 = a[i];
+                    for &y in b.iter() {
+                        let x = x0.add(y);
+                        let sup = x.a | x.b;
+                        if sup & smask != smask {
+                            continue;
+                        }
+                        let mut w: i128 = if (x.a & smask).count_ones() % 2 == 1 { -1 } else { 1 };
+                        for &m in bmask.iter() {
+                            match (sup & m).count_ones() {
+                                1 => w *= -2,
+                                4 => {}
+                                _ => {
+                                    w = 0;
+                                    break;
+                                }
+                            }
+                        }
+                        acc += w;
+                    }
+                }
+                acc
+            }));
+        }
+        hs.into_iter().map(|h| h.join().unwrap()).sum()
+    });
+    total
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let th = threads();
     let cmd = args.get(1).map(|s| s.as_str()).unwrap_or("help");
     match cmd {
         "selftest" => selftest(),
+        "rsigma" => {
+            // rsigma <file> <blocks as a,b,c,d;e,f,g,h;...>  (blocks may be empty: "-")
+            let txt = fs::read_to_string(&args[2]).expect("read");
+            let c = Code::from_text(&txt);
+            let blocks: Vec<Vec<usize>> = if args[3] == "-" { vec![] } else {
+                args[3].split(';').map(|b| b.split(',').map(|x| x.parse().unwrap()).collect()).collect() };
+            println!("R={}", rsigma(&c, &blocks, th));
+        }
+        "words" => {
+            // words <file> <wmax>: all codewords of weight <= wmax, one per line
+            let txt = fs::read_to_string(&args[2]).expect("read");
+            let c = Code::from_text(&txt);
+            assert!(c.is_self_dual());
+            let wmax: u32 = args[3].parse().unwrap();
+            let ws = low_weight_words(&c, wmax);
+            let mut s = String::new();
+            for w in &ws {
+                s.push_str(&w.to_string(c.n));
+                s.push('\n');
+            }
+            print!("{}", s);
+        }
         "index" => {
             // index <file>
             let txt = fs::read_to_string(&args[2]).expect("read");

@@ -1,0 +1,8 @@
+1 J ∈ Aut(Golay): True; J² = −1: True; cycle shape (2, 2, 2, 2, 2, 2); R_(0,1,2,3)(Golay) = 24
+2 n = 24 (k = 2): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; Index = 24 (brute force, sign-exact); next σ'' = [(0, 1, 16, 18), (12, 13, 17, 19)]
+2 n = 48 (k = 4): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; |Index| = 24 (Rust); next σ'' = [(0, 1, 32, 34), (24, 25, 33, 35)]
+3 n = 48, k = 4, m = gcd(4,24) = 4: ord J = 4, J^(m/2) = J² = −1: True  ⇒ GJF Thm 5.6 applies (index 6)
+2 n = 72 (k = 6): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; |Index| = 24 (Rust); next σ'' = [(1, 0, 58, 56), (49, 48, 59, 57)]
+2 n = 96 (k = 8): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; Index = 24 by Lemma 5.8 of [I] (not computed); next σ'' = [(1, 0, 82, 80), (73, 72, 83, 81)]
+2 n = 120 (k = 10): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; Index = 24 by Lemma 5.8 of [I] (not computed); next σ'' = [(0, 1, 104, 106), (96, 97, 105, 107)]
+2 n = 144 (k = 12): self-dual True, J ∈ Aut True, J² = −1 True, J fixed-point-free involution on coordinates True; Index = 24 by Lemma 5.8 of [I] (not computed); next σ'' = [(1, 0, 130, 128), (121, 120, 131, 129)]

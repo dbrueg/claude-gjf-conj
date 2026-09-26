@@ -1,0 +1,8 @@
+1 (◇) on 40/40 random J-invariant configurations at n = 24 (8 Lagrangians over D, exactly 4 J-invariant, Σ Index = 12·F(D), sign-exact)
+2 n = 24 (k = 2): g-neighbour configurations {(2, 2, 0, True, 0): 30} [key: (#g-inv, #other J-inv, (F(C)+F(C')) mod 48, F(C3) = F(C4), F(D) mod 8)]
+2 n = 48 (k = 4): g-neighbour configurations {(2, 2, (0, 0)): 30} [key: (#g-inv, #other J-inv, |Index| mod 48 of the two g-invariant codes)]
+3 n = 24 (k = 2): random g-invariant codes, |Index| mod 48: {0: 121, '0 exactly': 79}
+3 n = 36 (k = 3): random g-invariant codes, |Index| mod 48: {'0 exactly': 60}
+3 n = 48 (k = 4): random g-invariant codes, |Index| mod 48: {0: 59, '0 exactly': 1}
+3 n = 60 (k = 5): random g-invariant codes, |Index| mod 48: {'0 exactly': 30}
+3 n = 72 (k = 6): random g-invariant codes, |Index| mod 48: {0: 8}
