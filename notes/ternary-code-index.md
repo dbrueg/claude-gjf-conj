@@ -232,6 +232,10 @@ Independent checks by verification subagents, with their own code (not in the re
 2. [C] A TMF-level statement behind Remark (b): for a non-anomalous Z/3 acting on a holomorphic N=1 SVOA V, ob_(2)(V/Z₃) = 3^{−1}·ob_(2)(V) in Cok_(2). Its shadow on the Δᵏ-coefficient is 3·Index(V/Z₃) = Index(V) + 8T_u. The naive [V/Z₃] ≡ [V] in π_*TMF_(2) is false; see Remark (b).
 3. Proof II for families, or for the refined (Jacobi-form) index of the N=2 structure that V_{Λ(C)} also carries (GJF §2).
 4. Before any public claim: consider contacting Johnson-Freyd, since both proofs close a published open case.
+5. **Lean formalization (estimate only, 2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. Nothing is formalized yet; the setup is in `lean/` and CLAUDE.md.
+   - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
+   - Divisibility half via Proof II: ≈ 2,000–4,000 lines. Only the off-diagonal (◆), Σ s(ε)εᵢεⱼ = 0 for i ≠ j, is needed, since εᵢ² = 1. The harmonic polynomial xᵢxⱼ then gives a theta series that factorises over codewords into one-variable thetas and their z-derivatives, so the S-transformation reduces to the Jacobi law plus a finite Fourier (MacWilliams) step on F₃ⁿ. That S-transformation is most of the work; Steps 2–3 are short.
+   - Proof I alone gives only 8 | Index (≈ 1,000–1,500 lines, all finite); its 3-part still needs (◆) or GJF Thm 1.3.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 

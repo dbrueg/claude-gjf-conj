@@ -28,6 +28,16 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 - **Rust.** Fine to use for performance (the user said so). `cargo build --release` in `ternary60/`.
 - **Research style.** Don't stop at a literature search. Attempt the construction, verify pieces by explicit computation, and separate [V] from [C].
 
+## Lean / Mathlib (set up 2026-09-26)
+
+- Project in `lean/` (Mathlib master, toolchain `leanprover/lean4:v4.35.0-rc3`). `GJF/Basic.lean` only type-checks the Mathlib facts Proof II needs (`levelOne_weight_two_rank_zero` = M₂(SL₂ℤ) = 0, `jacobiTheta₂_functional_equation`). Nothing is formalized yet; the size estimate is in notes §5 item 5.
+- A fresh container needs this setup, because `release.lean-lang.org` and `cache.mathlib.org` are blocked:
+  1. `curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none`
+  2. Download `https://github.com/leanprover/lean4/releases/download/v4.35.0-rc3/lean-4.35.0-rc3-linux.tar.zst`, unpack it to `~/lean-toolchains/`, then run `elan toolchain link leanprover/lean4:v4.35.0-rc3 ~/lean-toolchains/lean-4.35.0-rc3-linux`.
+  3. `cd lean && lake update` (≈ 10 min), then `MATHLIB_CACHE_GET_URL=https://lakecache.blob.core.windows.net/mathlib4-master lake exe cache get` (≈ 10 min), then `lake build`.
+- If `lake update` moves Mathlib to a newer toolchain, repeat step 2 for the version in `lean/.lake/packages/mathlib/lean-toolchain`.
+- Push to master (the user's instruction, 2026-09-26).
+
 ## Pitfalls learned the hard way
 
 - **The Rust `index` sign is not meaningful.** It normalises a full-weight word to all-ones. Compare |I|, or use `brute_index` (n ≤ 24) or exact ℤ[ω] sums for sign-exact checks. Indices in 24ℤ are sign-independent mod 48.
