@@ -1,0 +1,16 @@
+1 Index(Q_σ(E)) = R_σ(E) exactly on 40/40; R_σ''(Q_σ(E)) = R_σ(E) for all 4 σ'' on 40/40 (random E, m = 12, b = 1, n = 24, brute force)
+2 R_σ(Golay), b = 1: {-24: 165, 24: 330}
+2 R_σ(Golay), b = 2: {-72: 1320, -24: 4950, 24: 8415, 72: 2640}
+2 R_σ(Golay), b = 3: {-24: 495, 24: 3960, 72: 1320}
+3 chain from Golay, σ = [(0, 1, 2, 3)] (b = 1), R_σ(Golay) = 24:
+3   n = 24 = 12·2: Index = 24 (brute force, sign-exact); saved codes/quad_index24_len24.txt; next σ'' = [(0, 16, 12, 17), (1, 18, 13, 19)]
+3   n = 48 = 12·4: Index = 24 (Rust, |I| meaningful); saved codes/quad_index24_len48.txt; next σ'' = [(0, 32, 24, 33), (16, 34, 25, 35)]
+3   n = 72 = 12·6: Index = 24 (Rust, |I| meaningful); saved codes/quad_index24_len72.txt; next σ'' = [(0, 56, 48, 57), (32, 58, 49, 59)]
+3 chain from Golay, σ = [(0, 1, 2, 3), (4, 5, 6, 8)] (b = 2), R_σ(Golay) = 24:
+3   n = 36 = 12·3: Index = 24 (Rust, |I| meaningful); saved codes/quad_index24_len36.txt; next σ'' = [(0, 20, 12, 21), (1, 22, 13, 23)]
+3   n = 60 = 12·5: Index = 24 (Rust, |I| meaningful); saved codes/quad_index24_len60.txt; next σ'' = [(0, 44, 36, 45), (20, 46, 37, 47)]
+3   n = 84 = 12·7: Index = 24 (Rust, |I| meaningful); saved codes/quad_index24_len84.txt; next σ'' = [(0, 68, 60, 69), (44, 70, 61, 71)]
+
+real	54m59.314s
+user	115m31.869s
+sys	0m10.220s
