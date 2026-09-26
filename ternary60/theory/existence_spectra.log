@@ -1,0 +1,13 @@
+A1 tetracode F(u+C): {0: 9}
+A2 Golay     F(u+C): {24: 1, -12: 24, 6: 264, -3: 440}
+A3 code2     F(u+C): {0: 585, 9: 72, -9: 72}
+A4 tetracode |G(y,v)|^2 over 81 pairs: {0: 33, 3.0: 48}
+B n=24: 17 states, smallest nonzero |I|: [72, 144, 216, 288]
+B n=36: 97 states, smallest nonzero |I|: [216, 432, 648, 864]
+B n=48: 394 states, smallest nonzero |I|: [648, 1296, 1944, 2592]
+B n=60: 1454 states, smallest nonzero |I|: [1944, 3888, 5832, 7776]
+B n=72: 3531 states, smallest nonzero |I|: [5832, 11664, 17496, 23328]
+B n=84: 2955 states, smallest nonzero |I|: [17496, 34992, 52488, 69984]
+B n=96: 1311 states, smallest nonzero |I|: [52488, 104976, 157464, 209952]
+B n=108: 457 states, smallest nonzero |I|: [157464, 314928, 472392, 629856]
+B |I|=24 ever reached: False

@@ -1,0 +1,16 @@
+L Golay+Golay: 100 mixed neighbours, formula holds 100/100, 72|I 100/100
+L Golay+code2: 100 mixed neighbours, formula holds 100/100, 72|I 100/100
+L code2+code2: 100 mixed neighbours, formula holds 100/100, 72|I 100/100
+W n=24 (Golay+code2^1) step 1: P(|I|=24)=0.000 P(72|I)=1.000
+W n=24 (Golay+code2^1) step 2: P(|I|=24)=0.150 P(72|I)=0.710
+W n=24 (Golay+code2^1) step 3: P(|I|=24)=0.355 P(72|I)=0.475
+W n=36 (Golay+code2^2) step 1: P(|I|=24)=0.000 P(72|I)=1.000
+W n=36 (Golay+code2^2) step 2: P(|I|=24)=0.000 P(72|I)=1.000
+W n=36 (Golay+code2^2) step 3: P(|I|=24)=0.100 P(72|I)=0.573
+W n=36 (Golay+code2^2) step 4: P(|I|=24)=0.180 P(72|I)=0.400
+W n=60 (Golay+code2^4) step 1: P(|I|=24)=0.000 P(72|I)=1.000
+W n=60 (Golay+code2^4) step 2: P(|I|=24)=0.000 P(72|I)=1.000
+W n=60 (Golay+code2^4) step 3: P(|I|=24)=0.000 P(72|I)=1.000
+W n=60 (Golay+code2^4) step 4: P(|I|=24)=0.000 P(72|I)=1.000
+W n=60 (Golay+code2^4) step 5: P(|I|=24)=0.033 P(72|I)=0.400
+W n=60 (Golay+code2^4) step 6: P(|I|=24)=0.033 P(72|I)=0.333

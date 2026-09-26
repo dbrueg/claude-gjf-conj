@@ -1,0 +1,5 @@
+ternary60/target/
+__pycache__/
+*.pyc
+literature/
+.DS_Store

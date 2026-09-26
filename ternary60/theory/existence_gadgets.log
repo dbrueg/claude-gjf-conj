@@ -1,0 +1,5 @@
+k=5: (nu, a) -> count {(1, 0): 995, (0, 0): 4, (2, 0): 1};  all a in 12Z: True
+k=7: (nu, a) -> count {(2, 0): 1000};  all a in 12Z: True
+k=9: (nu, a) -> count {(1, 0): 1000};  all a in 12Z: True
+k=11: (nu, a) -> count {(2, -12): 111, (2, 0): 754, (2, 12): 135};  all a in 12Z: True
+k=13: (nu, a) -> count {(1, 0): 2105, (1, 12): 455, (1, -12): 418, (1, -24): 14, (1, 24): 8};  all a in 12Z: True

@@ -1,0 +1,6 @@
+A (h, Index) -> count {(6, 24): 22, (12, 72): 16, (0, -24): 2};  formula −24+8h holds 40/40 (first 4 sign-exact by brute force)
+B lambda-formula 264, rust index 264, |equal| True
+B lambda-formula -1368, rust index -1368, |equal| True
+B lambda-formula 696, rust index 696, |equal| True
+C n=48 doubling: 200 samples, all Index ≡ 24 mod 48: True, P(|I|=24) = 0.030, max |I| = 2376
+D Hadamard Golay rings: 21 distinct trace sequences; smallest |Tr M^5| sequence (0, 192, 240, 12096, 12480)

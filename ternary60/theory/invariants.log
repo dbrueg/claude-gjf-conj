@@ -1,0 +1,18 @@
+n=12: #sym basis=4, dim invariants=2, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (24, 6)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (684, 6) ; TMF needs 24 | I, GJF conj 24 | I
+n=24: #sym basis=10, dim invariants=4, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (-30312, 3)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (-90, 6) ; TMF needs 12 | I, GJF conj 24 | I
+n=36: #sym basis=19, dim invariants=7, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (482194396, 2)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (482194396, 2) ; TMF needs 8 | I, GJF conj 24 | I
+n=48: #sym basis=30, dim invariants=10, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (294831795780, 3)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (287914238976, 6) ; TMF needs 6 | I, GJF conj 24 | I
+n=60: #sym basis=44, dim invariants=14, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (-8309152919053482493535148, 6)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (232861636126651121093326943349504, 6) ; TMF needs 24 | I, GJF conj 24 | I
+n=72: #sym basis=61, dim invariants=19, summed-design identity on all invariants: True
+   I on integral invariants with x^n-coeff 1:            (31045341434179979987027084374560182448025335296, 1)  (offset, gcd)
+   I after orbit congruences (even/6 | coefficients):   (-11867973667343294122080938981296352783537771233248716126947320776, 2) ; TMF needs 4 | I, GJF conj 24 | I

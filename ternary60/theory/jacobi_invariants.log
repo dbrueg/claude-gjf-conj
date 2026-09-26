@@ -1,0 +1,12 @@
+n=12 p=1000000009: #orbit unknowns=10  dim(G-invariant 2-point Jacobi polys)=3  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=12 p=2305843009213693951: #orbit unknowns=10  dim(G-invariant 2-point Jacobi polys)=3  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=24 p=1000000009: #orbit unknowns=36  dim(G-invariant 2-point Jacobi polys)=10  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=24 p=2305843009213693951: #orbit unknowns=36  dim(G-invariant 2-point Jacobi polys)=10  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=36 p=1000000009: #orbit unknowns=78  dim(G-invariant 2-point Jacobi polys)=21  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=36 p=2305843009213693951: #orbit unknowns=78  dim(G-invariant 2-point Jacobi polys)=21  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=48 p=1000000009: #orbit unknowns=136  dim(G-invariant 2-point Jacobi polys)=36  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=48 p=2305843009213693951: #orbit unknowns=136  dim(G-invariant 2-point Jacobi polys)=36  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=60 p=1000000009: #orbit unknowns=210  dim(G-invariant 2-point Jacobi polys)=55  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=60 p=2305843009213693951: #orbit unknowns=210  dim(G-invariant 2-point Jacobi polys)=55  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=72 p=1000000009: #orbit unknowns=300  dim(G-invariant 2-point Jacobi polys)=78  design functional D vanishes on all: True   index functional I vanishes on all: False
+n=72 p=2305843009213693951: #orbit unknowns=300  dim(G-invariant 2-point Jacobi polys)=78  design functional D vanishes on all: True   index functional I vanishes on all: False

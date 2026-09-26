@@ -1,0 +1,2 @@
+Golay: n=12 Index=-24 neighbours=364 index histogram=[(-24, 132), (0, 220), (24, 12)]  sum=-2880  predicted ((3^(k-1)-3)/2)*Index=-2880  (★) on all: true
+random24: n=24 Index=0 neighbours=265720 index histogram=[(-96, 46), (-72, 1096), (-48, 14410), (-24, 62944), (0, 108800), (24, 62764), (48, 14554), (72, 1060), (96, 46)]  sum=0  predicted ((3^(k-1)-3)/2)*Index=0  (★) on all: true

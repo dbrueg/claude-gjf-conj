@@ -1,0 +1,16 @@
+V n=36: formula 0, rust 0
+V n=36: formula 0, rust 0
+V n=36: formula 0, rust 0
+V n=24: formula 0, rust 0
+V n=24: formula 0, rust 0
+V n=24: formula -144, rust -144
+V n=36: formula 0, rust 0
+V n=36: formula 0, rust 0
+V n=36: formula 0, rust 0
+V n=36: formula 1296, rust 1296
+V n=36: formula 2160, rust -2160
+V n=36: formula 1296, rust -1296
+V formula = ±index on 12/12
+T 3-tetracode cells, (p1,p2,p3) of transfer/27: {('0', '0', '0'): 203, ('-24', '192', '-1536'): 54, ('24', '192', '1536'): 43}
+S code2 cells: spectral radius -> count {0.0: 58, 3.0: 18, 3.07: 4, 5.0: 5, 6.0: 43, 8.0: 2, 9.0: 16, 10.12: 1, 12.0: 3}; Kronecker cells: 0
+S Golay cells: spectral radius -> count {6.0: 46, 8.49: 30, 9.0: 47, 10.12: 8, 12.0: 19}; Kronecker cells: 0

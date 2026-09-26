@@ -1,0 +1,11 @@
+P(29): n=60 maximal=41184 I=21696  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=21696  step3 ok=true  => DESIGN IDENTITY HOLDS
+XQR(59): n=60 maximal=41184 I=41184  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=41184  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=0): n=60 maximal=17016 I=264  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=264  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=1): n=60 maximal=17016 I=120  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=120  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=2): n=60 maximal=16800 I=0  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=0  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=3): n=60 maximal=16552 I=-24  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-24  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=4): n=60 maximal=16784 I=-144  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=-144  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=5): n=60 maximal=16624 I=432  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=432  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=6): n=60 maximal=16888 I=504  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=504  step3 ok=true  => DESIGN IDENTITY HOLDS
+random(seed=9,i=7): n=60 maximal=16816 I=432  max_{i<j}|Σ s ε_i ε_j|=0  triple*4=432  step3 ok=true  => DESIGN IDENTITY HOLDS
+SUMMARY design n=60: all hold = true

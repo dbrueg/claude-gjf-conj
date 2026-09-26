@@ -1,0 +1,4 @@
+Index from shadow theta: 24
+Phi == I*eta^12 : True
+Phi_mu == (I mu^2/12) E2 eta^12 through q^{1/2+4}: True
+nonzero coefficients (Q-exponent: lhs, rhs): [(12, Fraction(12, 1), Fraction(12, 1)), (36, Fraction(-432, 1), Fraction(-432, 1)), (60, Fraction(3240, 1), Fraction(3240, 1)), (84, Fraction(-7392, 1), Fraction(-7392, 1)), (108, Fraction(-10692, 1), Fraction(-10692, 1))]

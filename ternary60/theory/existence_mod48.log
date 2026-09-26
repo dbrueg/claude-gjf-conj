@@ -1,0 +1,10 @@
+1 lambda-hat = 9 lambda on F_3^4: True
+2 m=12: S(C)+S(C') = 4S(C∩C') on 40/40 random neighbour pairs
+2 m=24: S(C)+S(C') = 4S(C∩C') on 6/6 random neighbour pairs
+3 m=12: Σ_E Λ ≡ Index(E) mod 16 on 180/180
+3 m=24: Σ_E Λ ≡ Index(E) mod 16 on 60/60
+4 m=12: |F| ≡ Index mod 16 on 200/200; (|F| mod 16, I mod 16) -> {(8, 8): 48, (0, 0): 152}
+4 m=24: |F| ≡ Index mod 16 on 30/30; (|F| mod 16, I mod 16) -> {(0, 0): 15, (8, 8): 15}
+4 m=36: |F| ≡ Index mod 16 on 200/200; (|F| mod 16, I mod 16) -> {(0, 0): 109, (8, 8): 91}
+4 m=48: |F| ≡ Index mod 16 on 60/60; (|F| mod 16, I mod 16) -> {(8, 8): 27, (0, 0): 33}
+4 m=60: |F| ≡ Index mod 16 on 20/20; (|F| mod 16, I mod 16) -> {(0, 0): 10, (8, 8): 10}
