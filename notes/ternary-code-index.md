@@ -34,7 +34,7 @@ GJF = D. Gaiotto, T. Johnson-Freyd, *Holomorphic SCFTs with small index*, Canad.
 **Theorem [P; V].** For every self-dual ternary code C, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
 - **Proof I (§1, Kneser neighbours; Fourier analysis on F₃ⁿ only):** 8 | Index. The 3-part then comes from GJF Thm 1.3.
 - **Proof II (§2, signed 2-design; one fact about modular forms, M₂(SL₂(Z)) = 0):** both 8 | Index and 3 | Index. This is independent of GJF Thm 1.3 and of Borcherds, and re-proves Thm 1.3 without the even-neighbour/Borcherds argument.
-- **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84. Not yet checked against the literature or by a second reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
+- **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84. Web literature check found no prior solution; not yet checked by a second reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
 
 **Consequences.**
 - Every 3-framed SCFT V_{Λ(C)} (c = n = 12k, N=1 structure from the code) satisfies the TMF-predicted divisibility 24/gcd(24,k) | Index, so ob = 0 in Cok_{24k}.
@@ -228,7 +228,7 @@ Independent checks by verification subagents, with their own code (not in the re
 
 ## 5. What remains
 
-1. The existence half of GJF Conj 1.4: **proved for all k** (Theorem 5.9, §5.1(f‴)). Remaining: a literature check and an independent reading of Lemma 5.8, and optionally a sign-exact (ℤ[ω] or brute-force) check at n ≥ 36.
+1. The existence half of GJF Conj 1.4: **proved for all k** (Theorem 5.9, §5.1(f‴)). Remaining: a full citation search (the 2026-09-26 web check found nothing, see §5.1(f‴)) and an independent reading of Lemma 5.8, and optionally a sign-exact (ℤ[ω] or brute-force) check at n ≥ 36.
 2. [C] A TMF-level statement behind Remark (b): for a non-anomalous Z/3 acting on a holomorphic N=1 SVOA V, ob_(2)(V/Z₃) = 3^{−1}·ob_(2)(V) in Cok_(2). Its shadow on the Δᵏ-coefficient is 3·Index(V/Z₃) = Index(V) + 8T_u. The naive [V/Z₃] ≡ [V] in π_*TMF_(2) is false; see Remark (b).
 3. Proof II for families, or for the refined (Jacobi-form) index of the N=2 structure that V_{Λ(C)} also carries (GJF §2).
 4. Before any public claim: consider contacting Johnson-Freyd, since both proofs close a published open case.
@@ -401,7 +401,11 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - By Theorem 5.4's argument, R_σ(E) ≡ Index(E) mod 48 is expected as well (Λ = φ^s λ^b is again a Fourier eigenfunction supported on isotropic vectors), but it is not needed.
 - [V: `existence_quadruple.py` parts 2–3] The R-distributions on Golay above, and the explicit chains (12,1) → 24 → 48 → 72 and (12,2) → 36 → 60 → 84, each step with b″ = 2. Every code is self-dual and has |Index| = 24 (brute force at n = 24; Rust at n ≥ 36). n = 72 and n = 84 were the first open cases.
 - The codes are explicit: Golay plus tetracodes, glued by coordinate-pair Hadamard maps. Generator matrices: `ternary60/codes/quad_index24_len{24,36,48,60,72,84}.txt`.
-- **Status.** Proved here, but not yet checked against the literature or by a second reader. The proof uses only the λ-formula of (f) and the local computation of Lemma 5.6, both elementary and verified numerically.
+- **Status.** Proved here, but not yet checked by a second reader. The proof uses only the λ-formula of (f) and the local computation of Lemma 5.6, both elementary and verified numerically.
+- **Literature check (2026-09-26, web search only).** arXiv, Semantic Scholar and Johnson-Freyd's site were blocked by the session's network policy, so no citation list of GJF could be read. Findings:
+  - No paper found that answers GJF Question 0.1 or constructs index-24 codes, or holomorphic N=1 SCFTs of index 24/gcd(k,24), for all k. Search engines still describe the question as open (GJF, arXiv:1811.00589; Lin–Pei, arXiv:2112.10724, treats bosonic holomorphic CFTs only).
+  - The ingredients are standard: self-dual codes built by gluing through pair maps (x, y) ↦ (x+y, x−y) (cf. (u|u+v)-type and doubling constructions), tetracode sums, and Hadamard-matrix constructions of ternary self-dual codes (e.g. Araya–Harada–Momihara, arXiv:2205.15498). No source found that tracks the index, or a block-weighted index like R_σ, through such maps. Lemmas 5.6/5.8 appear new.
+  - To do before any public claim: a proper citation search of GJF (Google Scholar / INSPIRE) from an unrestricted machine, and contact with Johnson-Freyd (§5 item 4).
 
 **(g) Coordinate connected sum [P; V].** Delete d-sets V₁ ⊂ C₁ and V₂ ⊂ C₂, and match the deleted values through an anti-isometry φ of F₃^d.
 - The result is self-dual of length n₁ + n₂ − 2d, with Index = Σ_q A₁(q)A₂(φq). Here A(q) is the signed count of words restricting to q on V and full-weight off V.

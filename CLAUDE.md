@@ -15,7 +15,7 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 
 ## Next steps
 
-1. **Literature check** of Lemma 5.6/5.8, Thm 5.7/5.9 and Prop 5.5. Then consider contacting Johnson-Freyd (notes §5 item 4).
+1. **Citation search** for GJF (Google Scholar/INSPIRE; arXiv and Semantic Scholar were blocked in the cloud session). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
 2. An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36 (ℤ[ω] sums or a sign-aware Rust count).
 3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
 
