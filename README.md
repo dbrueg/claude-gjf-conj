@@ -10,7 +10,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 
 | part | status | where |
 |---|---|---|
-| 24 \| Index for all codes (divisibility half) | **proved**, two proofs. Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
+| 24 \| Index for all codes (divisibility half) | **proved** and **formally verified in Lean 4** (`lean/GJF/Divisibility.lean`; positive length). Several proofs; the shortest is one Poisson summation (notes §2 Step 1′). Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
 | index-24 code at every length 12k (existence half) | **proved for all k** by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
 | by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
@@ -23,7 +23,7 @@ notes/ternary-code-index.md   the notes (read §0, then §5.1)
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 notes/tmf-context.md          TMF background
-lean/                         Lean 4 + Mathlib project (toolchain check only so far; setup steps in CLAUDE.md)
+lean/                         Lean 4 + Mathlib: GJF/Divisibility.lean proves 24 | Index formally (setup steps in CLAUDE.md)
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
@@ -50,6 +50,12 @@ python3 existence_quadruple.py       # Lemma 5.8 + Theorem 5.9: index 24 at ever
 python3 divisibility_check.py        # critical check of the finite proof, incl. four-point identity (≈ 5 min)
 python3 design_poisson.py            # finite Poisson proof of the signed 2-design (notes §2 Step 1′) (≈ 5 min)
 python3 paper_check.py               # every computable claim of paper/index24.tex, incl. a sign-exact Index at n = 36 (≈ 15 min)
+```
+
+Lean (formal proof of 24 | Index; toolchain and Mathlib-cache setup in CLAUDE.md):
+
+```bash
+cd lean && lake build                # builds GJF.Divisibility (theorem GJF.index_dvd_24) and GJF.Sanity
 ```
 
 Python scripts are stdlib only; numpy was not available on the original machine. Check scripts write `<script>.log` beside themselves.

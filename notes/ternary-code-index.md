@@ -31,10 +31,10 @@ GJF = D. Gaiotto, T. Johnson-Freyd, *Holomorphic SCFTs with small index*, Canad.
 - GJF conjectured 24 | Index in all lengths. The open case was n ≡ 12 mod 24 (36, 60, 84, …), where the missing piece is exactly 8 | Index.
 - GJF say they do not know an elementary proof even of the 24 | n case.
 
-**Theorem [P; V].** For every self-dual ternary code C, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
+**Theorem [P; V; Lean].** For every self-dual ternary code C of positive length, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
 - **Proof I (§1, Kneser neighbours; Fourier analysis on F₃ⁿ only):** 8 | Index. The 3-part then comes from GJF Thm 1.3.
 - **Proof II (§2, signed 2-design; one fact about modular forms, M₂(SL₂(Z)) = 0):** both 8 | Index and 3 | Index. This is independent of GJF Thm 1.3 and of Borcherds, and re-proves Thm 1.3 without the even-neighbour/Borcherds argument.
-- **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n.
+- **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n. **Formally verified in Lean 4** (`lean/GJF/Divisibility.lean`, §2 Step 1′); the formal statement needs n ≥ 1.
 - **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84, and re-derived from the paper's definitions with independent code, sign-exact at n = 36 (`paper_check.py`). Web literature check found no prior solution; not yet checked by a second (human) reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
 
 **Consequences.**
@@ -144,6 +144,11 @@ Notation.
   - Checked on all 495 four-sets for Golay (values ±8, never 0) and code2, and on 50 four-sets at n = 24.
   - So weight-(n−3) codewords are exactly the obstruction to a signed 4-design; this explains the "not a 4-design" remark in Step 2.
 - Write-up of all variants: `paper/divisibility.tex` (routes 0, A, B, C, C′).
+- **Formally verified in Lean 4 + Mathlib [Lean: `lean/GJF/Divisibility.lean`, 662 lines] (2026-09-26).** Theorem `GJF.index_dvd_24 : IsSelfDual C → 0 < n → 24 ∣ gjfIndex C`, with codes as `Submodule (ZMod 3) (Fin n → ZMod 3)`, self-duality as `x ∈ C ↔ ∀ c ∈ C, x·c = 0`, and `gjfIndex` literally #even − #odd maximal codewords. Also `GJF.design` (the off-diagonal (◆)), `eight_dvd_index`, `three_dvd_index`.
+  - Axioms: `propext`, `Classical.choice`, `Quot.sound` only; finite checks by kernel `decide` (no `native_decide`, no `sorry`).
+  - The formalization found a missing hypothesis: **n ≥ 1 is needed**. At n = 0 the empty word is an even maximal codeword and the index is 1 (both facts are Lean examples in the file). The notes and the .tex now say "positive length".
+  - Differences from the write-up: |C|² = 3ⁿ comes from Poisson summation of the constant function (no dimension theory); the factor 3 uses the two test vectors ε⁰ and ε⁰ + 3ε⁰₁e₁ and subtracts (9 | 15·Index), with no case split mod 9. The .tex was aligned with the latter.
+  - `lean/GJF/Sanity.lean` proves by `decide` that the tetracode is self-dual, so the hypotheses are satisfiable at positive length.
 
 **Step 2 (8 | Index).**
 - For distinct a, b, c, [ε_a = ε_b = ε_c] = (1 + ε_aε_b + ε_bε_c + ε_aε_c)/4. With (◆) this gives Σ_{ε∈F, ε_a=ε_b=ε_c} s(ε) = Index/4.
@@ -260,9 +265,10 @@ Independent checks by verification subagents, with their own code (not in the re
 2. [C] A TMF-level statement behind Remark (b): for a non-anomalous Z/3 acting on a holomorphic N=1 SVOA V, ob_(2)(V/Z₃) = 3^{−1}·ob_(2)(V) in Cok_(2). Its shadow on the Δᵏ-coefficient is 3·Index(V/Z₃) = Index(V) + 8T_u. The naive [V/Z₃] ≡ [V] in π_*TMF_(2) is false; see Remark (b).
 3. Proof II for families, or for the refined (Jacobi-form) index of the N=2 structure that V_{Λ(C)} also carries (GJF §2).
 4. Before any public claim: consider contacting Johnson-Freyd, since both proofs close a published open case.
-5. **Lean formalization (estimate only, 2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. Nothing is formalized yet; the setup is in `lean/` and CLAUDE.md.
+5. **Lean formalization (2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. The divisibility half is formalized (`lean/GJF/Divisibility.lean`); setup in CLAUDE.md.
    - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
-   - Divisibility half: ≈ 600–1,200 lines via Step 1′ (finite Poisson on F₃ⁿ for g_ij, then Steps 2–3). No modular forms are needed. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
+   - Divisibility half: **done** (`lean/GJF/Divisibility.lean`, 662 lines, within the ≈ 600–1,200 estimate), via Step 1′. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
+   - Existence half: not started; estimate ≈ 1,000–2,500 lines.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 

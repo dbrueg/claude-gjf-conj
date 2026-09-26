@@ -64,8 +64,11 @@ functions of lattices, and we do not know if there is an elementary proof.'' Thi
 proofs of the divisibility statement in all lengths.
 
 \begin{mainthm}
-For every self-dual ternary code $C$, $24\mid\Index(C)$.
+For every self-dual ternary code $C$ of positive length, $24\mid\Index(C)$.
 \end{mainthm}
+
+The hypothesis $n\ge1$ is needed: for $n=0$ the empty word is an even maximal codeword, so
+$\Index=1$. It was made explicit by the formalization in Lean (Remark~\ref{rem:lean}).
 
 The routes are as follows.
 \begin{itemize}
@@ -87,6 +90,8 @@ Routes (B) and (C) are each a complete proof of the Theorem, and so is (A) toget
 comparison is in \S\ref{sec:compare}.
 
 \section{Preliminaries}\label{sec:prelim}
+
+Throughout, $n\ge1$.
 
 \begin{lemma}\label{lem:basic}
 Let $C\subseteq\F^n$ be self-dual.
@@ -173,13 +178,12 @@ Theorem~\ref{thm:design},
 The set summed over is stable under $\varepsilon\mapsto-\varepsilon$, which has no fixed points
 and preserves $s$. So the left side is even, and $8\mid\Index(C)$.
 
-\emph{The factor $3$.} Fix $\varepsilon^0\in\cF$, and for $y\in\Z^n$ put $x=\varepsilon^0+3y$. For
-$\varepsilon\in\cF$ we have $\varepsilon\cdot x\equiv\varepsilon\cdot\varepsilon^0\equiv0\pmod3$, so
-$\sum_{\cF}s(\varepsilon)(\varepsilon\cdot x)^2\in9\Z$. By Theorem~\ref{thm:design} this sum is
-$\Index(C)\,|x|^2$. Now $|x|^2=n+6\,y\cdot\varepsilon^0+9|y|^2$, and for $y\in\{0,e_1,-e_1\}$ the
-term $6\,y\cdot\varepsilon^0$ takes the values $0,6,-6$. Since $3\mid n$, the three values of $|x|^2$
-are the three classes $0,3,6$ modulo $9$, so one choice of $y$ has $|x|^2\equiv3\pmod9$. Then
-$9\mid\Index(C)|x|^2$ and $3\,\|\,|x|^2$ give $3\mid\Index(C)$.
+\emph{The factor $3$.} Fix $\varepsilon^0\in\cF$. For every $x\in\Z^n$ with $x\equiv\varepsilon^0
+\pmod3$ and every $\varepsilon\in\cF$ we have $\varepsilon\cdot x\equiv\varepsilon\cdot\varepsilon^0
+\equiv0\pmod3$, so $\sum_{\cF}s(\varepsilon)(\varepsilon\cdot x)^2\in9\Z$. By
+Theorem~\ref{thm:design} this sum is $\Index(C)\,|x|^2$. Take $x=\varepsilon^0$, with $|x|^2=n$, and
+$x'=\varepsilon^0+3\varepsilon^0_1e_1$, with $|x'|^2=n-1+16=n+15$. Then $9$ divides both
+$\Index(C)\,n$ and $\Index(C)(n+15)$, hence $9\mid15\,\Index(C)$, and $3\mid\Index(C)$.
 \end{proof}
 
 \begin{remark}\label{rem:golay}
@@ -408,6 +412,21 @@ C$'$ & design, hence $8$ and $3$ & Poisson, neighbours & codes\\
 
 Route C is the shortest and the only one that is both complete and elementary. Route B is the most
 general. Route A gives the extra parity statement mentioned after Theorem~\ref{thm:A}.
+
+\begin{remark}[formal verification]\label{rem:lean}
+Route C together with Proposition~\ref{prop:design-suffices} is formalized in Lean~4 with Mathlib
+(repository file \texttt{lean/GJF/Divisibility.lean}, about $660$ lines). The formal statement is
+\[
+  \texttt{index\_dvd\_24}:\quad C=C^\perp\ \text{in}\ \F^n,\ n>0\ \Longrightarrow\ 24\mid
+  \#\{\text{even maximal}\}-\#\{\text{odd maximal}\},
+\]
+with codes as $\F$-submodules of $\F^n$ and the index defined literally as in \cite{GJF}. It uses
+only the standard axioms (propositional extensionality, choice, quotient soundness), and all finite
+case checks are done by the kernel (\texttt{decide}, no \texttt{native\_decide}). The Fourier
+analysis is carried out with $\omega=e^{2\pi i/3}\in\mathbb C$; $|C|^2=3^n$ is obtained by Poisson
+summation of the constant function, so no dimension theory is needed. A companion file checks by
+\texttt{decide} that the tetracode is self-dual, so the hypotheses are satisfiable.
+\end{remark}
 
 \begin{remark}[verification]
 Routes A and C, Proposition~\ref{prop:design-suffices} and Remark~\ref{rem:four} were checked by
