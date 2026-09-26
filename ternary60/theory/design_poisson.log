@@ -1,0 +1,7 @@
+1 Fourier formula for ĝ_ij: max error 7.1e-14 over 184194 (n, i, j, u) at n = 4, 8 (brute force)
+2 n = 12: G_ij(C) = 0 on 396/396 (C, i, j); Poisson identity on 396/396; 6 random codes, 1 with Index ≠ 0
+4 n = 12: words full weight off {i,j} with a zero at i or j: 0
+2 n = 24: G_ij(C) = 0 on 36/36 (C, i, j); Poisson identity on 36/36; 3 random codes, 2 with Index ≠ 0
+4 n = 24: words full weight off {i,j} with a zero at i or j: 0
+3 n = 12: G(D^⊥) = −G(D) on 1980/1980; G(C) + G(C′) = 0 on 1980/1980; G(D) ≠ 0 on 1108/1980 (30 random neighbour pairs)
+3 n = 24: G(D^⊥) = −G(D) on 48/48; G(C) + G(C′) = 0 on 48/48; G(D) ≠ 0 on 41/48 (6 random neighbour pairs)

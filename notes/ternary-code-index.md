@@ -34,6 +34,7 @@ GJF = D. Gaiotto, T. Johnson-Freyd, *Holomorphic SCFTs with small index*, Canad.
 **Theorem [P; V].** For every self-dual ternary code C, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
 - **Proof I (§1, Kneser neighbours; Fourier analysis on F₃ⁿ only):** 8 | Index. The 3-part then comes from GJF Thm 1.3.
 - **Proof II (§2, signed 2-design; one fact about modular forms, M₂(SL₂(Z)) = 0):** both 8 | Index and 3 | Index. This is independent of GJF Thm 1.3 and of Borcherds, and re-proves Thm 1.3 without the even-neighbour/Borcherds argument.
+- **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n.
 - **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84, and re-derived from the paper's definitions with independent code, sign-exact at n = 36 (`paper_check.py`). Web literature check found no prior solution; not yet checked by a second (human) reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
 
 **Consequences.**
@@ -116,6 +117,23 @@ Notation.
 - [V: `theory/qseries_check.py`, log `theory/qseries_check.log`] the q-series identity for the Golay code, through q^{1/2+4}: Σ_{v∈S} s(v)(v·μ)²q^{v²/2} = (Index·|μ|²/12)·E₂·ηⁿ.
   - For code lattices the coset series factorise over coordinates. So this identity is equivalent to its leading coefficient (◆), and it is not independent evidence for the modular step.
 - [V: `theory/jacobi_invariants.py`, log `theory/jacobi_invariants.log`] for n ≤ 72, (◆) already follows from invariance of the two-point Jacobi polynomial under the Gleason group. This was checked by rank computations mod two large primes.
+
+**Step 1′ (finite proof of (◆)) [P; V: `theory/design_poisson.py`, log `theory/design_poisson.log`] (2026-09-26).**
+- Only i ≠ j matters: the diagonal of (◆) is Σ s(ε)εᵢ² = Index, trivially.
+- Lift ε = −φ(x) coordinatewise. Then s(ε)εᵢεⱼ = f(x)φ(xᵢ)φ(xⱼ) = g_ij(x), where
+      g_ij(x) := ∏_{k≠i,j} φ(x_k) · [xᵢ ≠ 0][xⱼ ≠ 0].
+  So the off-diagonal entry is G_ij(C) := Σ_{x∈C} g_ij(x).
+- **Fourier transform.** φ̂ = i√3·φ (Proof I, Step 1), and the indicator of "≠ 0" has transform 3[u = 0] − 1. So
+      ĝ_ij(u) = (i√3)^{n−2} · ∏_{k≠i,j} φ(u_k) · (3[uᵢ=0] − 1)(3[uⱼ=0] − 1),
+  and (i√3)^{n−2} = −3^{n/2−1} since 4 | n.
+- **The correction terms vanish.** Expanding the last two factors, ĝ_ij(u) = −3^{n/2−1}·g_ij(u) except on words u that are full weight off {i, j} and vanish at i or j. Such words have weight n − 1 or n − 2. Every word of C is isotropic, so its weight u·u is ≡ 0 mod 3; with 3 | n these weights are impossible.
+- **Poisson.** Σ_{x∈C} g_ij(x) = |C|^{−1} Σ_{u∈C} ĝ_ij(u) = 3^{−n/2}·(−3^{n/2−1})·G_ij(C). Hence
+      **G_ij(C) = −G_ij(C)/3, so G_ij(C) = 0.** □
+- (If 3 ∤ n there are no maximal codewords and (◆) is trivial.)
+- *Why it works while Proof I needs neighbours.* f is a Fourier eigenfunction with eigenvalue 3^{n/2}, so Poisson over C only returns F(C) = F(C). Replacing φ by the indicator at two coordinates changes the eigenvalue by the factor −1/3 on everything C can contain, and a fixed point of x ↦ −x/3 is 0.
+- *Neighbour form.* The same computation for D = C ∩ C′ (dim n/2 − 1) gives G_ij(D^⊥) = −G_ij(D), hence G_ij(C) + G_ij(C′) = 0. G_ij(D) itself is usually nonzero.
+- [V: `design_poisson.py`] the ĝ formula by brute force at n = 4, 8; G_ij(C) = 0 and the Poisson identity exactly on random codes at n = 12, 24; G(D^⊥) = −G(D) and G(C) + G(C′) = 0 on random neighbour pairs at n = 12 (1980/1980; G(D) ≠ 0 in 1108) and n = 24 (48/48).
+- *Literature.* Not checked. Step 1 above (the modular proof) stays as an independent derivation.
 
 **Step 2 (8 | Index).**
 - For distinct a, b, c, [ε_a = ε_b = ε_c] = (1 + ε_aε_b + ε_bε_c + ε_aε_c)/4. With (◆) this gives Σ_{ε∈F, ε_a=ε_b=ε_c} s(ε) = Index/4.
@@ -234,8 +252,7 @@ Independent checks by verification subagents, with their own code (not in the re
 4. Before any public claim: consider contacting Johnson-Freyd, since both proofs close a published open case.
 5. **Lean formalization (estimate only, 2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. Nothing is formalized yet; the setup is in `lean/` and CLAUDE.md.
    - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
-   - Divisibility half via Proof II: ≈ 2,000–4,000 lines. Only the off-diagonal (◆), Σ s(ε)εᵢεⱼ = 0 for i ≠ j, is needed, since εᵢ² = 1. The harmonic polynomial xᵢxⱼ then gives a theta series that factorises over codewords into one-variable thetas and their z-derivatives, so the S-transformation reduces to the Jacobi law plus a finite Fourier (MacWilliams) step on F₃ⁿ. That S-transformation is most of the work; Steps 2–3 are short.
-   - Proof I alone gives only 8 | Index (≈ 1,000–1,500 lines, all finite); its 3-part still needs (◆) or GJF Thm 1.3.
+   - Divisibility half: ≈ 600–1,200 lines via Step 1′ (finite Poisson on F₃ⁿ for g_ij, then Steps 2–3). No modular forms are needed. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 

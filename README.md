@@ -30,6 +30,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
+                              design_poisson.py: checks for the finite proof of (◆), notes §2 Step 1′ (log beside it)
                               paper_check.py: independent re-implementation of every computable claim in paper/index24.tex (log beside it)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
@@ -44,6 +45,7 @@ cd theory
 python3 existence_refinement.py      # Lemma 5.6 + Theorem 5.7 checks (~minutes)
 python3 existence_mod48.py           # Thm 5.4 + Prop 5.5 checks (~15 min)
 python3 existence_quadruple.py       # Lemma 5.8 + Theorem 5.9: index 24 at every length (≈ 30 min; --no84 skips n = 84)
+python3 design_poisson.py            # finite Poisson proof of the signed 2-design (notes §2 Step 1′) (≈ 5 min)
 python3 paper_check.py               # every computable claim of paper/index24.tex, incl. a sign-exact Index at n = 36 (≈ 15 min)
 ```
 
