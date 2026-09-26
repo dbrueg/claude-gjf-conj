@@ -11,12 +11,13 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 **Both halves of Conj 1.4 are now proved here** (pending literature check and independent reading).
 - **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
 - Verified by `ternary60/theory/existence_quadruple.py`: exact at n = 24, and Rust |Index| = 24 on explicit chains at n = 36, 48, 60, 72, 84 (log complete; codes in `ternary60/codes/quad_index24_len*.txt`).
+- Independently re-verified by `ternary60/theory/paper_check.py` from the paper's definitions, with sign-exact Index = +24 at n = 24 and n = 36 (information-set enumeration).
 - Earlier results in §5.1 still stand: Thm 5.4 (mod 48), Prop 5.5, Lemma 5.6, Thm 5.7 (the s = 0 case of Lemma 5.8), Lemmas 5.2–5.3. The seed search (`existence_seed_search.py`) is no longer needed.
 
 ## Next steps
 
 1. **Citation search** for GJF (Google Scholar "Cited by" / INSPIRE, by hand in a browser: Scholar shows a CAPTCHA to the cloud session, and INSPIRE/Semantic Scholar are blocked). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
-2. An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36 (ℤ[ω] sums or a sign-aware Rust count).
+2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review with suggested wording edits is in `paper/review-2026-09-26.md`. Still wanted: a reading by a second person.
 3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
 
 ## Conventions
