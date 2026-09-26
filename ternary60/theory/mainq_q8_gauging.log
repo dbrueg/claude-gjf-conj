@@ -1,0 +1,41 @@
+1 Q8-chain code q8chain_len24: n = 24, dim U∩U₀ = 0, |Ŵ| = 3^12, Morita conversion (image = F₃²⊗U, J, K ↦ left mult. by i, j) True; all checks pass
+1 Q8-chain code q8chain_len48: n = 48, dim U∩U₀ = 1, |Ŵ| = 3^22, Morita conversion (image = F₃²⊗U, J, K ↦ left mult. by i, j) True; all checks pass
+1 Q8-chain code q8chain_len96: n = 96, dim U∩U₀ = 1, |Ŵ| = 3^46, Morita conversion (image = F₃²⊗U, J, K ↦ left mult. by i, j) True; all checks pass
+1 random Q8-invariant code #1: n = 24, dim U∩U₀ = 0, |Ŵ| = 3^12; all checks pass
+1 random Q8-invariant code #2: n = 24, dim U∩U₀ = 0, |Ŵ| = 3^12; all checks pass
+1 random Q8-invariant code #3: n = 24, dim U∩U₀ = 0, |Ŵ| = 3^12; all checks pass
+1 random Q8-invariant code #1: n = 48, dim U∩U₀ = 1, |Ŵ| = 3^22; all checks pass
+1 random Q8-invariant code #2: n = 48, dim U∩U₀ = 0, |Ŵ| = 3^24; all checks pass
+1 random Q8-invariant code #3: n = 48, dim U∩U₀ = 1, |Ŵ| = 3^22; all checks pass
+1 random Q8-invariant code #1: n = 72, dim U∩U₀ = 0, |Ŵ| = 3^36; all checks pass
+1 random Q8-invariant code #2: n = 72, dim U∩U₀ = 1, |Ŵ| = 3^34; all checks pass
+1 random Q8-invariant code #3: n = 72, dim U∩U₀ = 0, |Ŵ| = 3^36; all checks pass
+1 random Q8-invariant code #1: n = 96, dim U∩U₀ = 1, |Ŵ| = 3^46; all checks pass
+1 random Q8-invariant code #2: n = 96, dim U∩U₀ = 0, |Ŵ| = 3^48; all checks pass
+1 random Q8-invariant code #3: n = 96, dim U∩U₀ = 0, |Ŵ| = 3^48; all checks pass
+1 U ⊃ U₀ on 1 of 6 blocks: n = 24, dim U∩U₀ = 3, |Ŵ| = 3^6; all checks pass
+1 U ⊃ U₀ on 2 of 6 blocks: n = 24, dim U∩U₀ = 2, |Ŵ| = 3^8; all checks pass
+1 U ⊃ U₀ on 3 of 6 blocks: n = 24, dim U∩U₀ = 3, |Ŵ| = 3^6; all checks pass
+1 U ⊃ U₀ on 4 of 6 blocks: n = 24, dim U∩U₀ = 4, |Ŵ| = 3^4; all checks pass
+1 U ⊃ U₀ on 5 of 6 blocks: n = 24, dim U∩U₀ = 5, |Ŵ| = 3^2; all checks pass
+1 U ⊃ U₀ on 6 of 6 blocks: n = 24, dim U∩U₀ = 6, |Ŵ| = 3^0; all checks pass
+1 all multi-neighbour checks pass: True
+2 eta invariants on S³/<i> and RP³ (both spin structures): A(rotation by 2πa/m) = a²·A(generator) and A_Reg = α(Fer(Reg))·A(generator): True
+2 q8chain_len24 (k = 2): J, K ∈ Aut(C) True; χ characteristic True
+2   J: order 4, Frame shape 2^-12 4^12, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 4 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·2·6 ≡ 4; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('1/2', '1/2'), ('1/2', '1/2')]; match True
+2   K: order 4, Frame shape 2^-12 4^12, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 4 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·2·6 ≡ 4; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('1/2', '1/2'), ('1/2', '1/2')]; match True
+2   JK: order 4, Frame shape 2^-12 4^12, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 4 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·2·6 ≡ 4; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('1/2', '1/2'), ('1/2', '1/2')]; match True
+2   −1: order 2, Frame shape 1^-24 2^24, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_4, 3k·α(Fer(Reg)) = 3·2·2 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2 q8chain_len48 (k = 4): J, K ∈ Aut(C) True; χ characteristic True
+2   J: order 4, Frame shape 2^-24 4^24, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·4·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   K: order 4, Frame shape 2^-24 4^24, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·4·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   JK: order 4, Frame shape 2^-24 4^24, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·4·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   −1: order 2, Frame shape 1^-48 2^48, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_4, 3k·α(Fer(Reg)) = 3·4·2 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2 q8chain_len96 (k = 8): J, K ∈ Aut(C) True; χ characteristic True
+2   J: order 4, Frame shape 2^-48 4^48, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·8·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   K: order 4, Frame shape 2^-48 4^48, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·8·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   JK: order 4, Frame shape 2^-48 4^48, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_8, 3k·α(Fer(Reg)) = 3·8·6 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2   −1: order 2, Frame shape 1^-96 2^96, fixed-point-free True, Majorana layer 0 True, g^(m/2) = −1 True; α = 0 ∈ ℤ_4, 3k·α(Fer(Reg)) = 3·8·2 ≡ 0; on S³/<q>: α·A(gen) vs 3k·A_Reg = [('0', '0'), ('0', '0')]; match True
+2 general k = 1..48 (Frame shapes 2^(−6k) 4^(6k) and 1^(−12k) 2^(12k)): GJF's cyclic anomaly equals 3k·a restricted to <J>, <K>, <JK>, <−1>, in ℤ_(2m) and on the lens spaces: True
+2 all cyclic cross-checks pass: True
+3 det Reg(g) for g ∈ Q₈: [1] (so w₁(Reg) = 0: the Majorana layer of a vanishes)

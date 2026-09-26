@@ -47,6 +47,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_jchain.py, mainq_z12chain.py, mainq_seed_search.py, mainq_obstruction.py: Main Question checks (logs beside them)
                               mainq_automorphisms.py: automorphism groups via nauty (needs $DREADNAUT; scripts/build_nauty.sh)
                               mainq_q8chain.py, mainq_q8_anomaly.py: Q₈-equivariant chain; the Q₈ anomaly (reduction checks, eta invariants)
+                              mainq_q8_gauging.py: the coprime-gauging step of Thm 8.1 (multi-neighbour data; GJF's cyclic anomalies vs 3k·a; log beside it)
                               mainq_q8z3.py: Q₈ × ℤ/3 codes at n = 36 (the 72 | Index rule seen there)
                               mainq_morita.py: Q₈-invariant codes as F₃² ⊗ U (Morita form), h-invariant Lagrangians, free lifts over F₃[u]/u³
                               mainq_72rule.py: the 72-rule: exact laws at n = 12, 24, 36 and counterexamples at n = 72 (log beside it)

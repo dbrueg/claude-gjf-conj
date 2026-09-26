@@ -290,7 +290,33 @@ generates a cyclic group, and every nontrivial one contains $-1$, which fixes no
 So the twisted-sector argument of \cite{GJF} gives index $\Index(C)/8$ for
 $V_{\Lambda(C)}/\!\!/Q_8$, \emph{provided the $Q_8$-action is non-anomalous}. We write
 $\mathcal A(G)=\operatorname{Hom}(\Omega_3^{\mathrm{Spin}}(BG),U(1))$ for the group of anomalies
-of $G$-actions on two-dimensional fermionic theories.
+of $G$-actions on two-dimensional fermionic theories; it is the extended supercohomology group in which
+\cite[Thm.~4.2]{GJF} places the anomaly \cite[\S2.4]{JF}. We use the following standard fact.
+
+\begin{lemma}[Coprime gauging]\label{lem:gauge}
+Let $\Gamma=A\rtimes K$ act by even automorphisms on a holomorphic SVOA $V$, where $A$ is abelian and
+$\gcd(|A|,|K|)=1$. Suppose the anomaly of $\Gamma$ is $p^*\varepsilon$, where $p\colon\Gamma\to K$ is the
+projection and $\varepsilon\in\mathcal A(K)$ has vanishing Majorana layer. Let $V/\!\!/A$ be an orbifold by $A$
+with $K$-invariant discrete torsion. Then $\hat A\rtimes K$ acts on $V/\!\!/A$ with anomaly $p^*\varepsilon$,
+and $K$ acts on $(V/\!\!/A)^{\hat A}=V^A$ as before. In particular $K\subseteq\hat A\rtimes K$ acts on
+$V/\!\!/A$ with anomaly $\varepsilon$.
+\end{lemma}
+
+\begin{proof}[Sources]
+For pointed fusion categories: the orbifold with trivial discrete torsion corresponds to the module
+category $\mathcal M(A,1)$ over $\mathrm{Vec}(\Gamma,p^*\varepsilon)$. Its dual category is
+$\mathrm{Vec}(\hat A\rtimes K,p^*\varepsilon)$ by \cite[Thm.~4.9]{Naidu}, explicitly \cite[Thm.~3.7]{Uribe}
+with $F=\hat F=0$; the dual extension splits since $H^2(K;\hat A)=0$. A $K$-invariant discrete torsion
+$\mu\in H^2(A;U(1))^K=H^2(\Gamma;U(1))_{(|A|)}$ extends to a $2$-cocycle $\tilde\mu$ on $\Gamma$, and
+twisting the tensor structure by $\tilde\mu$ is an autoequivalence of $\mathrm{Vec}(\Gamma,p^*\varepsilon)$
+that carries $\mathcal M(A,1)$ to $\mathcal M(A,\mu)$. The passage to VOAs identifies holomorphic extensions
+of $V^\Gamma$ with Lagrangian algebras in $\operatorname{Rep}(V^\Gamma)\simeq Z(\mathrm{Vec}(\Gamma,
+p^*\varepsilon))$, i.e.\ with module categories \cite[Prop.~2.2.1 and the proof of Prop.~2.3.1]{JF}. For
+bosonic VOAs the remaining input is the regularity of $V^\Gamma$, known for solvable $\Gamma$ \cite{CM}. The super case reduces to the bosonic
+one through bosonic shadows, which exist because the Majorana layer vanishes \cite[\S2.4]{JF}, \cite{BGK};
+this is at the level of rigour of \cite[Thm.~4.2]{GJF}. In physical terms the lemma is
+\cite[\S2.4, Claim]{Tachikawa} with trivial extension classes.
+\end{proof}
 
 \begin{theorem}\label{thm:q8}
 Let $C$ be self-dual of length $12k$ and $Q_8=\langle J,K\rangle\subseteq\Aut(C)$ with
@@ -302,19 +328,38 @@ $8\mid k$.
 
 \begin{proof}
 Since $J^2=-1$, $J$ fixes no coordinate, and likewise $K$ and $JK$; so $Q_8/\{\pm1\}$ acts freely
-on coordinates, with $3k$ orbits of size $4$. Each of the eight possible sign patterns of such an
-action on four coordinates preserves exactly four tetracodes (a finite check); choose one on each
-orbit and let $C_0$ be their direct sum.
+on coordinates, with $3k$ orbits of size $4$. In the coordinates of Lemma~\ref{lem:morita} the
+$Q_8$-invariant tetracodes on an orbit are $\F^2\otimes\ell$ for the four lines $\ell\subseteq\F^2$; choose one
+on each orbit and let $C_0=\F^2\otimes U_0$ be their direct sum.
 
-\emph{Reduction to $C_0$.} Let $W$ be a $Q_8$-stable complement of $C\cap C_0$ in $C_0$ (Maschke's
-theorem; $8$ is prime to $3$). Then $C_0=(C\cap W^\perp)+W$, so $V_{\Lambda(C_0)}$ is the orbifold of
-$V_{\Lambda(C)}$ by the group $\hat W\cong(\mathbb Z/3)^{\dim W}$ of phases $\omega^{\langle w,\cdot\rangle}$,
-which $Q_8$ normalises. For $\Gamma=\hat W\rtimes Q_8$, the inclusion $BQ_8\to B\Gamma$ is a
-$\mathbb Z_{(2)}$-homology equivalence, so the $2$-primary part of the anomaly of $\Gamma$ is
-inflated from $\Gamma/\hat W=Q_8$; gauging the odd-order normal subgroup $\hat W$ leaves it
-unchanged. The induced $Q_8$-action on $V_{\Lambda(C_0)}$ agrees with the canonical one of
-\cite[Thm.~3.1]{GJF} on the frame $V_{\sqrt3\mathbb Z}^{\otimes 12k}$, and two actions agreeing on
-the frame differ by a $1$-cocycle with values in a $3$-group, hence are conjugate.
+\emph{Reduction to $C_0$.} Write $C=\F^2\otimes U$ (Lemma~\ref{lem:morita}) and put
+$D=C\cap C_0=\F^2\otimes(U\cap U_0)$ and $W=\F^2\otimes X$ for a complement $X$ of $U\cap U_0$ in $U_0$;
+$W$ is $Q_8$-stable. Since $\langle X,Y\rangle=\Omega(x_2,y_1)-\Omega(x_1,y_2)$ for rows $x_i,y_i$, we have
+$(\F^2\otimes X)^\perp=\F^2\otimes X^\Omega$. Hence $W\cap C=0$; $C\cap W^\perp=\F^2\otimes(U\cap X^\Omega)=D$,
+because an element of $U\cap X^\Omega$ is $\Omega$-orthogonal to $U_0=X+(U\cap U_0)$ and so lies in
+$U_0^\Omega=U_0$; and $C_0=D\oplus W$ with $W$ totally isotropic. For $w\in W$ let $h_w=\tilde w/\sqrt3$ with
+$\tilde w\in\{0,\pm1\}^{12k}$. Then $\exp(2\pi i\,h_w(0))$ multiplies the frame module
+$V_{\sqrt3\mathbb Z^{12k}+\tilde c/\sqrt3}$, $c\in C$, by $e^{2\pi i\,w\cdot c/3}$. These automorphisms form a
+group $\hat W\cong W$, faithful since $W\to\operatorname{Hom}(C,\F)$ is injective, and $Q_8$ normalises it.
+Its fixed points are $V_{\Lambda(C\cap W^\perp)}=V_{\Lambda(D)}$, the invariant parts of its twisted sectors are
+the $V_{\Lambda(D)+h_w}$, and these add up to $V_{\Lambda(D\oplus W)}=V_{\Lambda(C_0)}$. So
+$V_{\Lambda(C_0)}=V_{\Lambda(C)}/\!\!/\hat W$. In particular $\hat W$ is non-anomalous, and the discrete torsion
+of this orbifold is $Q_8$-invariant because $C_0$ is.
+
+Let $\Gamma=\hat W\rtimes Q_8$ with projection $p\colon\Gamma\to Q_8$, and let $\alpha$ be the anomaly of $Q_8$ on
+$V_{\Lambda(C)}$. Since $\hat W$ has
+odd order, $BQ_8\to B\Gamma$ is a $\mathbb Z_{(2)}$-homology equivalence, so the $2$-primary part of the anomaly
+of $\Gamma$ is $p^*\alpha$. Its $3$-primary part restricts injectively to $\hat W$ (corestriction after transfer
+is multiplication by $8$), where it vanishes. So the anomaly of $\Gamma$ is $p^*\alpha$. The Majorana layer of
+$\alpha$ vanishes: $J$ and $K$ are products of $6k$ transpositions with sign product $-1$, so
+$\langle\chi,(1-g)\chi\rangle=36k\in4\mathbb Z$ for $\chi=\sqrt3(1,\dots,1)$ \cite[Ex.~4.4]{GJF}, and the layer is
+a homomorphism $Q_8\to\mathbb Z/2$. By Lemma~\ref{lem:gauge} a complement $Q_8'\cong Q_8$ in
+$\hat W^\vee\rtimes Q_8$ acts on $V_{\Lambda(C_0)}$ with anomaly $\alpha$, and on $V_{\Lambda(D)}$ it acts as $Q_8$
+does. In particular it acts on the frame $V_{\sqrt3\mathbb Z}^{\otimes 12k}\subseteq V_{\Lambda(D)}$ as the
+canonical lift of \cite[Thm.~3.1]{GJF} for $C_0$ does. The automorphisms of $V_{\Lambda(C_0)}$ that are trivial
+on the frame form the $3$-group $\operatorname{Hom}(C_0,\mathbb C^\times)$ (Schur's lemma on the frame modules).
+So the two actions differ by a $1$-cocycle with values in a $3$-group, hence are conjugate, and the canonical
+$Q_8$-action on $V_{\Lambda(C_0)}$ has anomaly $\alpha$.
 
 \emph{Free fermions.} The lattice of a tetracode is odd unimodular of rank $4$, hence $\mathbb Z^4$, so
 $V_{\Lambda(C_0)}\cong\bigotimes_{3k}V_{\mathbb Z^4}\cong\bigotimes_{3k}\mathrm{Fer}(8)$ with $Q_8$ acting
@@ -340,11 +385,21 @@ $\tfrac14$ on the lens spaces $S^3/\mathbb Z_4$, and $\tfrac12$ on $\mathbb{RP}^
 and $3k\cdot a=0$ forces $8\mid k$.
 \end{proof}
 
-The values on the lens spaces and $\mathbb{RP}^3$ reproduce the anomaly clause of
-Theorem~\ref{thm:gjf}: on $\mathbb Z/4$ and $\mathbb Z/2$ the anomaly vanishes exactly when $4\mid k$
-and $2\mid k$. They are also consistent with topological modular forms: when $4\mid k$ but
+\begin{remark}\label{rem:cyc}
+On cyclic subgroups Theorem~\ref{thm:q8} can be checked without the reduction step. For $g\in\{J,K,JK\}$ the
+Frame shape is $2^{-6k}4^{6k}$, and \cite[Ex.~4.4]{GJF} gives the anomaly $2k\in\mathbb Z/8$ of $\langle g\rangle$
+on $V_{\Lambda(C)}$ directly; for $g=-1$ it is $1^{-12k}2^{12k}$ and the anomaly is $2k\in\mathbb Z/4$. For free
+fermions a rotation plane of angle $2\pi q/m$ contributes $q^2$. So $\mathrm{Fer}(\mathrm{Reg})$ restricted to
+$\langle i\rangle$ (two planes of angle $\pi/2$ and one of angle $\pi$) gives $6$, restricted to $\langle-1\rangle$
+(two planes of angle $\pi$) it gives $2$, and indeed $3k\cdot6\equiv2k\pmod8$ and $3k\cdot2\equiv2k\pmod4$. The eta
+invariants on the lens spaces and $\mathbb{RP}^3$ agree as well, and reproduce the anomaly clause of
+Theorem~\ref{thm:gjf}: on $\mathbb Z/4$ and $\mathbb Z/2$ the anomaly vanishes exactly when $4\mid k$ and $2\mid k$.
+This check cannot see $4a$. That class restricts to zero on every cyclic subgroup, and every abelian subgroup of
+$Q_8$ is cyclic, but it is nonzero on $S^3/Q_8$. So the dichotomy between $8\mid k$ and $k\equiv4\pmod8$ rests on
+the reduction step. The values are also consistent with topological modular forms: when $4\mid k$ but
 $8\nmid k$, a non-anomalous $Q_8$ would produce index $3$, which is not divisible by
 $24/\gcd(k,24)\in\{6,2\}$.
+\end{remark}
 
 \begin{corollary}\label{cor:q8}
 For every $k\equiv0\pmod8$ there is a holomorphic $\mathcal N=1$ SVOA of central charge $12k$ and
@@ -362,8 +417,8 @@ is $24/8=3$.
 
 For $k\equiv0\pmod{24}$ the same reasoning applies to $Q_8\times\mathbb Z/3$, with the order-$3$
 element $h$ fixed-point-free and balanced: the anomaly vanishes (Theorem~\ref{thm:q8}, \cite{GJF} for
-the $\mathbb Z/3$ part, coprimality for mixed terms), and the orbifold would have index $1$. What is
-missing is a suitable code.
+the $\mathbb Z/3$ part, coprimality for mixed terms), and the orbifold has index $1$. A suitable code is
+constructed in \S\ref{sec:D}.
 
 \subsection{Morita form}\label{sec:morita}
 The following description makes $Q_8$-invariant codes computable well beyond direct enumeration.
@@ -445,7 +500,9 @@ of lengths $36$ and $72$ have automorphism groups of $2$-power order, so they do
 condition (2); the one of length $48$ does satisfy Theorem~\ref{thm:gjf} with an element $J$,
 $J^2=-1$. For Theorem~\ref{thm:q8}: on the $Q_8$-invariant codes of lengths $24$, $48$ and $96$
 every coordinate orbit carries an invariant tetracode and their sum is a $Q_8$-invariant self-dual
-code; the eta invariants were evaluated in exact rational arithmetic. The good-plane enumeration of
+code; the identities $W\cap C=0$, $C\cap W^\perp=D$ and $C_0=D\oplus W$ of the reduction step hold on
+these codes and on random $Q_8$-invariant codes up to length $96$; the eta invariants and the cyclic anomalies of
+Remark~\ref{rem:cyc} (for $k\le48$) were evaluated in exact rational arithmetic. The good-plane enumeration of
 \S\ref{sec:morita} agrees sign-exactly with direct enumeration at lengths $12$, $24$, $36$, and in absolute
 value with an independent index algorithm at length $72$. For Theorem~D the chain was built explicitly to
 lengths $144$ and $288$: self-duality, invariance under $J,K,h$, the relations, and the cycle shape of $h$
@@ -479,10 +536,17 @@ Generator matrix of $E_{36}$ (coordinates $0,\dots,35$, entries in $\{0,1,2\}$):
 \end{verbatim}
 }
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 \bibitem{BR}
 [Authors], \emph{Self-dual ternary codes of index 24 in every length $12k$}, draft (2026);
 \texttt{paper/index24.tex} in [repository].
+\bibitem{BGK}
+L.~Bhardwaj, D.~Gaiotto and A.~Kapustin, \emph{State sum constructions of spin-TFTs and string net
+constructions of fermionic phases of matter}, J.\ High Energy Phys.\ \textbf{2017}, no.~4, 096;
+arXiv:1605.01640.
+\bibitem{CM}
+S.~Carnahan and M.~Miyamoto, \emph{Regularity of fixed-point vertex operator subalgebras},
+arXiv:1603.05645.
 \bibitem{Donnelly}
 H.~Donnelly, \emph{Eta invariants for $G$-spaces}, Indiana Univ.\ Math.\ J.\ \textbf{27} (1978), 889--918.
 \bibitem{GJF}
@@ -490,8 +554,19 @@ D.~Gaiotto and T.~Johnson-Freyd, \emph{Holomorphic SCFTs with small index},
 Canad.\ J.\ Math.\ \textbf{74} (2022), 573--601; arXiv:1811.00589.
 \bibitem{Hopkins}
 M.~J.~Hopkins, \emph{Algebraic topology and modular forms}, Proc.\ ICM Beijing 2002, Vol.~I, 291--317.
+\bibitem{JF}
+T.~Johnson-Freyd, \emph{The moonshine anomaly}, Comm.\ Math.\ Phys.\ \textbf{365} (2019), 943--970;
+arXiv:1707.08388.
 \bibitem{nauty}
 B.~D.~McKay and A.~Piperno, \emph{Practical graph isomorphism, II},
 J.\ Symbolic Comput.\ \textbf{60} (2014), 94--112.
+\bibitem{Naidu}
+D.~Naidu, \emph{Categorical Morita equivalence for group-theoretical categories}, Comm.\ Algebra
+\textbf{35} (2007), 3544--3565; arXiv:math/0605530.
+\bibitem{Tachikawa}
+Y.~Tachikawa, \emph{On gauging finite subgroups}, SciPost Phys.\ \textbf{8} (2020), 015; arXiv:1712.09542.
+\bibitem{Uribe}
+B.~Uribe, \emph{On the classification of pointed fusion categories up to weak Morita equivalence},
+Pacific J.\ Math.\ \textbf{290} (2017), 437--466; arXiv:1511.05522.
 \end{thebibliography}
 \end{document}

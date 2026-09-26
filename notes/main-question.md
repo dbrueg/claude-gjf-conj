@@ -21,6 +21,10 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
   - A length-72 seed with R_σ = 24 and R_σ̄(D) = 0, found by a targeted search, gives a G-equivariant chain with Index 24 and T_h = 0 at every k ≡ 0 mod 12, k ≥ 12. So V//G has index 1 for k ≡ 0 mod 24 (Thm 10.1).
   - **So the Main Question has a positive answer for every k** (Cor 10.2), modulo the cited results and caveats.
   - An independent check of GJF's anomaly analysis is not attempted here.
+- **The coprime-gauging step of Thm 8.1 is checked** (§8.2): it is correct.
+  - Its only non-elementary input is the standard coprime-gauging lemma (Naidu, Uribe; Tachikawa; Johnson-Freyd). That lemma is a theorem for fusion categories and follows from known results for bosonic VOAs with solvable group. It reaches the super case through the bosonic shadow.
+  - One gap is closed: the 3-primary part of the anomaly of Ŵ ⋊ Q₈ vanishes.
+  - GJF's cyclic formula, applied directly to V_{Λ(C)}, confirms Thm 8.1 on all cyclic subgroups (`mainq_q8_gauging.py`). The order-2 part 4a is invisible there.
 - **Morita form** (§9): Q₈-invariant codes are F₃² ⊗ U with U Lagrangian in F₃^{2r}. Maximal words are SL₂(F₃)-blocks, and the index is a sum over "good planes" of U weighted by ψ: SL₂(F₃) → ℤ/3. This gives a sign-exact index at length 72 in seconds (`ternary60 sl2words`).
 
 --------------------------------------------------------------------------------------------
@@ -158,6 +162,7 @@ Verification [V]:
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
+- `mainq_q8_gauging.py` (log): §8.2 (the multi-neighbour data of Step 1 on the Q₈-chain codes and random Q₈-invariant codes; GJF's cyclic anomaly against 3k·a on ⟨J⟩, ⟨K⟩, ⟨JK⟩, ⟨−1⟩ in ℤ_{2m} and on lens spaces; w₁(Reg) = 0).
 - `mainq_automorphisms.py` (log, needs nauty): §3.
 - `mainq_72rule.py` (log): §9 (sl2words vs rsigma; the exact laws at n = 12, 24, 36; counterexamples to the 72-rule at n = 72).
 - `mainq_q8z3_seed72.py` (log): §9.4 (seed search statistics; the chain pipeline in the Morita layout).
@@ -175,16 +180,17 @@ Verification [V]:
 
 ## 8. The Q₈ anomaly (2026-09-26, later session)
 
-Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-action on a 2d fermionic theory (for G acting by even automorphisms, symmetry G × ℤ₂^F). GJF use restricted supercohomology rSH³(G); a class that vanishes in A(G) vanishes there too.
+Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-action on a 2d fermionic theory (for G acting by even automorphisms, symmetry G × ℤ₂^F). GJF's anomaly lies in extended supercohomology S̃H³(G) [GJF Thm 4.2], which is A(G): the spectrum of extended supercohomology is a connective cover of the Pontryagin dual of spin bordism [JF §2.4]. Restricted supercohomology rSH³(G) ⊂ S̃H³(G) is the part with vanishing Majorana layer; it contains all classes met here.
 
-**Theorem 8.1 [P, modulo the coprime-gauging step; V].** Let C be self-dual of length n = 12k and Q₈ = ⟨J, K⟩ ⊂ Aut(C) with J² = K² = −1 (so the centre acts as −1). Then the anomaly of the Q₈-action on V_{Λ(C)} is **3k·a**, where a ∈ A(Q₈) is the anomaly of Q₈ acting on 8 Majorana fermions in the real regular representation. **a has order exactly 8.** So the action is non-anomalous iff **8 | k**.
+**Theorem 8.1 [P, given T: GJF Thm 3.1 and the coprime-gauging lemma (§8.2, Lemma E); V].** Let C be self-dual of length n = 12k and Q₈ = ⟨J, K⟩ ⊂ Aut(C) with J² = K² = −1 (so the centre acts as −1). Then the anomaly of the Q₈-action on V_{Λ(C)} is **3k·a**, where a ∈ A(Q₈) is the anomaly of Q₈ acting on 8 Majorana fermions in the real regular representation. **a has order exactly 8.** So the action is non-anomalous iff **8 | k**.
 
 *Proof.*
 - **Step 0 (orbits).** J² = −1 means J fixes no coordinate, and likewise K and JK. So V₄ = Q₈/±1 acts freely on coordinates: there are n/4 = 3k orbits of size 4.
-- **Step 1 (reduction to a model code) [P modulo standard orbifold facts].** On each orbit O choose a Q₈-invariant tetracode T_O. This is always possible: each of the 8 sign patterns of a Q₈ action on 4 coordinates preserves exactly 4 tetracodes [V]. Put C₀ = ⊕_O T_O.
-  - Let W be a Q₈-stable complement of C ∩ C₀ in C₀ (Maschke; 8 is prime to 3). Then C₀ = (C ∩ W^⊥) + W, the multi-neighbour of C along W ([I §5.1(d)]). So V_{Λ(C₀)} = V_{Λ(C)}//Ŵ, where Ŵ ≅ W is a 3-group acting by phases ω^{⟨w,·⟩} and normalised by Q₈.
-  - Put Γ = Ŵ ⋊ Q₈. BQ₈ → BΓ is a ℤ₍₂₎-homology equivalence, so the 2-primary part of Γ's anomaly is inflated from Γ/Ŵ = Q₈ and equals Q₈'s anomaly on V_{Λ(C)}. Gauging the odd-order normal subgroup Ŵ leaves this inflated part unchanged, so Q₈ has the same anomaly on V_{Λ(C₀)} (with the induced action).
-  - The induced action agrees with GJF's on the frame V_{√3ℤ}^{⊗n}. Two actions agreeing on the frame differ by a cocycle Q₈ → Ĉ₀, a 3-group, so they are conjugate (H¹ = 0).
+- **Step 1 (reduction to a model code) [P, given T: Lemma E of §8.2; V].** On each orbit O choose a Q₈-invariant tetracode T_O; in Morita form these are F₃² ⊗ ℓ for the 4 lines ℓ ⊂ F₃² (Lemma 9.1), so there are exactly 4. Put C₀ = ⊕_O T_O. Details and proofs are in §8.2:
+  - C₀ is the multi-neighbour of C along a Q₈-stable W ⊂ C₀ ([I §5.1(d)]), so V_{Λ(C₀)} = V_{Λ(C)}//Ŵ, where Ŵ ≅ W is a 3-group of phases ζ^{w·c} normalised by Q₈ (Lemmas A, B).
+  - The anomaly of Γ = Ŵ ⋊ Q₈ is inflated from Q₈: its 2-part because BQ₈ → BΓ is a ℤ₍₂₎-homology equivalence, its 3-part because it restricts injectively to Ŵ, which is non-anomalous (Lemma D).
+  - Gauging the normal subgroup Ŵ of coprime order leaves an inflated anomaly unchanged (Lemma E: Naidu, Uribe; Tachikawa; Johnson-Freyd). So Q₈ has the same anomaly on V_{Λ(C₀)}, with the induced action.
+  - The induced action is conjugate to GJF's canonical one for C₀: both act on the frame V_{√3ℤ}^{⊗n} in the standard way, and two such lifts differ by a cocycle Q₈ → C₀^*, a 3-group, so H¹ = 0 (Lemmas C, F).
 - **Step 2 (free fermions) [P].** Λ(T) ≅ ℤ⁴ (the only odd unimodular lattice of rank 4), so V_{Λ(C₀)} = ⊗_O V_{ℤ⁴} = ⊗_O Fer(8), with Q₈ acting factor by factor.
   - An automorphism of Fer(8) is determined by its action on the weight-½ space, which is spanned by the e^{t/√3}, t ∈ T∖0.
   - Q₈ permutes these up to sign, and freely: every nontrivial subgroup contains −1, and −t ≠ t. So the character is regular, and V_{½} ≅ Reg = 1 ⊕ χ_i ⊕ χ_j ⊕ χ_k ⊕ H as orthogonal real representations (H = the 4-dim quaternionic irreducible).
@@ -207,7 +213,7 @@ Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-actio
   - So a has order 8. 3k·a vanishes on these space forms exactly when 8 | k. Its restrictions vanish exactly when 2 | k (on ⟨−1⟩) and when 4 | k (on ℤ/4), which is GJF's anomaly clause "m | k" of Thm 5.6 for m = 2, 4: an independent check of the normalisation.
 - **TMF consistency.** When 8 ∤ k and 4 | k, a non-anomalous Q₈ would give index 3, but TMF demands 24/gcd(k,24) ∈ {6, 2} | index. The theorem says Q₈ is anomalous exactly there. □
 
-**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4) and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
+**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4), the coprime-gauging lemma of Thm 8.1 (§8.2), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
 - *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □
 - Checked explicitly at k = 8 (n = 96): Q₈-invariance, J² = K² = −1, JK = −KJ, self-duality; Index = 24 by [I Lemma 5.8].
 
@@ -224,6 +230,117 @@ Setting: 36 coordinates in nine Q₈-orbits, with h fixed-point-free, of order 3
 - **Consistent chain search.** There are 19 G-stable 9-block systems. On about 290 random codes with Index ≡ 24 mod 48 (exploratory runs plus the logged run), every system with R_σ̄(D) = 0 had |R_σ| ≥ 72, and 72 occurs. Such a chain would have T_h = 0 and Index R_σ, so this is what the rule predicts.
 - **Update (later session): the rule is false in general (§9).** At n = 72 (k = 6), 5 of 30 random G-invariant codes violate it; `ternary60/codes/q8z3_len72_T0.txt` has T_h = 0 and Index = −3840 ≡ 48 mod 72, and one random code even has Index = 24 with T_h = 0. At n = 36 the rule is explained by an exact law (§9.3). So it is **not** an obstruction to k ≡ 0 mod 24: it only says that chains seeded at k = 3 (whose index is R_σ of the seed) cannot work. Seeds at k = 6 are not constrained this way (§9.4).
 - (Superseded heuristics: an h-orbifold argument for extra divisibility; the fallback list of other groups. Both are moot now.)
+
+### 8.2 The coprime-gauging step of Theorem 8.1, checked (2026-09-26, later session) [P, T; V: `mainq_q8_gauging.py`, log beside it]
+
+**Verdict: Step 1 is correct.** Its code-theoretic and group-cohomological parts are elementary (Lemmas A–D, F). Its one non-elementary input is the standard coprime-gauging lemma (Lemma E). That lemma is a theorem for fusion categories. For bosonic VOAs with solvable group (as Γ is) it follows from known results [JF Prop 2.2.1; Carnahan–Miyamoto]. Here it is applied to a super VOA through the bosonic shadow, which is the level of rigour of GJF Thm 4.2 itself. The check closed one gap: the 3-primary part in Lemma D, needed so that the anomaly of Γ is inflated on the nose. It also made the hypotheses of the gauging lemma explicit.
+
+Setting: C = F₃² ⊗ U in Morita form (Lemma 9.1): U ⊂ F₃^{2r} is Lagrangian for Ω, r = 3k, and Q₈ acts on each block by left multiplication.
+- Frame F = V_{√3ℤ}^{⊗n}. V_{Λ(C)} = ⊕_{c∈C} M_c with M_c = V_{√3ℤⁿ + c̃/√3}, where c̃ ∈ {0, ±1}ⁿ lifts c.
+- ζ = e^{2πi/3}. C^* ≅ Hom(C, ℂ^×) ≅ 3^{n/2} denotes the automorphisms trivial on the frame (GJF's notation).
+
+**Lemma A (multi-neighbour data) [P; V].**
+- On one block the Q₈-invariant codes are F₃² ⊗ ℓ with ℓ ⊂ F₃² (Lemma 9.1). So the invariant tetracodes are F₃² ⊗ ℓ for the 4 lines ℓ, and "exactly 4" is [P].
+- Take U₀ = ⊕_b ℓ_b (one line per block) and C₀ = F₃² ⊗ U₀.
+  - D := C ∩ C₀ = F₃² ⊗ (U ∩ U₀).
+  - W := F₃² ⊗ X for a complement X of U ∩ U₀ in U₀.
+  - Every subspace F₃² ⊗ X is Q₈-stable, so Maschke is not needed.
+- In Morita form ⟨(x; x′), (y; y′)⟩ = Ω(x′, y) − Ω(x, y′), where x, x′ are the rows. So (F₃² ⊗ X)^⊥ = F₃² ⊗ X^Ω.
+- Consequences:
+  - (i) W ⊂ C₀ is totally isotropic, so 3 | wt(w) for w ∈ W.
+  - (ii) W ∩ C = F₃² ⊗ (X ∩ U) = 0.
+  - (iii) C ∩ W^⊥ = F₃² ⊗ (U ∩ X^Ω) = D. Indeed u ∈ U ∩ X^Ω is Ω-orthogonal to X and to U ∩ U₀, hence to U₀, so u ∈ U₀^Ω = U₀.
+  - (iv) W → Hom(C, F₃) is injective. Indeed x ∈ X with Ω(x, U) = 0 lies in U^Ω ∩ X = U ∩ X = 0.
+  - (v) C₀ = D ⊕ W.
+- [V] Part 1 checks all of this on:
+  - the Q₈-chain codes at n = 24, 48, 96, converted to Morita form by an explicit monomial map (checked to carry C onto F₃² ⊗ U and to intertwine J, K with left multiplication by i, j);
+  - 12 random Q₈-invariant codes with n ≤ 96;
+  - 6 codes with large U ∩ U₀, including C = C₀ (W = 0).
+
+**Lemma B (V_{Λ(C₀)} = V_{Λ(C)}//Ŵ, and Ŵ is non-anomalous) [P].**
+- For w ∈ W put h_w = w̃/√3. Then ĝ_w = exp(2πi h_w(0)) acts on M_c by ζ^{w·c}.
+  - These ĝ_w form Ŵ ≅ W, which acts faithfully by A(iv).
+  - Ŵ is a group of inner automorphisms of order 3^{dim W}, normalised by Q₈ (g ĝ_w g⁻¹ = ĝ_{gw}).
+- The orbifold:
+  - V^Ŵ = ⊕_{c ∈ C ∩ W^⊥} M_c = V_{Λ(D)}, by A(iii).
+  - The ĝ_w-twisted module is V_{Λ(C)+h_w}. Its Ŵ-invariant part is V_{Λ(D)+h_w}, by the same computation, since w ∈ W^⊥.
+  - By A(v), ⊕_{w∈W} V_{Λ(D)+h_w} = V_{Λ(D⊕W)} = V_{Λ(C₀)}.
+- So the Ŵ-orbifold exists and is V_{Λ(C₀)}. Equivalently, all shifts h_w lie in the integral lattice Λ(C₀): |h_w|² = wt(w)/3 ∈ ℤ and ⟨h_w, h_{w′}⟩ ∈ ℤ.
+- Orbifolds correspond to trivialisations of the anomaly [GJF Thm 4.2; JF Prop 2.2.1]. So **α|_Ŵ = 0**.
+- The extension V_{Λ(C₀)} ⊃ V_{Λ(D)} is stable under Q₈'s action on V_{Λ(D)}: GJF's lift for C₀ restricts to that action up to conjugation by D^* (as in Lemma C). So its discrete torsion is Q₈-invariant, as Lemma E requires.
+
+**Lemma C (the lifts) [T: GJF Thm 3.1; P].**
+- GJF Thm 3.1: Aut(C) acts on V_{Λ(C)} (the extension Λ̂[2].Aut(C) splits), through the standard action of 2ⁿ:S_n on the frame.
+  - So Q₈ acts genuinely, by even automorphisms (it fixes the supercurrent), and the symmetry is Q₈ × ℤ₂^F.
+  - The lift of −1 acts on each V_{√3ℤ} by the reflection θ, not by (−1)^F.
+- The automorphisms trivial on F form C^*:
+  - such an automorphism preserves each M_c, since the M_c are pairwise non-isomorphic F-modules;
+  - it acts on each M_c by a scalar (Schur);
+  - the scalars are multiplicative, since M_c · M_{c′} = M_{c+c′}.
+- So two lifts of Q₈ that agree on F differ by a 1-cocycle Q₈ → C^*. Since H¹(Q₈; C^*) = 0 (coprime orders), they are conjugate by an element of C^*.
+
+**Lemma D (the anomaly of Γ = Ŵ ⋊ Q₈ is inflated from Q₈) [P].**
+- Γ := ⟨Ŵ, Q₈⟩ ⊂ Aut(V_{Λ(C)}) equals Ŵ ⋊ Q₈, since Ŵ is normal and Ŵ ∩ Q₈ = 1. A(Γ) = A(Γ)₍₂₎ ⊕ A(Γ)₍₃₎.
+- **2-part.** Ŵ has odd order, so BQ₈ → BΓ is an isomorphism on ℤ₍₂₎-homology, hence on Ω₃^Spin(−)₍₂₎ (Atiyah–Hirzebruch).
+  - So inflation A(Q₈) → A(Γ)₍₂₎ is an isomorphism, inverse to restriction.
+  - Hence α_{Γ,(2)} = infl(α_{Q₈}), where α_{Q₈} is Q₈'s anomaly on V_{Λ(C)}.
+- **3-part.** At odd primes Ω₃^Spin(BΓ)₍₃₎ = H₃(Γ; ℤ)₍₃₎.
+  - Corestriction H₃(Ŵ) → H₃(Γ)₍₃₎ is onto, since corestriction ∘ transfer is multiplication by [Γ : Ŵ] = 8, a unit.
+  - So restriction A(Γ)₍₃₎ → A(Ŵ) is injective, and α_{Γ,(3)} = 0 by Lemma B.
+- So **α_Γ = infl(α_{Q₈})** on the nose. The original Step 1 treated only the 2-part.
+
+**Lemma E (coprime gauging) [T].** Let Γ = A ⋊ K act by even automorphisms on a holomorphic (S)VOA V, with A abelian and gcd(|A|, |K|) = 1, and with anomaly α_Γ = infl(ε), ε ∈ A(K) (with vanishing Majorana layer in the super case). Let V′ = V//A, with any K-invariant discrete torsion. Then:
+- Γ′ = Â ⋊ K acts on V′, extending the action of K on V^A (= V′^Â), with anomaly infl(ε).
+- In particular a complement K′ ≅ K acts on V′ with anomaly ε. The complement is unique up to conjugacy, since H¹(K; Â) = 0.
+
+Sources and status:
+- *Fusion categories.* V//A with discrete torsion μ corresponds to the module category M(A, μ) over Vec(Γ, α_Γ). For μ = 1 the dual category is Vec(Â ⋊ K, infl ε):
+  - [Naidu, Thm 4.9]; explicitly [Uribe, Thm 3.7] with F = F̂ = 0, which gives ω = ω̂ = ε.
+  - The dual extension Â.K splits because H²(K; Â) = 0.
+  - A K-invariant class μ extends to a 2-cocycle μ̃ on Γ, since H²(Γ; U(1))₍₃₎ = H²(A; U(1))^K. Twisting the tensor structure by μ̃ is an autoequivalence of Vec(Γ, α_Γ) that carries M(A, 1) to M(A, μ), so the dual is the same.
+- *VOAs.* Rep(V^Γ) ≅ Z(Vec(Γ, α_Γ)), and holomorphic extensions of V^Γ correspond to Lagrangian algebras, i.e. to module categories; V//A is the one for M(A, μ).
+  - This is [JF Prop 2.2.1] together with the argument in the proof of [JF Prop 2.3.1], which does the case of cyclic A.
+  - For bosonic VOAs the remaining input is regularity of V^Γ, which holds because Γ is solvable [Carnahan–Miyamoto]. JF notes that no single complete proof of Prop 2.2.1 is written down, but that it follows from the cited literature.
+- *Physics.* [Tachikawa §2.4, Claim] with e = ẽ = 0: gauging A leaves the anomaly ω(g) of the quotient group unchanged. The argument never uses the spin structure, so it applies verbatim to fermionic anomalies.
+- *Super VOAs.* The Majorana layer of α_{Q₈} vanishes on V_{Λ(C)}:
+  - J and K are products of n/2 transpositions with sign product −1, so ⟨χ, (1−g)χ⟩ = 3n ∈ 4ℤ (GJF Ex 4.4's criterion; [V] Part 2).
+  - The Majorana layer is a homomorphism Q₈ → ℤ/2, so it vanishes on Q₈. Consistently, w₁(Reg) = 0 (Part 3).
+  - So the super fusion category of twisted sectors has the bosonic shadow Vec(Γ̃, ω̃), with Γ̃ = Ŵ ⋊ 2.Q₈ and ω̃ = infl(ε̃) [JF §2.4, BGK].
+  - Gauge Ŵ there and divide by the central 2, as in JF's super T-duality.
+- *Status.* This is standard, but no complete written proof for super VOAs was found in the literature consulted. GJF Thm 4.2 (the fermionic anomaly itself) is at the same level.
+
+**Lemma F (the induced action is GJF's, up to conjugacy) [P, given T: GJF Thm 3.1].**
+- K′ ⊂ Γ′ acts on V′^{Â} = V_{Λ(D)} as Q₈ does on V^Ŵ = V_{Λ(D)}. In the construction behind Lemma E, K acts on the A-invariant parts of the twisted sectors through its action on those sectors, and the untwisted sector is V^A.
+- So K′ acts on the frame F ⊂ V_{Λ(D)} by the standard monomial action. It preserves F and maps onto Q₈ ⊂ Aut(C₀) (the same signed permutations).
+- GJF's lift for C₀ has the same frame action. By Lemma C (for C₀) the two lifts are conjugate by an element of C₀^*, and conjugate actions have equal anomalies.
+
+**Conclusion.** GJF's Q₈-action on V_{Λ(C₀)} = ⊗_O Fer(8) has the same anomaly as on V_{Λ(C)}, as Step 1 claims.
+- Lemmas A and B are the gauging; C and D are its hypotheses; E is the invariance; F identifies the action.
+- Steps 2–4 then give 3k·a.
+
+**Independent cross-check on cyclic subgroups [V: Part 2, exact arithmetic].** GJF Ex 4.4 computes the anomaly of ⟨g⟩ on V_{Λ(C)} directly, for fixed-point-free g of even order m with vanishing Majorana layer and g^{m/2} = −1 (so the lift has order m). The formula is α/(2m) ≡ m·ρ_g mod 1, where ρ_g = (1/24)Σ_k d_k (k − 1/k) is the weight of the twisted module.
+- **J, K, JK.** Frame shape 2^{−6k}4^{6k} and ρ = 3n/64, so α = 2k ∈ ℤ₈.
+  - Free fermions: a rotation plane of angle 2πq/m has twisted weight (q/m)²/2, so it contributes q².
+  - Reg|_{⟨i⟩} has two planes of angle π/2 and one of angle π, so α(Fer(Reg)) = 1 + 1 + 4 = 6, and 3k·6 ≡ 2k ∈ ℤ₈.
+- **−1.** Frame shape 1^{−12k}2^{12k} and ρ = n/16, so α = 2k ∈ ℤ₄.
+  - Free fermions: two planes of angle π give α(Fer(Reg)) = 2, and 3k·2 ≡ 2k ∈ ℤ₄.
+- **Lens spaces.** The same agreement holds on S³/⟨i⟩ and RP³ (eta invariants, both spin structures). The eta values obey the quadratic rule A(rotation by 2πq/m) = q²·A(generator).
+- **Coverage.** Frame shapes, fixed-point-freeness, Majorana layers and g^{m/2} = −1 are computed from the actual J, K of the Q₈-chain codes (n = 24, 48, 96), and from the Frame shapes for k = 1..48.
+- So Thm 8.1 holds on every cyclic subgroup without Step 1.
+- **Limitation.** 4a restricts to 0 on every cyclic subgroup (4·A_Reg ∈ ℤ on S³/⟨i⟩ and RP³), and every abelian subgroup of Q₈ is cyclic, yet 4a ≠ 0 (4·5/8 ≡ 1/2 on S³/Q₈).
+  - So no check done one cyclic subgroup at a time can distinguish 3k·a from 3k·a + 4a. This includes GJF's Frame-shape formula, the lens-space values, and each twisted–twining function Z(g, h) normalised within ⟨g, h⟩.
+  - For 8 | k versus k ≡ 4 mod 8 the argument therefore rests on Step 1.
+  - [H] 4a should be visible in the Q₈-action on the (−1)-twisted sector as a whole: whether the Q₈-linearised lift of −1 agrees with the lift normalised by ⟨−1⟩ alone.
+  - [open] A direct computation of that action (θ-twisted module of V_{Λ(C)}, extraspecial group of Λ/2Λ) at n = 48 and 96 would be a fully independent check of Thm 8.1.
+- **2-local picture [H].** Λ(C) ⊗ ℤ₍₂₎ = √3ℤ₍₂₎ⁿ = Λ(C₀) ⊗ ℤ₍₂₎ Q₈-equivariantly, since √3ℤⁿ has odd index in both. The 2-primary anomaly should depend only on this 2-local data; Step 1 proves that in the case at hand.
+
+References:
+- [Naidu] D. Naidu, Categorical Morita equivalence for group-theoretical categories, Comm. Algebra 35 (2007) 3544–3565, arXiv:math/0605530.
+- [Uribe] B. Uribe, On the classification of pointed fusion categories up to weak Morita equivalence, Pacific J. Math. 290 (2017) 437–466, arXiv:1511.05522 (theorem numbers of the arXiv version).
+- [Tachikawa] Y. Tachikawa, On gauging finite subgroups, SciPost Phys. 8 (2020) 015, arXiv:1712.09542.
+- [JF] T. Johnson-Freyd, The moonshine anomaly, Comm. Math. Phys. 365 (2019) 943–970, arXiv:1707.08388.
+- [Carnahan–Miyamoto] S. Carnahan, M. Miyamoto, Regularity of fixed-point vertex operator subalgebras, arXiv:1603.05645.
+- [BGK] L. Bhardwaj, D. Gaiotto, A. Kapustin, State sum constructions of spin-TFTs and string net constructions of fermionic phases of matter, JHEP 04 (2017) 096, arXiv:1605.01640.
 
 --------------------------------------------------------------------------------------------
 
@@ -304,4 +421,4 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).
 - gcd = 8: the Q₈-chain (Cor 8.2).
 - gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
-- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on the coprime-gauging step of Thm 8.1, and on [I] (not yet independently read). It still needs a literature check and a second reader.
+- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on the coprime-gauging lemma used in Step 1 of Thm 8.1 (§8.2, Lemma E: standard, [T]), and on [I] (not yet independently read). It still needs a literature check and a second reader.
