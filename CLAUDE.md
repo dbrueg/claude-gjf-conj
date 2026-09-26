@@ -8,11 +8,12 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 
 ## Where things stand (2026-09-26, later session)
 
-**Both halves of Conj 1.4 are now proved here** (pending literature check and independent reading).
+**Both halves of Conj 1.4 are now proved here, and both are formally verified in Lean 4** (`GJF.conjecture_1_4`; pending literature check and independent reading).
 - **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
 - Verified by `ternary60/theory/existence_quadruple.py`: exact at n = 24, and Rust |Index| = 24 on explicit chains at n = 36, 48, 60, 72, 84 (log complete; codes in `ternary60/codes/quad_index24_len*.txt`).
 - Independently re-verified by `ternary60/theory/paper_check.py` from the paper's definitions, with sign-exact Index = +24 at n = 24 and n = 36 (information-set enumeration).
-- **Divisibility half now has a finite, elementary proof** (notes §2 Step 1′, `design_poisson.py`): Poisson on F₃ⁿ for g_ij gives G_ij(C) = −G_ij(C)/3, hence the signed 2-design (◆) and 24 | Index with no modular forms.
+- **Divisibility half formally verified in Lean 4** (`lean/GJF/Divisibility.lean`); the statement needs n ≥ 1 (n = 0 has index 1).
+- **Divisibility half now has a finite, elementary proof** (notes §2 Step 1′, `design_poisson.py`): Poisson on F₃ⁿ for g_ij gives G_ij(C) = −G_ij(C)/3, hence the signed 2-design (◆) and 24 | Index with no modular forms. Critically checked (`divisibility_check.py`); all variants written up in `paper/divisibility.tex`.
 - Earlier results in §5.1 still stand: Thm 5.4 (mod 48), Prop 5.5, Lemma 5.6, Thm 5.7 (the s = 0 case of Lemma 5.8), Lemmas 5.2–5.3. The seed search (`existence_seed_search.py`) is no longer needed.
 
 **GJF's Main Question** (index 24/gcd(k,24) at c = 12k; notes `notes/main-question.md`, paper draft `paper/main-question.tex`), 2026-09-26, later session:
@@ -38,7 +39,8 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 
 ## Lean / Mathlib (set up 2026-09-26)
 
-- Project in `lean/` (Mathlib master, toolchain `leanprover/lean4:v4.35.0-rc3`). `GJF/Basic.lean` only type-checks the Mathlib facts Proof II needs (`levelOne_weight_two_rank_zero` = M₂(SL₂ℤ) = 0, `jacobiTheta₂_functional_equation`). Nothing is formalized yet; the size estimate is in notes §5 item 5 (divisibility via Step 1′ ≈ 600–1,200 lines).
+- Project in `lean/` (Mathlib master, toolchain `leanprover/lean4:v4.35.0-rc3`). **`GJF/Divisibility.lean` formalizes the divisibility half** (route C): `GJF.index_dvd_24 : IsSelfDual C → 0 < n → 24 ∣ gjfIndex C`, standard axioms only, no `sorry`/`native_decide`. `GJF/Sanity.lean`: the tetracode is self-dual (non-vacuity). `GJF/Orthogonal.lean`: `IsSelfDual C ↔ (dotProductBilin).orthogonal C = C ↔ self-orthogonal ∧ 2·dim C = n`, and `index_dvd_24'` with Mathlib's orthogonal complement. `GJF/Existence.lean` formalizes the existence half (Thm 5.9): `GJF.Ex.exists_selfDual_index24`; `GJF.conjecture_1_4` states both halves (standard axioms only; ≈ 2 min to compile, mostly kernel `decide` on Golay). `GJF/Basic.lean`: the modular-forms facts (unused now). Check with `lake build` and `#print axioms GJF.index_dvd_24`.
+- Lean pitfalls seen here: `simp`/`rw` fail to match `neg_neg` on `Fin n → ZMod 3` (use the term `neg_neg x`); `decide` handles all finite 𝔽₃ case checks, even ∀ over `Fin 4 → ZMod 3`; after `rw` of `n` in hypotheses mentioning `Fin n`, abstract the dependent term first (motive errors); Mathlib field lemmas on `ZMod 3` objects built from the ring instances fail instance synthesis (ring/field diamond), so pass instances with `@` (`Pi.Function.module`, `Module.Finite.pi`) and close by `Eq.trans`; keep `Word n` vs `Fin n → ZMod 3` consistent or `omega` sees different atoms; the Mathlib instance `instAddCommGroupOfIsSimpleAddGroupOfIsNilpotent` hijacks `Neg (ZMod 3)` (simp/ring then fail): remove it with `attribute [-instance]`; nested sum/product coordinate types need `set_option synthInstance.maxSize 2048` for `DecidableEq`.
 - A fresh container needs this setup, because `release.lean-lang.org` and `cache.mathlib.org` are blocked:
   1. `curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none`
   2. Download `https://github.com/leanprover/lean4/releases/download/v4.35.0-rc3/lean-4.35.0-rc3-linux.tar.zst`, unpack it to `~/lean-toolchains/`, then run `elan toolchain link leanprover/lean4:v4.35.0-rc3 ~/lean-toolchains/lean-4.35.0-rc3-linux`.

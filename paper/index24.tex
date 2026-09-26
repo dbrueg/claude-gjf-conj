@@ -315,7 +315,10 @@ constructed explicitly; they are self-dual with $|\Index|=24$. A maximal codewor
 information set, so the $2^{n/2}$ sign patterns on an information set exhaust the candidates
 ($2^{n/2-1}$ up to $x\mapsto-x$). Enumerating them without sign normalisation gives
 $\Index=+24$ exactly at $n=24$ and $n=36$; for $n\le84$ the same enumeration, with the sign of one word
-normalised, gives $|\Index|=24$. Lengths $72$ and $84$ are covered neither by the examples of
+normalised, gives $|\Index|=24$. The whole argument (Lemmas~\ref{lem:A}, \ref{lem:B}, \ref{lem:main}, Proposition~\ref{prop:base} and
+the proof of Theorem~\ref{thm:main}) is also formalized in Lean~4 with Mathlib (repository file
+\texttt{lean/GJF/Existence.lean}): for every $k\ge1$ it produces a self-dual code of length $12k$ with
+index exactly $24$, using only the standard axioms. Lengths $72$ and $84$ are covered neither by the examples of
 \cite{GJF} ($k\le5$) nor by doubling ($k=2^j$). Code and generator matrices are available at [repository].
 \end{remark}
 

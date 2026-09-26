@@ -31,10 +31,10 @@ GJF = D. Gaiotto, T. Johnson-Freyd, *Holomorphic SCFTs with small index*, Canad.
 - GJF conjectured 24 | Index in all lengths. The open case was n ≡ 12 mod 24 (36, 60, 84, …), where the missing piece is exactly 8 | Index.
 - GJF say they do not know an elementary proof even of the 24 | n case.
 
-**Theorem [P; V].** For every self-dual ternary code C, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
+**Theorem [P; V; Lean].** For every self-dual ternary code C of positive length, **24 | Index(C)**. This is the divisibility half of GJF Conj 1.4. There are two proofs.
 - **Proof I (§1, Kneser neighbours; Fourier analysis on F₃ⁿ only):** 8 | Index. The 3-part then comes from GJF Thm 1.3.
 - **Proof II (§2, signed 2-design; one fact about modular forms, M₂(SL₂(Z)) = 0):** both 8 | Index and 3 | Index. This is independent of GJF Thm 1.3 and of Borcherds, and re-proves Thm 1.3 without the even-neighbour/Borcherds argument.
-- **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n.
+- **Proof II′ (§2, Step 1′, 2026-09-26): the signed 2-design (◆) by a three-line Poisson argument on F₃ⁿ.** No modular forms and no neighbours. With Steps 2–3 this gives a **fully finite, elementary proof of 24 | Index**, which GJF say they did not have even for 24 | n. **Formally verified in Lean 4** (`lean/GJF/Divisibility.lean`, §2 Step 1′); the formal statement needs n ≥ 1.
 - **The existence half of Conj 1.4 (a code of index ±24 in every length 12k) is proved for all k ≥ 1** (Theorem 5.9, §5.1(f‴), 2026-09-26). The codes are explicit: Golay plus tetracodes, glued by *partial* Hadamard quadrupling, which adds 12b to the length and preserves a block-weighted index R_σ. Verified on explicit codes at n = 24, …, 84, and re-derived from the paper's definitions with independent code, sign-exact at n = 36 (`paper_check.py`). Web literature check found no prior solution; not yet checked by a second (human) reader. (Earlier: k = 2^j by doubling, Theorem 5.7.)
 
 **GJF's Main Question** (index 24/gcd(k,24) at c = 12k) is treated in `notes/main-question.md`: answered for all k with 8 ∤ k; for 8 | k GJF's cyclic-orbifold route is provably impossible.
@@ -135,7 +135,24 @@ Notation.
 - *Why it works while Proof I needs neighbours.* f is a Fourier eigenfunction with eigenvalue 3^{n/2}, so Poisson over C only returns F(C) = F(C). Replacing φ by the indicator at two coordinates changes the eigenvalue by the factor −1/3 on everything C can contain, and a fixed point of x ↦ −x/3 is 0.
 - *Neighbour form.* The same computation for D = C ∩ C′ (dim n/2 − 1) gives G_ij(D^⊥) = −G_ij(D), hence G_ij(C) + G_ij(C′) = 0. G_ij(D) itself is usually nonzero.
 - [V: `design_poisson.py`] the ĝ formula by brute force at n = 4, 8; G_ij(C) = 0 and the Poisson identity exactly on random codes at n = 12, 24; G(D^⊥) = −G(D) and G(C) + G(C′) = 0 on random neighbour pairs at n = 12 (1980/1980; G(D) ≠ 0 in 1108) and n = 24 (48/48).
-- *Literature.* Not checked. Step 1 above (the modular proof) stays as an independent derivation.
+- *Literature.* Step 1′ is an evaluation of the MacWilliams-type identity for the complete weight enumerator split at {i, j} (complete Jacobi polynomials: Ozeki, Math. Proc. Camb. Phil. Soc. 121 (1997); Chakraborty–Miezaki, Des. Codes Cryptogr. 90 (2022)). A web search (2026-09-26) found neither (◆) nor its use for the index; it was not systematic. Step 1 above (the modular proof) stays as an independent derivation.
+- **Critical check (2026-09-26) [V: `theory/divisibility_check.py`, log beside it]. Verdict: correct.**
+  - Re-derived by hand: the lift and sign conventions, the one-coordinate transforms, Poisson over C = C^⊥, the weight argument, and Steps 2–3. The sign of (i√3)^{n−2} is irrelevant (G = ±G/3), so 4 | n is not even used.
+  - The crux, ĝ_ij = −3^{n/2−1}·g_ij pointwise on C, checked by brute force in exact ℤ[ω] (no product formula) on every codeword of Golay, code2 and a random code at n = 12, three pairs each (2187/2187 each).
+  - Hypotheses are needed: for 40 random non-self-orthogonal 6-dim codes at n = 12, the general Poisson identity with correction terms holds exactly, the corrections are nonzero on all 40, and G(C^⊥) ≠ 0 on 28.
+  - The conclusion and Steps 2–3 exactly: n = 24 (Python, three codes with Index 24), n = 36, 48, 60 (Rust `design`, incl. P(17), P(23), XQR(47), P(29), XQR(59)).
+- **Four marked coordinates [P; V: `divisibility_check.py` part 4].** The same computation with K = {a,b,c,d} has correction terms from codewords of weight n − 3 whose three zeros lie in K (factor 2³·(−1) = −8), and gives
+      **Σ_F s(ε)ε_aε_bε_cε_d = −W_K,   W_K = Σ_{u∈C, zeros of u = three points of K} ∏_{k∉K} φ(u_k).**
+  - Checked on all 495 four-sets for Golay (values ±8, never 0) and code2, and on 50 four-sets at n = 24.
+  - So weight-(n−3) codewords are exactly the obstruction to a signed 4-design; this explains the "not a 4-design" remark in Step 2.
+- Write-up of all variants: `paper/divisibility.tex` (routes 0, A, B, C, C′).
+- **Formally verified in Lean 4 + Mathlib [Lean: `lean/GJF/Divisibility.lean`, 662 lines] (2026-09-26).** Theorem `GJF.index_dvd_24 : IsSelfDual C → 0 < n → 24 ∣ gjfIndex C`, with codes as `Submodule (ZMod 3) (Fin n → ZMod 3)`, self-duality as `x ∈ C ↔ ∀ c ∈ C, x·c = 0`, and `gjfIndex` literally #even − #odd maximal codewords. Also `GJF.design` (the off-diagonal (◆)), `eight_dvd_index`, `three_dvd_index`.
+  - Axioms: `propext`, `Classical.choice`, `Quot.sound` only; finite checks by kernel `decide` (no `native_decide`, no `sorry`).
+  - The formalization found a missing hypothesis: **n ≥ 1 is needed**. At n = 0 the empty word is an even maximal codeword and the index is 1 (both facts are Lean examples in the file). The notes and the .tex now say "positive length".
+  - Differences from the write-up: |C|² = 3ⁿ comes from Poisson summation of the constant function (no dimension theory); the factor 3 uses the two test vectors ε⁰ and ε⁰ + 3ε⁰₁e₁ and subtracts (9 | 15·Index), with no case split mod 9. The .tex was aligned with the latter.
+  - `lean/GJF/Sanity.lean` proves by `decide` that the tetracode is self-dual, so the hypotheses are satisfiable at positive length.
+  - **Relation to Mathlib [Lean: `lean/GJF/Orthogonal.lean`].** `GJF.dot` is definitionally `dotProduct`. With `dotForm n := dotProductBilin` (a `LinearMap.BilinForm`, proved nondegenerate and reflexive): `IsSelfDual C ↔ (dotForm n).orthogonal C = C`, and `IsSelfDual C ↔ C self-orthogonal ∧ 2·dim C = n` (via Mathlib's `finrank_orthogonal`); hence self-dual codes have even length. `GJF.index_dvd_24'` restates the main theorem with the hypothesis `LinearMap.BilinForm.orthogonal (dotProductBilin (ZMod 3) (ZMod 3)) C = C`.
+  - Pitfall met there: `ZMod 3` has ring-derived and field-derived instances whose additive groups agree only at default transparency, so Mathlib's field lemmas (`finrank_orthogonal`, `Submodule.eq_of_le_of_finrank_eq`) fail instance synthesis on ring-elaborated objects. Fix: apply them with explicit `@`-instances (`Pi.Function.module`, `Module.Finite.pi`) and transport by `Eq.trans`.
 
 **Step 2 (8 | Index).**
 - For distinct a, b, c, [ε_a = ε_b = ε_c] = (1 + ε_aε_b + ε_bε_c + ε_aε_c)/4. With (◆) this gives Σ_{ε∈F, ε_a=ε_b=ε_c} s(ε) = Index/4.
@@ -252,9 +269,10 @@ Independent checks by verification subagents, with their own code (not in the re
 2. [C] A TMF-level statement behind Remark (b): for a non-anomalous Z/3 acting on a holomorphic N=1 SVOA V, ob_(2)(V/Z₃) = 3^{−1}·ob_(2)(V) in Cok_(2). Its shadow on the Δᵏ-coefficient is 3·Index(V/Z₃) = Index(V) + 8T_u. The naive [V/Z₃] ≡ [V] in π_*TMF_(2) is false; see Remark (b).
 3. Proof II for families, or for the refined (Jacobi-form) index of the N=2 structure that V_{Λ(C)} also carries (GJF §2).
 4. Before any public claim: consider contacting Johnson-Freyd, since both proofs close a published open case.
-5. **Lean formalization (estimate only, 2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. Nothing is formalized yet; the setup is in `lean/` and CLAUDE.md.
+5. **Lean formalization (2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. The divisibility half is formalized (`lean/GJF/Divisibility.lean`); setup in CLAUDE.md.
    - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
-   - Divisibility half: ≈ 600–1,200 lines via Step 1′ (finite Poisson on F₃ⁿ for g_ij, then Steps 2–3). No modular forms are needed. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
+   - Divisibility half: **done** (`lean/GJF/Divisibility.lean`, 662 lines, within the ≈ 600–1,200 estimate), via Step 1′. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
+   - Existence half: **done** (`lean/GJF/Existence.lean`, 804 lines, below the ≈ 1,000–2,500 estimate). `GJF.conjecture_1_4` states both halves; standard axioms only, no `sorry`/`native_decide`.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 
@@ -417,7 +435,7 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - Theorem 5.7 is the special case s = 0 (two doublings at once).
 - [V: `existence_quadruple.py` part 1] Random self-dual E of length 12, random single block (n = 24, brute force, sign-exact): Index(Q_σ(E)) = R_σ(E), and R_{σ″} = R_σ for all four σ″, on 40/40.
 
-**Theorem 5.9 [P; V]. For every k ≥ 1 there is a self-dual ternary code of length 12k and index ±24.** This is the existence half of GJF Conj 1.4, and it answers GJF Question 0.1 with an explicit construction.
+**Theorem 5.9 [P; V; Lean]. For every k ≥ 1 there is a self-dual ternary code of length 12k and index ±24** (in fact exactly +24, formally verified). This is the existence half of GJF Conj 1.4, and it answers GJF Question 0.1 with an explicit construction.
 - *Engine.* Suppose (E, σ) has length m, |σ| = 2, and R_σ(E) = ±24. Q_σ(E) has length m + 24 and Index ±24. It has 4 step-1 blocks; refining exactly one gives σ″ with |σ″| = 2 and R_{σ″}(Q_σ(E)) = ±24 (Lemma 5.8). So the pair propagates, (m, 2) → (m + 24, 2).
 - *Odd k.* Over all partial systems on Golay with b = 2, R_σ(Golay) ∈ {±24, ±72}, and 13,365 of the 17,325 give ±24. Starting from one of them, the engine gives index-24 codes at lengths 12 + 24j = 12(2j+1) for all j ≥ 1, and Golay covers k = 1.
 - *Even k.* For every single block β, R_β(Golay) = ±24 (all 495). Q_β(Golay) has length 24, Index ±24, and 2 step-1 blocks; refining one gives a pair (24, 2) with R = ±24. The engine gives lengths 24 + 24j. □
@@ -425,6 +443,11 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - [V: `existence_quadruple.py` parts 2–3] The R-distributions on Golay above, and the explicit chains (12,1) → 24 → 48 → 72 and (12,2) → 36 → 60 → 84, each step with b″ = 2. Every code is self-dual and has |Index| = 24 (brute force at n = 24; Rust at n ≥ 36). n = 72 and n = 84 were the first open cases.
 - The codes are explicit: Golay plus tetracodes, glued by coordinate-pair Hadamard maps. Generator matrices: `ternary60/codes/quad_index24_len{24,36,48,60,72,84}.txt`.
 - **Status.** Proved here, but not yet checked by a second reader. The proof uses only the λ-formula of (f) and the local computation of Lemma 5.6, both elementary and verified numerically.
+- **Formally verified in Lean 4 + Mathlib [Lean: `lean/GJF/Existence.lean`] (2026-09-26).** `GJF.Ex.exists_selfDual_index24 : 1 ≤ k → ∃ C ⊆ 𝔽₃^{12k}, IsSelfDual C ∧ gjfIndex C = 24` (index exactly +24, GJF's #even − #odd). Together with the divisibility half: `GJF.conjecture_1_4`.
+  - Structure: codes with a block system live on `S ⊕ (B × P)`, `P = Fin 2 × Fin 2` (pairs = first coordinate). `D E` doubles every block against a tetracode. One lemma `sum_D` covers both local identities: any weight that factors over singletons and doubled blocks, with the local identity on each block, sums to R_σ(E). Lemmas A and B are `decide`d for all 81 block vectors u.
+  - Self-duality of Q_σ(E) by counting (isotropy for the signed form `dot_S ± dot_blocks`, flipped by each doubling, plus |Q|² = 3ⁿ via character sums), so no dimension theory.
+  - Engine: refine step-one block β₀, index the others by `{x // x ≠ β₀}` via `Equiv.optionSubtypeNe`; new state has 2 blocks. Base: Golay (span of the generator matrix), Index = 24, R_{σ₁} = R_{σ₂} = 24 by kernel `decide` over 729 codewords (σ₁ = {0,1,2,3}, σ₂ = {0,1,2,3},{4,5,6,8}).
+  - Mathlib pitfall found: the instance `[IsSimpleAddGroup G] [AddGroup.IsNilpotent G] : AddCommGroup G` applies to `ZMod 3` and hijacks `Neg (ZMod 3)`, so `simp`/`ring` fail to match; `attribute [-instance] instAddCommGroupOfIsSimpleAddGroupOfIsNilpotent` fixes it (likely also the cause of the "ring/field diamond" in `Orthogonal.lean`). `DecidableEq` on the nested coordinate types needs `synthInstance.maxSize 2048`.
 - [V: `paper_check.py`, log `paper_check.log`] (2026-09-26, later session) Every computable claim of `paper/index24.tex` re-derived from the paper's own definitions with independent code (ψ, κ, λ, R_σ and the two-step Q_σ with explicit labels i*, y**; nothing imported from `existence_quadruple.py`):
   - the two local identities of the paper (Lemma A = the λ-formula, Lemma B = the refinement identity) hold for all u ∈ F₃⁴, all three pair-splittings and all 384 monomial placements of the tetracode;
   - Lemma 5.8 on random self-dual E at n = 16, 20, 24 (brute force, every subset 𝓑 of the step-1 blocks, random splittings at both steps): Index(Q_σ(E)) = R_σ(E) and R_σ″ = R_σ in every case;

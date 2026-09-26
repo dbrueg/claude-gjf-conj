@@ -10,8 +10,8 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 
 | part | status | where |
 |---|---|---|
-| 24 \| Index for all codes (divisibility half) | **proved**, two proofs. Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
-| index-24 code at every length 12k (existence half) | **proved for all k** by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
+| 24 \| Index for all codes (divisibility half) | **proved** and **formally verified in Lean 4** (`lean/GJF/Divisibility.lean`; positive length). Several proofs; the shortest is one Poisson summation (notes §2 Step 1′). Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
+| index-24 code at every length 12k (existence half) | **proved for all k** and **formally verified in Lean 4** (`lean/GJF/Existence.lean`), by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
 | GJF **Main Question** (a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24)) | **answered for every k with 8 ∤ k** via GJF Thm 5.6, by building the needed code automorphism into the construction (J-chain from Golay; ℤ/12-chain from one searched length-36 seed). For 8 \| k the cyclic route is impossible: g⁴ = −1 forces 48 \| Index. | `notes/main-question.md` |
 | by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
@@ -24,8 +24,9 @@ notes/ternary-code-index.md   the notes (read §0, then §5.1)
 notes/main-question.md        GJF's Main Question: code automorphisms, equivariant chains, the g⁴ = −1 obstruction
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k with 8 ∤ k, and the obstruction
+paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 notes/tmf-context.md          TMF background
-lean/                         Lean 4 + Mathlib project (toolchain check only so far; setup steps in CLAUDE.md)
+lean/                         Lean 4 + Mathlib: both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
@@ -36,6 +37,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               jchain_len<n> (+ .J.txt), z12chain_len<n> (+ .g.txt): the equivariant chains (row 1 permutation, row 2 signs 1/2)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
+                              divisibility_check.py: critical check of the finite proof (log beside it)
                               design_poisson.py: checks for the finite proof of (◆), notes §2 Step 1′ (log beside it)
                               paper_check.py: independent re-implementation of every computable claim in paper/index24.tex (log beside it)
                               mainq_common.py, mainq_equivariant.py: monomial maps, fixed codes, twined counts; equivariant Q_σ
@@ -55,11 +57,18 @@ cd theory
 python3 existence_refinement.py      # Lemma 5.6 + Theorem 5.7 checks (~minutes)
 python3 existence_mod48.py           # Thm 5.4 + Prop 5.5 checks (~15 min)
 python3 existence_quadruple.py       # Lemma 5.8 + Theorem 5.9: index 24 at every length (≈ 30 min; --no84 skips n = 84)
+python3 divisibility_check.py        # critical check of the finite proof, incl. four-point identity (≈ 5 min)
 python3 design_poisson.py            # finite Poisson proof of the signed 2-design (notes §2 Step 1′) (≈ 5 min)
 python3 paper_check.py               # every computable claim of paper/index24.tex, incl. a sign-exact Index at n = 36 (≈ 15 min)
 python3 mainq_jchain.py              # J-chain: m = 4 (≈ 2 min)
 python3 mainq_z12chain.py            # ℤ/12 chains: m = 3, 6, 12 (≈ 30 min; the n = 144 twined count dominates)
 python3 mainq_obstruction.py         # g⁴ = −1 ⇒ 48 | Index, and the four-code identity (≈ 20 min)
+```
+
+Lean (formal proof of 24 | Index; toolchain and Mathlib-cache setup in CLAUDE.md):
+
+```bash
+cd lean && lake build                # builds GJF.conjecture_1_4 (both halves); ≈ 2 min for Existence.lean
 ```
 
 Python scripts are stdlib only (numpy was not available on the original machine); `mainq_automorphisms.py` additionally calls nauty's `dreadnaut`. Check scripts write `<script>.log` beside themselves.

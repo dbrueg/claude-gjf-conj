@@ -1,0 +1,484 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{mainthm}{Theorem}
+
+\newcommand{\F}{\mathbb{F}_3}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\Index}{\operatorname{Index}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\isq}{\sqrt{-3}}
+
+\title[The index of a self-dual ternary code]{The index of a self-dual ternary code is divisible by \texorpdfstring{$24$}{24}: four proofs}
+\author{[Draft --- authors to be added]}
+\date{Draft, 26 September 2026}
+
+\begin{document}
+\begin{abstract}
+Gaiotto and Johnson-Freyd conjectured that the index of every self-dual ternary code $C$, the
+number of even minus the number of odd maximal codewords, is divisible by $24$. They proved this for lengths divisible by $24$
+using Borcherds' theorem on theta series of even unimodular lattices, and remarked that they did not
+know an elementary proof. We record several proofs for all lengths. The main one is finite and
+elementary: a single Poisson summation over $C$, with two marked coordinates, shows that the
+maximal codewords, counted with signs, form a $2$-design: $\sum_{\varepsilon}s(\varepsilon)\,\varepsilon_i\varepsilon_j=0$
+for $i\ne j$. Both factors $8$ and $3$ of $24$ follow from this by short counting arguments.
+We also give a proof of the design identity by modular forms, a proof of the factor $8$ by Kneser
+neighbours, and a neighbour version of the Poisson argument. The same computation with four marked
+coordinates gives an identity that explains why the design property stops at strength two.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+A ternary code of length $n$ is a subspace $C\subseteq\F^n$. It is \emph{self-dual} if
+$C=C^\perp$ for the standard form $x\cdot y=\sum_k x_ky_k$. A codeword is \emph{maximal} if none of
+its entries is $0$, and it is \emph{even} or \emph{odd} according to the parity of the number of
+its entries equal to $1$. The \emph{index} of a self-dual code is
+\[
+  \Index(C)=\#\{\text{even maximal codewords}\}-\#\{\text{odd maximal codewords}\}.
+\]
+Gaiotto and Johnson-Freyd \cite{GJF} showed that $\Index(C)$ is the supersymmetric (Witten) index
+of a holomorphic $\mathcal N=1$ SVOA of central charge $n$ attached to $C$, and made the following
+conjecture.
+
+\begin{quote}
+\textbf{Conjecture} (\cite[Conj.~1.4]{GJF}; numbering of the arXiv version). The index of any
+self-dual ternary code is divisible by $24$, even if the length is merely divisible by $12$. For all
+lengths $12k$ there exists a self-dual ternary code of index $24$.
+\end{quote}
+
+They proved the first sentence when $24\mid n$ \cite[Thm.~1.3]{GJF}, and deduced $12\mid\Index(C)$
+when $12\mid n$. About their proof they write: ``Our proof relies on some nontrivial facts about Theta
+functions of lattices, and we do not know if there is an elementary proof.'' This note records
+proofs of the divisibility statement in all lengths.
+
+\begin{mainthm}
+For every self-dual ternary code $C$ of positive length, $24\mid\Index(C)$.
+\end{mainthm}
+
+The hypothesis $n\ge1$ is needed: for $n=0$ the empty word is an even maximal codeword, so
+$\Index=1$. It was made explicit by the formalization in Lean (Remark~\ref{rem:lean}).
+
+The routes are as follows.
+\begin{itemize}
+\item[(0)] \emph{GJF, $24\mid n$} (\S\ref{sec:gjf}): the two even neighbours of the lattice $\Lambda(C)$,
+  and Borcherds' theorem that the $\Delta^{k}$-coefficient of the theta series of an even unimodular
+  lattice of rank $24k$ is divisible by $24$.
+\item[(A)] \emph{Kneser neighbours} (\S\ref{sec:A}): a Fourier identity on $\F^n$ shows
+  $\Index(C)+\Index(C')\equiv0\pmod8$ for neighbouring codes, and the neighbour graph is connected.
+  This gives $8\mid\Index$. The factor $3$ still comes from route (0).
+\item[(B)] \emph{Signed $2$-design, modular} (\S\ref{sec:B}): the design identity
+  (Theorem~\ref{thm:design}) from a theta series with harmonic coefficients and
+  $M_2(\mathrm{SL}_2(\Z))=0$. Proposition~\ref{prop:design-suffices} then gives $8$ and $3$.
+\item[(C)] \emph{Signed $2$-design, finite} (\S\ref{sec:C}): the design identity from one Poisson
+  summation over $C$ with two marked coordinates, and again Proposition~\ref{prop:design-suffices}.
+  This proof is elementary and self-contained. A neighbour version (C$'$) is in
+  Remark~\ref{rem:Cprime}.
+\end{itemize}
+Routes (B) and (C) are each a complete proof of the Theorem, and so is (A) together with (0). A
+comparison is in \S\ref{sec:compare}.
+
+\section{Preliminaries}\label{sec:prelim}
+
+Throughout, $n\ge1$.
+
+\begin{lemma}\label{lem:basic}
+Let $C\subseteq\F^n$ be self-dual.
+\begin{enumerate}
+\item $4\mid n$.
+\item Every $u$ in a self-orthogonal code $D\subseteq D^\perp$ has $\wt(u)\equiv0\pmod3$.
+\item If $C$ has a maximal codeword, then $12\mid n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) $C$ is a totally isotropic subspace of half dimension of the standard quadratic space $\F^n$,
+so $\F^n$ is an orthogonal sum of $n/2$ hyperbolic planes. Comparing discriminants in
+$\F^\times/(\F^\times)^2=\{\pm1\}$ gives $1=(-1)^{n/2}$, so $n/2$ is even.
+(2) $u\cdot u=\sum_ku_k^2=\wt(u)$ in $\F$, since $a^2=1$ for $a\ne0$.
+(3) A maximal codeword has weight $n$, so $3\mid n$ by (2), and $4\mid n$ by (1).
+\end{proof}
+
+\subsection*{Signs and lifts}
+Let $\varphi\colon\F\to\{0,\pm1\}$ be $\varphi(0)=0$, $\varphi(1)=-1$, $\varphi(2)=1$, and
+$f(x)=\prod_k\varphi(x_k)$. Then $f(x)=(-1)^{\#\{k:x_k=1\}}$ for maximal $x$ and $f(x)=0$ otherwise,
+so $\Index(C)=\sum_{x\in C}f(x)$.
+
+For a maximal $x$ let $\varepsilon(x)\in\{\pm1\}^n$ be its lift, $\varepsilon_k=-\varphi(x_k)$; so
+$\varepsilon_k=1$ iff $x_k=1$, and $\varepsilon(x)\equiv x\pmod 3$ coordinatewise. Put
+$s(\varepsilon)=(-1)^{\#\{k:\varepsilon_k=1\}}=f(x)$, and let $\cF=\cF(C)\subset\{\pm1\}^n$ be the
+set of lifts of the maximal codewords. Then
+\begin{itemize}
+\item $\Index(C)=\sum_{\varepsilon\in\cF}s(\varepsilon)$;
+\item $\cF=-\cF$ and $s(-\varepsilon)=s(\varepsilon)$, since $n$ is even;
+\item $\varepsilon\cdot\varepsilon'\equiv0\pmod3$ for $\varepsilon,\varepsilon'\in\cF$ (integer dot
+product), because it reduces to the $\F$-product of two codewords.
+\end{itemize}
+
+\subsection*{Fourier analysis on \texorpdfstring{$\F^n$}{F\_3\textasciicircum n}}
+Let $\omega=e^{2\pi i/3}$ and $\isq:=\omega-\omega^2=i\sqrt3$. For $h\colon\F^n\to\mathbb C$ put
+$\hat h(u)=\sum_xh(x)\,\omega^{u\cdot x}$.
+
+\begin{lemma}\label{lem:fourier}
+\begin{enumerate}
+\item \emph{(Poisson.)} For every linear code $D\subseteq\F^n$,
+  $\displaystyle\sum_{x\in D^\perp}h(x)=|D|^{-1}\sum_{u\in D}\hat h(u)$.
+\item If $h(x)=\prod_kh_k(x_k)$, then $\hat h(u)=\prod_k\hat h_k(u_k)$.
+\item $\hat\varphi=\isq\cdot\varphi$, and the indicator $\iota=[\,\cdot\ne0\,]$ has
+  $\hat\iota(b)=3[b=0]-1$. Consequently $\hat f=(\isq)^nf=3^{n/2}f$ when $4\mid n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) $\sum_{u\in D}\hat h(u)=\sum_xh(x)\sum_{u\in D}\omega^{u\cdot x}=|D|\sum_{x\in D^\perp}h(x)$.
+(2) is clear. (3) $\hat\varphi(b)=-\omega^b+\omega^{2b}$ is $0,\ \omega^2-\omega=-\isq,\ \omega-\omega^2=\isq$
+for $b=0,1,2$. And $\hat\iota(b)=\omega^b+\omega^{2b}$ is $2$ for $b=0$ and $-1$ otherwise.
+Finally $(\isq)^2=-3$.
+\end{proof}
+
+\section{The signed \texorpdfstring{$2$}{2}-design and why it suffices}\label{sec:design}
+
+\begin{theorem}[signed $2$-design]\label{thm:design}
+For every self-dual ternary code $C$ and all coordinates $i,j$,
+\[
+  \sum_{\varepsilon\in\cF(C)}s(\varepsilon)\,\varepsilon_i\varepsilon_j=\Index(C)\,\delta_{ij}.
+\]
+Equivalently, $\sum_{\varepsilon\in\cF}s(\varepsilon)(\varepsilon\cdot\mu)^2=\Index(C)\,|\mu|^2$ for
+all $\mu\in\mathbb R^n$.
+\end{theorem}
+
+The diagonal case $i=j$ is trivial, since $\varepsilon_i^2=1$. Proofs of the off-diagonal case are
+in \S\ref{sec:C} and \S\ref{sec:B}.
+
+\begin{proposition}\label{prop:design-suffices}
+Theorem~\ref{thm:design} implies $8\mid\Index(C)$ and $3\mid\Index(C)$.
+\end{proposition}
+
+\begin{proof}
+If $C$ has no maximal codeword, $\Index(C)=0$. Otherwise $12\mid n$ by Lemma~\ref{lem:basic}.
+
+\emph{The factor $8$.} Fix distinct coordinates $a,b,c$. For $\varepsilon\in\{\pm1\}^n$,
+$[\varepsilon_a=\varepsilon_b=\varepsilon_c]=\tfrac14(1+\varepsilon_a\varepsilon_b+\varepsilon_a\varepsilon_c
++\varepsilon_b\varepsilon_c)$. Multiplying by $s(\varepsilon)$, summing over $\cF$ and using
+Theorem~\ref{thm:design},
+\[
+  \sum_{\varepsilon\in\cF,\ \varepsilon_a=\varepsilon_b=\varepsilon_c}s(\varepsilon)=\tfrac14\Index(C).
+\]
+The set summed over is stable under $\varepsilon\mapsto-\varepsilon$, which has no fixed points
+and preserves $s$. So the left side is even, and $8\mid\Index(C)$.
+
+\emph{The factor $3$.} Fix $\varepsilon^0\in\cF$. For every $x\in\Z^n$ with $x\equiv\varepsilon^0
+\pmod3$ and every $\varepsilon\in\cF$ we have $\varepsilon\cdot x\equiv\varepsilon\cdot\varepsilon^0
+\equiv0\pmod3$, so $\sum_{\cF}s(\varepsilon)(\varepsilon\cdot x)^2\in9\Z$. By
+Theorem~\ref{thm:design} this sum is $\Index(C)\,|x|^2$. Take $x=\varepsilon^0$, with $|x|^2=n$, and
+$x'=\varepsilon^0+3\varepsilon^0_1e_1$, with $|x'|^2=n-1+16=n+15$. Then $9$ divides both
+$\Index(C)\,n$ and $\Index(C)(n+15)$, hence $9\mid15\,\Index(C)$, and $3\mid\Index(C)$.
+\end{proof}
+
+\begin{remark}\label{rem:golay}
+For the extended ternary Golay code the $24$ maximal codewords are all even, and
+Theorem~\ref{thm:design} says that the $12$ of them taken up to sign are the rows of a Hadamard
+matrix of order $12$. This is the classical relation between the Golay code and the Hadamard matrix
+of order $12$; see e.g.\ \cite{AHM} for Hadamard matrices formed by codewords of ternary self-dual
+codes. Theorem~\ref{thm:design} is a signed version of this property that holds for every
+self-dual ternary code.
+\end{remark}
+
+\section{Route C: a finite proof of the design identity}\label{sec:C}
+
+Fix distinct coordinates $i,j$ and define
+\[
+  g_{ij}(x)=\prod_{k\ne i,j}\varphi(x_k)\cdot[x_i\ne0]\,[x_j\ne0],\qquad G_{ij}(X)=\sum_{x\in X}g_{ij}(x).
+\]
+For a maximal $x$ with lift $\varepsilon$ we have $s(\varepsilon)\varepsilon_i\varepsilon_j
+=f(x)\varphi(x_i)\varphi(x_j)=g_{ij}(x)$, since $\varphi(x_i)^2=\varphi(x_j)^2=1$. And $g_{ij}$
+vanishes off the maximal vectors. Hence
+\[
+  G_{ij}(C)=\sum_{\varepsilon\in\cF(C)}s(\varepsilon)\,\varepsilon_i\varepsilon_j .
+\]
+
+\begin{lemma}\label{lem:ghat}
+$\displaystyle\hat g_{ij}(u)=(\isq)^{\,n-2}\prod_{k\ne i,j}\varphi(u_k)\cdot\bigl(3[u_i=0]-1\bigr)\bigl(3[u_j=0]-1\bigr).$
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:fourier}(2) and (3), with $h_k=\varphi$ for $k\ne i,j$ and $h_i=h_j=\iota$.
+\end{proof}
+
+\begin{lemma}[pointwise identity]\label{lem:pointwise}
+Suppose $3\mid n$ and $D\subseteq\F^n$ is self-orthogonal. Then $\hat g_{ij}(u)=(\isq)^{n-2}g_{ij}(u)$
+for every $u\in D$.
+\end{lemma}
+
+\begin{proof}
+If $u_k=0$ for some $k\ne i,j$, both sides vanish. Otherwise $\wt(u)=n-2+[u_i\ne0]+[u_j\ne0]$. By
+Lemma~\ref{lem:basic}(2), $\wt(u)\equiv0\pmod3$; as $3\mid n$, the weights $n-1$ and $n-2$ are
+excluded, so $u_i\ne0$ and $u_j\ne0$. Then the last two factors in Lemma~\ref{lem:ghat} are
+$(-1)(-1)=1$, and $\prod_{k\ne i,j}\varphi(u_k)=g_{ij}(u)$.
+\end{proof}
+
+\begin{theorem}\label{thm:C}
+For every self-dual ternary code $C$ and $i\ne j$, $G_{ij}(C)=0$. Hence Theorem~\ref{thm:design}
+holds, and by Proposition~\ref{prop:design-suffices}, $24\mid\Index(C)$.
+\end{theorem}
+
+\begin{proof}
+If $3\nmid n$, $C$ has no maximal codewords and $G_{ij}(C)=0$. Let $3\mid n$. Poisson summation
+(Lemma~\ref{lem:fourier}(1)) with $D=C=C^\perp$, $|C|=3^{n/2}$, and Lemma~\ref{lem:pointwise} give
+\[
+  G_{ij}(C)=3^{-n/2}\sum_{u\in C}\hat g_{ij}(u)=3^{-n/2}(\isq)^{n-2}\,G_{ij}(C)=\pm\tfrac13\,G_{ij}(C).
+\]
+Hence $G_{ij}(C)=0$.
+\end{proof}
+
+\begin{remark}[what the proof uses]\label{rem:uses}
+Only three facts enter: Poisson summation over $C=C^\perp$; the one-variable transforms of
+$\varphi$ and $\iota$; and that the weights of self-orthogonal codes are divisible by $3$. The sign
+of $(\isq)^{n-2}$ is irrelevant, so the proof does not even use $4\mid n$ (for $4\mid n$ the factor is
+$-\frac13$). In contrast, $f$ itself is a Fourier eigenfunction with eigenvalue $3^{n/2}=|C|$, so
+Poisson summation over $C$ only returns $\Index(C)=\Index(C)$. Replacing $\varphi$ by $\iota$ at two
+coordinates multiplies the eigenvalue by $-\frac13$ on every word a self-orthogonal code can
+contain, and $0$ is the only fixed point of $G\mapsto-G/3$.
+\end{remark}
+
+\begin{remark}[route C$'$: the neighbour form]\label{rem:Cprime}
+Let $D\subseteq C$ have dimension $n/2-1$, so $D$ is self-orthogonal and $|D|=3^{n/2-1}$.
+Lemma~\ref{lem:pointwise} and Poisson summation over $D$ give $G_{ij}(D^\perp)=-G_{ij}(D)$ when
+$4\mid n$ and $3\mid n$. If $C'$ is the other self-dual code containing $D$, the coset decomposition in
+the proof of Lemma~\ref{lem:A-neighbour} (which only uses that $g_{ij}$ is supported on maximal,
+hence isotropic, vectors) gives $G_{ij}(D^\perp)=G_{ij}(C)+G_{ij}(C')-G_{ij}(D)$. Hence
+$G_{ij}(C)+G_{ij}(C')=0$. Connectivity of the neighbour graph (Lemma~\ref{lem:connected}) and the
+base code $T^{n/4}$, which has no maximal codewords, give a second proof of Theorem~\ref{thm:C}.
+Unlike $G_{ij}(C)$, the value $G_{ij}(D)$ is usually nonzero, so this identity is not vacuous.
+\end{remark}
+
+\begin{remark}[four marked coordinates]\label{rem:four}
+Let $K=\{a,b,c,d\}$ be four distinct coordinates, and $g_K$ the analogue of $g_{ij}$ with $\iota$ at
+the four points of $K$. Then $\sum_{x\in C}g_K(x)=\sum_{\cF}s(\varepsilon)\varepsilon_a\varepsilon_b
+\varepsilon_c\varepsilon_d=:Q_K(C)$. In the analogue of Lemma~\ref{lem:pointwise} a codeword that is
+nonzero off $K$ can now have $0$ or $3$ zeros in $K$ (weights $n$ or $n-3$), and a word with three
+zeros in $K$ contributes the factor $2^3\cdot(-1)=-8$. With $(\isq)^{n-4}=3^{n/2-2}$ for $4\mid n$,
+Poisson summation gives $Q_K=\frac19(Q_K-8W_K)$, that is,
+\[
+  Q_K(C)=-W_K(C),\qquad W_K(C)=\sum_{\substack{u\in C,\ u_k\ne0\ (k\notin K)\\ \#\{k\in K:\,u_k=0\}=3}}
+  \ \prod_{k\notin K}\varphi(u_k).
+\]
+So the weight-$(n-3)$ codewords whose zeros lie in $K$ are exactly the obstruction to a signed
+$4$-design. For the Golay code $Q_K=\pm8\ne0$ for all $495$ sets $K$, so the signed maximal words
+are in general not a $4$-design, in line with $M_4(\mathrm{SL}_2(\Z))\ne0$ in route B.
+\end{remark}
+
+\begin{remark}[relation to the literature]\label{rem:lit}
+Theorem~\ref{thm:C} is an evaluation of a MacWilliams-type identity for the complete weight
+enumerator of $C$ split at the two coordinates $i,j$, i.e.\ for a complete version of Ozeki's Jacobi
+polynomials \cite{Oz,CM}. We have not found the design identity, or its consequences for the index,
+in the literature; this search was not systematic. The observation that invariant theory of the
+unsplit complete weight enumerator alone only gives $\Index\in6\Z$ or $2\Z$ (project notes, \S3(e))
+is consistent with the need for two marked coordinates.
+\end{remark}
+
+\section{Route A: Kneser neighbours and the factor \texorpdfstring{$8$}{8}}\label{sec:A}
+
+Throughout, $12\mid n$ (otherwise all indices vanish). For $X\subseteq\F^n$ write
+$F(X)=\sum_{x\in X}f(x)$, so $F(C)=\Index(C)$.
+
+\begin{lemma}\label{lem:A-poisson}
+If $D\subseteq\F^n$ is linear of dimension $n/2-1$, then $F(D^\perp)=3F(D)$.
+\end{lemma}
+
+\begin{proof}
+Poisson summation and $\hat f=3^{n/2}f$ (Lemma~\ref{lem:fourier}(3), using $4\mid n$) give
+$F(D^\perp)=3^{-(n/2-1)}\cdot3^{n/2}F(D)$.
+\end{proof}
+
+\begin{lemma}[neighbour identity]\label{lem:A-neighbour}
+Let $C\ne C'$ be self-dual with $D=C\cap C'$ of dimension $n/2-1$. Then
+$\Index(C)+\Index(C')=4F(D)$.
+\end{lemma}
+
+\begin{proof}
+Since $D\subseteq C=C^\perp$ and $D\subseteq C'$, we have $C+C'\subseteq D^\perp$. Both have
+dimension $n/2+1$, so $D^\perp=C+C'$. Pick $c\in C\setminus D$ and $c'\in C'\setminus D$. Then
+$c\cdot c'\ne0$: otherwise $c'\perp D+\langle c\rangle=C$, so $c'\in C$. The nine cosets
+$D+ac+bc'$ ($a,b\in\F$) partition $D^\perp$. For $ab\ne0$ every vector $x$ of the coset has
+$x\cdot x=2ab\,(c\cdot c')\ne0$, while maximal vectors have $x\cdot x=n=0$ in $\F$. So these four
+cosets contribute nothing, and $F(D^\perp)=F(C)+F(C')-F(D)$. Lemma~\ref{lem:A-poisson} finishes the
+proof.
+\end{proof}
+
+\begin{lemma}\label{lem:A-even}
+$F(D)$ is even for every linear $D$.
+\end{lemma}
+
+\begin{proof}
+$f(0)=0$, and $x\mapsto-x$ is a fixed-point-free involution of $D\setminus\{0\}$ with
+$f(-x)=(-1)^nf(x)=f(x)$.
+\end{proof}
+
+\begin{lemma}[connectivity]\label{lem:connected}
+Any two self-dual codes of length $n$ are joined by a chain of neighbours.
+\end{lemma}
+
+\begin{proof}
+Let $C_1\ne C_2$ and pick $x\in C_2\setminus C_1$. Since $x\notin C_1=C_1^\perp$, the code
+$C_1\cap x^\perp$ has dimension $n/2-1$. As $x$ is isotropic and orthogonal to it,
+$C'=(C_1\cap x^\perp)+\langle x\rangle$ is self-dual, and it is a neighbour of $C_1$. Moreover
+$C_1\cap C_2\subseteq C_1\cap x^\perp$, so $C'\cap C_2\supseteq(C_1\cap C_2)+\langle x\rangle$, which is
+strictly larger than $C_1\cap C_2$. Induct on $n/2-\dim(C_1\cap C_2)$.
+\end{proof}
+
+\begin{theorem}\label{thm:A}
+$8\mid\Index(C)$ for every self-dual ternary code $C$.
+\end{theorem}
+
+\begin{proof}
+By Lemmas~\ref{lem:A-neighbour} and \ref{lem:A-even}, $\Index(C')\equiv-\Index(C)\pmod8$ for
+neighbours. The code $T^{n/4}$, a direct sum of tetracodes, has index $0$: every nonzero tetracode
+word has weight $3<4$, so no word of the sum is maximal. Lemma~\ref{lem:connected} finishes the
+proof.
+\end{proof}
+
+With GJF's $12\mid\Index(C)$ (route 0) this proves the Theorem. The same neighbour technique also
+shows that the numbers of even and of odd maximal codewords are each divisible by $8$ (project
+notes, Proposition~5.5).
+
+\section{Route B: the design identity from modular forms (sketch)}\label{sec:B}
+
+Let $\Lambda=\Lambda(C)=\{x/\sqrt3:\ x\in\Z^n,\ x\bmod3\in C\}$, an odd unimodular lattice
+\cite[\S2]{GJF}; $\chi=\sqrt3(1,\dots,1)\in\Lambda$ is characteristic. On the shadow
+$S=\Lambda+\chi/2$ put $s(\lambda+\chi/2)=(-1)^{\langle\lambda,\chi\rangle}$. Every $v\in S$ is
+$v=y/(2\sqrt3)$ with all $y_k$ odd and $y\bmod3\in C$, so $v^2=|y|^2/12\ge n/12$, with equality iff
+$y\in\{\pm1\}^n$. These minimal vectors correspond to the maximal codewords, with
+$y=-\varepsilon$ and matching signs.
+
+For $i\ne j$ the polynomial $H(v)=v_iv_j$ is harmonic of degree $2$. Put
+\[
+  \Phi(\tau)=\sum_{v\in S}s(v)H(v)\,q^{v^2/2}.
+\]
+Then
+\begin{itemize}
+\item $\Phi(\tau+1)=e(n/24)\Phi(\tau)$, because $|y|^2\equiv n\pmod{24}$ for $v\in S$;
+\item $\Phi(-1/\tau)=(\tau/i)^{n/2}\tau^2\,\Phi(\tau)$, by Poisson summation for theta series with
+harmonic coefficients (see e.g.\ \cite{Eb}) and unimodularity, as for the Ramond--Ramond theta series
+in \cite[Prop.~2.4]{GJF}.
+\end{itemize}
+These are the multipliers of $\eta^n\cdot\tau^2$, so $\Phi/\eta^n$ is a modular form of weight $2$
+for $\mathrm{SL}_2(\Z)$, holomorphic at $\infty$ because $\Phi=O(q^{n/24})$. Since
+$M_2(\mathrm{SL}_2(\Z))=0$ \cite[Ch.~VII]{Se}, $\Phi=0$. Its $q^{n/24}$-coefficient is
+$\frac1{12}\sum_{\cF}s(\varepsilon)\varepsilon_i\varepsilon_j$, which proves Theorem~\ref{thm:design}.
+
+\begin{remark}[lattice form]
+The argument never uses the code, only $\Lambda$. For every odd unimodular lattice $L$ of rank
+$n=12k$ whose shadow has minimum $\ge n/12$, a variant of this proof shows that the signed count of
+shadow vectors of norm $n/12$ is divisible by $24$ (project notes, \S2). Route C has no known lattice
+analogue.
+\end{remark}
+
+\section{Route 0: Gaiotto--Johnson-Freyd for \texorpdfstring{$24\mid n$}{24 | n}}\label{sec:gjf}
+
+For $n=24k$ let $\Lambda^\pm$ be the two even unimodular neighbours of $\Lambda(C)$. Then
+$\Index(C)=\Delta^{-k}(\Theta_{\Lambda^+}-\Theta_{\Lambda^-})=a_0^+-a_0^-$, where $a_0^\pm$ is the
+$\Delta^k$-coefficient of $\Theta_{\Lambda^\pm}$ in the basis $\Delta^{k-i}c_4^{3i}$. Borcherds
+\cite[Thm.~12.1]{Bo} shows $24\mid a_0^\pm$. For $12\mid n$ this gives $24\mid\Index(C\oplus C)
+=\Index(C)^2$, hence $12\mid\Index(C)$ \cite[\S1]{GJF}.
+
+\section{Comparison}\label{sec:compare}
+
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Route & Proves & Main input & Scope\\
+\midrule
+0 (GJF) & $24\mid\Index$ if $24\mid n$; $12\mid\Index$ & Borcherds' theorem & codes, via lattices\\
+A & $8\mid\Index$ & Fourier on $\F^n$, neighbours & codes\\
+B & design, hence $8$ and $3$ & harmonic theta series, $M_2=0$ & odd unimodular lattices\\
+C & design, hence $8$ and $3$ & one Poisson summation on $\F^n$ & codes\\
+C$'$ & design, hence $8$ and $3$ & Poisson, neighbours & codes\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Route C is the shortest and the only one that is both complete and elementary. Route B is the most
+general. Route A gives the extra parity statement mentioned after Theorem~\ref{thm:A}.
+
+\begin{remark}[formal verification]\label{rem:lean}
+Route C together with Proposition~\ref{prop:design-suffices} is formalized in Lean~4 with Mathlib
+(repository file \texttt{lean/GJF/Divisibility.lean}, about $660$ lines). The formal statement is
+\[
+  \texttt{index\_dvd\_24}:\quad C=C^\perp\ \text{in}\ \F^n,\ n>0\ \Longrightarrow\ 24\mid
+  \#\{\text{even maximal}\}-\#\{\text{odd maximal}\},
+\]
+with codes as $\F$-submodules of $\F^n$ and the index defined literally as in \cite{GJF}. It uses
+only the standard axioms (propositional extensionality, choice, quotient soundness), and all finite
+case checks are done by the kernel (\texttt{decide}, no \texttt{native\_decide}). The Fourier
+analysis is carried out with $\omega=e^{2\pi i/3}\in\mathbb C$; $|C|^2=3^n$ is obtained by Poisson
+summation of the constant function, so no dimension theory is needed. A companion file checks by
+\texttt{decide} that the tetracode is self-dual, so the hypotheses are satisfiable. A third file
+proves that the hypothesis used, $x\in C\iff x\perp C$, is Mathlib's $C^\perp=C$ for
+\texttt{dotProductBilin}, and is equivalent to $C\subseteq C^\perp$ with $2\dim C=n$.
+\end{remark}
+
+\begin{remark}[verification]
+Routes A and C, Proposition~\ref{prop:design-suffices} and Remark~\ref{rem:four} were checked by
+exact computation (scripts in the project repository); route B only through its conclusion, the
+design identity. Route C:
+the one-coordinate transforms exactly in $\Z[\omega]$; the pointwise identity of
+Lemma~\ref{lem:pointwise} by brute force in $\Z[\omega]$ on every codeword of three codes of length
+$12$; $G_{ij}(C)=0$ on random codes of lengths $12$ and $24$; the neighbour form on random neighbour
+pairs; for $40$ random non-self-orthogonal codes of length $12$ the correction terms are nonzero
+and the conclusion fails in $28$ cases; and Remark~\ref{rem:four} on all $495$ four-sets for two
+codes of length $12$ and on $50$ four-sets at length $24$. The design identity and both steps of
+Proposition~\ref{prop:design-suffices} hold exactly on random codes of lengths $24$ to $60$, on the
+Pless symmetry codes $P(17)$, $P(23)$, $P(29)$ and on the extended quadratic-residue codes
+$\mathrm{XQR}(47)$, $\mathrm{XQR}(59)$; for example $|\Index(P(17))|=744$ and
+$|\Index(P(29))|=21696$.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem{GJF}
+D.~Gaiotto and T.~Johnson-Freyd,
+\emph{Holomorphic SCFTs with small index},
+Canad.\ J.\ Math.\ \textbf{74} (2022), no.~2, 573--601. arXiv:1811.00589.
+
+\bibitem{Bo}
+R.~E.~Borcherds,
+\emph{Automorphic forms on $\mathrm{O}_{s+2,2}(\mathbb R)$ and infinite products},
+Invent.\ Math.\ \textbf{120} (1995), 161--213.
+
+\bibitem{Oz}
+M.~Ozeki,
+\emph{On the notion of Jacobi polynomials for codes},
+Math.\ Proc.\ Cambridge Philos.\ Soc.\ \textbf{121} (1997), 15--30.
+
+\bibitem{CM}
+H.~S.~Chakraborty and T.~Miezaki,
+\emph{Variants of Jacobi polynomials in coding theory},
+Des.\ Codes Cryptogr.\ \textbf{90} (2022), 2583--2597.
+
+\bibitem{AHM}
+M.~Araya, M.~Harada and K.~Momihara,
+\emph{Hadamard matrices related to a certain series of ternary self-dual codes},
+arXiv:2205.15498.
+
+\bibitem{Eb}
+W.~Ebeling,
+\emph{Lattices and Codes}, 3rd ed., Springer Spektrum, 2013.
+
+\bibitem{Se}
+J.-P.~Serre,
+\emph{A Course in Arithmetic}, Grad.\ Texts in Math.\ \textbf{7}, Springer, 1973.
+\end{thebibliography}
+
+\end{document}
