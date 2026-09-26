@@ -425,7 +425,9 @@ only the standard axioms (propositional extensionality, choice, quotient soundne
 case checks are done by the kernel (\texttt{decide}, no \texttt{native\_decide}). The Fourier
 analysis is carried out with $\omega=e^{2\pi i/3}\in\mathbb C$; $|C|^2=3^n$ is obtained by Poisson
 summation of the constant function, so no dimension theory is needed. A companion file checks by
-\texttt{decide} that the tetracode is self-dual, so the hypotheses are satisfiable.
+\texttt{decide} that the tetracode is self-dual, so the hypotheses are satisfiable. A third file
+proves that the hypothesis used, $x\in C\iff x\perp C$, is Mathlib's $C^\perp=C$ for
+\texttt{dotProductBilin}, and is equivalent to $C\subseteq C^\perp$ with $2\dim C=n$.
 \end{remark}
 
 \begin{remark}[verification]

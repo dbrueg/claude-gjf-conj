@@ -149,6 +149,8 @@ Notation.
   - The formalization found a missing hypothesis: **n ≥ 1 is needed**. At n = 0 the empty word is an even maximal codeword and the index is 1 (both facts are Lean examples in the file). The notes and the .tex now say "positive length".
   - Differences from the write-up: |C|² = 3ⁿ comes from Poisson summation of the constant function (no dimension theory); the factor 3 uses the two test vectors ε⁰ and ε⁰ + 3ε⁰₁e₁ and subtracts (9 | 15·Index), with no case split mod 9. The .tex was aligned with the latter.
   - `lean/GJF/Sanity.lean` proves by `decide` that the tetracode is self-dual, so the hypotheses are satisfiable at positive length.
+  - **Relation to Mathlib [Lean: `lean/GJF/Orthogonal.lean`].** `GJF.dot` is definitionally `dotProduct`. With `dotForm n := dotProductBilin` (a `LinearMap.BilinForm`, proved nondegenerate and reflexive): `IsSelfDual C ↔ (dotForm n).orthogonal C = C`, and `IsSelfDual C ↔ C self-orthogonal ∧ 2·dim C = n` (via Mathlib's `finrank_orthogonal`); hence self-dual codes have even length. `GJF.index_dvd_24'` restates the main theorem with the hypothesis `LinearMap.BilinForm.orthogonal (dotProductBilin (ZMod 3) (ZMod 3)) C = C`.
+  - Pitfall met there: `ZMod 3` has ring-derived and field-derived instances whose additive groups agree only at default transparency, so Mathlib's field lemmas (`finrank_orthogonal`, `Submodule.eq_of_le_of_finrank_eq`) fail instance synthesis on ring-elaborated objects. Fix: apply them with explicit `@`-instances (`Pi.Function.module`, `Module.Finite.pi`) and transport by `Eq.trans`.
 
 **Step 2 (8 | Index).**
 - For distinct a, b, c, [ε_a = ε_b = ε_c] = (1 + ε_aε_b + ε_bε_c + ε_aε_c)/4. With (◆) this gives Σ_{ε∈F, ε_a=ε_b=ε_c} s(ε) = Index/4.
