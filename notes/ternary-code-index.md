@@ -270,7 +270,7 @@ Independent checks by verification subagents, with their own code (not in the re
 5. **Lean formalization (2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. The divisibility half is formalized (`lean/GJF/Divisibility.lean`); setup in CLAUDE.md.
    - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
    - Divisibility half: **done** (`lean/GJF/Divisibility.lean`, 662 lines, within the ≈ 600–1,200 estimate), via Step 1′. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
-   - Existence half: not started; estimate ≈ 1,000–2,500 lines.
+   - Existence half: **done** (`lean/GJF/Existence.lean`, 804 lines, below the ≈ 1,000–2,500 estimate). `GJF.conjecture_1_4` states both halves; standard axioms only, no `sorry`/`native_decide`.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 
@@ -433,7 +433,7 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - Theorem 5.7 is the special case s = 0 (two doublings at once).
 - [V: `existence_quadruple.py` part 1] Random self-dual E of length 12, random single block (n = 24, brute force, sign-exact): Index(Q_σ(E)) = R_σ(E), and R_{σ″} = R_σ for all four σ″, on 40/40.
 
-**Theorem 5.9 [P; V]. For every k ≥ 1 there is a self-dual ternary code of length 12k and index ±24.** This is the existence half of GJF Conj 1.4, and it answers GJF Question 0.1 with an explicit construction.
+**Theorem 5.9 [P; V; Lean]. For every k ≥ 1 there is a self-dual ternary code of length 12k and index ±24** (in fact exactly +24, formally verified). This is the existence half of GJF Conj 1.4, and it answers GJF Question 0.1 with an explicit construction.
 - *Engine.* Suppose (E, σ) has length m, |σ| = 2, and R_σ(E) = ±24. Q_σ(E) has length m + 24 and Index ±24. It has 4 step-1 blocks; refining exactly one gives σ″ with |σ″| = 2 and R_{σ″}(Q_σ(E)) = ±24 (Lemma 5.8). So the pair propagates, (m, 2) → (m + 24, 2).
 - *Odd k.* Over all partial systems on Golay with b = 2, R_σ(Golay) ∈ {±24, ±72}, and 13,365 of the 17,325 give ±24. Starting from one of them, the engine gives index-24 codes at lengths 12 + 24j = 12(2j+1) for all j ≥ 1, and Golay covers k = 1.
 - *Even k.* For every single block β, R_β(Golay) = ±24 (all 495). Q_β(Golay) has length 24, Index ±24, and 2 step-1 blocks; refining one gives a pair (24, 2) with R = ±24. The engine gives lengths 24 + 24j. □
@@ -441,6 +441,11 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - [V: `existence_quadruple.py` parts 2–3] The R-distributions on Golay above, and the explicit chains (12,1) → 24 → 48 → 72 and (12,2) → 36 → 60 → 84, each step with b″ = 2. Every code is self-dual and has |Index| = 24 (brute force at n = 24; Rust at n ≥ 36). n = 72 and n = 84 were the first open cases.
 - The codes are explicit: Golay plus tetracodes, glued by coordinate-pair Hadamard maps. Generator matrices: `ternary60/codes/quad_index24_len{24,36,48,60,72,84}.txt`.
 - **Status.** Proved here, but not yet checked by a second reader. The proof uses only the λ-formula of (f) and the local computation of Lemma 5.6, both elementary and verified numerically.
+- **Formally verified in Lean 4 + Mathlib [Lean: `lean/GJF/Existence.lean`] (2026-09-26).** `GJF.Ex.exists_selfDual_index24 : 1 ≤ k → ∃ C ⊆ 𝔽₃^{12k}, IsSelfDual C ∧ gjfIndex C = 24` (index exactly +24, GJF's #even − #odd). Together with the divisibility half: `GJF.conjecture_1_4`.
+  - Structure: codes with a block system live on `S ⊕ (B × P)`, `P = Fin 2 × Fin 2` (pairs = first coordinate). `D E` doubles every block against a tetracode. One lemma `sum_D` covers both local identities: any weight that factors over singletons and doubled blocks, with the local identity on each block, sums to R_σ(E). Lemmas A and B are `decide`d for all 81 block vectors u.
+  - Self-duality of Q_σ(E) by counting (isotropy for the signed form `dot_S ± dot_blocks`, flipped by each doubling, plus |Q|² = 3ⁿ via character sums), so no dimension theory.
+  - Engine: refine step-one block β₀, index the others by `{x // x ≠ β₀}` via `Equiv.optionSubtypeNe`; new state has 2 blocks. Base: Golay (span of the generator matrix), Index = 24, R_{σ₁} = R_{σ₂} = 24 by kernel `decide` over 729 codewords (σ₁ = {0,1,2,3}, σ₂ = {0,1,2,3},{4,5,6,8}).
+  - Mathlib pitfall found: the instance `[IsSimpleAddGroup G] [AddGroup.IsNilpotent G] : AddCommGroup G` applies to `ZMod 3` and hijacks `Neg (ZMod 3)`, so `simp`/`ring` fail to match; `attribute [-instance] instAddCommGroupOfIsSimpleAddGroupOfIsNilpotent` fixes it (likely also the cause of the "ring/field diamond" in `Orthogonal.lean`). `DecidableEq` on the nested coordinate types needs `synthInstance.maxSize 2048`.
 - [V: `paper_check.py`, log `paper_check.log`] (2026-09-26, later session) Every computable claim of `paper/index24.tex` re-derived from the paper's own definitions with independent code (ψ, κ, λ, R_σ and the two-step Q_σ with explicit labels i*, y**; nothing imported from `existence_quadruple.py`):
   - the two local identities of the paper (Lemma A = the λ-formula, Lemma B = the refinement identity) hold for all u ∈ F₃⁴, all three pair-splittings and all 384 monomial placements of the tetracode;
   - Lemma 5.8 on random self-dual E at n = 16, 20, 24 (brute force, every subset 𝓑 of the step-1 blocks, random splittings at both steps): Index(Q_σ(E)) = R_σ(E) and R_σ″ = R_σ in every case;

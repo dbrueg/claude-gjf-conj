@@ -11,7 +11,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 | part | status | where |
 |---|---|---|
 | 24 \| Index for all codes (divisibility half) | **proved** and **formally verified in Lean 4** (`lean/GJF/Divisibility.lean`; positive length). Several proofs; the shortest is one Poisson summation (notes §2 Step 1′). Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
-| index-24 code at every length 12k (existence half) | **proved for all k** by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
+| index-24 code at every length 12k (existence half) | **proved for all k** and **formally verified in Lean 4** (`lean/GJF/Existence.lean`), by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
 | by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
 **How the existence proof works.** For a code E and a set σ of b disjoint 4-blocks, R_σ(E) weights each codeword by φ on the coordinates outside the blocks and by λ = (0, −2, 0, 0, 1)(|c ∩ β|) on each block. Hadamard-doubling the blocks twice against tetracodes gives a self-dual code of length m + 12b and index R_σ(E), and it carries a new 2-block system with the same R. Starting from Golay with b = 1 or b = 2 gives every length 12k.
@@ -23,7 +23,7 @@ notes/ternary-code-index.md   the notes (read §0, then §5.1)
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 notes/tmf-context.md          TMF background
-lean/                         Lean 4 + Mathlib: GJF/Divisibility.lean proves 24 | Index formally; GJF/Orthogonal.lean links IsSelfDual to Mathlib's orthogonal complement (setup in CLAUDE.md)
+lean/                         Lean 4 + Mathlib: both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
@@ -55,7 +55,7 @@ python3 paper_check.py               # every computable claim of paper/index24.t
 Lean (formal proof of 24 | Index; toolchain and Mathlib-cache setup in CLAUDE.md):
 
 ```bash
-cd lean && lake build                # builds GJF.Divisibility (theorem GJF.index_dvd_24) and GJF.Sanity
+cd lean && lake build                # builds GJF.conjecture_1_4 (both halves); ≈ 2 min for Existence.lean
 ```
 
 Python scripts are stdlib only; numpy was not available on the original machine. Check scripts write `<script>.log` beside themselves.
