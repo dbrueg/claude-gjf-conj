@@ -20,6 +20,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 
 ```
 notes/ternary-code-index.md   the notes (read §0, then §5.1)
+paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 notes/tmf-context.md          TMF background
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks

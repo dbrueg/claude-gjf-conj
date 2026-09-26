@@ -1,0 +1,335 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{hyperref}
+\setcounter{MaxMatrixCols}{12}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\F}{\mathbb{F}_3}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Index}{\operatorname{Index}}
+
+\title{Self-dual ternary codes of index 24 in every length $12k$}
+\author{[Draft --- authors to be added]}
+\date{Draft, 26 September 2026}
+
+
+\begin{document}
+\begin{abstract}
+Gaiotto and Johnson-Freyd attached to every self-dual ternary code $C$ of length $n$ a holomorphic
+$\mathcal N=1$ superconformal vertex operator algebra of central charge $n$. Its supersymmetric
+index is the signed count of full-weight codewords. They conjectured that this index is always
+divisible by $24$, and that for every $k$ some code of length $12k$ has index exactly $24$. They
+found such codes for $k\le 5$ by computer search, and asked for a systematic construction.
+We give one. We introduce a block-weighted index $R_\sigma(E)$ attached to a code $E$ and a set
+$\sigma$ of disjoint $4$-sets of coordinates. We show that Hadamard-gluing tetracodes onto the
+blocks twice produces a self-dual code of length $n+12|\sigma|$ whose index is $R_\sigma(E)$, and
+which again carries a block system with the same value of $R$. Starting from the extended ternary
+Golay code, this yields explicit self-dual ternary codes of index $24$ in every length $12k$,
+settling the existence part of the Gaiotto--Johnson-Freyd conjecture.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+A ternary code of length $n$ is a subspace $C\subseteq\F^n$; it is \emph{self-dual} if
+$C=C^\perp$ for the standard form $\langle x,y\rangle=\sum_i x_iy_i$. Self-dual ternary codes
+exist exactly when $4\mid n$. A codeword is \emph{maximal} if it has no zero entry, and it is
+\emph{even} or \emph{odd} according to the parity of the number of entries equal to $1$.
+
+\begin{definition}[{\cite[\S1]{GJF}}]
+The \emph{index} of a self-dual ternary code $C$ is
+\[
+  \Index(C)=\#\{\text{even maximal codewords}\}-\#\{\text{odd maximal codewords}\}.
+\]
+\end{definition}
+
+Gaiotto and Johnson-Freyd \cite{GJF} show that $C$ determines a holomorphic
+$\mathcal N=1$ SVOA $V_{\Lambda(C)}$ of central charge $n$, whose Ramond--Ramond partition function
+(the Witten index) equals $\Index(C)$. The index vanishes unless $12\mid n$. The Stolz--Teichner
+programme predicts that an SCFT of central charge $12k$ has index divisible by
+$24/\gcd(k,24)$ \cite{Hopkins,GJF}, and suggests that this bound is attained. For codes this leads to:
+
+\begin{quote}
+\textbf{Conjecture} (\cite[Conj.~1.4]{GJF}). The index of every self-dual ternary code is
+divisible by $24$. For every $k\ge1$ there is a self-dual ternary code of length $12k$ and
+index $24$.
+\end{quote}
+
+GJF prove the divisibility statement except for lengths $\equiv 12\pmod{24}$, and exhibit codes of
+index $24$ for $k\le 5$, found by random search. They ask
+\cite[Question~0.1]{GJF}: \emph{is there a systematic construction of self-dual ternary codes of
+index $24$ which would avoid the use of intensive computation?}
+Our main result answers this question and proves the existence half of the conjecture.
+
+\begin{theorem}\label{thm:main}
+For every $k\ge1$ there is an explicit self-dual ternary code of length $12k$ and index $24$.
+\end{theorem}
+
+Negating one coordinate of a code negates its index, so it suffices to produce index $\pm24$.
+
+The construction uses only the extended ternary Golay code, tetracodes, and the coordinate-pair
+map $(x,y)\mapsto(x+y,x-y)$. Its engine is a block-weighted index $R_\sigma$
+(Definition~\ref{def:R}). It is preserved by a ``partial quadrupling'' operation that adds $12$
+coordinates per block (Lemma~\ref{lem:main}). Doubling alone multiplies the length by $2$ and
+reaches only $k=2^j$; the partial version reaches all $k$.
+
+\subsection*{Conventions}
+Let $\varphi\colon\F\to\{0,\pm1\}$ be $\varphi(0)=0$, $\varphi(1)=-1$, $\varphi(2)=+1$, and
+$f(x)=\prod_i\varphi(x_i)$ for $x\in\F^n$. Then $\Index(C)=\sum_{c\in C}f(c)$. Note
+$\varphi(-a)=-\varphi(a)$ and $\varphi(a)^2=1$ for $a\neq0$.
+
+\section{Two local identities}
+
+The \emph{tetracode} $T\subseteq\F^4$ is the self-dual $[4,2,3]$ code \cite{CS}, e.g.\ spanned by
+$(1,1,1,0)$ and $(0,1,2,1)$. Its nonzero words have weight $3$, and each $3$-subset of the
+coordinates is the support of exactly two of them (a word and its negative).
+
+For $a,b\in\F$ put $\psi(a,b)=\varphi(a+b)\varphi(a-b)$. Then $\psi(a,b)\neq0$ iff exactly one
+of $a,b$ is nonzero, and
+\begin{equation}\label{eq:psi}
+  \psi(a,0)=1\quad(a\ne0),\qquad \psi(0,b)=-1\quad(b\neq0),
+\end{equation}
+since $\varphi(a)^2=1$ and $\varphi(b)\varphi(-b)=-1$. Similarly let
+$\kappa(a,b)=\#\{\text{nonzero entries of }(a+b,a-b)\}$. Then $\kappa=2$ if exactly one of $a,b$
+is nonzero, $\kappa=1$ if both are nonzero (as $b=\pm a$), and $\kappa=0$ if $a=b=0$.
+
+Define $\lambda\colon\{0,1,2,3,4\}\to\mathbb Z$ by
+\[
+  \lambda(0)=0,\quad\lambda(1)=-2,\quad\lambda(2)=\lambda(3)=0,\quad\lambda(4)=1 .
+\]
+
+\begin{lemma}[doubling identity]\label{lem:A}
+For $u\in\F^4$,
+\[
+  \sum_{t\in T}\ \prod_{i=1}^4\psi(u_i,t_i)=\lambda(\wt u).
+\]
+\end{lemma}
+
+\begin{proof}
+A term is nonzero only if $\supp t$ is the complement of $\supp u$, and then it equals
+$(-1)^{\wt t}$ by \eqref{eq:psi}. Since $T$ has weights $0$ and $3$ only, with two words on each
+$3$-set, the sum is $1$ if $\wt u=4$ ($t=0$), $-2$ if $\wt u=1$, and $0$ otherwise.
+\end{proof}
+
+\begin{lemma}[refinement identity]\label{lem:B}
+Split the coordinates of $\F^4$ into two pairs $\{p,q\}$ and $\{r,s\}$. For $u\in\F^4$,
+\[
+  \sum_{t\in T}\lambda\bigl(\kappa(u_p,t_p)+\kappa(u_q,t_q)\bigr)\,
+               \lambda\bigl(\kappa(u_r,t_r)+\kappa(u_s,t_s)\bigr)=\lambda(\wt u).
+\]
+\end{lemma}
+
+\begin{proof}
+Write $L(t)$ for the summand. For $t=0$ we have $\kappa(u_i,0)=2[u_i\ne0]$, so
+$L(0)=[\wt u=4]$.
+
+Let $t\neq0$, so $t$ vanishes at exactly one coordinate $z$. Let $z'$ be the partner of $z$ in its pair,
+and $\{x,y\}$ the other pair. On $\{x,y\}$ both $t_x,t_y\neq0$, so
+$\kappa(u_x,t_x),\kappa(u_y,t_y)\in\{1,2\}$. Their sum lies in $\{2,3,4\}$, and it is $4$ iff
+$u_x=u_y=0$; so that factor is $[u_x=u_y=0]$. On $\{z,z'\}$ the count is
+$2[u_z\ne0]+\kappa(u_{z'},t_{z'})$ with $\kappa(u_{z'},t_{z'})\in\{1,2\}$. It is $4$ iff
+$u_z\neq0$ and $u_{z'}=0$, it is $1$ iff $u_z=0$ and $u_{z'}\ne0$, and otherwise it is $2$ or $3$. Hence
+\[
+  L(t)=[u_x=u_y=0]\bigl([u_z\ne0,\,u_{z'}=0]-2\,[u_z=0,\,u_{z'}\neq0]\bigr).
+\]
+This vanishes unless $\wt u=1$. If $\supp u=\{w\}$, the two words $t$ vanishing at $w$ contribute
+$2\cdot 1$, the two vanishing at the partner of $w$ contribute $2\cdot(-2)$, and the rest
+contribute $0$. The total is $-2=\lambda(1)$. If $\wt u\ne1$ only $t=0$ can contribute, giving
+$[\wt u=4]=\lambda(\wt u)$ (note $\lambda(0)=0$).
+\end{proof}
+
+\section{Block systems and partial quadrupling}
+
+\begin{definition}\label{def:R}
+A \emph{block system} $\sigma$ on a coordinate set $X$ is a set of pairwise disjoint $4$-subsets
+of $X$ (\emph{blocks}). The coordinates of $X$ not in any block are \emph{singletons}. For
+$x\in\F^X$ put
+\[
+  w_\sigma(x)=\prod_{i\ \text{singleton}}\varphi(x_i)\prod_{\beta\in\sigma}\lambda\bigl(\wt(x|_\beta)\bigr),
+  \qquad R_\sigma(C)=\sum_{c\in C}w_\sigma(c).
+\]
+\end{definition}
+
+If $\sigma=\emptyset$ then $R_\sigma(C)=\Index(C)$.
+
+\begin{definition}[partial quadrupling]\label{def:Q}
+Let $E\subseteq\F^m$ be self-dual and $\sigma=\{\beta_1,\dots,\beta_b\}$ a block system on $[m]$,
+with each block split into two pairs.
+\begin{enumerate}
+\item[(1)] For each coordinate $i$ in a block, add a new coordinate $i^*$, and place a copy of $T$ on
+$\beta_j^*=\{i^*:i\in\beta_j\}$ for each $j$. Apply $h_1$, the map $(x_i,x_{i^*})\mapsto(x_i+x_{i^*},x_i-x_{i^*})$ on
+every pair $\{i,i^*\}$. For a block $\beta=\{p,q\}\sqcup\{r,s\}$ define the two \emph{step-one blocks}
+$\{p,p^*,q,q^*\}$ and $\{r,r^*,s,s^*\}$, each split into the pairs shown. There are $2b$ of them.
+\item[(2)] For each coordinate $y$ in a step-one block add a new coordinate $y^{**}$, and place a copy of $T$ on
+$B^{**}$ for each step-one block $B$. Apply $h_2$, the same map on every pair $\{y,y^{**}\}$.
+\end{enumerate}
+Set $Q_\sigma(E)=h_2h_1\bigl(E\oplus T^{b}\oplus T^{2b}\bigr)\subseteq\F^{m+12b}$. Singletons of $\sigma$ are untouched.
+\end{definition}
+
+\begin{lemma}
+$Q_\sigma(E)$ is a self-dual code of length $m+12b$.
+\end{lemma}
+
+\begin{proof}
+On one pair, $(x+y)(x'+y')+(x-y)(x'-y')=2(xx'+yy')=-(xx'+yy')$, so $h_1$ and $h_2$ negate the
+form on the coordinates they pair and fix it elsewhere. Write $v=(e,t_1,t_2)$ with $e\in E$,
+$t_1\in T^b$, $t_2\in T^{2b}$, and split $e=(e_S,e_B)$ into singleton and block parts. Then $h_1$
+negates the form on $(e_B,t_1)$. Next, $h_2$ negates it on $(e_B,t_1,t_2)$, since those are exactly the coordinates of the step-one blocks and their $^{**}$ partners. Hence
+\[
+  \langle h_2h_1v,h_2h_1v'\rangle=\langle e,e'\rangle+\langle t_1,t_1'\rangle-\langle t_2,t_2'\rangle=0
+\]
+for all $v,v'\in E\oplus T^b\oplus T^{2b}$. Since $h_2h_1$ is bijective, the image has dimension
+$m/2+2b+4b=(m+12b)/2$.
+\end{proof}
+
+A single step would not suffice: $h_1$ alone negates the form on the blocks but not on the
+singletons, and does not preserve self-orthogonality.
+
+\begin{lemma}[main lemma]\label{lem:main}
+Let $E,\sigma$ be as in Definition~\ref{def:Q}.
+\begin{enumerate}
+\item $\Index(Q_\sigma(E))=R_\sigma(E)$.
+\item Let $\sigma''$ be the block system on the coordinates of $Q_\sigma(E)$ obtained by choosing any
+subset $\mathcal B$ of the step-one blocks, and replacing each $B=\{y_1,y_2\}\sqcup\{y_3,y_4\}\in\mathcal B$ by the two
+blocks $\{y_1,y_1^{**},y_2,y_2^{**}\}$ and $\{y_3,y_3^{**},y_4,y_4^{**}\}$. All other coordinates are singletons. Then
+$R_{\sigma''}(Q_\sigma(E))=R_\sigma(E)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (1) is the case $\mathcal B=\emptyset$ of part (2), so we prove (2). Write
+\[
+  R_{\sigma''}(Q_\sigma(E))=\sum_{e,t_1,t_2}w_{\sigma''}\bigl(h_2h_1(e,t_1,t_2)\bigr).
+\]
+Put $u=h_1(e,t_1)$, and sum
+over $t_2=(t_B)_B\in T^{2b}$ first. The weight $w_{\sigma''}$ factors over the singletons of $\sigma$
+and over the step-one blocks $B$ together with their $^{**}$ partners. $t_B$ only enters the factor of $B$.
+
+\emph{Unrefined $B\notin\mathcal B$.} Its eight coordinates are singletons of $\sigma''$. The
+factor is $\prod_{y\in B}\varphi(u_y+t_{B,y})\varphi(u_y-t_{B,y})=\prod_{y\in B}\psi(u_y,t_{B,y})$,
+and summing over $t_B\in T$ gives $\lambda(\wt u|_B)$ by Lemma~\ref{lem:A}.
+
+\emph{Refined $B\in\mathcal B$.} The factor is
+\[
+\lambda\bigl(\kappa(u_{y_1},t_{B,y_1})+\kappa(u_{y_2},t_{B,y_2})\bigr)\,
+\lambda\bigl(\kappa(u_{y_3},t_{B,y_3})+\kappa(u_{y_4},t_{B,y_4})\bigr),
+\]
+and summing over $t_B$ gives
+$\lambda(\wt u|_B)$ by Lemma~\ref{lem:B}.
+
+Either way the result is $\sum_{e,t_1}\prod_{i\in S}\varphi(e_i)\prod_B\lambda(\wt u|_B)$, with
+$S$ the singletons of $\sigma$. Now sum over $t_1=(t_\beta)_\beta\in T^b$. For a block
+$\beta=\{p,q\}\sqcup\{r,s\}$ the two step-one blocks give
+\[
+\lambda\bigl(\kappa(e_p,t_{\beta,p})+\kappa(e_q,t_{\beta,q})\bigr)\,\lambda\bigl(\kappa(e_r,t_{\beta,r})+\kappa(e_s,t_{\beta,s})\bigr),
+\]
+because $\wt u|_{\{p,p^*,q,q^*\}}=\kappa(e_p,t_{\beta,p})+\kappa(e_q,t_{\beta,q})$.
+Lemma~\ref{lem:B} turns the sum over $t_\beta$ into $\lambda(\wt e|_\beta)$. What remains is
+$\sum_{e\in E}w_\sigma(e)=R_\sigma(E)$.
+\end{proof}
+
+\begin{remark}
+If $\sigma$ has no singletons, $Q_\sigma$ is two successive Hadamard doublings
+$E\mapsto H(E\oplus\sigma T)$. Lemma~\ref{lem:main} then specialises to the statement that
+$R_\sigma$ is preserved under doubling followed by refinement. That gives index-$24$ codes at
+lengths $12\cdot2^j$ only. The singletons are what make lengths $12k$ with $k$ not a power of $2$
+reachable.
+\end{remark}
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+Let $G\subseteq\F^{12}$ be the extended ternary Golay code \cite{CS} with generator matrix
+\[
+\begin{pmatrix}
+1&0&0&0&0&0&0&1&1&1&1&1\\
+0&1&0&0&0&0&2&0&1&2&2&1\\
+0&0&1&0&0&0&2&1&0&1&2&2\\
+0&0&0&1&0&0&2&2&1&0&1&2\\
+0&0&0&0&1&0&2&2&2&1&0&1\\
+0&0&0&0&0&1&2&1&2&2&1&0
+\end{pmatrix},
+\]
+with coordinates labelled $0,\dots,11$. $\Index(G)=\pm24$ (it has $24$ maximal codewords, all of the same parity).
+
+\begin{proposition}\label{prop:base}
+With $\sigma_1=\{\{0,1,2,3\}\}$ and $\sigma_2=\{\{0,1,2,3\},\{4,5,6,8\}\}$, we have
+$R_{\sigma_1}(G)=R_{\sigma_2}(G)=24$.
+\end{proposition}
+
+\begin{proof}
+Direct evaluation over the $3^6=729$ codewords. More generally, $R_\sigma(G)=\pm24$ for all
+$495$ single blocks, and for $13{,}365$ of the $17{,}325$ block systems with two blocks; the others give $\pm72$.
+\end{proof}
+
+\begin{lemma}[engine]\label{lem:engine}
+If $E$ is self-dual of length $m$ and $\sigma$ is a two-block system with $R_\sigma(E)=\pm24$, then
+there is a self-dual $E'$ of length $m+24$ with $\Index(E')=\pm24$, and a two-block system
+$\sigma'$ on $E'$ with $R_{\sigma'}(E')=\pm24$.
+\end{lemma}
+
+\begin{proof}
+Take $E'=Q_\sigma(E)$, of length $m+24$ and index $R_\sigma(E)$ by Lemma~\ref{lem:main}(1). It
+has four step-one blocks. Refining exactly one of them gives a two-block system $\sigma'$ with
+$R_{\sigma'}(E')=R_\sigma(E)$ by Lemma~\ref{lem:main}(2).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+$k=1$: the Golay code.
+
+Odd $k=2j+1\ge3$: start from $(G,\sigma_2)$ and apply Lemma~\ref{lem:engine} $j$ times. This
+gives codes of index $\pm24$ at lengths $12+24j$.
+
+Even $k$: $Q_{\sigma_1}(G)$ has length $24$ and index $R_{\sigma_1}(G)=24$. Refining one of its
+two step-one blocks gives a two-block system with $R=24$ (Lemma~\ref{lem:main}(2)). Applying
+Lemma~\ref{lem:engine} $j$ times gives lengths $24+24j$.
+
+Finally, negate one coordinate if necessary to make the index $+24$.
+\end{proof}
+
+\begin{remark}[Verification]
+The identities of Lemmas~\ref{lem:A}, \ref{lem:B} and \ref{lem:main} were also checked by
+exhaustive enumeration. At length $24$ the equality $\Index(Q_\sigma(E))=R_\sigma(E)$ and
+invariance under all choices of $\sigma''$ hold for $40$ random pairs $(E,\sigma)$ with
+$E$ of length $12$ and $|\sigma|=1$. The codes produced by the proof at lengths $24,36,48,60,72,84$ were
+constructed explicitly; they are self-dual with $|\Index|=24$. This was checked by brute force at $n=24$ and by
+exhaustive enumeration of $2^{n/2-1}$ words for $n\le 84$. Lengths $72$ and $84$ were the first
+cases not previously known. Code and generator matrices are available at [repository].
+\end{remark}
+
+\begin{remark}
+The codes have minimum distance at least $6$ (a weight-$3$ word forces the index to vanish), and
+by construction they are built from $G$ and tetracodes only. Each has an explicit generator
+matrix of size polynomial in $k$. This answers \cite[Question~0.1]{GJF}: no search is
+needed beyond the finite check of Proposition~\ref{prop:base} at length $12$. Through
+\cite{GJF}, it yields for every $k$ a holomorphic $\mathcal N=1$ SVOA of central charge $12k$ and
+index $24$. This realises $24\Delta^k$, which is the TMF-predicted minimal value
+$\tfrac{24}{\gcd(k,24)}\Delta^k$ exactly when $\gcd(k,24)=1$.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem{GJF}
+D.~Gaiotto and T.~Johnson-Freyd,
+\emph{Holomorphic SCFTs with small index},
+Canad.\ J.\ Math.\ \textbf{74} (2022), no.~2, 573--601. arXiv:1811.00589.
+
+\bibitem{CS}
+J.~H.~Conway and N.~J.~A.~Sloane,
+\emph{Sphere Packings, Lattices and Groups}, 3rd ed., Springer, 1999.
+
+\bibitem{Hopkins}
+M.~J.~Hopkins,
+\emph{Algebraic topology and modular forms},
+Proc.\ ICM Beijing 2002, Vol.~I, 291--317.
+\end{thebibliography}
+
+\end{document}
