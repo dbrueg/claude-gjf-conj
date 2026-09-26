@@ -67,9 +67,12 @@ index $24$.
 
 GJF prove the divisibility statement except for lengths $\equiv 12\pmod{24}$, and exhibit codes of
 index $24$ for $k\le 5$, found by random search. They ask
-\cite[Question~0.1]{GJF}: \emph{is there a systematic construction of self-dual ternary codes of
+\cite[Question~0.1]{GJF}\footnote{Numbering of statements in \cite{GJF} refers to the arXiv version.}:
+\emph{is there a systematic construction of self-dual ternary codes of
 index $24$ which would avoid the use of intensive computation?}
-Our main result answers this question and proves the existence half of the conjecture.
+Our main result answers this question and proves the existence half of the conjecture. The
+divisibility statement for the remaining lengths is treated separately; here we address only
+existence.
 
 \begin{theorem}\label{thm:main}
 For every $k\ge1$ there is an explicit self-dual ternary code of length $12k$ and index $24$.
@@ -148,6 +151,11 @@ contribute $0$. The total is $-2=\lambda(1)$. If $\wt u\ne1$ only $t=0$ can cont
 $[\wt u=4]=\lambda(\wt u)$ (note $\lambda(0)=0$).
 \end{proof}
 
+Both proofs use only the weights of $T$ and the number of words on each $3$-set. So Lemmas~\ref{lem:A}
+and~\ref{lem:B} hold for every code monomially equivalent to $T$, in particular for a copy of $T$
+placed on any $4$-set of coordinates in any order, and Lemma~\ref{lem:B} holds for every splitting of
+the four coordinates into two pairs.
+
 \section{Block systems and partial quadrupling}
 
 \begin{definition}\label{def:R}
@@ -164,12 +172,13 @@ If $\sigma=\emptyset$ then $R_\sigma(C)=\Index(C)$.
 
 \begin{definition}[partial quadrupling]\label{def:Q}
 Let $E\subseteq\F^m$ be self-dual and $\sigma=\{\beta_1,\dots,\beta_b\}$ a block system on $[m]$,
-with each block split into two pairs.
+with each block split arbitrarily into two pairs. (The splittings enter $Q_\sigma(E)$ but not
+$R_\sigma(E)$, and by Lemma~\ref{lem:B} every choice works below.)
 \begin{enumerate}
 \item[(1)] For each coordinate $i$ in a block, add a new coordinate $i^*$, and place a copy of $T$ on
 $\beta_j^*=\{i^*:i\in\beta_j\}$ for each $j$. Apply $h_1$, the map $(x_i,x_{i^*})\mapsto(x_i+x_{i^*},x_i-x_{i^*})$ on
 every pair $\{i,i^*\}$. For a block $\beta=\{p,q\}\sqcup\{r,s\}$ define the two \emph{step-one blocks}
-$\{p,p^*,q,q^*\}$ and $\{r,r^*,s,s^*\}$, each split into the pairs shown. There are $2b$ of them.
+$\{p,p^*,q,q^*\}$ and $\{r,r^*,s,s^*\}$, each again split arbitrarily into two pairs. There are $2b$ of them.
 \item[(2)] For each coordinate $y$ in a step-one block add a new coordinate $y^{**}$, and place a copy of $T$ on
 $B^{**}$ for each step-one block $B$. Apply $h_2$, the same map on every pair $\{y,y^{**}\}$.
 \end{enumerate}
@@ -200,7 +209,8 @@ Let $E,\sigma$ be as in Definition~\ref{def:Q}.
 \begin{enumerate}
 \item $\Index(Q_\sigma(E))=R_\sigma(E)$.
 \item Let $\sigma''$ be the block system on the coordinates of $Q_\sigma(E)$ obtained by choosing any
-subset $\mathcal B$ of the step-one blocks, and replacing each $B=\{y_1,y_2\}\sqcup\{y_3,y_4\}\in\mathcal B$ by the two
+subset $\mathcal B$ of the step-one blocks, and replacing each $B=\{y_1,y_2\}\sqcup\{y_3,y_4\}\in\mathcal B$,
+split into its two pairs, by the two
 blocks $\{y_1,y_1^{**},y_2,y_2^{**}\}$ and $\{y_3,y_3^{**},y_4,y_4^{**}\}$. All other coordinates are singletons. Then
 $R_{\sigma''}(Q_\sigma(E))=R_\sigma(E)$.
 \end{enumerate}
@@ -289,9 +299,9 @@ $k=1$: the Golay code.
 Odd $k=2j+1\ge3$: start from $(G,\sigma_2)$ and apply Lemma~\ref{lem:engine} $j$ times. This
 gives codes of index $\pm24$ at lengths $12+24j$.
 
-Even $k$: $Q_{\sigma_1}(G)$ has length $24$ and index $R_{\sigma_1}(G)=24$. Refining one of its
+Even $k=2j+2\ge2$: $Q_{\sigma_1}(G)$ has length $24$ and index $R_{\sigma_1}(G)=24$. Refining one of its
 two step-one blocks gives a two-block system with $R=24$ (Lemma~\ref{lem:main}(2)). Applying
-Lemma~\ref{lem:engine} $j$ times gives lengths $24+24j$.
+Lemma~\ref{lem:engine} $j$ times gives lengths $24+24j=12k$.
 
 Finally, negate one coordinate if necessary to make the index $+24$.
 \end{proof}
@@ -301,15 +311,19 @@ The identities of Lemmas~\ref{lem:A}, \ref{lem:B} and \ref{lem:main} were also c
 exhaustive enumeration. At length $24$ the equality $\Index(Q_\sigma(E))=R_\sigma(E)$ and
 invariance under all choices of $\sigma''$ hold for $40$ random pairs $(E,\sigma)$ with
 $E$ of length $12$ and $|\sigma|=1$. The codes produced by the proof at lengths $24,36,48,60,72,84$ were
-constructed explicitly; they are self-dual with $|\Index|=24$. This was checked by brute force at $n=24$ and by
-exhaustive enumeration of $2^{n/2-1}$ words for $n\le 84$. Lengths $72$ and $84$ were the first
-cases not previously known. Code and generator matrices are available at [repository].
+constructed explicitly; they are self-dual with $|\Index|=24$. A maximal codeword is nonzero on an
+information set, so the $2^{n/2}$ sign patterns on an information set exhaust the candidates
+($2^{n/2-1}$ up to $x\mapsto-x$). Enumerating them without sign normalisation gives
+$\Index=+24$ exactly at $n=24$ and $n=36$; for $n\le84$ the same enumeration, with the sign of one word
+normalised, gives $|\Index|=24$. Lengths $72$ and $84$ are covered neither by the examples of
+\cite{GJF} ($k\le5$) nor by doubling ($k=2^j$). Code and generator matrices are available at [repository].
 \end{remark}
 
 \begin{remark}
-The codes have minimum distance at least $6$ (a weight-$3$ word forces the index to vanish), and
-by construction they are built from $G$ and tetracodes only. Each has an explicit generator
-matrix of size polynomial in $k$. This answers \cite[Question~0.1]{GJF}: no search is
+The codes have minimum distance at least $6$: by self-duality, a maximal codeword $x$ agrees with a
+weight-$3$ codeword $w$ or with $-w$ on $\supp w$, so one of $x\pm w$ is maximal with the opposite
+sign, and a weight-$3$ word forces the index to vanish. By construction the codes are built from $G$
+and tetracodes only, and a generator matrix is computable in time polynomial in $k$. This answers \cite[Question~0.1]{GJF}: no search is
 needed beyond the finite check of Proposition~\ref{prop:base} at length $12$. Through
 \cite{GJF}, it yields for every $k$ a holomorphic $\mathcal N=1$ SVOA of central charge $12k$ and
 index $24$. This realises $24\Delta^k$, which is the TMF-predicted minimal value

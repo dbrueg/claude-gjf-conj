@@ -17,7 +17,7 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 ## Next steps
 
 1. **Citation search** for GJF (Google Scholar "Cited by" / INSPIRE, by hand in a browser: Scholar shows a CAPTCHA to the cloud session, and INSPIRE/Semantic Scholar are blocked). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
-2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review with suggested wording edits is in `paper/review-2026-09-26.md`. Still wanted: a reading by a second person.
+2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review is in `paper/review-2026-09-26.md`, and its wording edits are applied (author and repository placeholders remain). Still wanted: a reading by a second person.
 3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
 
 ## Conventions
