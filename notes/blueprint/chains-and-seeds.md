@@ -391,6 +391,11 @@ Options for T6, the only obstacle to a fully kernel-checked code-level answer:
 
 ## 5. Lean plan for this component, and its size
 
+**Status (2026-09-27, later): done** as planned below, in `lean/GJF/` (`ChainJ`, `ChainQ8`, `ChainZ12`, `ChainQ8Z3`, `Twined`, `Eval`, `SeedCert`, `TierA`), with R_σ(E₇₂) = 24 as the hypothesis `Q8Z3.E72Hyp`. Differences from the plan:
+- The ℤ/12 seeds are normalised (Lemma 2.6) so that h = g⁴ is a pure permutation; with this normalisation every block map of g on σ_A6 and σ_B6 is `A 1` (orderings found by `ternary60/theory/lean_seed_data.py`, log `lean_seed_data_z12.log`). σ_B6 is labelled `Fin 3 × Fin 2` and is already a uniform chain state. For k = 3 the unnormalised seed 3 is used (T_h for the signed h).
+- Fixed subcodes are certified by a sparse left inverse of the fixedness forms (`Eval.comp_of_cert`), not by Lemma 2.4.
+- The seed sums use a verified bit-sliced tree with pruning at information coordinates (Lemma 2.5), split into chunks of ≤ 4,500 leaves per declaration because of kernel memory (§4).
+
 **Encoding choices** (on top of [EQ] §7):
 - *Refinement.* Add `refdᵗ` (split by the second label of the step-one block, i.e. {x, y} | {x*, y*}) and `localBᵗ`, a `decide` over 81 cases [V: Part 1, Lemma B for all 3 splits]. Add a regrouping `r₂ᵗ` sending new-block label (a′, b′) to the doubled step-one coordinate ((a′ ⊕ b′, s), a′). This is the order (x, y, y**, x**). Generalise `newState` from one refined block to a G-stable set 𝓑 ([EQ] §7 item 3).
 - *Placements.* With Lemma 2.7, keep `Tfin` everywhere. The stage-0 orderings are data: J (0,1\|3,2); σ_A (24,27\|33,30), …; σ_A6, σ_B6; Q₈ (9,8\|10,11), (13,12\|14,15); Q₈×ℤ/3 (4b, 4b+1\|4b+3, 4b+2). This avoids [EQ]'s per-block placement generalisation `Dp`, provided chain B uses σ_B6 (seed 6). With seed 3's σ_B, `Dp` is needed.

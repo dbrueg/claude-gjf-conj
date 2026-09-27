@@ -231,15 +231,64 @@ inductive FStep
   | chkS (i : ℕ)
   | chkB (b : ℕ × ℕ × ℕ × ℕ)
 
+/-- One step of the kernel-fast evaluation (`ih`: the evaluation of the rest of the tree). -/
+noncomputable def stepF (s : FStep) (ih : ℕ → ℕ → ℤ) (a b : ℕ) : ℤ :=
+  FStep.rec (motive := fun _ => ℤ)
+    (fun r1 r2 => Int.add (Int.add (ih a b) (ih (r1f a b r1 r2) (r1f b a r2 r1)))
+      (ih (r1f a b r2 r1) (r1f b a r1 r2)))
+    (fun i => cond (tb (Nat.lor a b) i) (ih a b) 0)
+    (fun bb => (fun c => cond (Nat.beq c 4) (ih a b) (cond (Nat.beq c 1) (ih a b) 0))
+      (cntF (Nat.lor a b) bb)) s
+
 /-- The kernel-fast evaluation of a tree with leaf weight `w`. -/
 noncomputable def fastT (w : ℕ → ℕ → ℤ) (st : List FStep) : ℕ → ℕ → ℤ :=
-  List.rec (motive := fun _ => ℕ → ℕ → ℤ) w
-    (fun s _ ih a b => FStep.rec (motive := fun _ => ℤ)
-      (fun r1 r2 => Int.add (Int.add (ih a b) (ih (r1f a b r1 r2) (r1f b a r2 r1)))
-        (ih (r1f a b r2 r1) (r1f b a r1 r2)))
-      (fun i => cond (tb (Nat.lor a b) i) (ih a b) 0)
-      (fun bb => (fun c => cond (Nat.beq c 4) (ih a b) (cond (Nat.beq c 1) (ih a b) 0))
-        (cntF (Nat.lor a b) bb)) s) st
+  List.rec (motive := fun _ => ℕ → ℕ → ℤ) w (fun s _ ih => stepF s ih) st
+
+lemma fastT_foldr (w : ℕ → ℕ → ℤ) (st : List FStep) : fastT w st = st.foldr stepF w := by
+  induction st with
+  | nil => rfl
+  | cons s st ih => rw [List.foldr_cons, ← ih]; rfl
+
+lemma fastT_append (w : ℕ → ℕ → ℤ) (pre post : List FStep) :
+    fastT w (pre ++ post) = fastT (fastT w post) pre := by
+  rw [fastT_foldr, fastT_foldr, fastT_foldr, List.foldr_append]
+
+/-- The leaves of a tree (the words reaching the leaf weight). -/
+def leavesT : List FStep → ℕ → ℕ → List (ℕ × ℕ)
+  | [], a, b => [(a, b)]
+  | .row r1 r2 :: st, a, b => leavesT st a b ++ leavesT st (r1f a b r1 r2) (r1f b a r2 r1) ++
+      leavesT st (r1f a b r2 r1) (r1f b a r1 r2)
+  | .chkS i :: st, a, b => cond (tb (Nat.lor a b) i) (leavesT st a b) []
+  | .chkB bb :: st, a, b => (fun c => cond (Nat.beq c 4) (leavesT st a b)
+      (cond (Nat.beq c 1) (leavesT st a b) [])) (cntF (Nat.lor a b) bb)
+
+lemma fastT_leaves (k : ℕ → ℕ → ℤ) : ∀ (st : List FStep) (a b : ℕ),
+    fastT k st a b = ((leavesT st a b).map fun m => k m.1 m.2).sum := by
+  intro st
+  induction st with
+  | nil => intro a b; simp [leavesT]; rfl
+  | cons s st ih =>
+    intro a b
+    cases s with
+    | row r1 r2 =>
+      show Int.add (Int.add (fastT k st a b) _) _ = _
+      simp only [leavesT, List.map_append, List.sum_append, ← ih]
+      rfl
+    | chkS i =>
+      show cond (tb (Nat.lor a b) i) (fastT k st a b) 0 = _
+      simp only [leavesT]
+      cases tb (Nat.lor a b) i <;> simp [ih]
+    | chkB bb =>
+      show (fun c => cond (Nat.beq c 4) (fastT k st a b) (cond (Nat.beq c 1) (fastT k st a b) 0))
+        (cntF (Nat.lor a b) bb) = _
+      simp only [leavesT]
+      cases Nat.beq (cntF (Nat.lor a b) bb) 4 <;> cases Nat.beq (cntF (Nat.lor a b) bb) 1 <;>
+        simp [ih]
+
+/-- **Splitting a tree** into chunks below the leaves of a prefix. -/
+theorem fastT_split (w : ℕ → ℕ → ℤ) (st : List FStep) (p : ℕ) (a b : ℕ) :
+    fastT w st a b = ((leavesT (st.take p) a b).map fun m => fastT w (st.drop p) m.1 m.2).sum := by
+  rw [← fastT_leaves, ← fastT_append, List.take_append_drop]
 
 /-- The rows of a tree. -/
 def rowsOf : List FStep → List (ℕ × ℕ)
@@ -529,39 +578,148 @@ lemma wtP_eq : ∀ u : P → F, wtP u = (if u (0, 0) ≠ 0 then 1 else 0) + (if 
     (if u (1, 0) ≠ 0 then 1 else 0) + (if u (1, 1) ≠ 0 then 1 else 0) := by decide
 
 /-- The singleton coordinates of a placement `c`. -/
-def sListOf {a b : ℕ} (c : Blk (Fin a) (Fin b) → Fin n) : List ℕ := List.ofFn fun s => (c (.inl s)).val
+def sListOf {a : ℕ} {B : Type} (c : Blk (Fin a) B → Fin n) : List ℕ :=
+  List.ofFn fun s => (c (.inl s)).val
 
-/-- The blocks of a placement `c`, in the order `(0,0), (0,1), (1,0), (1,1)`. -/
-def bListOf {a b : ℕ} (c : Blk (Fin a) (Fin b) → Fin n) : List (ℕ × ℕ × ℕ × ℕ) :=
-  List.ofFn fun β => ((c (.inr (β, (0, 0)))).val, (c (.inr (β, (0, 1)))).val,
-    (c (.inr (β, (1, 0)))).val, (c (.inr (β, (1, 1)))).val)
+/-- The four coordinates of a block under a placement `c`. -/
+def blockOf {a : ℕ} {B : Type} (c : Blk (Fin a) B → Fin n) (β : B) : ℕ × ℕ × ℕ × ℕ :=
+  ((c (.inr (β, (0, 0)))).val, (c (.inr (β, (0, 1)))).val, (c (.inr (β, (1, 0)))).val,
+    (c (.inr (β, (1, 1)))).val)
 
-lemma Rw_eq_Wt {a b : ℕ} (c : Blk (Fin a) (Fin b) → Fin n) (x : Fin n → F) :
-    Rw (fun i => x (c i)) = Wt (sListOf c) (bListOf c) (ext x) := by
-  unfold Rw Wt sListOf bListOf
+/-- The blocks of a placement `c`, listed along `eB`. -/
+def bListOf {a b : ℕ} {B : Type} (c : Blk (Fin a) B → Fin n) (eB : Fin b ≃ B) :
+    List (ℕ × ℕ × ℕ × ℕ) :=
+  List.ofFn fun j => blockOf c (eB j)
+
+lemma weight_eq_Wt {a b : ℕ} {B B' : Type} [Fintype B'] (c : Blk (Fin a) B → Fin n)
+    (eB' : Fin b ≃ B') (reps : B' → B) (x : Fin n → F) :
+    (∏ s, phi (x (c (.inl s)))) * ∏ β', lam (wtP fun p => x (c (.inr (reps β', p)))) =
+      Wt (sListOf c) (List.ofFn fun j => blockOf c (reps (eB' j))) (ext x) := by
+  unfold Wt sListOf blockOf
   have he : ∀ j : Fin n, ext x j.val = x j := fun j => by simp [ext, j.isLt]
   rw [List.map_ofFn, List.prod_ofFn, List.map_ofFn, List.prod_ofFn]
   congr 1
   · exact Finset.prod_congr rfl fun s _ => by simp only [Function.comp_apply, he]
-  · refine Finset.prod_congr rfl fun β _ => ?_
+  · rw [← Fintype.prod_equiv eB' (fun j => lam (wtP fun p => x (c (.inr (reps (eB' j), p)))))
+      _ (fun _ => rfl)]
+    refine Finset.prod_congr rfl fun β _ => ?_
     simp only [Function.comp_apply, cnt4, he, wtP_eq]
 
-variable (n rows) in
-/-- **The seed formula.** `R` of a seed code equals the value of an admissible fast tree. -/
-theorem R_seed {a b : ℕ} (c : Blk (Fin a) (Fin b) → Fin n) (hc : Function.Bijective c)
-    {info : Fin rows.length → Fin n} (hsys : Sys info)
-    (hbits : ∀ r ∈ rows, r.1 < 2 ^ n ∧ r.2 < 2 ^ n) (sL : List ℕ) (bL : List (ℕ × ℕ × ℕ × ℕ))
-    (hsL : sListOf c = sL) (hbL : bListOf c = bL) (st : List FStep) (hst : rowsOf st = rows)
+lemma Rw_eq_Wt {a b : ℕ} {B : Type} [Fintype B] (c : Blk (Fin a) B → Fin n) (eB : Fin b ≃ B)
+    (x : Fin n → F) : Rw (fun i => x (c i)) = Wt (sListOf c) (bListOf c eB) (ext x) :=
+  weight_eq_Wt c eB id x
+
+/-- The sum of `Wt` over a seed code, as a fast tree. -/
+theorem sum_encS_fast (hbits : ∀ r ∈ rows, r.1 < 2 ^ n ∧ r.2 < 2 ^ n)
+    (sL : List ℕ) (bL : List (ℕ × ℕ × ℕ × ℕ)) (st : List FStep) (hst : rowsOf st = rows)
     (hv : fvalid sL bL st = true) :
-    R (relabel (Equiv.ofBijective c hc) (codeS n rows)) = fastT (WtF sL bL) st 0 0 := by
-  unfold R
-  rw [sum_relabel, CSG_codeS, Finset.sum_image (fun a _ b _ h => encS_inj hsys h)]
+    ∑ a : Fin rows.length → F, Wt sL bL (ext (encS n rows a)) = fastT (WtF sL bL) st 0 0 := by
   rw [show (0 : ℕ) = ((0, 0) : ℕ × ℕ).1 from rfl, fastT_eq sL bL st (0, 0) hv valid_zero, decN_zero,
     hst, show rows.map decN = List.ofFn (fun r : Fin rows.length => decN rows[r]) from
       (List.ofFn_getElem_eq_map rows decN).symm, fullS_eq_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [zero_add, ← ext_encS hbits, ← hsL, ← hbL, ← Rw_eq_Wt]
+  rw [zero_add, ext_encS hbits]
+
+variable (n rows) in
+/-- **The seed formula.** `R` of a seed code equals the value of an admissible fast tree. -/
+theorem R_seed {a b : ℕ} {B : Type} [Fintype B] [DecidableEq B] (c : Blk (Fin a) B → Fin n)
+    (hc : Function.Bijective c) (eB : Fin b ≃ B)
+    {info : Fin rows.length → Fin n} (hsys : Sys info)
+    (hbits : ∀ r ∈ rows, r.1 < 2 ^ n ∧ r.2 < 2 ^ n) (sL : List ℕ) (bL : List (ℕ × ℕ × ℕ × ℕ))
+    (hsL : sListOf c = sL) (hbL : bListOf c eB = bL) (st : List FStep) (hst : rowsOf st = rows)
+    (hv : fvalid sL bL st = true) :
+    R (relabel (Equiv.ofBijective c hc) (codeS n rows)) = fastT (WtF sL bL) st 0 0 := by
+  unfold R
+  rw [sum_relabel, CSG_codeS, Finset.sum_image (fun a _ b _ h => encS_inj hsys h),
+    ← sum_encS_fast hbits sL bL st hst hv]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [← hsL, ← hbL, ← Rw_eq_Wt]
   rfl
+
+/-! ### Sums over the fixed codewords of a signed permutation -/
+
+/-- The fixed codewords of `h` are spanned by the rows `frows`, systematic on `J`. -/
+theorem fixed_sum {M : Type*} [AddCommMonoid M] (h : SP (Fin n)) {frows : List (ℕ × ℕ)}
+    {J : Fin frows.length → Fin n}
+    (hsysF : Sys (n := n) (rows := frows) J) (hmem : ∀ j, gen n frows j ∈ codeS n rows)
+    (hfix : ∀ j, h.act (gen n frows j) = gen n frows j)
+    (hcomp : ∀ x ∈ codeS n rows, h.act x = x → (∀ j, x (J j) = 0) → x = 0) (W : (Fin n → F) → M) :
+    ∑ x ∈ (CSG (codeS n rows)).filter (fun x => h.act x = x), W x =
+      ∑ b : Fin frows.length → F, W (encS n frows b) := by
+  have hencF : ∀ b, encS n frows b = ∑ j, b j • gen n frows j := fun b => by
+    funext i; simp [encS, Finset.sum_apply]
+  have hmemF : ∀ b, encS n frows b ∈ codeS n rows := fun b => by
+    rw [hencF]; exact (codeS n rows).sum_mem fun j _ => (codeS n rows).smul_mem _ (hmem j)
+  have hfixF : ∀ b, h.act (encS n frows b) = encS n frows b := fun b => by
+    rw [act_encS]
+    simp only [hfix]
+    exact (hencF b).symm
+  rw [← Finset.sum_image (fun a _ b _ hab => encS_inj hsysF hab)]
+  refine Finset.sum_congr ?_ fun _ _ => rfl
+  ext x
+  simp only [Finset.mem_filter, mem_CSG, Finset.mem_image, Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨hx, hhx⟩
+    refine ⟨fun j => x (J j), ?_⟩
+    have hy := hcomp (x - encS n frows fun j => x (J j))
+      ((codeS n rows).sub_mem hx (hmemF _))
+      (by rw [show x - encS n frows (fun j => x (J j)) = x + (-1 : F) • encS n frows (fun j => x (J j))
+          by rw [neg_one_smul, sub_eq_add_neg], SP.act_add, SP.act_smul, hhx, hfixF])
+      (fun j => by rw [Pi.sub_apply, encS_sys hsysF, sub_self])
+    exact (sub_eq_zero.1 hy).symm
+  · rintro ⟨b, rfl⟩
+    exact ⟨hmemF b, hfixF b⟩
+
+/-- The linear forms whose common zeros are the fixed codewords vanishing on `J`, as functions of
+the coefficient vector. -/
+def fixForm (h : SP (Fin n)) {d : ℕ} (J : Fin d → Fin n) : Fin n ⊕ Fin d → Fin rows.length → F
+  | .inl i, r => gen n rows r (h.perm i) - h.sgn i * gen n rows r i
+  | .inr j, r => gen n rows r (J j)
+
+lemma sum_list_comm {α ι : Type*} [Fintype ι] (L : List α) (f : α → ι → F) :
+    ∑ r', (L.map fun a => f a r').sum = (L.map fun a => ∑ r', f a r').sum := by
+  induction L with
+  | nil => simp
+  | cons a L ih => simp [Finset.sum_add_distrib, ih]
+
+/-- **Certificate for `hcomp`:** a sparse left inverse `L` of the forms. -/
+theorem comp_of_cert (h : SP (Fin n)) {d : ℕ}
+    (J : Fin d → Fin n) (L : Fin rows.length → List ((Fin n ⊕ Fin d) × F))
+    (hL : ∀ r r', ((L r).map fun cl => cl.2 * fixForm h J cl.1 r').sum = if r = r' then 1 else 0) :
+    ∀ x ∈ codeS n rows, h.act x = x → (∀ j, x (J j) = 0) → x = 0 := by
+  rintro x ⟨a, rfl⟩ hfx hJ
+  have hform : ∀ c, ∑ r', fixForm h J c r' * a r' = 0 := by
+    rintro (i | j)
+    · have := congrFun hfx (h.perm i)
+      rw [SP.act_perm] at this
+      simp only [fixForm, sub_mul, Finset.sum_sub_distrib]
+      rw [sub_eq_zero]
+      unfold encS at this
+      rw [show (∑ r, gen n rows r (h.perm i) * a r) = ∑ r, a r * gen n rows r (h.perm i) from
+        Finset.sum_congr rfl fun r _ => mul_comm _ _, ← this, Finset.mul_sum]
+      exact Finset.sum_congr rfl fun r _ => by ring
+    · have := hJ j
+      unfold encS at this
+      simp only [fixForm]
+      rw [← this]
+      exact Finset.sum_congr rfl fun r _ => by ring
+  have ha : ∀ r, a r = 0 := by
+    intro r
+    have : a r = ∑ r', (if r = r' then 1 else 0) * a r' := by simp
+    rw [this]
+    simp_rw [← hL r]
+    have e : ∀ r', ((L r).map fun cl => cl.2 * fixForm h J cl.1 r').sum * a r' =
+        ((L r).map fun cl => cl.2 * (fixForm h J cl.1 r' * a r')).sum := by
+      intro r'
+      rw [← List.sum_map_mul_right]
+      congr 1
+      exact List.map_congr_left fun cl _ => by ring
+    simp_rw [e]
+    rw [sum_list_comm]
+    simp_rw [← Finset.mul_sum, hform, mul_zero]
+    simp
+  funext i
+  simp [encS, ha]
 
 end Seed
 

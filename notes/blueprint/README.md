@@ -4,7 +4,7 @@ Written 2026-09-27. This directory prepares a Lean formalization of the answer t
 
 Each file states definitions and lemmas in a Lean-ready form and proves them in full. It separates what is proved ([P]), checked by computation ([V], with a script), cited ([T]), or cited with only a sketched super-VOA proof ([T*]). Each file ends with a list of issues found in the older notes. Status labels are as in the notes.
 
-Nothing here is formalized yet. The existing Lean development (`lean/`, 1,639 lines) proves Conj 1.4 (`GJF.conjecture_1_4`). It covers [I] Lemma 5.8 only in the special case used by Thm 5.9.
+**Status (2026-09-27, later).** Tier A is formalized, with the one seed value R_σ(E₇₂) = 24 as a hypothesis: `GJF.Ex.tierA : Q8Z3.E72Hyp → ∀ k ≥ 1, MQcode k` (`lean/GJF/TierA.lean`, standard axioms only, no `sorry`, no `native_decide`). About 3,650 hand-written lines on top of the Conj 1.4 development, plus generated seed data and certificates (`ternary60/theory/lean_seed_data.py`). The VOA side (D8′–D14) is not formalized. See `lean/README.md` for the files; §4 below has the estimate this replaced.
 
 ## 1. Files
 
@@ -30,12 +30,12 @@ In each case the orbifold V_{Λ(C)}//G has index 24/|G|.
 | # | node | content | status | where | Lean today |
 |---|---|---|---|---|---|
 | D1 | codes | F₃-codes, self-duality, f, Index | definitions | [I] | done (`IsSelfDual`, `gjfIndex`) |
-| D2 | placements, local identities | 8 placements = the [4,2,3] codes; Lemmas A, B for every placement and split | [P; V] | [EQ] §1–2 | `localA`, `localB` for one placement |
-| D3 | partial quadrupling | Q_σ(E) self-dual if E is; F(Q_σE) = R_σ(E) and R_σ″(Q_σE) = R_σ(E) for any linear E | [P; V] | [EQ] Thm 3.3 | special case (`engine`) |
-| D4 | equivariance | G ⊂ Aut(Q_σE); inherited relations, orders, cycle and sign data; invariant placements exist at every stage | [P; V] | [EQ] §4 (Lemma 4.11) | — |
-| D5 | twined counts | T_h(Q_σE) = R_σ̄(D) (collapse) or R^h_σ(E) (orbit weights); constant along chains | [P; V] | [EQ] §5, [CS] Lemma 2.3 | — |
-| D6 | seeds | Golay, J; ℤ/12 seed 6: R_{σA6} = R_{σB6} = +24 and twined 0, and for k = 3 Index = ±24 and T_h = 0 of the seed itself ([CS] Z5–Z8); Q₈ seed (R = 24); Q₈ × ℤ/3 seed E₇₂ (R_σ = 24, twined 0) | [V] | [CS] §3–4 | Golay only |
-| D7 | chains, coverage | every k reached, with the group data H(k) that D9–D12 need | [P; V] | [CS] §3 | m ∈ {1, 2} only |
+| D2 | placements, local identities | 8 placements = the [4,2,3] codes; Lemmas A, B for every placement and split | [P; V] | [EQ] §1–2 | done for the placement `Tfin` and both splits used (`localA`, `localB`, `localBt`); the group `LM` of local maps preserving it |
+| D3 | partial quadrupling | Q_σ(E) self-dual if E is; F(Q_σE) = R_σ(E) and R_σ″(Q_σE) = R_σ(E) for any linear E | [P; V] | [EQ] Thm 3.3 | done for any set of refined step-one blocks with the transposed split (`Qt`, `NSt`, `indexG_Qt`, `R_NSt`) |
+| D4 | equivariance | G ⊂ Aut(Q_σE); inherited relations, orders, cycle and sign data; invariant placements exist at every stage | [P; V] | [EQ] §4 (Lemma 4.11) | done for local maps in `LM` (`Equivariant.lean`, `Chain.lean`: `extD`, `step1`, `newSM` are homomorphisms) |
+| D5 | twined counts | T_h(Q_σE) = R_σ̄(D) (collapse) or R^h_σ(E) (orbit weights); constant along chains | [P; V] | [EQ] §5, [CS] Lemma 2.3 | done, orbit weights (`Twined.lean`: `Th_Qt`, `Rh_NSt`) |
+| D6 | seeds | Golay, J; ℤ/12 seed 6: R_{σA6} = R_{σB6} = +24 and twined 0, and for k = 3 Index = ±24 and T_h = 0 of the seed itself ([CS] Z5–Z8); Q₈ seed (R = 24); Q₈ × ℤ/3 seed E₇₂ (R_σ = 24, twined 0) | [V] | [CS] §3–4 | all by the kernel (verified evaluator `Eval.lean`), except R_σ(E₇₂) = 24 (hypothesis `E72Hyp`) |
+| D7 | chains, coverage | every k reached, with the group data H(k) that D9–D12 need | [P; V] | [CS] §3 | done (`tierA`) |
 | D8′ | N=1 structure | τ ∈ V_{Λ(C)}; G fixes τ; W = V//G is N=1; G₀² = κ(L₀ − c/24), so the index is a constant | [P, given Li96, ORB] | [OF] Props 2.6, 5.7, Lemma 2.7; [OI] Lemma 1.1 | — |
 | D8 | Ramond ground states | V_R = V_{Λ+χ/2}; ground states ↔ maximal codewords; Z_RR = Index(C) exactly | [P, given T] | [OF] §3 | — |
 | D9 | Theorem O | Index(V//G) = ±Index(C)/\|G\| | [P, given ORB, T] | [OI] | — |
@@ -103,7 +103,7 @@ Breakdown of Tier B (≈ 4,000–9,000):
 Main risks:
 - **The E₇₂ certificate.** A kernel-only Tier A needs a new seed with a cheap certificate, or a new reduction; neither exists yet.
   - *A simpler `native_decide` route [H].* The information-set sum of `rsigma_is` needs only [CS] Lemma 2.5 (information sets, item C4, already in Tier A) for its soundness. It needs no Morita form, no good-plane formula ([MQ] Cor 9.2) and no SL₂-words. So "A + certificate" could cost ≈ 200–400 lines (a verified Gray-code or bit-sliced evaluator over 2³⁶ patterns) instead of 800–1,500. The cost is run time: 6.9·10¹⁰ evaluations take ≈ 3.5 CPU-minutes in Rust, and compiled Lean code is slower, perhaps by 10–100× [H]. It still adds `Lean.ofReduceBool`.
-- **Kernel time** for the ℤ/12 seed sums is unmeasured (no Lean toolchain in this container).
+- **Kernel time** for the ℤ/12 seed sums (measured 2026-09-27): about 3 ms per leaf with the leaf weight used, and about 90 KB of kernel cache per leaf, so a sum is split into declarations of at most 4,500 leaves (`Eval.fastT_split`). The three sums (2·2¹⁸ + 2¹⁰·24² leaves) dominate the build time.
 - **Interface faithfulness.** A mis-stated field makes the theorem vacuous or wrong, and no model can be built without Tier C. Examples: the index sign, the trivialisation torsor, the ν_m normalisation, a missing KJ = −JK hypothesis. Use `structure` hypotheses, never global `axiom`s, and review each field against its source.
 - **Dependent-type bookkeeping** for nested Sum/product coordinate types (the CLAUDE.md pitfalls).
 - **Branch tracking** in the complex analysis.

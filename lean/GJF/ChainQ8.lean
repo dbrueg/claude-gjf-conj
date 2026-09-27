@@ -73,7 +73,7 @@ def treeQ : List FStep := [.row 2106369 4247808, .chkS 0, .row 18434 9482752, .c
 theorem fast_Q : fastT (WtF sLQ bLQ) treeQ 0 0 = 24 := by decide +kernel
 
 theorem R_E0 : R E0 = 24 := by
-  rw [E0, eQ, EQ, R_seed 24 rowsQ cQ cQ_bij sysQ (by decide) sLQ bLQ (by decide) (by decide) treeQ
+  rw [E0, eQ, EQ, R_seed 24 rowsQ cQ cQ_bij (Equiv.refl _) sysQ (by decide) sLQ bLQ (by decide) (by decide) treeQ
     rfl (by decide)]
   exact fast_Q
 
