@@ -153,3 +153,20 @@ So Tier A is about 4–5 times Existence.lean, and Tier B is the size of a mid-s
 | ambiguous generator files `jchain_len*.J.txt`, `z12chain_len*.g.txt` (up to 888 parses) | `ternary60/codes/` | fixed: `.gens.txt` files (`mainq_gens_files.py`, exactly one valid parse each); the chain scripts write them; old files kept for the logs that cite them |
 | R_σ(E₇₂) = 24 rests on one program | [MQ] §10 | open: an independent second implementation is wanted |
 | GJF typos: Ex 4.4 exponent for m odd (2m/k); Thm 5.6 proof "3(m/2) − 2×odd" should be 6×odd; the m = 3 step cites even-lattice results | GJF | recorded ([AN] §6, [OF] §9) |
+
+## 6. TODO: references replaced during the 2026-09-27 citation fixes
+
+The citation fixes replaced several references that treat even lattices or bosonic VOAs. Some are still cited in a narrower role; others were removed. Decide for each whether it should be cited (for priority, as the bosonic/even-lattice analogue, or as the original source), and check exact item numbers against the journal versions.
+
+| reference | earlier use | now | suggestion |
+|---|---|---|---|
+| Frenkel–Lepowsky–Meurman 1988 (FLM), Thm 1.7.3, Ch. 9; Thm 8.10.2 | twisted modules of the (odd) code lattice VOA; GJF cite Thm 8.10.2 | still cited in [OI] Lemma 3.1 only for twisted Heisenberg modules (bosonic M(1)); [MQ] Lemma 8.3 mentions it parenthetically as even-lattice only | keep for the Heisenberg step; cite as origin of the 1/16 vacuum energy |
+| Lepowsky, PNAS 82 (1985) (Lep85) | twisted modules of lattice VOAs; vacuum energy | still cited in [OI] Lemma 3.1 for the vacuum energy (M(1) only) | keep (original source of the twisted vacuum energy) |
+| Dong–Lepowsky, JPAA 110 (1996) (DL96) | same | still cited in [OI] Lemma 3.1 (M(1) only); [MQ] Lemma 8.3 parenthetical | keep for M(1); cite Bakalov–Kac for the odd lattice |
+| Dong–Li–Mason, CMP 214 (2000), Thm 10.3 (DLM00) | uniqueness of twisted modules for holomorphic V ([OI] first version) | removed from [OI]; now Dong–Zhao 2005 Thm 7.7 (super) | cite as the bosonic original of the uniqueness theorem |
+| van Ekeren, CMP 322 (2013) (vE13) | uniqueness of twisted Ramond sectors (wrong: it proves modular invariance) | kept only for modular covariance in [OI] §3.3 / §4, next to DZ05 | keep for covariance; note his opposite labelling of Ramond/NS twisted modules |
+| Barron–Dong–Mason, CMP 227 (2002) | Majorana zero modes of signed 2-cycles ([MQ] §8.5) | removed as a source; [MQ] §8.5 mentions it only as treating unsigned permutations of VOAs; now Bakalov–Kac Rem 4.4 | probably drop, or cite only as the permutation-orbifold analogue |
+| Möller, PhD thesis (lattice-automorphism lifts, Ch. 5) | GJF's m = 3 step (even lattices), cited via GJF | replaced by [AN] Lemma 2.7 and Prop 2.8 (odd lattices, given (A7)) | cite as the even-lattice precedent of Prop 2.8 |
+| Dong–Nagatomo, Contemp. Math. 248 (1999) | lifts of lattice automorphisms ((A8)) | still in [AN] (A8) | keep; check whether it covers odd lattices |
+
+Where the replacements are cited: Bakalov–Kac 2004 (Thm 4.2, Rem 4.4, Prop 4.1), Li 1996 (Prop 5.4), Dong–Zhao 2005 (Thms 4.12, 7.7), Dong–Ren–Yang 2022 (Prop 3.4), in [OI], [MQ] §8.3–8.5, [OF] and the paper's Remark rem:cyc (Bakalov–Kac only). The paper `paper/main-question.tex` cites none of the older references.
