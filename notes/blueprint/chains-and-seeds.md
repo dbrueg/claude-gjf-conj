@@ -43,7 +43,7 @@ Main points:
   - `z12seed_len36_6`: Index = −24, R_σA6 = R_σB6 = +24.
   - `q8chain_len24`: R_σ = +24.
   - The twisted seeds: R^h_σ = T_h = 0 for all four ℤ/12 systems and for the Q₈×ℤ/3 seed.
-- **Only one seed fact is out of reach of the Lean kernel:** R_σ(E₇₂) = 24 for the Q₈×ℤ/3 seed (5.8·10⁶ normalised SL₂-words, [MQ] Cor 9.2). Its value also rests on a single program (`ternary60 sl2words`, two code paths; §7 issue 4). Every other seed fact needs at most 589,824 candidate evaluations. Those are within reach of a verified bit-sliced checker, though not of `decide` in the style of [Lean].
+- **Only one seed fact is out of reach of the Lean kernel:** R_σ(E₇₂) = 24 for the Q₈×ℤ/3 seed (5.8·10⁶ normalised SL₂-words, [MQ] Cor 9.2). Its value was first computed by a single program (`ternary60 sl2words`, two code paths; §7 issue 4); since 2026-09-27 an independent information-set enumeration (`rsigma_is`, `mainq_e72_infoset.py`) confirms +24. Every other seed fact needs at most 589,824 candidate evaluations. Those are within reach of a verified bit-sliced checker, though not of `decide` in the style of [Lean].
 - **Twined counts without collapsing** (Lemma 2.3): T_h(Q_σ E) = R^h_σ(E), with one weight per ⟨h⟩-orbit [P; V: Part 4, 24/24 with 12 nonzero values].
 - **The refinement split and the placement matter for Lean** (Lemma 2.2, 2.7, §7 issues 1–2).
   - With the split hard-wired in [Lean] (`refd`, `r₂`), the ℤ/12 chains miss k ≡ 6, 9 mod 12 for k ≥ 18 [V: Part 3].
@@ -382,7 +382,8 @@ A *verified checker* is a `Bool`-valued function on bit-sliced `Nat` data (two m
 
 Options for T6, the only obstacle to a fully kernel-checked code-level answer:
 - (a) `native_decide` on a verified sl2words-type checker. This adds the axiom `Lean.ofReduceBool`, and the project currently excludes `native_decide`, so it needs the user's decision.
-- (b) State T6 as an explicit hypothesis of the k ≡ 0 mod 24 theorem, and cross-check it by an independent second implementation (§7 issue 4).
+- (b) State T6 as an explicit hypothesis of the k ≡ 0 mod 24 theorem, and cross-check it by an independent second implementation (§7 issue 4; done: `rsigma_is`, +24).
+- (a′) `native_decide` on the information-set sum instead (2³⁶ patterns): its soundness is only Lemma 2.5 (item C4), with no Morita form or Cor 9.2. It is simpler than (a), but slower to run [H].
 - (c) Search for a seed with a cheap certificate. For example: a length-72 G-invariant seed whose σ-part and complement are glued along a small glue group ([I] Lemma 5.3), so that R_σ is a short sum of products [H]. Direct sums cannot work, since R is multiplicative (24·24 ≠ 24), and seeds at k = 3 are ruled out by the 72-rule ([MQ] §8.1).
 - (d) The ⟨h⟩-symmetry of the good planes saves at most a factor 3.
 
@@ -461,6 +462,7 @@ None of these breaks a result: the chain codes were built by `quad_eq`, which us
    - [MQ] §10 cites three agreeing computations: sl2words with b₀ = 0, with b₀ = 9, and "the older enumeration". The last is the `SL2_SLOW` code path of the same `ternary60 sl2words` subcommand.
    - The Morita formula itself (Cor 9.2) was cross-checked against direct enumeration only at n ≤ 36.
    - Nothing independent checks the value that decides k ≡ 0 mod 24. Worth doing before publication (e.g. a separate implementation of Cor 9.2 in another language).
+   - *Resolved 2026-09-27.* `ternary60/src/bin/rsigma_is.rs` (no code shared with src/main.rs) enumerates the definition of R_σ over an information set: 2³⁶ sign patterns, since all 36 information coordinates lie outside σ. It gives R_σ(E₇₂) = +24 and Index(E₇₂) = −1608, and agrees with sl2words on four more systems of E₇₂ and on random n = 36 codes (`mainq_e72_infoset.py`, log beside it).
 5. **Sign in [MQ] Thm 4.4.** Chains A and B from seed 3 have Index −24 (R_σA = R_σB = −24). GJF Thm 5.6 is stated for index 24, so one singleton must be re-signed (Lemma 2.6), as [MQ] Cor 2.1 says for its case; Thm 4.4 says "±24" without the remark. Seed 6's systems give +24 directly.
 6. **Collapse with a signed h.** `mainq_z12chain.collapsed` and `mainq_seed_search` collapse the fixed code of the signed h = g⁴ to orbit representatives without normalising. So "T_h = R_σ̄(D)" holds there only up to a global sign (Lemma 2.4's expansion carries the signs). Harmless, since all values are 0; [EQ] Lemma 5.3 states the sign.
 7. **Dangling reference.** `notes/orbifold-index.md` §4 cites `notes/lean-blueprint.md`, which does not exist (also [EQ] issue 5).

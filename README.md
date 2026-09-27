@@ -34,6 +34,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
                               `| words <file> <w>` (all codewords of weight ≤ w) `| rsigma <file> <blocks>` (R_σ, sign-exact, any linear code)
                               `| sl2words <U-file> <b0> [systems]` (Q₈-invariant codes F₃²⊗U: good planes, index and orbit-block R_σ, sign-exact; notes main-question §9)
+  src/bin/rsigma_is.rs        `rsigma_is <file> <blocks> [threads] | selftest`: R_σ by information-set enumeration from the definition (no code shared with main.rs; the independent check of R_σ(E₇₂) = 24)
   codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60,
                               quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
                               gjf_ex57_len{12,…,60}: GJF's Example 5.7 codes (from their TeX); z12seed_len36_*: seeds (mainq_seed_search.py)
@@ -53,6 +54,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_q8_gauging.py: the coprime-gauging step of Thm 8.1 (multi-neighbour data; GJF's cyclic anomalies vs 3k·a; log beside it)
                               mainq_orbifold_index.py: the orbifold index for cyclic, Q₈ and Q₈ × ℤ/3 groups (notes/orbifold-index.md; log beside it)
                               mainq_q8_orbifold_character.py: the facts behind μ (exact eta identities; S-invariance of the would-be Q₈-orbifold character; log beside it)
+                              mainq_e72_infoset.py: R_σ(E₇₂) = +24 and Index(E₇₂) = −1608 by information-set enumeration (src/bin/rsigma_is.rs), independent of sl2words (log beside it)
                               mainq_gens_files.py: unambiguous .gens.txt generator files for the J- and ℤ/12-chains (log beside it)
                               blueprint_equivariant.py: checks for notes/blueprint/equivariant-quadrupling.md (placements, local identities, equivariance, collapse; log beside it)
                               blueprint_chains.py: checks for notes/blueprint/chains-and-seeds.md (seed values sign-exact, splits, coverage, data files; log beside it)

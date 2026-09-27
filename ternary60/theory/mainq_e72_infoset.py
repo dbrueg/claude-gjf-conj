@@ -24,8 +24,8 @@ Part 4 (E₇₂). The file q8z3_seed72.txt spans F₃² ⊗ U for U = q8z3_seed7
         - σ = ∅: Index(E₇₂) = −1608;
         - further block systems, compared with sl2words.
 Part 5 (E₇₂, transformed). A random monomial copy dPE₇₂ with the transported σ: a different information set,
-        and R changes by Π_{i∉σ} d_i exactly (λ is sign-blind, φ is odd).
-Needs `cargo build --release` in ternary60/ (both binaries). Runtime ≈ 6 min.
+        and R changes by Π_{i∉σ} d_i exactly (λ is sign-blind, φ is odd); d is chosen with Π_{i∉σ} d_i = −1.
+Needs `cargo build --release` in ternary60/ (both binaries). Runtime ≈ 10 min on 4 cores.
 """
 import os, sys, random, subprocess, time
 from existence_common import rref, HERE, BIN, _TMPDIR
@@ -154,19 +154,23 @@ def part5(E):
     n = 72
     perm = list(range(n)); rng.shuffle(perm)            # coordinate i goes to perm[i]
     d = [rng.choice((1, -1)) for _ in range(n)]
-    F = []
-    for r in E:
-        v = [0] * n
-        for i in range(n):
-            v[perm[i]] = r[i] * (1 if d[i] == 1 else 2) % 3
-        F.append(v)
     sig = orbit_blocks([0, 1, 2, 3, 4, 5])
     tb = [sorted(perm[i] for i in b) for b in sig]
     inside = {i for b in sig for i in b}
+    first_out = min(i for i in range(n) if i not in inside)
     sgn = 1
     for i in range(n):
         if i not in inside:
             sgn *= d[i]
+    if sgn == 1:                                          # make the expected sign −1, so the check sees signs
+        d[first_out] = -d[first_out]
+        sgn = -1
+    F = []
+    for r_ in E:
+        v = [0] * n
+        for i in range(n):
+            v[perm[i]] = r_[i] * (1 if d[i] == 1 else 2) % 3
+        F.append(v)
     r, dd = run_is(F, tb, tag="e72p5")
     ok = r == sgn * 24
     print(f"5 random monomial copy dPE₇₂, σ transported: rsigma_is {r:+d}, expected Π_(i∉σ) d_i · 24 = {sgn * 24:+d}: "

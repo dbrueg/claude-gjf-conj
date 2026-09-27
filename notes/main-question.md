@@ -189,6 +189,7 @@ Verification [V]:
 - `mainq_72rule.py` (log): §9 (sl2words vs rsigma; the exact laws at n = 12, 24, 36; counterexamples to the 72-rule at n = 72).
 - `mainq_q8z3_seed72.py` (log): §9.4 (seed search statistics; the chain pipeline in the Morita layout).
 - `mainq_q8z3_chain24.py` (log): §10 (the seed, R_σ = 24 three ways, R_σ̄(D) = 0; the chain at n = 144, 288).
+- `mainq_e72_infoset.py` (log): §10, R_σ(E₇₂) = +24 and Index(E₇₂) = −1608 by information-set enumeration (`rsigma_is`), independent of sl2words.
 - The four-code identity and Lemma 4.3 are local/Poisson identities; all numerics are sign-exact where stated (Rust `rsigma` enumerates the code, no sign normalisation).
 
 ## 7. Remarks and further directions
@@ -556,6 +557,7 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 **Seed [V].** `ternary60/codes/q8z3_seed72.U.txt`: a Lagrangian U ⊂ F₃³⁶, h-invariant and free over R. E = F₃² ⊗ U (length 72, `q8z3_seed72.txt`) is self-dual, with G = Q₈ × ⟨h⟩ ⊂ Aut(E) as in §9: J² = K² = −1, JK = −KJ, h³ = 1 commuting with J, K, and h of cycle shape 3²⁴.
 - Index(E) = −1608 (sl2words, sign-exact; |Index| confirmed by `ternary60 index`). T_h(E) = 0.
 - σ = the six Q₈-orbit blocks of h-triples 0 and 1. **R_σ(E) = +24**: sl2words with normalisation block 0, with block 9, and by the older enumeration all agree.
+- **Independent second computation (2026-09-27) [V: `mainq_e72_infoset.py`, log beside it].** `rsigma_is` (`ternary60/src/bin/rsigma_is.rs`, no code shared with sl2words) sums the definition of R_σ over an information set: φ(0) = 0 leaves 2³⁶ sign patterns on the 36 information coordinates outside σ, walked in Gray-code order, ≈ 1 min on 4 threads. It uses no Morita form and no symmetry. It gives **R_σ(E) = +24** and Index(E) = −1608, sign-exact. It agrees with sl2words on four further block systems of E (values −7944, +132792, +68664, −7896) and on a random monomial copy of E with the sign flipped. It also agrees with sl2words and with full enumeration on 4 random Q₈ × ℤ/3-invariant codes at n = 36 × 6 systems, and with brute force on 240 random small codes.
 - **R_σ̄(D) = 0** on the collapsed fixed code D (length 24, self-dual), by direct enumeration (rsigma, independent of sl2words).
 
 **Theorem 10.1 [P, given T*: GJF Thm 4.2 (orbifolds by non-anomalous groups; fermionic case sketched, ORB); T: their Frame-shape anomaly for ℤ/3; I Lemma 5.8, Thm 5.9; Lemma 4.1, 4.3; Thm 8.1; V].** For every k ≡ 0 mod 12 with k ≥ 12 there is a self-dual ternary code C_k of length 12k with Index(C_k) = 24, G = Q₈ × ℤ/3 ⊂ Aut(C_k) of the type above (J² = K² = −1, h fixed-point-free of cycle shape 3^{4k}), and T_h(C_k) = 0. For k ≡ 0 mod 24, V_{Λ(C_k)}//G is a holomorphic N=1 SVOA of central charge 12k and **index 1**. So the Main Question has a positive answer for gcd(k, 24) = 24.

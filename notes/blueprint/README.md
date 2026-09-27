@@ -60,7 +60,7 @@ Not on the path: [MQ] Thm 5.1 (the obstruction 48 | Index when g⁴ = −1) only
   - CM16 Cor 5.25 (regularity);
   - FLM Thm 1.7.3 (twisted Heisenberg modules).
 - **[T] Group cohomology** ([AN] Lemmas 1.4, 3.1, 4.2): H*(ℤ/m; ℤ) (in Mathlib: `RepresentationTheory/Homological/GroupCohomology/FiniteCyclic.lean`), transfer (cor∘res = index), H*(Q₈) via the periodic resolution, and the Bockstein H³(G; U(1)) ≅ H⁴(G; ℤ).
-- **[V] only: R_σ(E₇₂) = 24.** It decides k ≡ 0 mod 24 and rests on one program (`ternary60 sl2words`, two code paths). The Morita good-plane formula was cross-checked against direct enumeration only for n ≤ 36. It needs ≈ 5.8·10⁶ good planes, so it is out of kernel reach ([CS] §4).
+- **[V] only: R_σ(E₇₂) = 24.** It decides k ≡ 0 mod 24. Two independent programs give +24: `ternary60 sl2words` (Morita good-plane formula, two code paths) and, since 2026-09-27, `rsigma_is` (information-set enumeration from the definition over 2³⁶ sign patterns, ≈ 1 min on 4 threads; `mainq_e72_infoset.py`). The Morita good-plane formula was cross-checked against direct enumeration only for n ≤ 36. It needs ≈ 5.8·10⁶ good planes, so it is out of kernel reach ([CS] §4).
 
 **Observation (not used by the notes; [P, given T: tensor products of VOSAs and of their (twisted) modules, FHL93 §4.6–4.7, super case identical]).** Holomorphic N=1 SVOAs are closed under ⊗: c adds, τ ⊗ 1 + 1 ⊗ τ′ is an N=1 current, and for c ∈ ℤ the Ramond sectors are of ℂ-type, so (W ⊗ W′)_R = W_R ⊗ W′_R with supercharge G₀ ⊗ 1 + (−1)^F ⊗ G₀′, and the index multiplies up to sign. Hence W₂₄^{⊗q} ⊗ W_r answers k = 24q + r with 1 ≤ r ≤ 24, since gcd(k, 24) = gcd(r, 24). This reduces the Main Question to k ≤ 24. For Lean it saves only ≈ 100–300 lines (and adds one interface field): the chains are still needed up to n = 288. It does not remove the E₇₂ certificate.
 
@@ -102,6 +102,7 @@ Breakdown of Tier B (≈ 4,000–9,000):
 
 Main risks:
 - **The E₇₂ certificate.** A kernel-only Tier A needs a new seed with a cheap certificate, or a new reduction; neither exists yet.
+  - *A simpler `native_decide` route [H].* The information-set sum of `rsigma_is` needs only [CS] Lemma 2.5 (information sets, item C4, already in Tier A) for its soundness. It needs no Morita form, no good-plane formula ([MQ] Cor 9.2) and no SL₂-words. So "A + certificate" could cost ≈ 200–400 lines (a verified Gray-code or bit-sliced evaluator over 2³⁶ patterns) instead of 800–1,500. The cost is run time: 6.9·10¹⁰ evaluations take ≈ 3.5 CPU-minutes in Rust, and compiled Lean code is slower, perhaps by 10–100× [H]. It still adds `Lean.ofReduceBool`.
 - **Kernel time** for the ℤ/12 seed sums is unmeasured (no Lean toolchain in this container).
 - **Interface faithfulness.** A mis-stated field makes the theorem vacuous or wrong, and no model can be built without Tier C. Examples: the index sign, the trivialisation torsor, the ν_m normalisation, a missing KJ = −JK hypothesis. Use `structure` hypotheses, never global `axiom`s, and review each field against its source.
 - **Dependent-type bookkeeping** for nested Sum/product coordinate types (the CLAUDE.md pitfalls).
@@ -151,7 +152,7 @@ So Tier A is about 4–5 times Existence.lean, and Tier B is the size of a mid-s
 | [I] Lemma 5.8 is stated for self-dual E but applied to the non-self-dual D | [MQ] Lemma 4.3 | wording; [EQ] Thm 3.3 proves it for any linear E |
 | Existence.lean's `Tfin` is not J-invariant, so the Lean Thm 5.9 codes are not the chain codes | `lean/` | open (Tier A step 1) |
 | ambiguous generator files `jchain_len*.J.txt`, `z12chain_len*.g.txt` (up to 888 parses) | `ternary60/codes/` | fixed: `.gens.txt` files (`mainq_gens_files.py`, exactly one valid parse each); the chain scripts write them; old files kept for the logs that cite them |
-| R_σ(E₇₂) = 24 rests on one program | [MQ] §10 | open: an independent second implementation is wanted |
+| R_σ(E₇₂) = 24 rests on one program ([CS] 4) | [MQ] §10 | fixed 2026-09-27: `rsigma_is` (information-set enumeration, shares no code with sl2words) gives +24; `mainq_e72_infoset.py` |
 | GJF typos: Ex 4.4 exponent for m odd (2m/k); Thm 5.6 proof "3(m/2) − 2×odd" should be 6×odd; the m = 3 step cites even-lattice results | GJF | recorded ([AN] §6, [OF] §9) |
 
 ## 6. TODO: references replaced during the 2026-09-27 citation fixes
