@@ -10,10 +10,12 @@ normalisation blocks 0 and 9, and SL2_SLOW), which evaluates the good-plane form
   input row is re-expanded in the systematic rows) picks an information set I preferring coordinates outside
   the blocks. On E₇₂ all 36 information coordinates lie outside σ, so the sum runs over 2³⁶ ≈ 6.9·10¹⁰ sign
   patterns, walked in Gray-code order (≈ 1 min on 4 threads). It uses no Morita form, no SL₂-words and no
-  symmetry.
+  symmetry. The elimination is checked in both directions, and the output names the code file (with an FNV-1a
+  hash) and the block list.
 
-Part 1 (the binary's selftest). Bit-sliced F₃ arithmetic; 200 random codes (n ≤ 16) against its own brute
-        force, at four Gray-walk depths.
+Part 1 (the binary's selftest). Bit-sliced F₃ arithmetic; 252 codes against its own brute force (200 random,
+        a third of them rank-deficient; 52 random self-dual codes of length 12 and 24), each at outer split depth
+        0, 1, 3, 10 and with 1 and 3 threads.
 Part 2 (independent brute force). 40 random linear codes, n = 12…20, random 4-block systems, some forcing
         information coordinates into the blocks, against a Python brute force over all codewords.
 Part 3 (against both existing methods). Random h-invariant Lagrangians U at n = 36 (r = 9), E = F₃² ⊗ U,
@@ -25,7 +27,10 @@ Part 4 (E₇₂). The file q8z3_seed72.txt spans F₃² ⊗ U for U = q8z3_seed7
         - further block systems, compared with sl2words.
 Part 5 (E₇₂, transformed). A random monomial copy dPE₇₂ with the transported σ: a different information set,
         and R changes by Π_{i∉σ} d_i exactly (λ is sign-blind, φ is odd); d is chosen with Π_{i∉σ} d_i = −1.
-Needs `cargo build --release` in ternary60/ (both binaries). Runtime ≈ 10 min on 4 cores.
+Part 6 (a third evaluator). `rsigma_mitm` (`ternary60/src/bin/rsigma_mitm.rs`), written by an independent
+        reviewer with different choices (reverse pivot order, u128 words, a 2²⁰-word table instead of a Gray walk):
+        against Python brute force on 40 random codes, and R_σ(E₇₂), Index(E₇₂).
+Needs `cargo build --release` in ternary60/ (all three binaries). Runtime ≈ 13 min on 4 cores.
 """
 import os, sys, random, subprocess, time
 from existence_common import rref, HERE, BIN, _TMPDIR
@@ -34,6 +39,7 @@ from mainq_morita import code_from_U, rand_U, rsys, h_blocks
 
 CODES = os.path.join(HERE, "..", "codes")
 BIN_IS = os.path.join(HERE, "..", "target", "release", "rsigma_is")
+BIN_MITM = os.path.join(HERE, "..", "target", "release", "rsigma_mitm")
 PHI = (0, -1, 1)
 LAM = (0, -2, 0, 0, 1)
 
@@ -45,6 +51,23 @@ def run_is(rows, blocks, tag="is"):
     out = subprocess.run([BIN_IS, fn, spec, "4"], capture_output=True, text=True, check=True).stdout
     d = dict(ln.split(" ", 1) for ln in out.splitlines())
     return int(d["R"]), d
+
+
+def run_mitm(rows, blocks, tag="mitm"):
+    fn = os.path.join(_TMPDIR, tag + ".txt")
+    write_code(fn, rows)
+    spec = ";".join(",".join(map(str, b)) for b in blocks) if blocks else "-"
+    out = subprocess.run([BIN_MITM, fn, spec, "4"], capture_output=True, text=True, check=True).stdout
+    return int(next(ln for ln in out.splitlines() if ln.startswith("R ")).split()[1])
+
+
+def random_case(rng):
+    n = rng.randrange(12, 21)
+    k = rng.randrange(3, 10)
+    rows = [[rng.randrange(3) for _ in range(n)] for _ in range(k)]
+    perm = list(range(n)); rng.shuffle(perm)
+    nb = rng.randrange(0, n // 4 + 1)
+    return rows, n, [sorted(perm[4 * i:4 * i + 4]) for i in range(nb)]
 
 
 def orbit_blocks(bs):
@@ -87,12 +110,7 @@ def part2():
     rng = random.Random(20260927)
     ok, nz, forced = True, 0, 0
     for t in range(40):
-        n = rng.randrange(12, 21)
-        k = rng.randrange(3, 10)
-        rows = [[rng.randrange(3) for _ in range(n)] for _ in range(k)]
-        perm = list(range(n)); rng.shuffle(perm)
-        nb = rng.randrange(0, n // 4 + 1)
-        blocks = [sorted(perm[4 * i:4 * i + 4]) for i in range(nb)]
+        rows, n, blocks = random_case(rng)
         want = brute(rows, n, blocks)
         got, d = run_is(rows, blocks)
         ok &= want == got
@@ -178,6 +196,24 @@ def part5(E):
     return ok
 
 
+def part6():
+    rng = random.Random(6)
+    ok, nz = True, 0
+    for _ in range(40):
+        rows, n, blocks = random_case(rng)
+        want = brute(rows, n, blocks)
+        ok &= run_mitm(rows, blocks) == want
+        nz += want != 0
+    E = read_code(os.path.join(CODES, "q8z3_seed72.txt"))
+    t0 = time.time()
+    r = run_mitm(E, orbit_blocks([0, 1, 2, 3, 4, 5]))
+    i = run_mitm(E, [])
+    ok2 = r == 24 and i == -1608
+    print(f"6 rsigma_mitm: 40 random codes against Python brute force: {ok} ({nz} with R ≠ 0); R_σ(E₇₂) = {r:+d}, "
+          f"Index(E₇₂) = {i:+d}: {ok2} [{time.time() - t0:.0f}s]", flush=True)
+    return ok and ok2
+
+
 if __name__ == "__main__":
     import io, contextlib
     buf = io.StringIO()
@@ -196,7 +232,8 @@ if __name__ == "__main__":
         c = part3()
         d, E = part4()
         e = part5(E)
-        print(f"parts pass: 1 {a}, 2 {b}, 3 {c}, 4 {d}, 5 {e}; all checks pass: {a and b and c and d and e} "
+        f = part6()
+        print(f"parts pass: 1 {a}, 2 {b}, 3 {c}, 4 {d}, 5 {e}, 6 {f}; all checks pass: {a and b and c and d and e and f} "
               f"[{time.time() - t0:.0f}s]", flush=True)
     with open(os.path.splitext(os.path.abspath(__file__))[0] + ".log", "w") as fh:
         fh.write(buf.getvalue())
