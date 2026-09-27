@@ -8,3 +8,5 @@ import GJF.LocalMaps
 import GJF.Equivariant
 import GJF.Chain
 import GJF.ChainJ
+import GJF.Eval
+import GJF.ChainQ8

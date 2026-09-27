@@ -68,6 +68,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_72rule.py: the 72-rule: exact laws at n = 12, 24, 36 and counterexamples at n = 72 (log beside it)
                               mainq_q8z3_seed72.py: search for length-72 seeds of a Q₈ × ℤ/3 chain to k ≡ 0 mod 24 (log beside it)
                               mainq_q8z3_chain24.py: the seed and its chain to n = 144, 288 (Main Question for k ≡ 0 mod 24; log beside it)
+                              lean_seed_data.py: Lean literals of the Tier A seeds (bitmask rows, block orderings with local maps in LM, evaluation trees), each seed value recomputed (log per seed)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
 scripts/build_nauty.sh        builds nauty's dreadnaut into tools/ (gitignored), for mainq_automorphisms.py
