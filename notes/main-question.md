@@ -173,6 +173,7 @@ Verification [V]:
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
+- `mainq_orbifold_index.py` (log): `notes/orbifold-index.md` (group theory, class-sum identity, and ρ_g > c/24 for every even-order element on the actual chain codes).
 - `mainq_q8_orbifold_character.py` (log): §8.5 (exact eta multipliers and identities (i)–(iii); S-invariance of the would-be orbifold character for each ψ at k = 4, 8, 12, 16).
 - `mainq_q8_nonanomaly.py` (log): §8.4 (free fermions exhaust rSH³(Q₈), cyclic kernel {0, κ}; the codes at n = 48, 96 and their direct sums at n = 144: Majorana layer, cyclic anomalies, μ).
 - `mainq_q8_twisted.py` (log): §8.3 (the frame Clifford module T and the Pin lifts of J, K on the Q₈-chain codes; T ≅ (H ⊕ 2ψ)^{⊗3k}; the modular normalisation N = 2^{3k}e^{2πik/8}; μ against the S³/Q₈ eta values for k ≤ 48).
@@ -228,7 +229,7 @@ Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-actio
 - **TMF consistency.** When 8 ∤ k and 4 | k, a non-anomalous Q₈ would give index 3, but TMF demands 24/gcd(k,24) ∈ {6, 2} | index. The theorem says Q₈ is anomalous exactly there. □
 
 **Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4), Thm 8.1 (by §8.2 or, without the gauging lemma, §8.4), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
-- *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □
+- *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □ The index computation is proved in detail in `notes/orbifold-index.md` (Theorem O): for Q₈ every twisted term vanishes directly, with no modular transformation.
 - Checked explicitly at k = 8 (n = 96): Q₈-invariance, J² = K² = −1, JK = −KJ, self-duality; Index = 24 by [I Lemma 5.8].
 
 **k ≡ 0 mod 24 (m = 24, index 1).** Use G = Q₈ × ℤ/3 with h of order 3, fixed-point-free and balanced (T_h = 0).
@@ -553,7 +554,7 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - *Construction.* Lemma 4.1 with G, starting from (E, σ) and refining the G-orbit of one step-1 block at each step (12 blocks, +12 in k). Lengths are 72 + 72 = 144 (k = 12), then 288 (k = 24), 432, …; k runs over all multiples of 12 from 12 on.
 - *Invariants.* Index(C_k) = R_σ(E) = 24 at every step [I Lemma 5.8]. T_h(C_k) = R_σ̄(D) = 0 (Lemma 4.3), with the collapsed systems carried along in the same way.
 - *Anomaly.* It vanishes for 24 | k: the Q₈ part is 3k·a = 0 since 8 | k (Thm 8.1); the ℤ/3 part is zero since 3 | k (GJF); mixed terms vanish by coprimality.
-- *Twisted sectors.* Every abelian subgroup of G is cyclic. Those containing −1 have vanishing twisted–twined indices, since −1 fixes no maximal codeword; the only other nontrivial one is ⟨h⟩, with T_h = 0. So the index is Index(C_k)/|G| = 24/24 = 1. The orbifold is N=1 because G fixes the supercurrent. □
+- *Twisted sectors.* Every abelian subgroup of G is cyclic. Those containing −1 have vanishing twisted–twined indices, since −1 fixes no maximal codeword; the only other nontrivial one is ⟨h⟩, with T_h = 0. So the index is Index(C_k)/|G| = 24/24 = 1. The orbifold is N=1 because G fixes the supercurrent. □ Detailed proof: `notes/orbifold-index.md` (Theorem O).
 - [V: `mainq_q8z3_chain24.py`, log beside it]
   - At n = 144 and n = 288: self-duality, J, K, h ∈ Aut, the relations, and h fixed-point-free.
   - At n = 144: T_h = 0 directly (`ternary60 index` on the collapsed fixed code, length 48).

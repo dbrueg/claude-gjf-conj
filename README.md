@@ -48,6 +48,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_automorphisms.py: automorphism groups via nauty (needs $DREADNAUT; scripts/build_nauty.sh)
                               mainq_q8chain.py, mainq_q8_anomaly.py: Q₈-equivariant chain; the Q₈ anomaly (reduction checks, eta invariants)
                               mainq_q8_gauging.py: the coprime-gauging step of Thm 8.1 (multi-neighbour data; GJF's cyclic anomalies vs 3k·a; log beside it)
+                              mainq_orbifold_index.py: the orbifold index for cyclic, Q₈ and Q₈ × ℤ/3 groups (notes/orbifold-index.md; log beside it)
                               mainq_q8_orbifold_character.py: the facts behind μ (exact eta identities; S-invariance of the would-be Q₈-orbifold character; log beside it)
                               mainq_q8_nonanomaly.py: non-anomaly for 8 | k directly (rSH³(Q₈) via free fermions; μ on codes and direct sums; log beside it)
                               mainq_q8_twisted.py: the Q₈-action on the (−1)-twisted sector (frame Clifford module, modular normalisation, μ = S³/Q₈ value; log beside it)
