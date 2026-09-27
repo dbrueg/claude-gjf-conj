@@ -9,7 +9,7 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
 ## 0. Summary
 
 - **GJF's Main Question** asks for a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24) for every k. GJF answer k ≤ 5, via Thm 5.6: orbifold the code VOA V_{Λ(C)} of an index-24 code C by an automorphism g of order m = gcd(k,24) with (1) g^{m/2} = −1 and (2) g^{m/3} a balanced fixed-point-free order-3 map (§1).
-- **Answered here for every k** (§2, §4, §8, §10), modulo GJF Thm 5.6 [T], the fermionic GJF Thm 4.2 [T*] and [I Thm 5.9]; previously k ≤ 5.
+- **Answered here for every k** (§2, §4, §8, §10), modulo GJF Thm 5.6 [T, via T*: its orbifold step is the fermionic Thm 4.2], the fermionic GJF Thm 4.2 [T*] and [I Thm 5.9]; previously k ≤ 5.
   - [T*]: the super case of GJF Thm 4.2 (anomaly in S̃H³, trivialisation ⇒ holomorphic orbifold with W_R = ⊕ V_{R,g}^{C(g)}) is only sketched in GJF. What is used is isolated as Hypothesis ORB in `notes/blueprint/orbifold-foundations.md` (§5); the index computation for all groups used is `notes/orbifold-index.md` (Theorem O). The Lean blueprint is `notes/blueprint/README.md`.
   - gcd(k,24) ∈ {1, 2}: any index-24 code from [I], with g = 1 or g = −1 (Cor 2.1).
   - gcd(k,24) = 4: a J-equivariant version of [I]'s construction, seeded by J ∈ Aut(Golay) with J² = −1 (Thm 4.2).
@@ -101,14 +101,14 @@ The engine of [I Thm 5.9] (partial quadrupling Q_σ) uses only tetracodes and co
 
 Conventions. A block is a 4-tuple (a, b, c, d) read with the pair split {a, b}, {c, d}; the step-1 blocks of Q_σ are (a, a*, b, b*), (c, c*, d, d*), and refining a step-1 block B with a split {w, x}, {y, z} gives the 4-sets {w, w**, x, x**}, {y, y**, z, z**}. Lemma 5.6 and Lemma 5.8 of [I] hold for every choice of splits and placements, and for any linear E ([I §5.1(f″)], `paper_check.py`; [EQ] Thm 3.3).
 - **Which splits the chains use (corrected 2026-09-27).** The splits are not the literal ones above. `mainq_equivariant.choose_splits` re-splits every new block so that its stabiliser fixes both pairs. For a J-stable step-1 block B = {p, p*, q, q*} this is the *transposed* refinement split {p, q}, {p*, q*}, and the σ″-blocks {x, y, x**, y**} are split {x, y}, {x**, y**}.
-- With the literal splits, J swaps the two pairs of each σ″-block, the next stabilisers drop to {±1}, and from the third step on k grows by |G| instead of |G|/2. The ℤ/12 chains would then miss k ≡ 6, 18 mod 24 from k = 18 and k ≡ 9, 21 mod 24 from k = 21 ([EQ] Lemma 4.11 and its remark; [CS] Part 3).
-- `lean/GJF/Existence.lean` hard-wires the canonical split (`refd`, `r₂`); a Lean version of the chains needs the transposed one ([CS] Lemma 2.7).
+- With the literal splits the next step-1 blocks have stabiliser {±1}: with the canonical refinement split J maps each σ″-block onto the other, and with a canonical σ″-split J swaps its two pairs. Either way, from the third step on k grows by |G| instead of |G|/2, and the ℤ/12 chains would miss k ≡ 6, 18 mod 24 from k = 18 and k ≡ 9, 21 mod 24 from k = 21 ([EQ] Lemma 4.11 and its remark; [CS] §3.6; [V: `blueprint_chains.py` Part 3]).
+- `lean/GJF/Existence.lean` hard-wires the canonical split (`refd`, `r₂`); a Lean version of the chains needs the transposed one (`refdᵗ`, [CS] §5 and §3.6).
 
 **Lemma 4.1 (equivariant quadrupling) [P].** Let G ⊂ Aut(E) ⊂ 2^m:S_m be a finite group that permutes the blocks of σ and maps split pairs to split pairs. Extend each g ∈ G to the new coordinates by letting a Hadamard partner follow its partner with the same sign: g(e_x) = s e_{g·x} ⇒ g(e_{x*}) = s e_{(g·x)*} (same at step 2). Suppose the tetracodes are placed G-equivariantly (on one block per G-orbit a placement invariant under the stabiliser, elsewhere its transport). Then:
 1. G acts faithfully on F₃^{m+12b} and G ⊂ Aut(Q_σ(E)).
 2. Orders, the relation g^j = −1, and cycle lengths are inherited: a new coordinate lies in a cycle of the same length as its partner.
 3. If the refined set of step-1 blocks is G-stable and its splits are chosen G-equivariantly, σ″ is again G-stable. The construction iterates *provided invariant placements exist again at both steps of the next stage*: a stabiliser acting on a split pair by an involutive swap or by diag(1, −1) admits no invariant step-2 placement ([EQ] Prop 4.10). With transposed splits, the three local types of block stabiliser (scalar, J-type, Q₈-regular) propagate, so placements exist at every stage of all four chains used here ([EQ] Lemma 4.11).
-- *Proof.* On a Hadamard pair (x, x*) the map (u, v) ↦ (u + v, u − v) commutes with the scalar s, so each step-1 and step-2 Hadamard map commutes with G. E ⊕ T₁^b ⊕ T₂^{2b} is G-invariant by hypothesis, hence so is its image Q_σ(E). Items 2–3 are immediate from the definition of the extension. □
+- *Proof.* On a Hadamard pair (x, x*) the map (u, v) ↦ (u + v, u − v) commutes with the scalar s, so each step-1 and step-2 Hadamard map commutes with G. E ⊕ T₁^b ⊕ T₂^{2b} is G-invariant by hypothesis, hence so is its image Q_σ(E). Item 2 and the G-stability of σ″ are immediate from the definition of the extension; the existence of invariant placements at the next stage is [EQ] Prop 4.10 and Lemma 4.11. □
 - *When do invariant placements exist?* The stabiliser G_β acts on the new block β* as it acts on β, by signed permutations. A tetracode placement invariant under G_β exists iff that image lies in a conjugate of Aut(tetracode) ≅ GL₂(F₃) inside 2⁴:S₄ (8 conjugates = 8 placements). For the cases used here: J with J² = −1 acting as a double transposition (an element of Q₈ ⊂ GL₂(F₃)) — yes; a fixed-point-free order-3 map never stabilises a block (4 is not a multiple of 3), so its blocks come in orbits of 3 and no condition arises. `placement_on` finds the placement.
 - *Consequence for k mod 3.* If an element of order 3 lies in G, every block orbit has size divisible by 3, so b ≡ 0 mod 3 and k mod 3 is invariant along a G-chain. Order-3 chains need a seed with 3 | k.
 
@@ -128,7 +128,7 @@ so T_h is constant along an h-equivariant chain.
 - *Block systems.* J = g³ pairs coordinates inside each 6-cycle, h = g⁴ cycles those pairs. A g-stable block is two J-pairs from different 6-cycles; its h-orbit gives 3 blocks. On seed 3, 2 of the 45 such 3-block systems have R_σ = ±24 and R_σ̄(D) = 0, and 3 of the 405 six-block systems do.
 - *Chains.* Refining one h-orbit of J-stable step-1 blocks gives 6 new blocks (k grows by 6). From k = 3: with b₀ = 3 the chain reaches k = 6, 12, 18, 24, …; with b₀ = 6 it reaches k = 9, 15, 21, … . Together with k = 3 itself: every multiple of 3.
 - *Theorem 5.6.* m = 3: g⁴ = h has order 3, cycle shape 3^{n/3}, T_h = 0. m = 6: g² has order 6, (g²)³ = −1, (g²)² = h. m = 12: g itself. (m = 24 needs an element of order 24; see §5.)
-- *Sign (added 2026-09-27).* The chains from seed 3 have Index = R_σ(seed 3) = −24, while GJF Thm 5.6 is stated for Index 24. Replace (C, g) by (dC, dgd⁻¹) for a diagonal d with an odd number of −1's. Since f(dx) = (Π d_i)·f(x), this multiplies Index and T_h by −1. It keeps self-duality, the relations, the cycle types and the cycle sign products ([CS] Lemma 2.6). Alternatively, chains from seed 6 (`z12seed_len36_6`: R_σA6 = R_σB6 = +24, [CS] §3.3) have Index +24 from k = 6 on. The orbifold index only changes sign, so the Main Question is unaffected.
+- *Sign (added 2026-09-27).* The chains from seed 3 have Index = R_σ(seed 3) = −24, while GJF Thm 5.6 is stated for Index 24. Replace (C, g) by (dC, dgd⁻¹) for a diagonal d with an odd number of −1's. Since f(dx) = (Π d_i)·f(x), this multiplies Index and T_h by −1. It keeps self-duality, the relations, the cycle types and the cycle sign products: on a cycle, dgd⁻¹ has signs d_{i_j}s_j d_{i_{j+1}}, whose product is Π s_j ([CS] Lemma 2.6, [EQ] Rem 4.13). (k = 3 is seed 3 itself, Index +24.) Alternatively, chains from seed 6 (`z12seed_len36_6`: R_σA6 = R_σB6 = +24, [CS] §3.3) have Index +24 from k = 6 on. The orbifold index only changes sign, so the Main Question is unaffected.
 - [V: `mainq_z12chain.py`, log beside it] (results below in §6).
 
 --------------------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ so T_h is constant along an h-equivariant chain.
 | 8, 16 | 8 | 3 | cyclic route impossible (Thm 5.1); Q₈ chain + Q₈ non-anomalous for 8 \| k (Thm 8.1, Cor 8.2) | [P; V] |
 | 0 | 24 | 1 | cyclic route impossible (Thm 5.1); Q₈ × ℤ/3-chain from a length-72 seed (§9, Thm 10.1) | [P; V] |
 
-"[P]" here means: proved here given GJF Thm 5.6 [T] (including its anomaly analysis) and [I Thm 5.9] (not yet independently read).
+"[P]" here means: proved here given GJF Thm 5.6 [T, via T*] (including its anomaly analysis; its orbifold step is the fermionic GJF Thm 4.2, [T*], in the form ORB of `notes/blueprint/orbifold-foundations.md` Hyp 5.5) and [I Thm 5.9] (not yet independently read).
 
 Verification [V]:
 - `mainq_jchain.py` (log): J-chain n = 24 … 144.
@@ -235,7 +235,7 @@ Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-actio
   - So a has order 8. 3k·a vanishes on these space forms exactly when 8 | k. Its restrictions vanish exactly when 2 | k (on ⟨−1⟩) and when 4 | k (on ℤ/4), which is GJF's anomaly clause "m | k" of Thm 5.6 for m = 2, 4: an independent check of the normalisation.
 - **TMF consistency.** When 8 ∤ k and 4 | k, a non-anomalous Q₈ would give index 3, but TMF demands 24/gcd(k,24) ∈ {6, 2} | index. The theorem says Q₈ is anomalous exactly there. □
 
-**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4), Thm 8.1 (by §8.2 or, without the gauging lemma, §8.4), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
+**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T*: GJF's orbifold theorem for non-anomalous finite groups (their §4; fermionic case sketched, ORB), the index computation `notes/orbifold-index.md`; T: Thm 8.1 (by §8.2 or, without the gauging lemma, §8.4), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
 - *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □ The index computation is proved in detail in `notes/orbifold-index.md` (Theorem O): for Q₈ every twisted term vanishes directly, with no modular transformation.
 - Checked explicitly at k = 8 (n = 96): Q₈-invariance, J² = K² = −1, JK = −KJ, self-duality; Index = 24 by [I Lemma 5.8].
 
@@ -419,10 +419,11 @@ Inputs:
    - the values on S³/Q₈ for its 4 spin structures.
    All of these invariants are homomorphisms. With the bound 32, free-fermion classes are therefore all of rSH³(Q₈), and the invariants separate it. The classes with all cyclic restrictions zero are exactly 0 and κ := A(Fer(4H)), which takes the value ½ on S³/Q₈.
    - By hand: a class with nonzero Gu–Wen layer is b_χ + h, where b_χ = A(Fer(2χ)) restricts to 4 on the two ℤ₄'s with χ = −1, and h ∈ H³(Q₈;U(1)) = ℤ₈ restricts to the same element on all three ℤ₄'s. So its restrictions cannot all vanish. On H³ the kernel of restriction to ℤ₄ is {0, 4·gen}.
+   - (Added 2026-09-27.) This remark silently uses that the Gu–Wen layers of the three b_χ are the three nonzero classes of H²(Q₈;ℤ/2), and that the generator of H⁴(Q₈;ℤ) restricts to the same element on each ℤ₄ (Aut(Q₈)-invariance). A shorter counting proof, with neither these facts nor eta invariants, is `notes/blueprint/anomalies.md` Prop 4.3 (|rSH³(Q₈)| = 32, the cyclic-restriction image has order 16).
 2. **α_C ∈ {0, κ} when 4 | k.**
    - The Majorana layer vanishes: J and K are products of n/2 transpositions of sign product −1, so ⟨χ,(1−g)χ⟩ = 3n ∈ 4ℤ. Hence α_C ∈ rSH³(Q₈).
    - GJF Ex 4.4 gives α_J = α_K = α_{JK} = 2k ≡ 0 mod 8 and α_{−1} = 2k ≡ 0 mod 4.
-3. **k ≡ 4 mod 8 ⇒ α_C = κ.** μ(C) = −1 (§8.3), and a non-anomalous action has μ = 1, so α_C ≠ 0.
+3. **k ≡ 4 mod 8 ⇒ α_C = κ.** μ(C) = −1 (§8.3), and a non-anomalous action has μ = 1, so α_C ≠ 0. (The logical input is Prop 8.5.2, "non-anomalous and 4 | k ⇒ 8 | k"; μ is a consistency check. `notes/blueprint/anomalies.md` Prop 4.7, Remark 4.9.)
 4. **8 | k ⇒ α_C = 0.** Take any Q₈-code C′ with k′ ≡ 4 mod 8 (e.g. `q8chain_len48`). Then k + k′ ≡ 4 mod 8, so α_{C⊕C′} = κ = α_{C′} by step 3, and α_C = α_{C⊕C′} − α_{C′} = 0.
 5. **All k.** δ(C) := α_C − 3k·a lies in {0, κ} by step 1, since the cyclic restrictions agree (§8.2, Part 2 of `mainq_q8_gauging.py`).
    - δ is additive under ⊕.
@@ -470,14 +471,14 @@ Both are now proved in the form needed. (MC) becomes three exact identities. (TP
   - Hence η(2τ′)/η(4τ′) = √2·e^{2πi/48}·η(τ)η(4τ)/η(2τ)². Also F = (η(τ)η(4τ)/η(2τ)²)^{n/2}. □
 - [V] The multipliers are computed exactly (Dedekind sums), and every step is checked numerically to 10⁻¹⁴.
 
-**Proposition 8.5.2 (the trivial-phase fact, as needed) [P, given T*: GJF Thm 4.2 (fermionic; ORB); T: modular invariance of the NS character of a holomorphic SVOA (Dong–Zhao 2005 Thm 7.7, cf. `notes/blueprint/orbifold-foundations.md` Prop 4.8(c)); twisted modules of odd lattice SVOAs (Bakalov–Kac 2004 Thm 4.2, Rem 4.4; the FLM/Dong–Lepowsky references treat even lattices)].** If Q₈ acts non-anomalously on V_{Λ(C)} with 4 | k, then ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8} for some ψ ∈ Hom(Q₈, ±1). Hence 8 | k and ψ = 1, which is exactly μ = 1.
+**Proposition 8.5.2 (the trivial-phase fact, as needed) [P, given T*: GJF Thm 4.2 (fermionic), in the form (A11) of `notes/blueprint/anomalies.md` / ORB; T: modular invariance of the NS character of a holomorphic SVOA (Dong–Zhao 2005 Thms 4.12, 7.7 and positivity at τ = i, cf. `notes/blueprint/orbifold-foundations.md` Prop 4.8(c)); twisted modules of odd lattice SVOAs (Bakalov–Kac 2004 Thm 4.2, Rem 4.4; the FLM/Dong–Lepowsky references treat even lattices)].** If Q₈ acts non-anomalously on V_{Λ(C)} with 4 | k, then ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8} for some ψ ∈ Hom(Q₈, ±1). Hence 8 | k and ψ = 1, which is exactly μ = 1.
 
 *Proof.*
 1. **The orbifold and its sectors.** A trivialisation gives the holomorphic SVOA W = V//Q₈ = ⊕_{[g]} V(g)^{C(g)} (GJF Thm 4.2), where V(g) is the unique g-twisted module. Regauge the parities of the V(g) by a cochain β with dβ = ω₂. Then all fusion maps are even, and so are the centraliser actions, which are genuine representations. The remaining choices (β ↦ β + ψ′, ψ′ ∈ H¹(Q₈;ℤ₂)) flip the parities of V(g) with ψ′(g) = 1. That never affects V(−1), and it changes the J-sector only by ε ↦ −ε.
 2. **The (−1)-sector.** C(−1) = Q₈. By Schur and Lemma 8.3 the action is ψ ⊗ ρ̃. Its traces are ψ(h)·t_h·F for h = ±x, where t_x = Tr_T ρ̃(x) = 2^{3k} (Clifford computation), and 0 for h = −1, since Tr_T ρ̃(−1) = Tr zΓ = 0.
 3. **The x-sectors.** C(x) = ⟨x⟩. e^{2πiL₀} implements x(−1)^F, so ρ_x(x) = ε·e^{2πiL₀}P.
    - Odd powers have trace 0, since sdim T_x = 0.
-   - *W_x := V(x)^{⟨x⟩} ≠ 0* (step added 2026-09-27; `notes/blueprint/anomalies.md` Prop 4.7). On the weight space h_x + j/4 (Fock level j/4, tensor T_x), odd powers of ρ_x(x) have trace 0 and ρ_x(x²) is the scalar ε²e^{4πih_x}(−1)^j. So the projector onto W_x has trace ¼(1 + ε²e^{4πih_x}(−1)^j)·dim, nonzero for j = 0 or j = 1.
+   - *W_x := V(x)^{⟨x⟩} ≠ 0* (step added 2026-09-27; `notes/blueprint/anomalies.md` Prop 4.7). On the weight space h_x + j/4 (Fock level j/4, tensor T_x), odd powers of ρ_x(x) have trace 0 and ρ_x(x²) is the scalar ε²e^{4πih_x}(−1)^j. So the projector onto W_x has trace ¼(1 + ε²e^{4πih_x}(−1)^j)·dim, nonzero for j = 0 or j = 1; both levels are nonzero, since T_x ≠ 0 and the modes lie in ±¼ + ℤ.
    - ε = ±1 because W is an SVOA: e^{2πiL₀} = ±parity on W_x ≠ 0, and ρ_x(x) = 1 there. (The earlier argument "ε⁴ = 1 because the weights lie in h_x + ¼ℤ" silently used 4h_x ∈ ℤ; it is not needed.)
    - So the sector contributes (1/4)(g + g(τ+2)).
 4. **The character.** ch W = Z(1,1)/8 + e/8 + (6/8)f + E/8 + (1/4)T_ψ·F + (3/4)(g + g(τ+2)), where T_ψ = Σ_x ψ(x) t_x. Z(1,1) is S-invariant because V is holomorphic.
@@ -557,7 +558,7 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - σ = the six Q₈-orbit blocks of h-triples 0 and 1. **R_σ(E) = +24**: sl2words with normalisation block 0, with block 9, and by the older enumeration all agree.
 - **R_σ̄(D) = 0** on the collapsed fixed code D (length 24, self-dual), by direct enumeration (rsigma, independent of sl2words).
 
-**Theorem 10.1 [P, given T: GJF Thm 4.2 (orbifolds by non-anomalous groups) and their Frame-shape anomaly for ℤ/3; I Lemma 5.8, Thm 5.9; Lemma 4.1, 4.3; Thm 8.1; V].** For every k ≡ 0 mod 12 with k ≥ 12 there is a self-dual ternary code C_k of length 12k with Index(C_k) = 24, G = Q₈ × ℤ/3 ⊂ Aut(C_k) of the type above (J² = K² = −1, h fixed-point-free of cycle shape 3^{4k}), and T_h(C_k) = 0. For k ≡ 0 mod 24, V_{Λ(C_k)}//G is a holomorphic N=1 SVOA of central charge 12k and **index 1**. So the Main Question has a positive answer for gcd(k, 24) = 24.
+**Theorem 10.1 [P, given T*: GJF Thm 4.2 (orbifolds by non-anomalous groups; fermionic case sketched, ORB); T: their Frame-shape anomaly for ℤ/3; I Lemma 5.8, Thm 5.9; Lemma 4.1, 4.3; Thm 8.1; V].** For every k ≡ 0 mod 12 with k ≥ 12 there is a self-dual ternary code C_k of length 12k with Index(C_k) = 24, G = Q₈ × ℤ/3 ⊂ Aut(C_k) of the type above (J² = K² = −1, h fixed-point-free of cycle shape 3^{4k}), and T_h(C_k) = 0. For k ≡ 0 mod 24, V_{Λ(C_k)}//G is a holomorphic N=1 SVOA of central charge 12k and **index 1**. So the Main Question has a positive answer for gcd(k, 24) = 24.
 - *Construction.* Lemma 4.1 with G, starting from (E, σ) and refining the G-orbit of one step-1 block at each step (12 blocks, +12 in k). Lengths are 72 + 72 = 144 (k = 12), then 288 (k = 24), 432, …; k runs over all multiples of 12 from 12 on.
 - *Invariants.* Index(C_k) = R_σ(E) = 24 at every step [I Lemma 5.8]. T_h(C_k) = R_σ̄(D) = 0 (Lemma 4.3), with the collapsed systems carried along in the same way.
 - *Anomaly.* It vanishes for 24 | k: the Q₈ part is 3k·a = 0 since 8 | k (Thm 8.1); the ℤ/3 part is zero since 3 | k (GJF); mixed terms vanish by coprimality.
@@ -568,7 +569,7 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
   - Index = 24 at n = 144, 288 is by [I Lemma 5.8]; direct computation is out of reach (3⁷² words; sl2words would need 3³⁴ steps).
   - Codes: `ternary60/codes/q8z3_chain_len{144,288}.txt` (+ `.gens.txt`).
 
-**Corollary 10.2 (the Main Question) [P, given the same T and I].** Together with §2, §4 and §8: **for every k ≥ 1 there is a holomorphic N=1 SVOA of central charge 12k and index 24/gcd(k, 24)**, the TMF minimum. The sources by residue class:
+**Corollary 10.2 (the Main Question) [P, given the same T, T* (ORB) and I].** Together with §2, §4 and §8: **for every k ≥ 1 there is a holomorphic N=1 SVOA of central charge 12k and index 24/gcd(k, 24)**, the TMF minimum. The sources by residue class:
 - gcd(k, 24) ∈ {1, 2}: [I Thm 5.9], with g = 1 or −1.
 - gcd = 4: the J-chain (Thm 4.2).
 - gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).

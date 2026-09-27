@@ -17,11 +17,11 @@ Companions: `notes/blueprint/equivariant-quadrupling.md` [EQ] and `notes/bluepri
 - **(Q₈)** Q₈ = ⟨J, K⟩ with J² = K² = −1 and KJ = −JK (k ≡ 0 mod 8).
 - **(Q₈×ℤ₃)** Q₈ × ⟨h⟩, with h of order 3 commuting with J and K, without fixed coordinate, and T_h = 0 (k ≡ 0 mod 24).
 
-Here T_h := Σ_{x∈C, hx=x} f(x), with f(x) = Π φ(x_i) and φ = (0, −1, +1). It is defined up to a global sign ([MQ] Lemma 4.3).
+Here T_h := Σ_{x∈C, hx=x} f(x), with f(x) = Π φ(x_i), φ = (0, −1, +1), and h acting as a signed permutation. With this signed definition T_h is well defined and T_{h²} = T_h. ([MQ] Lemma 4.3 first conjugates h to a permutation by a diagonal d, which multiplies T_h by Π d_i; only T_h = 0 matters.)
 
 The cases m ∈ {8, 24} cannot occur: (g^{m/8})⁴ = g^{m/2} = −1 forces 48 | Index(C) ([MQ] Thm 5.1).
 
-Suppose the lift of G to V = V_{Λ(C)} (GJF Thm 3.1) is non-anomalous. Fix a trivialisation, and let W = V//G be the orbifold with the properties (ORB) of §1. Then, for every trivialisation,
+Suppose the lift of G to V = V_{Λ(C)} (GJF Thm 3.1) is non-anomalous. For every trivialisation, the orbifold W = V//G with the properties (ORB) of §1 satisfies
 
   **Index(W) = ± Index(C)/|G| = ± 24/|G|.**
 
@@ -47,7 +47,9 @@ For Q₈ and for m ∈ {1, 2, 4} the proof uses no SL₂(ℤ)-transformation of 
 - For g ∈ G, V_{R,g} := V(gσ) is the unique σ-stable irreducible gσ-twisted V-module, unique up to parity shift [T: DZ05 Thm 7.7, DRY22 Prop 3.4; [OF] Thm 4.1]. It is the *g-twisted Ramond sector*; V_R := V_{R,1}.
 - For x ∈ C(g), an *x-intertwiner* on V_{R,g} is an invertible A with A Y(v,z) A⁻¹ = Y(xv, z).
   - One exists: x maps V_{R,g} to a σ-stable irreducible x(gσ)x⁻¹ = gσ-twisted module, which is ≅ V_{R,g} by uniqueness.
-  - When V_{R,g} is of ℂ-type (Lemma 1.2), A is unique up to a scalar (Schur). So its parity p_g(x) ∈ ℤ/2 is well defined.
+  - When V_{R,g} is of ℂ-type (Lemma 1.2), A is unique up to a scalar (Schur).
+  - *A is homogeneous* (even or odd). Let P be the parity operator, P Y(v,z) P⁻¹ = Y(σv, z). Then B := APA⁻¹ satisfies B Y(v,z) B⁻¹ = Y(xσx⁻¹v, z) = Y(σv, z), since σ is central. So BP⁻¹ commutes with all Y(v,z), and Schur gives B = cP. From B² = 1, c = ±1, i.e. AP = ±PA.
+  - So the parity p_g(x) ∈ ℤ/2 of A is well defined. It does not change if V_{R,g} is replaced by an isomorphic module via a (possibly odd) isomorphism ψ: ψAψ⁻¹ has the parity of A.
 - Z_RR(g, A) := str_{V_{R,g}} A q^{L₀−c/24}.
 
 **Lemma 1.1 (supertrace cancellation) [P; = [OF] Lemma 2.7].** On V_{R,g}, and on the Ramond sector W_R of W:
@@ -86,15 +88,15 @@ In particular the ρ_g(x) of (O2″) are even, and e_g := (1/|C(g)|) Σ_x ρ_g(x
 *Proof.*
 - **(i)** The Majorana layer of the anomaly is the homomorphism G → ℤ/2 recording which V(g) are of Cl(1)-type (GJF §4). For g ∈ Aut(C) it is the character ε(g) = Π_i s_i ([OF] Lemma 4.3, from GJF Ex 4.4 and BK04: ⟨χ, (1−g)χ⟩ = 6·N₋(g), N₋(g) := #{i : s_i = −1}).
   - ε = 1 on all of G. [V: Part 2, every element of every group on every code.]
-  - Directly: −1 has N₋ = n; J has one negative sign per 2-cycle, N₋ = n/2 = 6k; g of order 12 has one per 6-cycle, N₋ = 2k; odd-order elements have ε = 1 automatically.
-  - V_R is ℂ-type ([OF] Prop 3.1(c)), and V_{R,g} ≅ V(g) ⊠ V_R.
-- **(ii)** Put p(M, x) := parity of an x-intertwiner on a ℂ-type simple object M of Rep V. It is intrinsic: two x-intertwiners differ by an even scalar.
-  - *Additivity.* If M ⊠ N ≅ P and A_M, A_N are x-intertwiners, then A_M ⊠ A_N, transported to P by any isomorphism φ, is an x-intertwiner on P: x acts on Rep V by monoidal functors, and the parity of φ cancels. So p(P, x) = p(M, x) + p(N, x).
-  - V(g) ⊠ V(g′) ≅ V(gg′) in the G̃-crossed supercategory Rep V [T: McR21 Thms 4.15, 4.17; [OF] Thm 5.3].
+  - Directly (ε is a character, so generators suffice): −1 has N₋ = n. J with J² = −1 has an odd number of negative signs on each of its n/2 two-cycles, so N₋ ≡ n/2 = 6k ≡ 0. g of order 12 with g⁶ = −1 has an odd number on each of its n/6 six-cycles, so N₋ ≡ 2k ≡ 0. For m = 6 the generator −h has n/3 three-cycles of sign product −1, so N₋ ≡ n/3 ≡ 0. Elements of odd order have ε = 1 automatically. (On the chain codes each 2-cycle of J and each 6-cycle of g carries exactly one negative sign, but only the parity matters.)
+  - V_R is ℂ-type ([OF] Prop 3.1(c)), and V_{R,g} ≅ V(g) ⊠ V_R (the grading of Rep V by G̃ is multiplicative, and the product is simple by (ii) below).
+- **(ii)** Put p(M, x) := parity of an x-intertwiner on a ℂ-type simple object M of Rep V. It is well defined (homogeneity as in the Notation, with the same argument for twisted NS modules) and intrinsic: two x-intertwiners differ by an even scalar, and conjugating by an isomorphism of any parity keeps it.
+  - *Additivity.* Let φ: M ⊠ N → P be an isomorphism (of any parity) and A_M, A_N x-intertwiners. Then A_P := φ ∘ (A_M ⊠ A_N) ∘ φ⁻¹ is an x-intertwiner on P. Here x acts on Rep V by monoidal functors T_x whose structure maps are the identity on underlying spaces (an intertwining operator of type (P; M, N) is also one of type (T_xP; T_xM, T_xN)), and T_x(φ) = φ as a linear map. So |A_P| = |A_M| + |A_N|: the parity of φ enters twice and cancels. Hence p(P, x) = p(M, x) + p(N, x).
+  - *The products are simple.* Rep V is a G̃-crossed supercategory with one simple object per component up to parity shift [T: McR21 Thms 4.15, 4.17; [OF] Thm 5.3]. A ℂ-type simple M in Rep(V, g) is invertible: by rigidity, Hom(M ⊠ M*, V) ≅ End(M) = ℂ^{1|0}, and Rep(V, 1) contains only V and ΠV (V holomorphic), so M ⊠ M* ≅ V. (Equivalently, qdim M = 1, DRY22 Thm 6.3; GJF's proof of Thm 4.2 uses the same ⊠-invertibility.) So V(g) ⊠ V(g′) is invertible, hence simple, hence ≅ V(gg′) up to parity shift; likewise V(g) ⊠ V_R ≅ V_{R,g}.
   - p(V, x) = 0, since x is an even automorphism.
   - So a ↦ p(V(g^a), x) is a homomorphism ℤ/ord(g) → ℤ/2. It vanishes, since ord(g) is odd.
   - Then p(V_{R,g}, x) = p(V(g), x) + p(V_R, x) = p(V_R, x).
-  - Finally p(V_R, x) = 0: an x-intertwiner maps the ground state e^{λ_w} to a multiple of e^{λ_{xw}} (§1.4). The parities are f(w) and f(xw) = ε(x)·f(w) ([OF] Prop 3.2(b); f(x·w) = (Π s)·f(w), EQ Lemma 1.3). And ε(x) = 1. □
+  - Finally p(V_R, x) = 0: an x-intertwiner maps the ground state e^{λ_w} to a multiple of e^{λ_{xw}} (§1.4; maximal codewords exist since Index(C) ≠ 0). The parities are f(w) and f(xw) = ε(x)·f(w) ([OF] Prop 3.2(b); f(x·w) = (Π s)·f(w), [EQ] Lemma 1.3). This is GJF Ex 4.4's relative-parity computation, ½⟨χ, (1−x)χ⟩ = 3N₋(x). And ε(x) = 1. □
 
 **Corollary 1.3 (the reduction) [P, given ORB].**
 - Index(W) := str_{W_R} q^{L₀−c/24} = sdim (W_R)_{c/24} = Σ_{[g]} sdim (W_{R,[g]})_{c/24} (Lemma 1.1 in W, with A = 1).
@@ -119,7 +121,7 @@ In particular the ρ_g(x) of (O2″) are even, and e_g := (1/|C(g)|) Σ_x ρ_g(x
 
 **Lemma 2.1.** In each G of Theorem O:
 - (a) every pair of commuting elements generates a cyclic subgroup;
-- (b) −1 is the unique involution of G, and it is a power of every element of even order;
+- (b) if |G| is even, −1 is the unique involution of G, and it is a power of every element of even order;
 - (c) the elements of odd order form a central subgroup ⟨h₃⟩ of order 3 (h₃ = g^{m/3}, resp. h), or just {1} if 3 ∤ |G|.
 
 *Proof.*
@@ -134,7 +136,7 @@ In particular the ρ_g(x) of (O2″) are even, and e_g := (1/|C(g)|) Σ_x ρ_g(x
 
 Where each part is used:
 - (b) is used in §3.1 and §3.2.
-- (c) is used in §3.3: C(h₃) = G.
+- (c) is used in Lemma 3.2 (y ∈ ⟨h₃⟩), in Cor 1.3 and Lemma 1.2 (C(g) for g of odd order), and in §3.3 (C(h₃) = G).
 - (a) is used only through the modular covariance in §3.3: DZ05 Thm 7.7 makes the conformal-block space of a pair generating a cyclic group one-dimensional ([OF] Prop 4.8(b)).
 
 --------------------------------------------------------------------------------------------
@@ -196,16 +198,16 @@ By Cor 1.3 the contribution of [1] is (1/|G|) Σ_{x∈G} Z_RR(1, x), where ρ_1(
   - So no ground-state line is mapped to itself, and Z_RR(1, x) = 0 (§1.4), for every normalisation of ρ_1(x).
 - **x of order 3** (x ∈ ⟨h₃⟩ ∖ 1).
   - *The lift fixes V_{Λ^x} pointwise.* GJF's lift x̂ lies in Λ̂[2].Aut(C) and acts by e^λ ↦ ±e^{xλ} (±1-valued cocycle; [BK04] Prop 4.1, GJF §3). For λ ∈ Λ^x this gives x̂e^λ = u(λ)e^λ with u(λ) = ±1, and x̂³ = 1 forces u(λ) = 1.
-  - *No uniqueness of the lift is used.* The order-3 lifts in Λ̂[2]·x̂ are the t·x̂ with t + xt + x²t = 0; there are 4^{n/3} of them. They are all Λ̂[2]-conjugate (Schur–Zassenhaus), but not unique. Lifts in ℂ*:Aut(C) outside Λ̂[2].Aut(C) can have different twining counts. Theorem O is about GJF's lift.
+  - *No uniqueness of the lift is used.* The order-3 lifts in Λ̂[2]·x̂ are the t·x̂ with t + xt + x²t = 0; there are 4^{n/3} of them. They are all Λ̂[2]-conjugate (Schur–Zassenhaus), but not unique. Lifts in T_Λ.Aut(C) (T_Λ = Hom(Λ, U(1)) the torus, [AN] (A8)(i)) outside Λ̂[2].Aut(C) can have different twining counts. Theorem O is about GJF's lift.
   - *One common eigenvalue.* Let A = ρ_1(x), with A³ = 1.
     - Any two x-fixed ground-state momenta differ by an x-fixed vector of Λ, so they lie in one coset of Λ^x.
     - For α ∈ Λ^x, the leading term of Y_R(e^α, z)e^λ is a nonzero multiple of e^{λ+α} ([OF] Prop 3.1).
     - A Y_R(e^α, z) A⁻¹ = Y_R(x̂e^α, z) = Y_R(e^α, z).
     - So A has one common eigenvalue ζ on all x-fixed ground states, with ζ³ = 1. The trivialisation fixes ζ; it is not forced to be 1.
-  - Hence **Z_RR(1, x) = ζ·Σ_{y∈C, xy=y} f(y)** with the signed x. Non-maximal words have f = 0.
-    - After a diagonal sign change making x a permutation, the sum is ±T_x ([MQ] Lemma 4.3).
-    - T_{x²} = ±T_x, since x and x² have the same fixed vectors.
-    - So Z_RR(1, h₃^{±1}) = ±ζ^{±1}T_h. It vanishes iff T_h = 0, i.e. iff C has as many even as odd h-fixed maximal codewords (GJF's condition).
+  - Hence **Z_RR(1, x) = ζ·Σ_{y∈C, xy=y} f(y) = ζ·T_x**, with the signed x and up to the global parity of V_R. Non-maximal words have f = 0.
+    - T_{x²} = T_x, since x and x² have the same fixed vectors.
+    - So Z_RR(1, h₃^{±1}) = ±ζ^{±1}T_h, with ± the global parity. It vanishes iff T_h = 0, i.e. iff C has as many even as odd h-fixed maximal codewords (GJF's condition).
+    - Example of a different lift: t·x̂ with t ∈ Hom(Λ, μ₃) and t∘x = t has twining count proportional to Σ_{xw=w} t(λ_w)f(w), a character sum that in general differs from ζ·T_x.
   - [OF] Prop 3.3(iii) gives a second proof, via an h-fixed characteristic vector.
 - **Conclusion.** The [1]-contribution is Index(C)/|G|, up to the global parity sign.
 
@@ -219,10 +221,10 @@ This occurs only when 3 | |G|. Let g ∈ ⟨h₃⟩ ∖ 1. Then C(g) = G (Lemma 
   - DZ05 needs C₂-cofiniteness and rationality for ⟨g, x, σ⟩. These are supplied by [OF] Prop 2.4 and Thm 5.2 (CM16 on V₀̄).
   - Only "Z_RR(γ-image) ≡ 0 ⇒ Z_RR(g, x) ≡ 0" is used, so the constant c_γ and the normalisation of ρ_g(x) never matter.
 - **x of even order.** S = (0 −1; 1 0) carries (g, x) to (x, g⁻¹), and Z_RR(x, g⁻¹) = 0 by Cor 3.4. So Z_RR(g, x) = 0.
-- **x = g^b ∈ ⟨g⟩.**
+- **x = g^j ∈ ⟨g⟩.**
   - SL₂(ℤ) → SL₂(ℤ/3) is onto, and SL₂(ℤ/3) is transitive on (ℤ/3)² ∖ 0 [V: Part 1].
-  - So some γ carries (g, g^b) to (1, g^d), with d ≠ 0.
-  - Z_RR(1, g^d) = 0 by §3.2, hence Z_RR(g, g^b) = 0.
+  - So some γ carries (g, g^j) ↔ (1, j) ∈ (ℤ/3)² to (1, g^d) ↔ (0, d), with d ≠ 0.
+  - Z_RR(1, g^d) = 0 by §3.2, hence Z_RR(g, g^j) = 0.
 - So every Z_RR(g, x) vanishes, and [g] contributes 0. This is GJF's m = 3 argument, extended to the even-order x ∈ C(g).
 
 ### 3.4 Conclusion
@@ -231,7 +233,7 @@ Index(W) = (the [1]-contribution) + 0 = ±Index(C)/|G|. □
 
 **Which inputs each case uses** [V: Part 3 classifies every pair].
 - **Q₈ and m ∈ {1, 2, 4}.**
-  - Every class except [1] has even order. So only (O2′) and (O2″) for [1] are used, and there ρ_1(x) is an explicit x-intertwiner.
+  - Every class except [1] has even order. So only (O2′), and (O2″) for [1], are used. There ρ_1(x) is some x-intertwiner on V_R, and the vanishing holds for every normalisation.
   - No SL₂(ℤ)-transformation of twisted–twined traces is used.
   - The cited inputs (ORB, uniqueness of twisted modules) rest on modular-invariance theorems. For the twisted modules one can cite [BK04] instead.
 - **m ∈ {3, 6, 12} and Q₈ × ℤ₃.** §3.3 uses the modular covariance [DZ05], as GJF do.
@@ -276,3 +278,8 @@ References: GJF = Gaiotto–Johnson-Freyd, *Holomorphic SCFTs with small index*;
   - "Fixed-point-free on coordinates" and "on ℝⁿ" are now distinguished.
   - The trivialisation remark is corrected.
   - Citations: the Ramond decomposition is attributed to GJF's proof of Thm 5.6, the super orbifold theorem is marked [T*], BK04 is cited for odd lattices, and the dangling reference is replaced by [OF].
+- **Second review (same day, three lenses; no error in the argument).**
+  - Lemma 1.2: homogeneity of x-intertwiners (so p is well defined), and simplicity of the fusion products (⊠-invertibility), which additivity needs, are now proved; the additivity step is spelled out.
+  - Lemma 1.2(i): the sign count "one negative sign per 6-cycle" holds on the chain codes but not for every G of Theorem O; replaced by the parity argument, which is all that is used.
+  - T_h is defined with the signed action (exact; T_{h²} = T_h); Lemma 2.1(b) is stated for |G| even; notation fixes in §3.2–§3.4.
+  - The script now also checks the defining relations of each group (J² = K² = −1, KJ = −JK, h³ = 1 central, g⁶ = −1, g⁴ of shape 3^{n/3}).

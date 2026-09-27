@@ -406,7 +406,7 @@ Options for T6, the only obstacle to a fully kernel-checked code-level answer:
 | C4 Lemma 2.5 (information-set sums) as a `Finset` statement, with soundness | 120–200 |
 | C5 bit-sliced evaluator and soundness, for Z5, Z6, Z8 | 300–500 |
 | C6 Lemma 2.4 and the twined sums over D | 100–180 |
-| C7 Lemma 2.3 (orbit-weighted), if used instead of [EQ]'s collapse (replaces its 200–300) | 150–250 |
+| C7 Lemma 2.3 (orbit-weighted), if used instead of [EQ]'s collapse (replaces its 200–300; not counted in the subtotal) | 150–250 |
 | C8 five chain instantiations, MQcode(k) for every k, residue bookkeeping | 250–400 |
 | **subtotal** | **≈ 1,200–2,000** |
 | C9 (k ≡ 0 mod 24 only) Morita form ([MQ] Lemma 9.1), Cor 9.2, good-plane enumerator and its soundness | 800–1,200, plus `native_decide` or a hypothesis |

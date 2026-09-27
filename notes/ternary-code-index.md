@@ -272,7 +272,7 @@ Independent checks by verification subagents, with their own code (not in the re
 5. **Lean formalization (2026-09-26).** Mathlib has M₂(SL₂ℤ) = 0 (`levelOne_weight_two_rank_zero`), the one-variable Jacobi theta transformation law, and the S-transformation of η up to a constant; the constant is fixed by evaluating at τ = i. The divisibility half is formalized (`lean/GJF/Divisibility.lean`); setup in CLAUDE.md.
    - Existence half (paper): ≈ 1,000–2,500 lines, dominated by the main-lemma sum manipulation.
    - Divisibility half: **done** (`lean/GJF/Divisibility.lean`, 662 lines, within the ≈ 600–1,200 estimate), via Step 1′. The earlier estimate via the modular Step 1 was ≈ 2,000–4,000 lines.
-   - Existence half: **done** (`lean/GJF/Existence.lean`, 804 lines, below the ≈ 1,000–2,500 estimate). `GJF.conjecture_1_4` states both halves; standard axioms only, no `sorry`/`native_decide`.
+   - Existence half: **done** (`lean/GJF/Existence.lean`, 805 lines, below the ≈ 1,000–2,500 estimate). `GJF.conjecture_1_4` states both halves; standard axioms only, no `sorry`/`native_decide`.
 
 ### 5.1 The existence half: obstructions, constructions, data (2026-09-25)
 

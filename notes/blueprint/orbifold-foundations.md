@@ -51,7 +51,7 @@ Literature (theorem numbers are those of the arXiv versions, whose sources were 
 | 5.2 | V^{G×⟨σ⟩} strongly rational and V^G nice, G solvable | [P, given T] | [CM16] is for VOAs; applied to V₀̄ | hypothesis |
 | 5.3 | G̃-crossed supercategory, Rep(V^{G̃}) ≅ (Rep V)^{G̃} | [T] | **yes**: [McR21] Thms 4.15, 4.17 | hypothesis |
 | 5.4 | GJF Thm 4.2 for fermionic V (anomaly in S̃H³, trivialisations ↔ orbifolds) | **[T*]** | **no complete written proof** | hypothesis ORB (5.5) |
-| 5.6, 5.7 | index formula (1.2) of [OI]; W = V//G is N=1 | [P, given 5.5] | – | formalize (finite sums) |
+| 5.6, 5.7 | class-sum index formula (a remark in [OI] Cor 1.3); W = V//G is N=1 | [P, given 5.5] | – | formalize (finite sums) |
 
 **Verdict.** Everything in (b) and (c) is either proved here or is a theorem in the literature that explicitly covers vertex operator superalgebras ([BK04], [Li96], [DZ05], [DRY22]). In (a), regularity (Thm 5.2) and the G̃-crossed structure (Thm 5.3, [McR21]) are rigorous for SVOAs. **The one folklore-level input is the fermionic part of GJF Thm 4.2** (Thm 5.4): the anomaly class in S̃H³(G), and the claim that a trivialisation produces a holomorphic SVOA W ⊃ V^G whose Ramond sector is ⊕_{[g]} V(gσ)^{C(g)}. Its rigorous ingredients exist, but their assembly is not written anywhere. Hypothesis 5.5 (ORB) isolates exactly what is used.
 
@@ -173,7 +173,7 @@ put Y_R(v,z) := Y(Δ(χ/2,z)v, z) on the space V_Λ. Then:
 - [V: Part 1] (d) as q-series through q^{n/24+3}, computed by direct per-coordinate lattice sums (no Euler identity), for tetracode³, 4E₃⁺, Golay (n = 12) and `q8chain_len24` (n = 24): Index·ηⁿ = 0, 0, 24ηⁿ, 24ηⁿ. [V: Part 2] (a)–(b) on every maximal codeword of Golay (24 words, 24 even) and `q8chain_len24` (88 words: 56 even, 32 odd, Index 24).
 - *Lean.* (a)–(c) at the lattice level are elementary: a per-coordinate lemma (`decide` on residues plus (2a+3)² ≥ 1), a bijection {minimal a} ≃ {maximal codewords}, and a parity lemma matching `GJF.f` / `gjfIndex`. ≈ 200–350 lines. (d) needs Euler's pentagonal theorem and is not needed if (c) is used with Lemma 2.7.
 
-**Proposition 3.3 (the untwisted twined terms, [OI] §1.3 and §3.2) [P, given T: GJF Thm 3.1; BK04 Prop 4.1; Li96 Prop 5.4; V: Part 2].** Let h ∈ Aut(C) with its lift ĥ from GJF Thm 3.1, and let φ be any operator on V_R with φY_R(v,z)φ⁻¹ = Y_R(ĥv,z).
+**Proposition 3.3 (the untwisted twined terms, [OI] (1.4) and §3.2) [P, given T: GJF Thm 3.1; BK04 Prop 4.1; Li96 Prop 5.4; V: Part 2].** Let h ∈ Aut(C) with its lift ĥ from GJF Thm 3.1, and let φ be any operator on V_R with φY_R(v,z)φ⁻¹ = Y_R(ĥv,z).
 - (i) **φ maps e^{λ_w} to a multiple of e^{λ_{hw}}.** By Prop 3.1(b), φ conjugates the Heisenberg zero modes by h, so it maps the momentum-ν eigenspace to the momentum-hν one. Also hν_w = ν_{hw}, since ι commutes with signed permutations. Each ground-state momentum space is one-dimensional.
 - (ii) **If some power of h is −1, then str_{ground} φ = 0**, so Z_RR(1,h) = 0 for every normalisation: a fixed maximal w would satisfy w = −w.
 - (iii) **If ord h is odd**:
@@ -270,7 +270,7 @@ and ch V(ĝ) = |det(1−g)|^{1/2} Π_k η(τ/k)^{−d_k}.
 
 **Proposition 4.8 (modular covariance in the RR sector; S-invariance of NS characters) [P, given T: DZ05 Thms 4.12, 5.2, 7.1, 7.7; DRY22 Prop 3.4].** Let V be nice and holomorphic, and g, h ∈ Aut(V) commuting of finite order.
 - (a) In the ordinary case (Def 1.4), Z_RR(g,h) (Def 1.5) lies in 𝒞(g,h) ([DZ05] Thm 5.2: V(gσ) is simple, and h- and σ-stable by uniqueness). For γ = (a b; c d) ∈ SL₂(ℤ), Z_RR(g,h)(γτ) is the v = 𝟙 value of an element of 𝒞(g^a h^c, g^b h^d) ([DZ05] Thm 4.12).
-- (b) If ⟨g,h⟩ is cyclic, 𝒞(g,h) is one-dimensional, spanned by the trace function of V(σg) ([DZ05] Thm 7.7). Hence Z_RR(g,h)(γτ) = c_γ·Z_RR((g,h)γ)(τ), and **Z_RR((g,h)γ) ≡ 0 ⇒ Z_RR(g,h) ≡ 0**. This is exactly what [OI] §3.3–3.4 use (there ⟨g,h⟩ is cyclic by [OI] Lemma 2.1(a)), and the modular action on labels is the plain (g,h) ↦ (g^a h^c, g^b h^d).
+- (b) If ⟨g,h⟩ is cyclic, 𝒞(g,h) is one-dimensional, spanned by the trace function of V(σg) ([DZ05] Thm 7.7). Hence Z_RR(g,h)(γτ) = c_γ·Z_RR((g,h)γ)(τ), and **Z_RR((g,h)γ) ≡ 0 ⇒ Z_RR(g,h) ≡ 0**. This is exactly what [OI] §3.3 uses (there ⟨g,h⟩ is cyclic by [OI] Lemma 2.1(a)), and the modular action on labels is the plain (g,h) ↦ (g^a h^c, g^b h^d).
 - (c) **ch W(−1/τ) = ch W(τ) for every nice holomorphic SVOA W** ([MQ] Prop 8.5.2).
   - ch W = T_W(𝟙,(σ,σ)) ∈ 𝒞(σ,σ), and S maps 𝒞(σ,σ) to 𝒞(σ,σ⁻¹) = 𝒞(σ,σ). This space is one-dimensional ((b), with ⟨σ⟩ cyclic).
   - So ch W(−1/τ) = c·ch W(τ). At the S-fixed point τ = i, ch W(i) > 0, so c = 1. □
@@ -331,9 +331,10 @@ and ch V(ĝ) = |det(1−g)|^{1/2} Π_k η(τ/k)^{−d_k}.
 - (O1) W is a nice holomorphic SVOA containing V^G as a sub-VOSA with the same conformal vector;
 - (O2) W_R ≅ ⊕_{[g]} V(gσ)^{C(g)} as ℤ₂- and L₀-graded spaces. Here C(g) acts on V(gσ) by a **genuine** representation ρ_g by even operators with ρ_g(h)Y(v,z)ρ_g(h)⁻¹ = Y(hv,z), and the parities of the V(gσ) are fixed by the trivialisation;
 - (O3) Z_RR(g,h) = Z_RR(xgx⁻¹, xhx⁻¹) for these ρ's (conjugation compatibility).
+- *Update 2026-09-27.* The revised [OI] uses only (O2′) (for g of even order, W_{R,[g]} ⊂ V(gσ) is a graded subspace) and (O2″) (for g of odd order, W_{R,[g]} = V(gσ)^{C(g)} for a genuine action by x-intertwiners). The evenness of these intertwiners is proved in [OI] Lemma 1.2, so it could be dropped from (O2). (O3) is not used.
 - *Remark.* The anomaly statements ([MQ] Thm 8.1 and §8.4–8.5; GJF Ex 4.4) are a separate component. ORB is conditional on α = 0.
 
-**Proposition 5.6 ([OI] (1.2), the index formula) [P, given 5.5].** Index(W) := str_{W_R} q^{L₀−c/24} = (1/|G|) Σ_{gh=hg} Z_RR(g,h).
+**Proposition 5.6 (the class-sum index formula; a remark in [OI] Cor 1.3, which no longer needs it) [P, given 5.5].** Index(W) := str_{W_R} q^{L₀−c/24} = (1/|G|) Σ_{gh=hg} Z_RR(g,h).
 - For a genuine representation ρ of a finite group C by even operators on a graded super space E, e := (1/|C|)Σ_h ρ(h) is an even projector onto E^C. So str(q^{L₀}|_{E^C}) = (1/|C|)Σ_h str(ρ(h)q^{L₀}).
 - Summing over classes and using (O3) gives Σ_{[g]} 1/|C(g)| Σ_{h∈C(g)} = (1/|G|) Σ_{commuting}. [V: `mainq_orbifold_index.py` Part 1]
 - The result is a constant by Lemma 2.7, applied in W: τ ∈ W and G₀² = L₀ − c/24 on W_R. □
@@ -352,8 +353,8 @@ and ch V(ĝ) = |det(1−g)|^{1/2} Π_k η(τ/k)^{−d_k}.
 | gcd 1 | 1 (W = V) | 2.4, 2.6, 2.7, 3.1, **3.2** |
 | gcd 2 | ⟨−1⟩ | + 4.1–4.6 (ρ = n/16), 3.3(ii), 5.2–5.7 |
 | gcd 4 | ⟨J⟩, J² = −1 | same (ρ_J = 3n/64) |
-| gcd 3, 6, 12 | ℤ/3, ℤ/6, ℤ/12 | + 3.3(iii) (T_h = 0, [MQ] Lemma 4.3), **4.8(a)–(b)** ([OI] §3.3–3.4) |
-| gcd 8 | Q₈ | as gcd 4, with non-cyclic ORB; no modular transformation ([OI] §3.5) |
+| gcd 3, 6, 12 | ℤ/3, ℤ/6, ℤ/12 | + 3.3(iii) (T_h = 0, [MQ] Lemma 4.3), **4.8(a)–(b)** ([OI] §3.3) |
+| gcd 8 | Q₈ | as gcd 4, with non-cyclic ORB; no modular transformation ([OI] §3.4, "Which inputs each case uses") |
 | gcd 24 | Q₈ × ℤ/3 | everything |
 
 The anomaly input (non-anomaly of G: GJF Thm 5.6's Frame-shape computation, [MQ] Thm 8.1 for Q₈) is outside this file. It uses Prop 4.4 (structure of the (−1)- and x-sectors, via 4.7) and Prop 4.8(c) (in [MQ] §8.5).
@@ -400,7 +401,7 @@ The VOA side cannot be stated in current Mathlib: to our knowledge it has at mos
 
 *Status (2026-09-27): the items below are tracked, with what has been fixed since, in `README.md` §5.*
 
-None of these changes a result of [MQ] or [OI]. Items 1–3 and 5 concern citations or statements that should be corrected in those files (not edited here).
+These items refer to the first version of [OI] (commit 7c533a5); its section numbers have changed since. None of these changes a result of [MQ] or [OI]. Items 1–3 and 5 concern citations or statements that should be corrected in those files (not edited here).
 
 1. **Uniqueness of twisted sectors is cited to bosonic or non-uniqueness results.** [OI] §1 and §4 cite "Dong–Li–Mason, van Ekeren" for the uniqueness of V_{R,g}.
    - [DLM00] Thm 10.3 is for VOAs.

@@ -17,6 +17,9 @@ Part 2 (Lemmas 1.2, 3.2, 3.3, on the actual codes and groups). For each code: se
           s/m, each with multiplicity 2n/m; and the vacuum energy E_g = ¼ Σ θ(1−θ) equals
           n/24 + n/(12m²) exactly (Lemma 3.3);
         - if g has order 3: cycle shape 3^{n/3}.
+        The defining relations are checked on the generators: J² = −1 (J-chain); g⁶ = −1 and g⁴ of cycle shape
+        3^{n/3} (ℤ/12); J² = K² = −1 and KJ = −JK (Q₈); in addition h³ = 1, hJ = Jh, hK = Kh and h without fixed
+        coordinate (Q₈ × ℤ/3).
         Codes and groups (the whole cyclic group ⟨g⟩ is checked even where only a subgroup is the orbifold
         group, e.g. ⟨g²⟩ at n = 72 and ⟨g⁴⟩ at n = 108; other chain lengths are covered by Lemma 3.2):
         - J-chain n = 48: ⟨J⟩;
@@ -30,7 +33,8 @@ Part 3 (the vanishing table, §3). For each group and each class [g] the script 
         of it: even order (no Ramond ground states, §3.1); g = 1 (the untwisted terms Z_RR(1,x), §3.2);
         g of order 3 (Z_RR(g,x) by one S-transformation for x of even order, by an SL₂(ℤ)-orbit for x ∈ ⟨g⟩,
         §3.3). It reports whether the proof uses modular transformations for that group.
-Runtime ≈ 2–3 min (the group closures and Aut checks on the long codes).
+Runtime ≈ 2–3 min (the group closures and Aut checks on the long codes). Needs the Rust binary
+(cargo build --release in ternary60/): mainq_q8_anomaly.chain_gens() uses it for the Q₈-chain generators.
 """
 import os, sys, itertools
 from fractions import Fraction as Fr
@@ -158,8 +162,26 @@ def mono_order(g, n):
     return k
 
 
-def check_code(tag, C, gens, n):
+def relations(kind, gens, n):
+    neg, one = mono_neg(n), mono_id(n)
+    pw = lambda g, k: one if k == 0 else mono_mul(g, pw(g, k - 1))
+    if kind == "J":
+        return pw(gens[0], 2) == neg
+    if kind == "z12":
+        g = gens[0]
+        return pw(g, 6) == neg and all(L == 3 for L, _ in signed_cycles(pw(g, 4)))
+    J, K = gens[0], gens[1]
+    ok = pw(J, 2) == neg and pw(K, 2) == neg and mono_mul(K, J) == mono_mul(neg, mono_mul(J, K))
+    if kind == "q8z3":
+        h = gens[2]
+        ok &= (pw(h, 3) == one and mono_mul(h, J) == mono_mul(J, h) and mono_mul(h, K) == mono_mul(K, h)
+               and all(h[0][i] != i for i in range(n)))
+    return ok
+
+
+def check_code(tag, C, gens, n, kind):
     G = closure(gens, n)
+    rel = relations(kind, gens, n)
     neg, one = mono_neg(n), mono_id(n)
     R = rref(C)
     sd = len(R) == n // 2 and all(dot(a, b) == 0 for i, a in enumerate(C) for b in C[i:])
@@ -183,8 +205,8 @@ def check_code(tag, C, gens, n):
             margins.add((m, E - Fr(n, 24)))
         elif m == 3:
             odd_ok &= all(L == 3 for L, _ in signed_cycles(g))
-    ok = sd and inv and maj_ok and fpf_ok and even_ok and odd_ok
-    print(f"2 {tag}: n = {n}, |G| = {len(G)}; self-dual (rank n/2, rows orthogonal) {sd}; generators in Aut {inv}; "
+    ok = sd and inv and rel and maj_ok and fpf_ok and even_ok and odd_ok
+    print(f"2 {tag}: n = {n}, |G| = {len(G)}; self-dual (rank n/2, rows orthogonal) {sd}; generators in Aut {inv}; defining relations {rel}; "
           f"N₋(g) even for all g (ε = 1) {maj_ok}; underlying permutation fixed-point-free for all g ≠ ±1 {fpf_ok}; "
           f"all {n_even} even-order g: g^(m/2) = −1, phases = odd multiples of 1/m each 2n/m times, "
           f"E_g = n/24 + n/(12m²) {even_ok} (E_g − n/24 by order: "
@@ -196,21 +218,21 @@ def check_code(tag, C, gens, n):
 def part2():
     allok = True
     C = read_code(os.path.join(CODES, "jchain_len48.txt"))
-    allok &= check_code("J-chain jchain_len48 (⟨J⟩)", C, gens_from(os.path.join(CODES, "jchain_len48.gens.txt"), "J"), 48)
+    allok &= check_code("J-chain jchain_len48 (⟨J⟩)", C, gens_from(os.path.join(CODES, "jchain_len48.gens.txt"), "J"), 48, "J")
     for n in (72, 108, 144):
         C = read_code(os.path.join(CODES, f"z12chain_len{n}.txt"))
         allok &= check_code(f"ℤ/12-chain z12chain_len{n} (⟨g⟩, ord g = 12)", C,
-                            gens_from(os.path.join(CODES, f"z12chain_len{n}.gens.txt"), "g"), n)
+                            gens_from(os.path.join(CODES, f"z12chain_len{n}.gens.txt"), "g"), n, "z12")
     gens = QA.chain_gens()
     C = read_code(os.path.join(CODES, "q8chain_len96.txt"))
-    allok &= check_code("Q₈-chain q8chain_len96 (Q₈)", C, list(gens[96]), 96)
+    allok &= check_code("Q₈-chain q8chain_len96 (Q₈)", C, list(gens[96]), 96, "q8")
     C = read_code(os.path.join(CODES, "q8z3_seed72.txt"))
     J, K = q8_gens(18)
-    allok &= check_code("Q₈×ℤ₃ seed q8z3_seed72", C, [J, K, h_gen(6)], 72)
+    allok &= check_code("Q₈×ℤ₃ seed q8z3_seed72", C, [J, K, h_gen(6)], 72, "q8z3")
     for n in (144, 288):
         C = read_code(os.path.join(CODES, f"q8z3_chain_len{n}.txt"))
         allok &= check_code(f"Q₈×ℤ₃ chain q8z3_chain_len{n}", C,
-                            gens_from(os.path.join(CODES, f"q8z3_chain_len{n}.gens.txt"), "JKH"), n)
+                            gens_from(os.path.join(CODES, f"q8z3_chain_len{n}.gens.txt"), "JKH"), n, "q8z3")
     return allok
 
 

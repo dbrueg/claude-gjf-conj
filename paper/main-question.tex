@@ -159,7 +159,11 @@ the same sign: if $g(e_i)=\pm e_{j}$ then $g(e_{i^*})=\pm e_{j^*}$, and likewise
 Choose the tetracodes $G$-equivariantly: on one block of each $G$-orbit a copy of $T$ invariant
 under the stabiliser, and its transports elsewhere. Then $G\subseteq\Aut(Q_\sigma(E))$; the
 extension preserves orders, relations $g^j=-1$, and cycle lengths; and if $\mathcal B$ and its
-splits are $G$-stable, then $\sigma''$ is $G$-stable.
+splits are $G$-stable, then $\sigma''$ is $G$-stable. The construction iterates provided
+stabiliser-invariant placements of $T$ exist again at both steps of the next stage; this holds for
+all chains below when the splits are chosen so that the stabilisers fix both pairs (for a $J$-stable
+step-one block $\{p,p^*,q,q^*\}$ the split $\{p,q\}\sqcup\{p^*,q^*\}$, and for the resulting blocks
+$\{x,y,x^{**},y^{**}\}$ the split $\{x,y\}\sqcup\{x^{**},y^{**}\}$).
 \end{lemma}
 
 \begin{proof}
@@ -238,8 +242,11 @@ $g$-stable system of three blocks. For the systems
 \end{align*}
 direct enumeration gives $R_{\sigma_3}(E_{36})=R_{\sigma_6}(E_{36})=-24$ and
 $R_{\bar\sigma_3}(D)=R_{\bar\sigma_6}(D)=0$. Apply Lemma~\ref{lem:eq} with $G=\langle g\rangle$,
-refining at each step one $h$-orbit of $J$-stable step-one blocks with $J$-stable splits; this
-yields a $g$-stable system of six blocks and adds $72$ coordinates. Starting from $\sigma_3$ we
+refining at each step one $h$-orbit of $J$-stable step-one blocks with $J$-stable splits, and
+splitting each new block $\{x,y,x^{**},y^{**}\}$ as $\{x,y\}\sqcup\{x^{**},y^{**}\}$; this
+yields a $g$-stable system of six blocks and adds $72$ coordinates. (With the split
+$\{x,x^{**}\}\sqcup\{y,y^{**}\}$ the stabilisers would drop to $\{\pm1\}$ from the next step on, and the
+chains would skip residue classes.) Starting from $\sigma_3$ we
 reach every $k\equiv0\pmod6$, from $\sigma_6$ every odd multiple of $3$ other than $3$, and $k=3$ is
 $E_{36}$ itself. By \eqref{eq:main} and Lemmas~\ref{lem:eq} and~\ref{lem:fix}, every code in these
 chains has $\Index=\pm24$, contains $g$ with $g^6=-1$ and all cycles of length $6$, and has
@@ -398,8 +405,10 @@ This check cannot see $4a$. That class restricts to zero on every cyclic subgrou
 $Q_8$ is cyclic, but it is nonzero on $S^3/Q_8$.
 
 The class $4a$ can be seen on $V_{\Lambda(C)}$ itself, through the $(-1)$-twisted sector. Each $V_{\sqrt3\mathbb Z}$ has
-a $\theta$-twisted module with one odd zero mode $\gamma_i$. Comparing characters, the $\theta$-twisted
-$V_{\Lambda(C)}$-module is the unique irreducible $\theta$-twisted module of the frame, with ground states the spinor
+a $\theta$-twisted module with one odd zero mode $\gamma_i$. The $\theta$-twisted modules of the frame are completely
+reducible \cite[Thm.~4.2]{BK}, and the $\theta$-twisted $V_{\Lambda(C)}$-module and the irreducible frame module both have
+lowest-weight spaces of dimension $2^{n/2}$ and the same character. So the $\theta$-twisted $V_{\Lambda(C)}$-module is the
+unique irreducible $\theta$-twisted module of the frame, with ground states the spinor
 module $T$ of the Clifford algebra $\langle\gamma_1,\dots,\gamma_{12k}\rangle$. By Schur's lemma, $Q_8$ therefore acts on
 it through $Q_8\subseteq SO(12k)\to\mathrm{Pin}(12k)$. In particular this action does not depend on $C$, and
 $T\cong(\mathbb H\oplus2\psi)^{\otimes3k}$, with $\operatorname{Tr}_T(JK)/(\operatorname{Tr}_TJ\cdot\operatorname{Tr}_TK)=2^{-3k}$.
@@ -411,8 +420,10 @@ representation of $Q_8$, i.e.\ $\mu=1$. To see this, suppose $Q_8$ is non-anomal
 $W=V_{\Lambda(C)}/\!\!/Q_8=\bigoplus_{[g]}V(g)^{C(g)}$. The characters of its sectors are explicit. The
 $(-1)$-sector contributes $\tfrac18E+\tfrac14\bigl(\sum_x\psi(x)t_x\bigr)F$, for some character $\psi$ of $Q_8$, where
 $t_x=2^{3k}$ and $F=q^{n/48}\prod_{r\ \mathrm{odd}}(1+q^r)^{-n/2}$. Each class $\{\pm x\}$ contributes
-$\tfrac14\bigl(g(\tau)+g(\tau+2)\bigr)$, since odd powers of $x$ have vanishing trace and spin--statistics fixes the
-square. The untwisted sector contributes $\tfrac18\bigl(Z(1,1)+e+6f\bigr)$. Here $e=\eta(\tau)^{12k}/\eta(2\tau)^{12k}$,
+$\tfrac14\bigl(g(\tau)+g(\tau+2)\bigr)$: write $\rho_x(x)=\varepsilon e^{2\pi iL_0}P$. On the weight space $h_x+j/4$ odd
+powers of $x$ have trace $0$ and $x^2$ acts by $\varepsilon^2e^{4\pi ih_x}(-1)^j$, so the invariants are nonzero at $j=0$
+or $j=1$. There $\rho_x(x)=1$ while $e^{2\pi iL_0}=\pm P$ (spin--statistics in $W$), so $\varepsilon=\pm1$ and $x^2$ acts
+as $e^{4\pi iL_0}$. The untwisted sector contributes $\tfrac18\bigl(Z(1,1)+e+6f\bigr)$. Here $e=\eta(\tau)^{12k}/\eta(2\tau)^{12k}$,
 $f=\eta(2\tau)^{6k}/\eta(4\tau)^{6k}$, and $E$, $g$ are the characters of the $(-1)$- and $x$-twisted modules. The
 exact identities $e|S=E$, $f|S=g$ and $f|ST^2S=N\,F$ with $N=(\sqrt2\,e^{2\pi i/48})^{6k}=2^{3k}e^{2\pi ik/8}$ hold (in
 the last one the two eta multipliers cancel). So $\operatorname{ch}W|S-\operatorname{ch}W=\tfrac14\bigl(3N-\sum_x\psi(x)t_x\bigr)
@@ -451,8 +462,12 @@ is $24/8=3$. Indeed, by supersymmetry the index counts Ramond ground states (wei
 $g\in Q_8\setminus\{1\}$ has even order $m$, a fixed-point-free coordinate permutation unless $g=-1$, and
 $g^{m/2}=-1$; so its eigenvalues on $\mathbb R^n$ are the odd powers of $e^{2\pi i/m}$, each $2n/m$ times, and
 its twisted Ramond sector has lowest weight $\tfrac n{24}+\tfrac n{12m^2}>\tfrac c{24}$. In the untwisted sector
-the ground states are the maximal codewords, and no element of even order fixes one (it would fix $-w\ne w$).
-So only the $Q_8$-average of the untwisted ground states contributes, giving $\Index(C)/8$. The same argument,
+the ground states are the maximal codewords, and no element of even order fixes one ($g^{m/2}=-1$ would fix it,
+but $-w\ne w$).
+So only the $Q_8$-average of the untwisted ground states contributes, giving $\Index(C)/8=3$ (the $Q_8$ seed has
+$R=+24$, so the chain codes have $\Index=+24$). Here we use the Ramond decomposition
+$W_R=\bigoplus_{[g]}V_{R,g}^{C(g)}$ of the orbifold, as in the proof of \cite[Thm.~5.6]{GJF}; like the fermionic
+case of \cite[Thm.~4.2]{GJF} itself, its super-VOA proof is only sketched there. The same argument,
 with \cite{GJF}'s modular step for the order-$3$ terms, gives the index of the $Q_8\times\mathbb Z/3$ orbifold
 below.
 \end{proof}
@@ -582,6 +597,9 @@ Generator matrix of $E_{36}$ (coordinates $0,\dots,35$, entries in $\{0,1,2\}$):
 }
 
 \begin{thebibliography}{99}
+\bibitem{BK}
+B.~Bakalov and V.~G.~Kac, \emph{Twisted modules over lattice vertex algebras}, in \emph{Lie Theory and
+Its Applications in Physics V}, World Sci., 2004, 3--26; arXiv:math/0402315.
 \bibitem{BR}
 [Authors], \emph{Self-dual ternary codes of index 24 in every length $12k$}, draft (2026);
 \texttt{paper/index24.tex} in [repository].
