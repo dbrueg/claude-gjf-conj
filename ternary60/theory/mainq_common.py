@@ -24,6 +24,29 @@ def write_code(path, rows):
         fh.write("\n".join("".join(map(str, r)) for r in rows) + "\n")
 
 
+def write_gens(path, gens):
+    """Signed permutations {name: (perm, signs)} in the space-separated .gens.txt format."""
+    with open(path, "w") as fh:
+        for name, (p, s) in gens.items():
+            fh.write(f"{name} perm: " + " ".join(map(str, p)) + "\n")
+            fh.write(f"{name} sign: " + " ".join(map(str, s)) + "\n")
+
+
+def read_gens(path):
+    """Inverse of write_gens: {name: (perm, signs)}, in file order."""
+    d, out = {}, {}
+    with open(path) as fh:
+        for ln in fh:
+            if ln.strip():
+                key, vals = ln.split(":")
+                d[key.strip()] = tuple(int(x) for x in vals.split())
+    for key in d:
+        name, kind = key.rsplit(" ", 1)
+        if kind == "perm":
+            out[name] = (d[key], d[f"{name} sign"])
+    return out
+
+
 def to_bits(v):
     a = b = 0
     for i, x in enumerate(v):

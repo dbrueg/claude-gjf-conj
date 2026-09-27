@@ -6,7 +6,7 @@ Read `notes/ternary-code-index.md` first: §0 for the results, then §5.1 for th
 
 Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code of index exactly ±24 at every length 12k. The divisibility half (24 | Index) is already proved (notes §1–2).
 
-## Where things stand (2026-09-26, later session)
+## Where things stand (2026-09-27)
 
 **Both halves of Conj 1.4 are now proved here, and both are formally verified in Lean 4** (`GJF.conjecture_1_4`; pending literature check and independent reading).
 - **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
@@ -38,6 +38,16 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
   - Trivial phases: for 4 | k a would-be orbifold V//Q₈ has S-invariant NS character iff ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8}. So k ≡ 4 mod 8 is anomalous, using only standard theorems (GJF Thm 4.2, S-invariance of holomorphic SVOA characters, lattice twisted modules).
   - Remaining inputs of the direct proof: those, plus the rSH³ layer bound, additivity, and free-fermion eta values (only to count classes).
   - GJF numbering: Thm 3.1 (lift), Thm 4.2 (anomaly in extended supercohomology S̃H³), Ex 4.4 (Frame shapes).
+- **Orbifold index proved for all groups used, incl. Q₈ and Q₈ × ℤ/3** (`notes/orbifold-index.md`, Theorem O, revised after a 3-lens review; `mainq_orbifold_index.py`).
+  - Supersymmetry reduces Index(W) to Ramond ground states (Cor 1.3). Every g ∈ G ∖ {±1} has a fixed-point-free coordinate permutation, so an element of even order m has E_g = n/24 + n/(12m²) > c/24: no ground states (Lemmas 3.2–3.3).
+  - Untwisted terms: even-order x fixes no maximal word; order-3 x gives ±ζT_h (ζ³ = 1 from the trivialisation; the order-3 lift is *not* unique, only conjugate). Order-3 sectors: modular covariance (DZ05), as in GJF. Evenness of ρ_g(x) is proved (Lemma 1.2).
+  - The fermionic GJF Thm 4.2 is [T*]: only sketched in GJF. What is used is Hypothesis ORB (`notes/blueprint/orbifold-foundations.md` §5).
+- **Lean blueprint** (`notes/blueprint/`, 2026-09-27; start with its `README.md`): four files ([EQ] equivariant quadrupling, [CS] chains and seeds, [AN] anomalies, [OF] orbifold foundations), each with a `blueprint_*.py` check script. README has the dependency list D1–D14, the trusted base, and the size estimate:
+  - Tier A (code level, E₇₂ value as hypothesis) ≈ 2,500–5,000 new lines (≈ 3,500);
+  - Tier B (VOA facts as a hypothesis structure, everything elementary proved) + 4,000–9,000, total ≈ 9,500;
+  - unconditional ≈ 10⁵–5·10⁵.
+  - The only seed fact out of kernel reach is R_σ(E₇₂) = 24 (5.8·10⁶ good planes; one program so far). The ℤ/12 seed sums (≤ 5.9·10⁵ candidates) need a verified bit-sliced evaluator. Lean's `Tfin` is not J-invariant and its refinement split is the canonical one; the chains need the transposed split ([MQ] §4 Conventions, corrected).
+  - Generator files: use `jchain_len<n>.gens.txt` / `z12chain_len<n>.gens.txt` (`mainq_gens_files.py`); the old `.J.txt`/`.g.txt` have no separators and up to 888 parses.
 - **Morita form** (notes §9.1): Q₈-invariant codes = F₃² ⊗ U, U Lagrangian in F₃^{2r}; maximal words are SL₂(F₃)-blocks with f₄ = φ∘ψ (ψ = abelianisation). `ternary60 sl2words` computes Index and orbit-block R_σ sign-exactly at n = 72 in seconds (`mainq_morita.py` wraps it; `rsys`).
 - The Thm 5.9 chain codes themselves: n = 48 has the needed J; n = 36, 72 have 2-group automorphism groups (no order-3 symmetry).
 - `mainq_automorphisms.py` needs nauty's `dreadnaut` (`scripts/build_nauty.sh`); everything else is stdlib Python + the Rust binary (new subcommands `words`, `rsigma`).
@@ -47,7 +57,8 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 1. **Citation search** for GJF (Google Scholar "Cited by" / INSPIRE, by hand in a browser: Scholar shows a CAPTCHA to the cloud session, and INSPIRE/Semantic Scholar are blocked). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
 2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review is in `paper/review-2026-09-26.md`, and its wording edits are applied (author and repository placeholders remain). Still wanted: a reading by a second person.
 3. Optional: prove R_σ(E) ≡ Index(E) mod 48 (the Theorem 5.4 argument should carry over), and the [C] in §5.1(d).
-4. Main Question: all classes answered (notes §10). Still wanted: an independent reading of GJF's anomaly analysis (Thm 5.6, the ℤ/3 Frame-shape part); (the gauging lemma is no longer needed: notes §8.4); a literature check; optionally a proof of the n = 36 law (notes §9.3) and of "β ≥ 1 ⇒ 72 | Index".
+4. **Lean formalization of the Main Question**: follow `notes/blueprint/README.md` §4 "Recommended order" (signed permutations and the general quadrupling first). Open decision: how to certify R_σ(E₇₂) = 24 (hypothesis, `native_decide`, or a new seed with a cheap certificate); an independent second implementation of that value is wanted first.
+5. Main Question: all classes answered (notes §10). Still wanted: an independent reading of GJF's anomaly analysis (Thm 5.6, the ℤ/3 Frame-shape part); (the gauging lemma is no longer needed: notes §8.4); a literature check; optionally a proof of the n = 36 law (notes §9.3) and of "β ≥ 1 ⇒ 72 | Index".
 
 ## Conventions
 

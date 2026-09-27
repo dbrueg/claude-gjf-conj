@@ -16,7 +16,7 @@ Part 3: GJF Thm 5.6 hypotheses at n = 48 (k = 4, m = 4): ord J = 4 = m and J^{m/
 import os, sys
 from existence_common import GOLAY, brute_index, rust_index, dot, span, HERE
 from existence_quadruple import R
-from mainq_common import mono_mul, mono_neg, mono_order, cycle_type, is_aut, write_code
+from mainq_common import mono_mul, mono_neg, mono_order, cycle_type, is_aut, write_code, write_gens
 from mainq_equivariant import quad_eq, choose_splits
 from mainq_common import closure
 
@@ -50,6 +50,7 @@ def main(maxn):
         write_code(os.path.join(HERE, "..", "codes", f"jchain_len{n}.txt"), rows)
         write_code(os.path.join(HERE, "..", "codes", f"jchain_len{n}.J.txt"),
                    [list(Jn[0]), [1 if s == 1 else 2 for s in Jn[1]]])
+        write_gens(os.path.join(HERE, "..", "codes", f"jchain_len{n}.gens.txt"), {"J": Jn})
         if n == 48:
             print(f"3 n = 48, k = 4, m = gcd(4,24) = 4: ord J = {mono_order(Jn)}, J^(m/2) = J² = −1: "
                   f"{mono_mul(Jn, Jn) == mono_neg(n)}  ⇒ GJF Thm 5.6 applies (index 6)", flush=True)

@@ -1,0 +1,47 @@
+1 per-coordinate lattice sums: θ_0 = 0, θ_1 = η, θ_2 = −η termwise to x^200: True
+1 tetracode³ (n = 12): Σ_λ (−1)^⟨χ,λ⟩ q^(|λ+χ/2|²/2) = Index·ηⁿ through q^(n/24 + 3): True; Index = Σ f(w) = 0; the raw sum vanishes identically to this order (no maximal codewords)
+1 4E₃⁺ (GJF code 2) (n = 12): Σ_λ (−1)^⟨χ,λ⟩ q^(|λ+χ/2|²/2) = Index·ηⁿ through q^(n/24 + 3): True; Index = Σ f(w) = 0; the raw sum vanishes identically to this order (no maximal codewords)
+1 Golay (n = 12): Σ_λ (−1)^⟨χ,λ⟩ q^(|λ+χ/2|²/2) = Index·ηⁿ through q^(n/24 + 3): True; Index = Σ f(w) = 24; leading term of the raw sum: q^1/2 = q^(n/24) with coefficient 24
+1 q8chain_len24 (n = 24): Σ_λ (−1)^⟨χ,λ⟩ q^(|λ+χ/2|²/2) = Index·ηⁿ through q^(n/24 + 3): True; Index = Σ f(w) = 24; leading term of the raw sum: q^1 = q^(n/24) with coefficient 24
+2 per-coordinate min of (2a+3)² over a ≡ r mod 3: {0: (9, [-3, 0]), 1: (1, [-2]), 2: (1, [-1])}; so Σ(2a_i+3)² ≥ n + 8·#{w_i = 0}, equality only for the unique lift with a_i ∈ {−1, −2} on nonzero coordinates: True
+2 Golay: 24 maximal codewords = Ramond ground states; lift a ∈ {−1,−2}ⁿ with 2a+3 = −ι(w), parity (−1)^Σa = f(w) = f(−w) for all: True; #even − #odd = 24 − 0 = 24 = Index 24
+2 q8chain_len24: 88 maximal codewords = Ramond ground states; lift a ∈ {−1,−2}ⁿ with 2a+3 = −ι(w), parity (−1)^Σa = f(w) = f(−w) for all: True; #even − #odd = 56 − 32 = 24 = Index 24
+2 q8chain_len24: J, K ∈ Aut and ν(gw) = g·ν(w) for all maximal w (the bijection is equivariant): True; maximal words fixed by J: 0 (J² = −1 fixes none)
+2 z12seed_len36_3, h = g⁴ (order 3): g ∈ Aut True; every h-cycle has sign product +1 True; h-fixed sign vector s found True; χ' = √3·s characteristic True; h-fixed maximal words 16, χ'-parity/χ-parity = [1] (one global sign); T_h = 0
+3 400 random signed permutations (n ≤ 9, 127 fixed-point-free): ¼Σθ(1−θ) = (1/24)Σd_k(k−1/k), Σk·d_k = n, fixed-point-free ⟺ Σd_k = 0, and |det(1−g)| = Πk^(d_k) (else det = 0): True
+3 −1 on n = 12: Frame 1^-12 2^12; fixed-point-free True; ρ_g = 3/4 (ρ_g/n = 1/16); |det(1−g)| = 4096; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 1.0e-15
+3 J (J² = −1) on n = 12: Frame 2^-6 4^6; fixed-point-free True; ρ_g = 9/16 (ρ_g/n = 3/64); |det(1−g)| = 64; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 4.9e-15
+3 JK on n = 12: Frame 2^-6 4^6; fixed-point-free True; ρ_g = 9/16 (ρ_g/n = 3/64); |det(1−g)| = 64; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 4.9e-15
+3 −h (order 6) on n = 12: Frame 3^-4 6^4; fixed-point-free True; ρ_g = 19/36 (ρ_g/n = 19/432); |det(1−g)| = 16; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 1.3e-15
+3 g (order 12, g⁶ = −1) on n = 12: Frame 6^-2 12^2; fixed-point-free True; ρ_g = 73/144 (ρ_g/n = 73/1728); |det(1−g)| = 4; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 2.6e-15
+3 g² (order 6) on n = 12: Frame 3^-4 6^4; fixed-point-free True; ρ_g = 19/36 (ρ_g/n = 19/432); |det(1−g)| = 16; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 1.3e-15
+3 g³ (order 4) on n = 12: Frame 2^-6 4^6; fixed-point-free True; ρ_g = 9/16 (ρ_g/n = 3/64); |det(1−g)| = 64; −Σd_k/(24k) = ρ_g − n/24: True; 1/η_g(−1/τ) = |det|^(1/2)·Πη(τ/k)^(−d_k): max rel. err 4.9e-15
+3 h (order 3, not fpf) on n = 12: Frame 3^4; fixed-point-free False; ρ_g = 4/9 (ρ_g/n = 1/27); |det(1−g)| = 0; −Σd_k/(24k) = ρ_g − n/24: True
+4 Λ(tetracode) ≅ ℤ⁴: 27 fixed-point-free automorphisms; (|det(1−σ)|, |Z_σ|, d², ⟨χ,(1−σ)χ⟩ mod 4, Π s_i) → count: {(2, 2, 1, 2, -1): 12, (4, 1, 4, 0, 1): 14, (16, 1, 16, 0, 1): 1}; |Z_σ| = 2 exactly when ⟨χ,(1−σ)χ⟩ ≡ 2 mod 4, and ⟨χ,(1−σ)χ⟩ = 6·#{s_i = −1}: True
+4 300 random signed permutations: ⟨χ,(1−g)χ⟩ = 6·#{i : s_i = −1}, so the Majorana number is ≡ 2 mod 4 iff Π_i s_i = −1: True
+4 ℤ^1, σ = −1: |det(1−σ)| = 2, |Z_σ| = 2, d(σ)² = 1; ⟨χ,(1−σ)χ⟩ = 2 ≡ 2 mod 4 → predicted |Z| = 2: True
+4 ℤ^2, σ = −1: |det(1−σ)| = 4, |Z_σ| = 1, d(σ)² = 4; ⟨χ,(1−σ)χ⟩ = 4 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 ℤ^3, σ = −1: |det(1−σ)| = 8, |Z_σ| = 2, d(σ)² = 4; ⟨χ,(1−σ)χ⟩ = 6 ≡ 2 mod 4 → predicted |Z| = 2: True
+4 ℤ^4, σ = −1: |det(1−σ)| = 16, |Z_σ| = 1, d(σ)² = 16; ⟨χ,(1−σ)χ⟩ = 8 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 ℤ², 90° rotation: |det(1−σ)| = 2, |Z_σ| = 2, d(σ)² = 1; ⟨χ,(1−σ)χ⟩ = 2 ≡ 2 mod 4 → predicted |Z| = 2: True
+4 Λ(Golay), σ = −1: |det(1−σ)| = 4096, |Z_σ| = 1, d(σ)² = 4096; ⟨χ,(1−σ)χ⟩ = 72 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 Λ(q8chain_len24), σ = J: |det(1−σ)| = 4096, |Z_σ| = 1, d(σ)² = 4096; ⟨χ,(1−σ)χ⟩ = 72 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 Λ(q8chain_len24), σ = JK: |det(1−σ)| = 4096, |Z_σ| = 1, d(σ)² = 4096; ⟨χ,(1−σ)χ⟩ = 72 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 Λ(z12seed_len36_3), σ = g (order 12): |det(1−σ)| = 64, |Z_σ| = 1, d(σ)² = 64; ⟨χ,(1−σ)χ⟩ = 36 ≡ 0 mod 4 → predicted |Z| = 1: True
+4 frame √3ℤ^1, σ = θ = −1: |det(1−σ)| = 2, |Z_σ| = 2, d(σ)² = 1; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^2, σ = θ = −1: |det(1−σ)| = 4, |Z_σ| = 1, d(σ)² = 4; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^3, σ = θ = −1: |det(1−σ)| = 8, |Z_σ| = 2, d(σ)² = 4; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^4, σ = θ = −1: |det(1−σ)| = 16, |Z_σ| = 1, d(σ)² = 16; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^8, σ = θ = −1: |det(1−σ)| = 256, |Z_σ| = 1, d(σ)² = 256; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^12, σ = θ = −1: |det(1−σ)| = 4096, |Z_σ| = 1, d(σ)² = 4096; expected |Z| = 1, d² = 2ⁿ for n even (|Z| = 2, d² = 2^(n−1) Majorana for n odd): True
+4 frame √3ℤ^4, σ = J-type x: |det(1−σ)| = 4, |Z_σ| = 1, d(σ)² = 4; expected |Z| = 1, d² = 2^(n/2): T_x = spinor module of Cl(n/2): True
+4 frame √3ℤ^12, σ = J-type x: |det(1−σ)| = 64, |Z_σ| = 1, d(σ)² = 64; expected |Z| = 1, d² = 2^(n/2): T_x = spinor module of Cl(n/2): True
+4 frame √3ℤ^24, σ = J-type x: |det(1−σ)| = 4096, |Z_σ| = 1, d(σ)² = 4096; expected |Z| = 1, d² = 2^(n/2): T_x = spinor module of Cl(n/2): True
+4 [1s]
+5 Golay, −1: g ∈ Aut; t_(χ/2) acts on Λ(C) as the parity (−1)^|λ|² True; (g⁻¹ − 1)a = χ/2 solvable (a ∈ ℚ⊗Λ, denominators [4]), so t_a ĝ t_a⁻¹ = ĝ·P_V: True
+5 q8chain_len24, J: g ∈ Aut; t_(χ/2) acts on Λ(C) as the parity (−1)^|λ|² True; (g⁻¹ − 1)a = χ/2 solvable (a ∈ ℚ⊗Λ, denominators [1, 2]), so t_a ĝ t_a⁻¹ = ĝ·P_V: True
+5 z12seed_len36_3, g (order 12): g ∈ Aut; t_(χ/2) acts on Λ(C) as the parity (−1)^|λ|² True; (g⁻¹ − 1)a = χ/2 solvable (a ∈ ℚ⊗Λ, denominators [1, 2]), so t_a ĝ t_a⁻¹ = ĝ·P_V: True
+5 z12seed_len36_3, g²: g ∈ Aut; t_(χ/2) acts on Λ(C) as the parity (−1)^|λ|² True; (g⁻¹ − 1)a = χ/2 solvable (a ∈ ℚ⊗Λ, denominators [4]), so t_a ĝ t_a⁻¹ = ĝ·P_V: True
+6 Golay (n = 12): det Λ_ev = 4; reps in Λ_ev^*, pairwise distinct mod Λ_ev, all of order ≤ 2 (so Λ_ev^*/Λ_ev ≅ ℤ₂²): True; q mod 1 = {'0': '0', 'v = √3e₁': '1/2', 's = χ/2': '1/2', 'c = χ/2 + √3e₁': '1/2'} (3n/8 mod 1 = 1/2): True
+6 q8chain_len24 (n = 24): det Λ_ev = 4; reps in Λ_ev^*, pairwise distinct mod Λ_ev, all of order ≤ 2 (so Λ_ev^*/Λ_ev ≅ ℤ₂²): True; q mod 1 = {'0': '0', 'v = √3e₁': '1/2', 's = χ/2': '0', 'c = χ/2 + √3e₁': '0'} (3n/8 mod 1 = 0): True
+parts pass: 1 True, 2 True, 3 True, 4 True, 5 True, 6 True; all True [2s]

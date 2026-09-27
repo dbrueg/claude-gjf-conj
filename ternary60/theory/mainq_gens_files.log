@@ -1,0 +1,10 @@
+jchain_len24.J.txt: 3 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len24.gens.txt: True
+jchain_len48.J.txt: 18 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len48.gens.txt: True
+jchain_len72.J.txt: 60 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len72.gens.txt: True
+jchain_len96.J.txt: 136 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len96.gens.txt: True
+jchain_len120.J.txt: 888 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len120.gens.txt: True
+jchain_len144.J.txt: 888 parses, 1 satisfying the relation and in Aut(C); wrote jchain_len144.gens.txt: True
+z12chain_len72.g.txt: 24 parses, 1 satisfying the relation and in Aut(C); wrote z12chain_len72.gens.txt: True
+z12chain_len108.g.txt: 120 parses, 1 satisfying the relation and in Aut(C); wrote z12chain_len108.gens.txt: True
+z12chain_len144.g.txt: 400 parses, 1 satisfying the relation and in Aut(C); wrote z12chain_len144.gens.txt: True
+all checks pass: True

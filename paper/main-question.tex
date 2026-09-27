@@ -447,7 +447,14 @@ samples). From such a code with a $Q_8$-stable two-block system of value $R=24$,
 with $G=Q_8$ gives $Q_8$-invariant codes of index $\pm24$ at every $k\equiv0\pmod4$ (checked explicitly
 up to length $96$). For $8\mid k$, Theorem~\ref{thm:q8} makes the action non-anomalous, so the orbifold
 exists \cite[Thm.~4.2]{GJF}; it is $\mathcal N=1$ because $Q_8$ fixes the supercurrent, and its index
-is $24/8=3$.
+is $24/8=3$. Indeed, by supersymmetry the index counts Ramond ground states (weight $c/24$). Every
+$g\in Q_8\setminus\{1\}$ has even order $m$, a fixed-point-free coordinate permutation unless $g=-1$, and
+$g^{m/2}=-1$; so its eigenvalues on $\mathbb R^n$ are the odd powers of $e^{2\pi i/m}$, each $2n/m$ times, and
+its twisted Ramond sector has lowest weight $\tfrac n{24}+\tfrac n{12m^2}>\tfrac c{24}$. In the untwisted sector
+the ground states are the maximal codewords, and no element of even order fixes one (it would fix $-w\ne w$).
+So only the $Q_8$-average of the untwisted ground states contributes, giving $\Index(C)/8$. The same argument,
+with \cite{GJF}'s modular step for the order-$3$ terms, gives the index of the $Q_8\times\mathbb Z/3$ orbifold
+below.
 \end{proof}
 
 For $k\equiv0\pmod{24}$ the same reasoning applies to $Q_8\times\mathbb Z/3$, with the order-$3$

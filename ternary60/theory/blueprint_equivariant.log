@@ -1,0 +1,44 @@
+1 2-dim subspaces of F_3^4: 130; self-dual: 8; [4,2,3]: 8; equal sets: True; = monomial orbit of the standard tetracode: True
+1 |Mon(T)| = 48; Mon(T) ∩ diagonal = 2 elements (±1); permutation image 24 = |S_4|; element orders {1: 1, 2: 13, 3: 8, 4: 6, 6: 8, 8: 12} (GL_2(F_3): 1:1, 2:13, 3:8, 4:6, 6:8, 8:12)
+1 normaliser of Mon(T) in 2^4:S_4 has order 48; distinct stabilisers of the 8 placements: 8; |T∩T'| over pairs: {1: 12, 3: 16} (1 = meet in 0, 3 = meet in a line); rulings (classes of 'meet in 0'): [4, 4]
+2 Lemma A: 648/648 (placement, u); Lemma B: 1944/1944 (placement, split, u); κ = weight of (a+b, a−b) and ψ ≠ 0 ⇔ exactly one of a, b nonzero: True
+3 signed cycle type : #placements preserved (constant on each class):  1+1+1+1+:[8]  1-1+1+1+:[0]  1-1-1+1+:[0]  1-1-1-1+:[0]  1-1-1-1-:[8]  2+1+1+:[0]  2+1-1+:[4]  2+1-1-:[0]  2+2+:[0]  2-1+1+:[0]  2-1-1+:[0]  2-1-1-:[0]  2-2+:[0]  2-2-:[4]  3+1+:[2]  3+1-:[0]  3-1+:[0]  3-1-:[2]  4+:[0]  4-:[2]
+3 J-type J(e0)=s e1, J(e1)=−s e0, J(e2)=s' e3, J(e3)=−s' e2: (s, s', #invariant placements, <(1,s,1,0),(0,s,2,2s')> invariant) = [(1, 1, 4, True), (1, -1, 4, True), (-1, 1, 4, True), (-1, -1, 4, True)]
+3 the fixed tetracode Tfin = <(1,1,1,0),(0,1,2,1)> of lean/GJF/Existence.lean is J_(s,s')-invariant only for (s, s') ∈ [(1, -1), (-1, 1)]; the J-chain's J acts on block (0,1,2,3) as ((1, 0, 3, 2), (-1, 1, -1, 1)), and Tfin is invariant under it: False
+3 Q8-regular: model of mainq_q8chain (|Q8| = 8): 4 invariant placements; Morita model (|Q8| = 8): 4
+3 doubled action m ⊕ m on a step-one block (p,q,p*,q*): #invariant placements:  id ((0, 1), (1, 1)): 8;  diag(±1,∓1) ((0, 1), (1, -1)): 0;  diag(±1,∓1) ((0, 1), (-1, 1)): 0;  −1 ((0, 1), (-1, -1)): 8;  swap, m²=+1 ((1, 0), (1, 1)): 0;  swap, m²=−1 ((1, 0), (1, -1)): 4;  swap, m²=−1 ((1, 0), (-1, 1)): 4;  swap, m²=+1 ((1, 0), (-1, -1)): 0
+3 split stabiliser W (order 128): Mon(T) ∩ W for the 8 placements: Counter({(16, ((1, 1), (2, 5), (4, 6), (8, 4))): 8}) (order 16, element orders of the semidihedral group SD16)
+4 random block-structured g, h on m = 12 (2 blocks, 4 singletons; n = 36): ext(gh) = ext(g)ext(h) 300/300; ĝ commutes with H₁ and H₂ 300/300; cycle length and sign product of x*, x**, x*** = those of x 300/300; (−1)^ = −1 True
+5 random (E, σ, placements, splits), m ∈ {6, 8}, b = 1 (E linear, not self-dual except every 5th): F(Q_σ(E)) = R_σ(E) 60/60; R_σ''(Q_σ(E)) = R_σ(E) for all 4 subsets 𝓑 with random splits 60/60; Q_σ(E) self-dual for self-dual E 12/12
+6 synthetic h-invariant E (m = 18, σ = one h-orbit of 3 blocks, 6 singletons; case 0: E = diag<(1,0,0,0,1,1)>): (T_h(Q_σ(E)), R_σ̄(D), Σ_{E^h} w_σ) = [(-4, -4, -16), (2, 2, 2), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (4, 4, 4)]; T_h = R_σ̄(D) 8/8; naive R-collapse differs in 1
+6 Z/12 seed: h = g⁴ has 24 sign changes; after the diagonal change (global sign Π d_i = 1) h is a permutation True, g' ∈ Aut(E') True, ord g' = 12, g'⁶ = −1 True
+6 Z/12 step 1 (36 → 72): n = 72, Q^ĥ collapsed: length 24, dim 12; D = c(E^h): length 12, dim 6; D ⊂ H̄₁H̄₂(c(Q^ĥ)) True; 1 + 2 collapsed placements inside True, each a [4,2,3] code True; dimensions add up (direct sum = whole) True  [0s]
+6   T_h(Q) = F(c(Q^ĥ)) = 0; R_σ̄(D) = 0; R_σ̄''(c(Q^ĥ)) = 0 (Lemma 5.8(2) on the collapsed chain)
+6   on the seed: Σ_{x∈E^h} w_σ(x) = 0, R_σ̄(D) = 0 (equal here by accident; see the synthetic cases)
+6 Z/12 step 2 (72 → 144): n = 144, Q^ĥ collapsed: length 48, dim 24; D = c(E^h): length 24, dim 12; D ⊂ H̄₁H̄₂(c(Q^ĥ)) True; 2 + 4 collapsed placements inside True, each a [4,2,3] code True; dimensions add up (direct sum = whole) True  [0s]
+6   step 2: c(Q₂^ĥ) = Q_σ̄''(c(Q^ĥ)) as subspaces True; |T_h(Q₂)| = |F(c(Q₂^ĥ))| = 0 (ternary60 index); collapsed code of step 1 equals D₁ of step 2: True
+6 Q8×Z/3 step 1 (72 → 144): n = 144, Q^ĥ collapsed: length 48, dim 24; D = c(E^h): length 24, dim 12; D ⊂ H̄₁H̄₂(c(Q^ĥ)) True; 2 + 4 collapsed placements inside True, each a [4,2,3] code True; dimensions add up (direct sum = whole) True  [0s]
+6   R_σ̄(D) = 0 (D length 24); |T_h(Q)| = |F(c(Q^ĥ))| = 0 (ternary60 index)
+7 J-chain (Golay, J):  [0s]
+      n=12: b=1 σ-blocks {('J(pairs fixed)', True): 1}; step-one blocks {('J(pairs swapped)', True): 2}; refined 1 → b''=2; gens ∈ Aut(Q) (n=24) True
+      n=24: b=2 σ-blocks {('J(pairs fixed)', True): 2}; step-one blocks {('J(pairs swapped)', True): 4}; refined 1 → b''=2; gens ∈ Aut(Q) (n=48) True
+      n=48: b=2 σ-blocks {('J(pairs fixed)', True): 2}; step-one blocks {('J(pairs swapped)', True): 4}; refined 1 → b''=2; gens ∈ Aut(Q) (n=72) True
+      n=72: b=2 σ-blocks {('J(pairs fixed)', True): 2}
+7 Z/12 chain A (seed 3, σ₃):  [3s]
+      n=36: b=3 σ-blocks {('J(pairs fixed)', True): 3}; step-one blocks {('J(pairs swapped)', True): 6}; refined 3 → b''=6; gens ∈ Aut(Q) (n=72) True
+      n=72: b=6 σ-blocks {('J(pairs fixed)', True): 6}; step-one blocks {('J(pairs swapped)', True): 12}; refined 3 → b''=6; gens ∈ Aut(Q) (n=144) True
+      n=144: b=6 σ-blocks {('J(pairs fixed)', True): 6}
+7 Q8 chain (q8chain_len24):  [1s]
+      n=24: b=2 σ-blocks {('Q8-regular', True): 2}; step-one blocks {('J(pairs swapped)', True): 4}; refined 2 → b''=4; gens ∈ Aut(Q) (n=48) True
+      n=48: b=4 σ-blocks {('J(pairs fixed)', True): 4}; step-one blocks {('J(pairs swapped)', True): 8}; refined 2 → b''=4; gens ∈ Aut(Q) (n=96) True
+      n=96: b=4 σ-blocks {('J(pairs fixed)', True): 4}
+7 Q8×Z/3 chain (q8z3_seed72):  [8s]
+      n=72: b=6 σ-blocks {('Q8-regular', True): 6}; step-one blocks {('J(pairs swapped)', True): 12}; refined 6 → b''=12; gens ∈ Aut(Q) (n=144) True
+      n=144: b=12 σ-blocks {('J(pairs fixed)', True): 12}
+8 certificate sizes for R_σ(seed):
+      Golay σ₁ (J-chain, Lean): dim 6, 8 singletons, rank on singletons 6, candidates 2^6·3^0 ≈ 6.40e+01 (plain 3^6 ≈ 7.29e+02)
+      Golay σ₂ (Lean): dim 6, 4 singletons, rank on singletons 4, candidates 2^4·3^2 ≈ 1.44e+02 (plain 3^6 ≈ 7.29e+02)
+      Z/12 seed σ₃: dim 18, 24 singletons, rank on singletons 18, candidates 2^18·3^0 ≈ 2.62e+05 (plain 3^18 ≈ 3.87e+08)
+      Z/12 seed σ₆: dim 18, 12 singletons, rank on singletons 12, candidates 2^12·3^6 ≈ 2.99e+06 (plain 3^18 ≈ 3.87e+08)
+      Q8 seed: dim 12, 16 singletons, rank on singletons 12, candidates 2^12·3^0 ≈ 4.10e+03 (plain 3^12 ≈ 5.31e+05)
+      Q8×Z/3 seed: dim 36, 48 singletons, rank on singletons 36, candidates 2^36·3^0 ≈ 6.87e+10 (plain 3^36 ≈ 1.50e+17)

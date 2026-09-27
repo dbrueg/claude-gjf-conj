@@ -12,7 +12,7 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 |---|---|---|
 | 24 \| Index for all codes (divisibility half) | **proved** and **formally verified in Lean 4** (`lean/GJF/Divisibility.lean`; positive length). Several proofs; the shortest is one Poisson summation (notes §2 Step 1′). Proof I uses Kneser neighbours and Fourier analysis on F₃ⁿ. Proof II uses a signed 2-design and M₂(SL₂ℤ) = 0; its lattice form covers odd unimodular lattices of rank 12k with shadow minimum ≥ k. | notes §1, §2 |
 | index-24 code at every length 12k (existence half) | **proved for all k** and **formally verified in Lean 4** (`lean/GJF/Existence.lean`), by an explicit construction: partial Hadamard quadrupling from the Golay code adds 24 to the length and keeps a block-weighted index R_σ = ±24 (Lemma 5.8, Thm 5.9). Verified on explicit codes at n = 24–84. Web literature check found no prior solution; awaiting a full citation search and an independent reading. | notes §5.1(f‴) |
-| GJF **Main Question** (a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24)) | **answered for every k with 24 ∤ k**. For 8 ∤ k via GJF Thm 5.6, by building the needed code automorphism into the construction (J-chain from Golay; ℤ/12-chain from one searched length-36 seed). For 8 \| k the cyclic route is impossible (g⁴ = −1 forces 48 \| Index), but a quaternion group Q₈ works: its anomaly is 3k times a class of order 8, so it vanishes for 8 \| k (k ≡ 8, 16 mod 24, index 3). Open: k ≡ 0 mod 24. | `notes/main-question.md` |
+| GJF **Main Question** (a holomorphic N=1 VOA with c = 12k and index 24/gcd(k,24)) | **answered for every k**, given GJF's orbifold theorem (its fermionic part is only sketched in GJF: Hypothesis ORB) and the cited VOA inputs. For 8 ∤ k via GJF Thm 5.6, by building the needed code automorphism into the construction (J-chain from Golay; ℤ/12-chains from a searched length-36 seed). For 8 \| k the cyclic route is impossible (g⁴ = −1 forces 48 \| Index), but a quaternion group Q₈ works: its anomaly is 3k times a class of order 8, so it vanishes for 8 \| k (index 3). For k ≡ 0 mod 24, Q₈ × ℤ/3 on a chain from a length-72 seed (index 1). The orbifold index for these non-cyclic groups is proved in `notes/orbifold-index.md`; a Lean blueprint with a size estimate is in `notes/blueprint/`. | `notes/main-question.md` |
 | by-products | Lemma 5.2 (neighbours of direct sums have 72 \| Index). Lemma 5.3 (gluing divisibility). Thm 5.4 (Hadamard doubling preserves Index mod 48). Prop 5.5 (#even ≡ #odd ≡ 0 mod 8 maximal codewords). Lemma 5.6 (refinement invariance). Thm 5.7 (lengths 12·2^j by doubling). | notes §5.1 |
 
 **How the existence proof works.** For a code E and a set σ of b disjoint 4-blocks, R_σ(E) weights each codeword by φ on the coordinates outside the blocks and by λ = (0, −2, 0, 0, 1)(|c ∩ β|) on each block. Hadamard-doubling the blocks twice against tetracodes gives a self-dual code of length m + 12b and index R_σ(E), and it carries a new 2-block system with the same R. Starting from Golay with b = 1 or b = 2 gives every length 12k.
@@ -22,6 +22,8 @@ Index(C) = #even − #odd maximal (full-weight) codewords, where parity is the n
 ```
 notes/ternary-code-index.md   the notes (read §0, then §5.1)
 notes/main-question.md        GJF's Main Question: code automorphisms, equivariant chains, the g⁴ = −1 obstruction
+notes/orbifold-index.md       Theorem O: Index(V//G) = ±Index(C)/|G| for all groups used (cyclic, Q₈, Q₈ × ℤ/3)
+notes/blueprint/              Lean blueprint for the Main Question (README.md: dependency list, trusted base, size estimate)
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k (Theorems A–D), and the obstruction
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
@@ -35,7 +37,8 @@ ternary60/                    Rust crate (std only): index computation, neighbou
   codes/                      generator matrices (rows of digits 0/1/2): P17, P23, P29, XQR47, XQR59, index24_len60,
                               quad_index24_len{24,…,84} (Thm 5.9 chain, written by theory/existence_quadruple.py)
                               gjf_ex57_len{12,…,60}: GJF's Example 5.7 codes (from their TeX); z12seed_len36_*: seeds (mainq_seed_search.py)
-                              jchain_len<n> (+ .J.txt), z12chain_len<n> (+ .g.txt), q8chain_len<n>: the equivariant chains (row 1 permutation, row 2 signs 1/2)
+                              jchain_len<n> (+ .gens.txt), z12chain_len<n> (+ .gens.txt), q8chain_len<n>: the equivariant chains (generators space-separated;
+                              the older .J.txt/.g.txt files, row 1 permutation without separators, row 2 signs 1/2, are ambiguous and kept for old logs)
                               q8z3_len72_T0 (+ .U.txt): Q₈ × ℤ/3-invariant code with T_h = 0 and Index −3840 ≢ 0 mod 72 (refutes the 72-rule)
                               q8z3_seed72 (+ .U.txt), q8z3_chain_len{144,288} (+ .gens.txt): the Q₈ × ℤ/3 chain for k ≡ 0 mod 24 (index 24, T_h = 0)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
@@ -50,6 +53,11 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_q8_gauging.py: the coprime-gauging step of Thm 8.1 (multi-neighbour data; GJF's cyclic anomalies vs 3k·a; log beside it)
                               mainq_orbifold_index.py: the orbifold index for cyclic, Q₈ and Q₈ × ℤ/3 groups (notes/orbifold-index.md; log beside it)
                               mainq_q8_orbifold_character.py: the facts behind μ (exact eta identities; S-invariance of the would-be Q₈-orbifold character; log beside it)
+                              mainq_gens_files.py: unambiguous .gens.txt generator files for the J- and ℤ/12-chains (log beside it)
+                              blueprint_equivariant.py: checks for notes/blueprint/equivariant-quadrupling.md (placements, local identities, equivariance, collapse; log beside it)
+                              blueprint_chains.py: checks for notes/blueprint/chains-and-seeds.md (seed values sign-exact, splits, coverage, data files; log beside it)
+                              blueprint_anomaly.py: checks for notes/blueprint/anomalies.md (Majorana layer, Frame shapes, Sylow detection, cyclic kernel, Clifford traces, Prop 4.7; log beside it)
+                              blueprint_foundations.py: checks for notes/blueprint/orbifold-foundations.md (Ramond ground states, twisted modules of odd lattices, vacuum energy; log beside it)
                               mainq_q8_nonanomaly.py: non-anomaly for 8 | k directly (rSH³(Q₈) via free fermions; μ on codes and direct sums; log beside it)
                               mainq_q8_twisted.py: the Q₈-action on the (−1)-twisted sector (frame Clifford module, modular normalisation, μ = S³/Q₈ value; log beside it)
                               mainq_q8z3.py: Q₈ × ℤ/3 codes at n = 36 (the 72 | Index rule seen there)

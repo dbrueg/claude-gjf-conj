@@ -1,0 +1,85 @@
+1 8 tetracode placements in F_3^4; the Lean placement T_L = <1110, 0121> is placement 0
+1   placement 0: rows 1110, 0121
+1   placement 1: rows 1110, 0122
+1   placement 2: rows 1120, 0111
+1   placement 3: rows 1120, 0112
+1   placement 4: rows 1210, 0221
+1   placement 5: rows 1210, 0222
+1   placement 6: rows 1220, 0211
+1   placement 7: rows 1220, 0212
+1 signed double transpositions x with x² = −1: 12; each fixes exactly [4] of the 8 placements
+1 regular Q_8-actions on a 4-block (J = (01)(23), K = (02)(13) with signs): 8; each fixes exactly [4] placements
+1 Morita Q_8 (left multiplication by i, j in quaternion coordinates): invariant placements [1, 2, 4, 7]; T_L among them: False
+1 T_L under within-pair swaps x_(s0,s1) (e_(a,0) ↦ s_a e_(a,1), e_(a,1) ↦ −s_a e_(a,0)): {(1, 1): False, (1, -1): True, (-1, 1): True, (-1, -1): False}  (invariant iff s0·s1 = −1)
+1 T_L under pair swaps y_ε (e_(0,s) ↦ ε e_(1,s), e_(1,s) ↦ −ε e_(0,s)): {1: True, -1: True}
+1 placements invariant under the diagonal within-pair swap x_(1,1) (the stabiliser action on a block refined with the pair-stable split, labels (u, b)): [1, 2, 4, 7]
+1   placement 0: x(1,1) False, x(1,-1) True, y(1) True, Q8 Morita False; in transposed labels it is placement 1
+1   placement 1: x(1,1) True, x(1,-1) False, y(1) False, Q8 Morita True; in transposed labels it is placement 0
+1   placement 2: x(1,1) True, x(1,-1) False, y(1) False, Q8 Morita True; in transposed labels it is placement 5
+1   placement 3: x(1,1) False, x(1,-1) True, y(1) True, Q8 Morita False; in transposed labels it is placement 4
+1   placement 4: x(1,1) True, x(1,-1) False, y(1) False, Q8 Morita True; in transposed labels it is placement 3
+1   placement 5: x(1,1) False, x(1,-1) True, y(1) True, Q8 Morita False; in transposed labels it is placement 2
+1   placement 6: x(1,1) False, x(1,-1) True, y(1) True, Q8 Morita False; in transposed labels it is placement 7
+1   placement 7: x(1,1) True, x(1,-1) False, y(1) False, Q8 Morita True; in transposed labels it is placement 6
+1 local identities for T_L, all 81 u: Lemma A True; Lemma B for each of the 3 pair-splittings True
+1 split-preserving elements of Mon(T_L): 16; 8 with both pair maps rotations, and these are exactly (r, r⁻¹) (pairs kept) and (r, −r⁻¹) (pairs swapped); the rest have two reflections: True
+2 J-chain seed Golay (= Lean golayRow): self-dual True, J ∈ Aut True, J² = −1 True, cycle shape [2, 2, 2, 2, 2, 2]; σ = (0,1,2,3): G-stable with split pairs True, |stabiliser| [4], stabiliser fixes both pairs [True], invariant placements [4] (namely [1, 2, 4, 7]), Lean T_L invariant [False]; (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; Index = 24, R_σ = 24 (729 codewords)
+2 ℤ/12 seed z12seed_len36_3: self-dual True, g ∈ Aut True, ord g 12, g⁶ = −1 True, h = g⁴ fixed-point-free True; Index(E) = 24 (262144 candidates, 0s)
+2   σ_A (b = 3): G-stable with split pairs True, |stabiliser| [4], stabiliser fixes both pairs True, invariant placements per block [4], Lean T_L invariant [False], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; R_σ(E) = -24 (information set: 18 singletons, block profile [0, 0, 0], 262144 candidates, 0s)
+2   σ_A: D = π(E)^⊥ has length 12, rank π(E) = 6, dim D = 6 (expansions in E^h: True); collapsed system σ̄ = [[8, 9, 10, 11]]; R^h_σ(E) = 0, T_h(E) = 0 (729 fixed codewords)
+2   σ_B (b = 6): G-stable with split pairs True, |stabiliser| [4], stabiliser fixes both pairs True, invariant placements per block [4], Lean T_L invariant [False, True], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; R_σ(E) = -24 (information set: 10 singletons, block profile [4, 4, 0, 0, 0, 0], 589824 candidates, 0s)
+2   σ_B: D = π(E)^⊥ has length 12, rank π(E) = 6, dim D = 6 (expansions in E^h: True); collapsed system σ̄ = [[0, 1, 2, 3], [4, 5, 8, 9]]; R^h_σ(E) = 0, T_h(E) = 0 (729 fixed codewords)
+2 ℤ/12 seed z12seed_len36_6: self-dual True, g ∈ Aut True, ord g 12, g⁶ = −1 True, h = g⁴ fixed-point-free True; Index(E) = -24 (262144 candidates, 0s)
+2   σ_A6 (b = 3): G-stable with split pairs True, |stabiliser| [4], stabiliser fixes both pairs True, invariant placements per block [4], Lean T_L invariant [False], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; R_σ(E) = 24 (information set: 18 singletons, block profile [0, 0, 0], 262144 candidates, 0s)
+2   σ_A6: D = π(E)^⊥ has length 12, rank π(E) = 6, dim D = 6 (expansions in E^h: True); collapsed system σ̄ = [[0, 1, 4, 5]]; R^h_σ(E) = 0, T_h(E) = 0 (729 fixed codewords)
+2   σ_B6 (b = 6): G-stable with split pairs True, |stabiliser| [4], stabiliser fixes both pairs True, invariant placements per block [4], Lean T_L invariant [False], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; R_σ(E) = 24 (information set: 10 singletons, block profile [4, 4, 0, 0, 0, 0], 589824 candidates, 0s)
+2   σ_B6: D = π(E)^⊥ has length 12, rank π(E) = 6, dim D = 6 (expansions in E^h: True); collapsed system σ̄ = [[0, 1, 10, 11], [2, 3, 4, 5]]; R^h_σ(E) = 0, T_h(E) = 0 (729 fixed codewords)
+2 Q_8 seed q8chain_len24: self-dual True, J, K ∈ Aut True, relations True, |G| = 8; σ = [(9, 8, 11, 10), (13, 12, 15, 14)]: G-stable with split pairs True, |stabiliser| [8, 8], stabiliser fixes both pairs [False, False], invariant placements [4, 4] (block 0: [1, 2, 4, 7]), Lean T_L invariant [False, False], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8; R_σ(E) = 24 (all 3^12 codewords, 0s) = 24 (information set: 4096 candidates); Index(E) = 24 (4096 candidates)
+2 Q_8×ℤ/3 seed q8z3_seed72: U Lagrangian True, hU = U True, dim U^h = 6 (free ⇔ 6); E = F_3²⊗U (stored file agrees True) self-dual True; J, K, h ∈ Aut True; relations True; |G| = 24; σ = [(0, 1, 2, 3), (4, 5, 6, 7), (8, 9, 10, 11), (12, 13, 14, 15), (16, 17, 18, 19), (20, 21, 22, 23)]: G-stable with split pairs True, |stabiliser| [8], stabiliser fixes both pairs False, invariant placements per block [4] (block 0: [1, 2, 4, 7]), Lean T_L invariant [False], (★) True, step-1 placements True, split-respecting orderings with T_L invariant [4]/8
+2   fixed code: rank π(E) = 12, dim D = 12 of length 24 (expansions in E^h True); σ̄ = [[0, 1, 2, 3], [4, 5, 6, 7]]; R^h_σ(E) = 0, T_h(E) = 0 (531441 fixed codewords, 12s)
+2   on D (length 24): R_σ̄(D) = 0 (4096 candidates), Index(D) = 0 (4096 candidates); R_σ(E) at n = 72 would need ≥ 2^36 information-set candidates (48 singletons ⊇ an information set) — see Part 6
+3 [transposed, Lean labels] J: stage-0 blocks reordered to [((0, 1), (3, 2))]; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [transposed, Lean labels] Z12-A: stage-0 blocks reordered to [((24, 27), (33, 30)), ((25, 28), (34, 31))] …; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [transposed, Lean labels] Z12-B: stage-0 blocks reordered to [((0, 3), (10, 7)), ((1, 4), (11, 8))] …; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): False
+3 [transposed, Lean labels] Z12-A6: stage-0 blocks reordered to [((0, 3), (15, 12)), ((1, 4), (16, 13))] …; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [transposed, Lean labels] Z12-B6: stage-0 blocks reordered to [((0, 3), (33, 30)), ((1, 4), (34, 31))] …; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [transposed, Lean labels] Q8: stage-0 blocks reordered to [((9, 8), (10, 11)), ((13, 12), (14, 15))]; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [transposed, Lean labels] Q8xZ3: stage-0 blocks reordered to [((0, 1), (3, 2)), ((4, 5), (7, 6))] …; every local map g: β → gβ (all g ∈ G, all blocks; and all step-one blocks in r₁ labels) lies in Mon(T_L) for 3 steps (σ″-blocks ordered (x, y, y**, x**)): True
+3 [stable] J: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(2, 1, 1, ((4, True),)), (4, 2, 1, ((4, True),)), (6, 2, 1, ((4, True),)), (8, 2, 1, ((4, True),)), (10, 2, 1, ((4, True),))] …
+3 [stable] Z12-A: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(6, 3, 3, ((4, True),)), (12, 6, 3, ((4, True),)), (18, 6, 3, ((4, True),)), (24, 6, 3, ((4, True),)), (30, 6, 3, ((4, True),))] …
+3 [stable] Z12-B: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(9, 6, 3, ((4, True),)), (15, 6, 3, ((4, True),)), (21, 6, 3, ((4, True),)), (27, 6, 3, ((4, True),)), (33, 6, 3, ((4, True),))] …
+3 [stable] Z12-A6: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(6, 3, 3, ((4, True),)), (12, 6, 3, ((4, True),)), (18, 6, 3, ((4, True),)), (24, 6, 3, ((4, True),)), (30, 6, 3, ((4, True),))] …
+3 [stable] Z12-B6: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(9, 6, 3, ((4, True),)), (15, 6, 3, ((4, True),)), (21, 6, 3, ((4, True),)), (27, 6, 3, ((4, True),)), (33, 6, 3, ((4, True),))] …
+3 [stable] Q8: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(4, 2, 2, ((4, True),)), (8, 4, 2, ((4, True),)), (12, 4, 2, ((4, True),)), (16, 4, 2, ((4, True),)), (20, 4, 2, ((4, True),))] …
+3 [stable] Q8xZ3: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(12, 6, 6, ((4, True),)), (24, 12, 6, ((4, True),)), (36, 12, 6, ((4, True),)), (48, 12, 6, ((4, True),)), (60, 12, 6, ((4, True),))] …
+3 [stable] classes needed (gcd(k,24) ∈ set) but not reached for k ≤ 100: {'J': [], 'Z12': [], 'Q8': [], 'Q8xZ3': []}; with the seed-6 systems (A6, B6): []
+3 [lean] J: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(2, 1, 1, ((2, True),)), (4, 2, 2, ((2, True),)), (8, 4, 2, ((2, True),)), (12, 4, 2, ((2, True),)), (16, 4, 2, ((2, True),))] …
+3 [lean] Z12-A: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(6, 3, 3, ((2, True),)), (12, 6, 6, ((2, True),)), (24, 12, 6, ((2, True),)), (36, 12, 6, ((2, True),)), (48, 12, 6, ((2, True),))] …
+3 [lean] Z12-B: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(9, 6, 3, ((2, True),)), (15, 6, 6, ((2, True),)), (27, 12, 6, ((2, True),)), (39, 12, 6, ((2, True),)), (51, 12, 6, ((2, True),))] …
+3 [lean] Z12-A6: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(6, 3, 3, ((2, True),)), (12, 6, 6, ((2, True),)), (24, 12, 6, ((2, True),)), (36, 12, 6, ((2, True),)), (48, 12, 6, ((2, True),))] …
+3 [lean] Z12-B6: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(9, 6, 3, ((2, True),)), (15, 6, 6, ((2, True),)), (27, 12, 6, ((2, True),)), (39, 12, 6, ((2, True),)), (51, 12, 6, ((2, True),))] …
+3 [lean] Q8: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(4, 2, 2, ((2, True),)), (8, 4, 4, ((2, True),)), (16, 8, 4, ((2, True),)), (24, 8, 4, ((2, True),)), (32, 8, 4, ((2, True),))] …
+3 [lean] Q8xZ3: (k, b before the step, refined orbit size, (|stab|, fixes pairs) of the new blocks) = [(12, 6, 6, ((2, True),)), (24, 12, 12, ((2, True),)), (48, 24, 12, ((2, True),)), (72, 24, 12, ((2, True),)), (96, 24, 12, ((2, True),))]
+3 [lean] classes needed (gcd(k,24) ∈ set) but not reached for k ≤ 100: {'J': [], 'Z12': [18, 21, 30, 33, 42, 45, 54, 57, 66, 69, 78, 81, 90, 93], 'Q8': [], 'Q8xZ3': []}; with the seed-6 systems (A6, B6): [18, 21, 30, 33, 42, 45, 54, 57, 66, 69, 78, 81, 90, 93]
+4 24 random h-invariant self-dual codes of length 36 (h = twelve 3-cycles), σ = 1 or 2 h-orbits of blocks: T_h(Q_σ E) = R^h_σ(E) = R^h_σ″(Q_σ E) in 24/24 (nonzero in 12); the naive restriction of R_σ to E^h (λ per block, i.e. λ³ per orbit) differs from R^h_σ in 13/24; sample (R^h_σ(E), T_h(Q), R^h_σ″(Q), naive) = [(48, 48, 48, 144), (-24, -24, -24, -120), (36, 36, 36, 108), (0, 0, 0, 0), (0, 0, 0, 0), (-96, -96, -96, -912)]
+5 jchain_len24.J.txt: 38 digits for n = 24: 3 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 jchain_len48.J.txt: 86 digits for n = 48: 18 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 jchain_len72.J.txt: 134 digits for n = 72: 60 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 jchain_len96.J.txt: 182 digits for n = 96: 136 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 jchain_len120.J.txt: 250 digits for n = 120: 888 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 jchain_len144.J.txt: 322 digits for n = 144: 888 parses into a permutation; 1 satisfy J² = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 z12chain_len72.g.txt: 134 digits for n = 72: 24 parses into a permutation; 1 satisfy ord 12, g⁶ = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 z12chain_len108.g.txt: 214 digits for n = 108: 120 parses into a permutation; 1 satisfy ord 12, g⁶ = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+5 z12chain_len144.g.txt: 322 digits for n = 144: 400 parses into a permutation; 1 satisfy ord 12, g⁶ = −1; 1 of those are automorphisms of the code; the first (backtracking) parse is one of them: True
+6 sl2words on the Q_8×ℤ/3 seed (r = 18 Q_8-orbits): Index(E) = -1608, R_σ(E) = 24 (σ = orbit blocks 0..5); 5812449 normalised SL_2-words (good planes) enumerated; the first rows x_1 range over an affine space of dimension r − 2 = 16 (3^16 = 43046721 points, pruned); 3s wall-clock
+7 ℤ/12 systems: 45 three-block, 15 offset-matched; 405 six-block, 45 offset-matched
+7 seed 1: Index 24; matched b = 3 with R^h = 0, |R| = 24: 0 []; matched b = 6: 0 []
+7 seed 2: Index 24; matched b = 3 with R^h = 0, |R| = 24: 0 []; matched b = 6: 1 [(24, [(0, 3, 12, 15), (4, 1, 16, 13), (2, 5, 14, 17), (6, 9, 18, 21), (10, 7, 22, 19), (8, 11, 20, 23)])]
+7 seed 3: Index 24; matched b = 3 with R^h = 0, |R| = 24: 1 [(-24, [(24, 27, 30, 33), (28, 25, 34, 31), (26, 29, 32, 35)])]; matched b = 6: 0 []
+7 seed 4: Index 24; matched b = 3 with R^h = 0, |R| = 24: 2 [(-24, [(0, 3, 12, 15), (4, 1, 16, 13), (2, 5, 14, 17)])]; matched b = 6: 0 []
+7 seed 5: Index -24; matched b = 3 with R^h = 0, |R| = 24: 0 []; matched b = 6: 1 [(-24, [(0, 3, 6, 9), (4, 1, 10, 7), (2, 5, 8, 11), (24, 27, 30, 33), (28, 25, 34, 31), (26, 29, 32, 35)])]
+7 seed 6: Index -24; matched b = 3 with R^h = 0, |R| = 24: 1 [(24, [(0, 3, 12, 15), (4, 1, 16, 13), (2, 5, 14, 17)])]; matched b = 6: 1 [(24, [(0, 3, 30, 33), (4, 1, 34, 31), (2, 5, 32, 35), (6, 9, 12, 15), (10, 7, 16, 13), (8, 11, 14, 17)])]
+7 seed 7: Index -24; matched b = 3 with R^h = 0, |R| = 24: 0 []; matched b = 6: 0 []
+7 seed 8: Index -24; matched b = 3 with R^h = 0, |R| = 24: 0 []; matched b = 6: 0 []
+7 seeds with both a matched 3-block and a matched 6-block system: [6]
+parts pass: 1 True, 2 True, 3 True, 4 True, 5 True, 6 True, 7 True; all True [174s]

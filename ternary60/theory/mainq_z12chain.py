@@ -15,7 +15,7 @@ Codes are saved to ../codes/z12chain_len<n>.txt with g in z12chain_len<n>.g.txt.
 import os, sys
 from existence_common import dot, rust_index, rref, span, HERE
 from existence_quadruple import R
-from mainq_common import (mono_pow, mono_neg, mono_order, cycle_type, is_aut, write_code, read_code,
+from mainq_common import (mono_pow, mono_neg, mono_order, cycle_type, is_aut, write_code, write_gens, read_code,
                           closure, fixed_code, rust_R, twined_count_rust)
 from mainq_equivariant import quad_eq, choose_splits, block_image
 from math import gcd
@@ -101,6 +101,7 @@ def main(label, SIGMA, maxn, tmax):
         write_code(os.path.join(HERE, "..", "codes", f"z12chain_len{nn}.txt"), rows)
         write_code(os.path.join(HERE, "..", "codes", f"z12chain_len{nn}.g.txt"),
                    [list(gq[0]), [1 if s == 1 else 2 for s in gq[1]]])
+        write_gens(os.path.join(HERE, "..", "codes", f"z12chain_len{nn}.gens.txt"), {"g": gq})
         if nn >= maxn:
             break
         E, m_, blocks, gens = rows, nn, newb, gens2

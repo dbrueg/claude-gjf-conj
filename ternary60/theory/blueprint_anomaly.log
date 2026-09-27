@@ -1,0 +1,70 @@
+
+== Part 0: calibration of (MP) on Fer(2) = V_ℤ (q² rule)
+ok   m = 2: eigenvalue of S T^2 S⁻¹ on Z^(1,g)/Z^(1,1) = exp(2πi q²/4) for q = 1..1 (max error 1.4e-16); so rotation by 2π/m generates a class of order 4
+ok   m = 3: eigenvalue of S T^6 S⁻¹ on Z^(1,g)/Z^(1,1) = exp(2πi q²/3) for q = 1..2 (max error 1.8e-15); so rotation by 2π/m generates a class of order 3
+ok   m = 4: eigenvalue of S T^4 S⁻¹ on Z^(1,g)/Z^(1,1) = exp(2πi q²/8) for q = 1..3 (max error 2.5e-16); so rotation by 2π/m generates a class of order 8
+ok   m = 6: eigenvalue of S T^6 S⁻¹ on Z^(1,g)/Z^(1,1) = exp(2πi q²/12) for q = 1..5 (max error 2.2e-15); so rotation by 2π/m generates a class of order 12
+ok   m = 12: eigenvalue of S T^12 S⁻¹ on Z^(1,g)/Z^(1,1) = exp(2πi q²/24) for q = 1..11 (max error 6.4e-15); so rotation by 2π/m generates a class of order 24
+
+== Part 1: Majorana layer ⟨χ,(1−g)χ⟩ = 6 N₋(g); Ramond parity; N₋ even
+ok   Golay (⟨−1⟩): n = 12, |G| = 2, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   jchain_len48 (⟨J⟩): n = 48, |G| = 4, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   z12seed_len36_3 (⟨g⟩, ord 12): n = 36, |G| = 12, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   z12chain_len72 (⟨g⟩, ord 12): n = 72, |G| = 12, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   z12chain_len108 (⟨g⟩, ord 12): n = 108, |G| = 12, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   tetracode sum D48 (Q₈): n = 48, |G| = 8, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   tetracode sum D96 (Q₈): n = 96, |G| = 8, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   q8z3_seed72 (Q₈×ℤ₃): n = 72, |G| = 24, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   q8z3_chain_len144 (Q₈×ℤ₃): n = 144, |G| = 24, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+ok   q8z3_chain_len288 (Q₈×ℤ₃): n = 288, |G| = 24, self-dual and generators in Aut True; ⟨χ,(1−g)χ⟩ = 6N₋ True; Ramond parity change = N₋ = ½⟨χ,(1−g)χ⟩ mod 2 and g preserves Λ + χ/2 True; N₋(g) even for all g (Majorana layer 0) True
+
+== Part 2: cyclic anomalies α_g = 2k in ℤ/m' (Frame shape for even order, standard lift for order 3)
+ok   Golay (⟨−1⟩) (k = 1): orders {1: 1, 2: 1}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: False
+ok   jchain_len48 (⟨J⟩) (k = 4): orders {1: 1, 2: 1, 4: 2}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: True
+ok   z12seed_len36_3 (⟨g⟩, ord 12) (k = 3): orders {1: 1, 2: 1, 3: 2, 4: 2, 6: 2, 12: 4}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: False
+ok   z12chain_len72 (⟨g⟩, ord 12) (k = 6): orders {1: 1, 2: 1, 3: 2, 4: 2, 6: 2, 12: 4}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: False
+ok   z12chain_len108 (⟨g⟩, ord 12) (k = 9): orders {1: 1, 2: 1, 3: 2, 4: 2, 6: 2, 12: 4}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: False
+ok   tetracode sum D48 (Q₈) (k = 4): orders {1: 1, 2: 1, 4: 6}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: True
+ok   tetracode sum D96 (Q₈) (k = 8): orders {1: 1, 2: 1, 4: 6}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: True
+ok   q8z3_seed72 (Q₈×ℤ₃) (k = 6): orders {1: 1, 2: 1, 3: 2, 4: 6, 6: 2, 12: 12}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: False
+ok   q8z3_chain_len144 (Q₈×ℤ₃) (k = 12): orders {1: 1, 2: 1, 3: 2, 4: 6, 6: 2, 12: 12}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: True
+ok   q8z3_chain_len288 (Q₈×ℤ₃) (k = 24): orders {1: 1, 2: 1, 3: 2, 4: 6, 6: 2, 12: 12}; every even-order element fixed-point-free with α = 2k mod 2m, every order-3 element of shape 3^(n/3) with ρ = n/27 and α = 2k mod 3: True; CRT ℤ/24 = ℤ/8 × ℤ/3 consistent True; all cyclic subgroups non-anomalous: True
+ok   closed forms, k = 1..48: α = 2k in ℤ/m' for the five element types, vanishing iff m | k (GJF's clause); free fermions: 3k·α(Fer(Reg)|⟨x⟩) = 3k·6 ≡ 2k (ℤ/8), 3k·α(Fer(Reg)|⟨−1⟩) = 3k·2 ≡ 2k (ℤ/4)
+
+== Part 3: the order-3 standard lift; eta-quotient multipliers
+     Golay: fixed-point-free order-3 automorphism found after 16194 random tries; T_h = 0
+ok   Golay: n = 12 (k = 1), h ∈ Aut of order 3 and shape 3^(n/3) True; 3|π_h λ|² ∈ ℤ on Λ(C) True; dim D = 2 (length 4); F_h(τ/(1−6τ))/F_h(τ) = -0.5000000000-0.8660254038i vs exp(2πi·8k/3) (error 2.7e-15); anomaly 2k mod 3 = 2
+ok   GJF Ex 5.7 k = 3 (shift by 12): n = 36 (k = 3), h ∈ Aut of order 3 and shape 3^(n/3) True; 3|π_h λ|² ∈ ℤ on Λ(C) True; dim D = 6 (length 12); F_h(τ/(1−6τ))/F_h(τ) = +1.0000000000+0.0000000000i vs exp(2πi·8k/3) (error 3.5e-15); anomaly 2k mod 3 = 0
+ok   z12seed_len36_3 (h = g⁴): n = 36 (k = 3), h ∈ Aut of order 3 and shape 3^(n/3) True; 3|π_h λ|² ∈ ℤ on Λ(C) True; dim D = 6 (length 12); F_h(τ/(1−6τ))/F_h(τ) = +1.0000000000+0.0000000000i vs exp(2πi·8k/3) (error 3.5e-15); anomaly 2k mod 3 = 0
+ok   z12chain_len72 (h = g⁴): n = 72 (k = 6), h ∈ Aut of order 3 and shape 3^(n/3) True; 3|π_h λ|² ∈ ℤ on Λ(C) True; dim D = 12 (length 24); F_h(τ/(1−6τ))/F_h(τ) = +1.0000000000+0.0000000000i vs exp(2πi·8k/3) (error 8.1e-15); anomaly 2k mod 3 = 0
+ok   q8z3_seed72 (h): n = 72 (k = 6), h ∈ Aut of order 3 and shape 3^(n/3) True; 3|π_h λ|² ∈ ℤ on Λ(C) True; dim D = 12 (length 24); F_h(τ/(1−6τ))/F_h(τ) = +1.0000000000+0.0000000000i vs exp(2πi·8k/3) (error 7.4e-15); anomaly 2k mod 3 = 0
+ok   n = 12, g = −1 (1^-12 2^12): ρ_g = (1/24)Σ d_k(k − 1/k) = 3/4; (1/η_g)(τ/(1−2τ))/(1/η_g)(τ) = exp(2πi·2ρ_g) (error 7.8e-16); α = 2 = 2k in ℤ/4
+ok   n = 12, g = J (2^-6 4^6): ρ_g = (1/24)Σ d_k(k − 1/k) = 9/16; (1/η_g)(τ/(1−4τ))/(1/η_g)(τ) = exp(2πi·4ρ_g) (error 4.0e-18); α = 2 = 2k in ℤ/8
+ok   n = 12, g = order 6 (3^-4 6^4): ρ_g = (1/24)Σ d_k(k − 1/k) = 19/36; (1/η_g)(τ/(1−6τ))/(1/η_g)(τ) = exp(2πi·6ρ_g) (error 1.4e-15); α = 2 = 2k in ℤ/12
+ok   n = 12, g = order 12 (6^-2 12^2): ρ_g = (1/24)Σ d_k(k − 1/k) = 73/144; (1/η_g)(τ/(1−12τ))/(1/η_g)(τ) = exp(2πi·12ρ_g) (error 5.4e-15); α = 2 = 2k in ℤ/24
+
+== Part 4: group cohomology in degrees ≤ 2 (normalised bar complex)
+ok   Q₈ over F₂: dim H¹ = 2, dim H² = 2; x, y homomorphisms True; x², y², xy cocycles True, each nonzero [1, 1, 1], pairwise independent [2, 2, 2], x² + y² + xy = 0 in H² True: so x², y², xy = (x+y)² are the three nonzero classes
+ok   Q₈ over F₂: restriction H²(Q₈) → H²(⟨u⟩) is zero for u = i, j, k (dims of H¹, H² of ℤ/4: [(1, 1), (1, 1), (1, 1)])
+ok   Q₈ over F₃: dim H¹ = 0, dim H² = 0
+ok   Q₈×ℤ₃ over F₂: dim H¹ = 2, dim H² = 2; inflations of x², y² independent (2), so restriction to Q₈ (a left inverse of inflation) is an isomorphism on H¹ and H²
+ok   Q₈×ℤ₃ over F₃: dim H¹ = 1, dim H² = 1; the inflated Bockstein class is a nonzero cocycle class (True, 1), so restriction to ℤ₃ is an isomorphism on H¹ and H²
+ok   cyclic restrictions: R(b_χ) = {'χ_i': (0, 4, 4), 'χ_j': (4, 0, 4), 'χ_k': (4, 4, 0)}; for every odd a, ⟨(2a,2a,2a), R(b_χ_i), R(b_χ_j), R(b_χ_k)⟩ ⊂ (ℤ/8)³ has order 16, so |ker R| ≤ 32/16 = 2 (Prop 4.3)
+
+== Part 5: Pin lifts on one Q₈-orbit: the spinor module of Cl(4) is ρ₂ ⊕ 2ψ
+ok   Cl(4) relations True; Pin lifts of J, K intertwine True; 4 linearisations; each has traces (1, −1, ±x) = (4, 0, 2ψ(x)), multiplicities ⟨χ,ρ₂⟩ = 1, ⟨χ,ψ⟩ = 2, ρ̃(−1) = ±Γ: True; ψ runs over [(-1, -1, 1), (-1, 1, -1), (1, -1, -1), (1, 1, 1)]
+
+== Part 6: Lemma 8.5.1(iii) and the S-defect of ch W (notes Prop 8.5.2)
+ok   n = 12: f(τ/(1−2τ)) = N·F(τ) with N = (√2 e^(2πi/48))^6 = 8e^(2πi/8) (relative error 9.9e-16)
+ok   k = 4: Z(1,1)(−1/τ) = Z(1,1)(τ) (relative error 1.6e-14); scale of the other terms 2.9e+05
+ok   k = 4, ψ(J,K,JK) = (1, 1, 1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 6.546e+00, |rhs| = 6.546e+00, |lhs − rhs| = 1.1e-09 (noise level 2.9e-07); S-invariant: False (expected False)
+ok   k = 4, ψ(J,K,JK) = (1, -1, -1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 2.182e+00, |rhs| = 2.182e+00, |lhs − rhs| = 1.1e-09 (noise level 2.9e-07); S-invariant: False (expected False)
+ok   k = 4, ψ(J,K,JK) = (-1, 1, -1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 2.182e+00, |rhs| = 2.182e+00, |lhs − rhs| = 1.1e-09 (noise level 2.9e-07); S-invariant: False (expected False)
+ok   k = 4, ψ(J,K,JK) = (-1, -1, 1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 2.182e+00, |rhs| = 2.182e+00, |lhs − rhs| = 1.1e-09 (noise level 2.9e-07); S-invariant: False (expected False)
+ok   k = 8: Z(1,1)(−1/τ) = Z(1,1)(τ) (relative error 3.2e-14); scale of the other terms 8.2e+10
+ok   k = 8, ψ(J,K,JK) = (1, 1, 1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 3.053e-04, |rhs| = 1.131e-14, |lhs − rhs| = 3.1e-04 (noise level 8.2e-02); S-invariant: True (expected True)
+ok   k = 8, ψ(J,K,JK) = (1, -1, -1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 6.159e+01, |rhs| = 6.159e+01, |lhs − rhs| = 3.1e-04 (noise level 8.2e-02); S-invariant: False (expected False)
+ok   k = 8, ψ(J,K,JK) = (-1, 1, -1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 6.159e+01, |rhs| = 6.159e+01, |lhs − rhs| = 3.1e-04 (noise level 8.2e-02); S-invariant: False (expected False)
+ok   k = 8, ψ(J,K,JK) = (-1, -1, 1): chW(−1/τ) − chW(τ) = ¼(3N − T_ψ)(F − g(τ+2)/N): |lhs| = 6.159e+01, |rhs| = 6.159e+01, |lhs − rhs| = 3.1e-04 (noise level 8.2e-02); S-invariant: False (expected False)
+
+all checks pass: True
