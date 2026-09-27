@@ -86,7 +86,7 @@ theorem tierA (hE : Q8Z3.E72Hyp) (k : ℕ) (hk : 1 ≤ k) : MQcode k := by
     · simpa using hT
   · -- m = 4
     obtain ⟨j, rfl⟩ := hdiv
-    obtain ⟨C, J, hC, hI, hJ, hJ2⟩ := ChainJ.exists_J (4 * j) (by omega) ⟨2 * j, by ring⟩
+    obtain ⟨C, J, hC, hI, hJ, hJ2⟩ := JChain.exists_J (4 * j) (by omega) ⟨2 * j, by ring⟩
     exact ⟨C, hC, hI, fun _ => ⟨J, hJ, hJ2⟩, by simp, by simp, by simp⟩
   · -- m = 6: x = g²
     obtain ⟨C, g, hC, hI, hg, h6, hF, hT⟩ := hcyc (Nat.dvd_trans (by norm_num) hdiv)
@@ -103,7 +103,7 @@ theorem tierA (hE : Q8Z3.E72Hyp) (k : ℕ) (hk : 1 ≤ k) : MQcode k := by
   · -- m = 12: x = g
     obtain ⟨C, g, hC, hI, hg, h6, hF, hT⟩ := hcyc (Nat.dvd_trans (by norm_num) hdiv)
     refine ⟨C, hC, hI, by simp, fun _ => ⟨g, hg, ?_, fun _ => h6, hF, hT⟩, by simp, by simp⟩
-    rw [show 12 = 6 * 2 by norm_num, pow_mul, h6, SP.neg_one_pow_two]
+    rw [show g ^ 12 = (g ^ 6) ^ 2 by rw [← pow_mul], h6, SP.neg_one_pow_two]
   · -- m = 24
     obtain ⟨C, J, K, h, hC, hI, hJ, hK, hh, r1, r2, r3, r4, r5, r6, hF, hT⟩ :=
       Q8Z3.exists_Q8Z3 hE k (Nat.dvd_trans (by norm_num) hdiv) (by omega)

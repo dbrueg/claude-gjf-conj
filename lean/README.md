@@ -60,13 +60,14 @@ There is no `sorry` and no `native_decide`: finite checks are done by the kernel
 ## Building
 
 ```bash
-lake build                      # about 2 min; mostly kernel `decide` on the Golay code
+lake build                      # about 30 min on 4 cores (the ℤ/12 certificates `CertZ12*`); the rest about 5 min
 ```
 
 To inspect the axioms, put this in a file that imports `GJF` and compile it with `lake env lean`:
 
 ```lean
 #print axioms GJF.conjecture_1_4
+#print axioms GJF.Ex.tierA
 ```
 
 The toolchain is `leanprover/lean4:v4.35.0-rc3`, with Mathlib `master` pinned in `lake-manifest.json`.
