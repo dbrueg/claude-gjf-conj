@@ -32,7 +32,11 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
   - Free fermions realise all 32 classes of rSH³(Q₈) (the layer bound), so the classes with zero cyclic restrictions are {0, κ}.
   - The anomaly of V_{Λ(C)} has Majorana layer 0 and zero cyclic restrictions for 4 | k, so it lies in {0, κ}; μ = −1 gives κ at k ≡ 4 mod 8.
   - For 8 | k: α_C = α_{C⊕C′} − α_{C′} = κ − κ = 0, with any Q₈-code C′ of k′ ≡ 4 mod 8.
-  - With tetracode sums (Step 2) this reproves Thm 8.1 for all k without the gauging lemma. Remaining inputs: GJF Ex 4.4, additivity, the rSH³ layer bound, free-fermion eta values (to count classes), and modular covariance/trivial phases (for μ).
+  - With tetracode sums (Step 2) this reproves Thm 8.1 for all k without the gauging lemma.
+- **The facts behind μ proved** (notes §8.5, `mainq_q8_orbifold_character.py`).
+  - Modular covariance: three exact eta identities. For τ′ = τ/(1−2τ) the multipliers of γ₁, γ₂ are both e^{−πi/6}, so N = (√2e^{2πi/48})^{n/2}.
+  - Trivial phases: for 4 | k a would-be orbifold V//Q₈ has S-invariant NS character iff ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8}. So k ≡ 4 mod 8 is anomalous, using only standard theorems (GJF Thm 4.2, S-invariance of holomorphic SVOA characters, lattice twisted modules).
+  - Remaining inputs of the direct proof: those, plus the rSH³ layer bound, additivity, and free-fermion eta values (only to count classes).
   - GJF numbering: Thm 3.1 (lift), Thm 4.2 (anomaly in extended supercohomology S̃H³), Ex 4.4 (Frame shapes).
 - **Morita form** (notes §9.1): Q₈-invariant codes = F₃² ⊗ U, U Lagrangian in F₃^{2r}; maximal words are SL₂(F₃)-blocks with f₄ = φ∘ψ (ψ = abelianisation). `ternary60 sl2words` computes Index and orbit-block R_σ sign-exactly at n = 72 in seconds (`mainq_morita.py` wraps it; `rsys`).
 - The Thm 5.9 chain codes themselves: n = 48 has the needed J; n = 36, 72 have 2-group automorphism groups (no order-3 symmetry).

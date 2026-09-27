@@ -1,0 +1,23 @@
+1 eta multipliers (exact, Dedekind sums): ε(γ₁) = e^(πi·-1/6), ε(γ₂) = e^(πi·-1/6) — they cancel; √(−i(2τ−1))/√(−i(τ−½)) = √2; η(τ−½) = e^(−2πi/48)η(2τ)³/(η(τ)η(4τ)). Hence η(2τ′)/η(4τ′) = √2·e^(2πi/48)·η(τ)η(4τ)/η(2τ)² for τ′ = τ/(1−2τ), and N = (√2·e^(2πi/48))^(n/2) = 2^(3k)·e^(2πik/8) exactly.
+1 numerical confirmation (max relative deviation over 3 points τ, n = 48, 96): eta(t-1/2) 1.8e-15; (i) e|S = E 5.4e-14; (ii) f|S = g 1.5e-14; (iii) f|ST²S = N·F 2.4e-14; sqrt ratio 4.9e-17; all ok: True
+2 k = 4 (t_x from Clifford on q8chain_len48): characters ψ with S-invariant ch W: none ⇒ Q₈ anomalous
+2 k = 8 (t_x from Clifford on q8chain_len96): characters ψ with S-invariant ch W: [(1, 1, 1)] ⇒ consistent (ψ = 1)
+2 k = 12 (t_x from universal (Lemma 8.3)): characters ψ with S-invariant ch W: none ⇒ Q₈ anomalous
+2 k = 16 (t_x from universal (Lemma 8.3)): characters ψ with S-invariant ch W: [(1, 1, 1)] ⇒ consistent (ψ = 1)
+2   k=4, ψ(J,K,JK)=(+1,+1,+1): Σψ(x)t_x/2^(3k) = +3, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 2.9e+00
+2   k=4, ψ(J,K,JK)=(+1,-1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 9.6e-01
+2   k=4, ψ(J,K,JK)=(-1,+1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 9.6e-01
+2   k=4, ψ(J,K,JK)=(-1,-1,+1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 9.6e-01
+2   k=8, ψ(J,K,JK)=(+1,+1,+1): Σψ(x)t_x/2^(3k) = +3, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 2.2e-14
+2   k=8, ψ(J,K,JK)=(+1,-1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 1.3e+00
+2   k=8, ψ(J,K,JK)=(-1,+1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 1.3e+00
+2   k=8, ψ(J,K,JK)=(-1,-1,+1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 1.3e+00
+2   k=12, ψ(J,K,JK)=(+1,+1,+1): Σψ(x)t_x/2^(3k) = +3, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 2.3e+00
+2   k=12, ψ(J,K,JK)=(+1,-1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 7.8e-01
+2   k=12, ψ(J,K,JK)=(-1,+1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 7.8e-01
+2   k=12, ψ(J,K,JK)=(-1,-1,+1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = -3.000+0.000j; reduced S-defect 7.8e-01
+2   k=16, ψ(J,K,JK)=(+1,+1,+1): Σψ(x)t_x/2^(3k) = +3, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 4.8e-14
+2   k=16, ψ(J,K,JK)=(+1,-1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 2.0e+00
+2   k=16, ψ(J,K,JK)=(-1,+1,-1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 2.0e+00
+2   k=16, ψ(J,K,JK)=(-1,-1,+1): Σψ(x)t_x/2^(3k) = -1, 3N/2^(3k) = 3.000-0.000j; reduced S-defect 2.0e+00
+all checks pass: True

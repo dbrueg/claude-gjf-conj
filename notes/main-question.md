@@ -33,6 +33,9 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
   - In rSH³(Q₈) ≅ ℤ₈ ⊕ ℤ₂², all of it realised by free fermions, the classes with zero cyclic restrictions are {0, κ}.
   - μ = −1 identifies κ at k ≡ 4 mod 8. For 8 | k, α_C = α_{C⊕C′} − α_{C′} = κ − κ = 0.
   - This gives a second proof of Thm 8.1 for all k. The Main Question no longer depends on the gauging lemma.
+- **The facts behind μ, proved** (§8.5, `mainq_q8_orbifold_character.py`).
+  - The modular covariance used is three exact eta identities (multipliers cancel; N = (√2e^{2πi/48})^{n/2}).
+  - Trivial phases: a would-be Q₈-orbifold has an S-invariant character only if ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8}, i.e. only for 8 | k and ψ = 1.
 - **Morita form** (§9): Q₈-invariant codes are F₃² ⊗ U with U Lagrangian in F₃^{2r}. Maximal words are SL₂(F₃)-blocks, and the index is a sum over "good planes" of U weighted by ψ: SL₂(F₃) → ℤ/3. This gives a sign-exact index at length 72 in seconds (`ternary60 sl2words`).
 
 --------------------------------------------------------------------------------------------
@@ -170,6 +173,7 @@ Verification [V]:
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
+- `mainq_q8_orbifold_character.py` (log): §8.5 (exact eta multipliers and identities (i)–(iii); S-invariance of the would-be orbifold character for each ψ at k = 4, 8, 12, 16).
 - `mainq_q8_nonanomaly.py` (log): §8.4 (free fermions exhaust rSH³(Q₈), cyclic kernel {0, κ}; the codes at n = 48, 96 and their direct sums at n = 144: Majorana layer, cyclic anomalies, μ).
 - `mainq_q8_twisted.py` (log): §8.3 (the frame Clifford module T and the Pin lifts of J, K on the Q₈-chain codes; T ≅ (H ⊕ 2ψ)^{⊗3k}; the modular normalisation N = 2^{3k}e^{2πik/8}; μ against the S³/Q₈ eta values for k ≤ 48).
 - `mainq_q8_gauging.py` (log): §8.2 (the multi-neighbour data of Step 1 on the Q₈-chain codes and random Q₈-invariant codes; GJF's cyclic anomaly against 3k·a on ⟨J⟩, ⟨K⟩, ⟨JK⟩, ⟨−1⟩ in ℤ_{2m} and on lens spaces; w₁(Reg) = 0).
@@ -379,7 +383,7 @@ Setting: C, Q₈ = ⟨J, K⟩ as in Thm 8.1, with GJF's lift (Lemma C of §8.2).
 - The chain S T^{−2} S gives 2^{3k}·e^{−2πik/8}, the same iff 4 | k. So for 4 | k (where ⟨J⟩ is non-anomalous, §8.2) this is the canonical ℤ₄-lift, and N = (−1)^{k/4}·2^{3k}.
 - Convention check: Z(−1, 1) = Z(1,−1)(−1/τ) equals dim T × the Fock character.
 
-**The invariant μ [P, given T: modular covariance of twisted–twining traces (Dong–Li–Mason; van Ekeren for SVOAs), and trivial phases for a non-anomalous orbifold].**
+**The invariant μ [P, given T; the two facts used are proved in §8.5].**
 - Write the canonical lifts on V_{−1} as x̂ = λ_x ρ̃(x) for x = J, K, JK (the same N for all three). Then Ĵ K̂ = μ·(JK)^ with μ = λ_J λ_K/λ_{JK} = 1/(N·I).
 - If Q₈ were non-anomalous, the lifts of V_{Λ(C)}//Q₈ on V_{−1} would form a genuine Q₈-representation. Their restrictions to each ⟨x⟩ are trivial-phase ℤ₄-structures, i.e. the canonical lifts. Hence μ = 1.
 - Here **μ = e^{−2πik/8}**: μ = −1 for k ≡ 4 mod 8, and μ = 1 for 8 | k.
@@ -399,7 +403,7 @@ Inputs:
 - [T] GJF Ex 4.4 for cyclic subgroups.
 - [T] additivity of anomalies under tensor products. V_{Λ(C⊕C′)} = V_{Λ(C)} ⊗ V_{Λ(C′)}, and GJF's lift for C ⊕ C′ is the tensor product of the lifts up to conjugation (Lemma C of §8.2).
 - [T] the anomaly of free fermions on S³/Q₈ is given by eta invariants. This is used only to count classes, in step 1.
-- [P, given T] the invariant μ of §8.3, with "non-anomalous ⇒ μ = 1".
+- [P, given T] "non-anomalous ⇒ μ = 1" for 4 | k (§8.5, Prop 8.5.2: S-invariance of the orbifold character).
 
 *Proof.*
 1. **The cyclic kernel of rSH³(Q₈) is {0, κ}** [V: Part 1]. Free fermions Fer(ρ), with ρ = n_iχ_i + n_jχ_j + n_kχ_k + n_H H and w₁(ρ) = 0, realise 32 distinct values of two sets of invariants:
@@ -427,7 +431,61 @@ Inputs:
 - Theorem 8.1 now has two independent proofs:
   - §8.2, via Step 1 (the gauging lemma) and eta invariants;
   - §8.4, via the twisted sector (μ) and the structure of rSH³(Q₈).
-- The Main Question consequences (Cor 8.2, Thm 10.1) now need only GJF's orbifold theorem for non-anomalous groups, plus the standard orbifold facts behind μ: modular covariance of twisted–twining traces, and trivial phases for a non-anomalous orbifold. They no longer need the gauging lemma.
+- The Main Question consequences (Cor 8.2, Thm 10.1) now need only GJF's orbifold theorem for non-anomalous groups and the standard theorems listed in §8.5; they no longer need the gauging lemma.
+
+### 8.5 The facts behind μ, proved (2026-09-27) [P, T; V: `mainq_q8_orbifold_character.py`, log beside it]
+
+§8.3–8.4 used two facts:
+- (MC) the S T² S chain carries Z(1,J) to the trace of a lift of J^{±1} on V(−1);
+- (TP) for a non-anomalous Q₈ the orbifold's lifts have trivial phases, so μ = 1.
+
+Both are now proved in the form needed. (MC) becomes three exact identities. (TP) is replaced by the S-invariance of the NS character of the holomorphic orbifold, a standard theorem.
+
+**Setting.** 4 | k, x ∈ {±J, ±K, ±JK}. All functions below carry q^{L₀−c/24}.
+- Untwisted twinings: e = Z(1,−1) = η(τ)ⁿ/η(2τ)ⁿ and f = Z(1,x) = η(2τ)^{n/2}/η(4τ)^{n/2}. Only λ = 0 is fixed, and the lift acts linearly on the Heisenberg modes.
+- Twisted characters: E = ch V(−1) = 2^{n/2} q^{n/48} Π_{m∈½+ℤ≥0}(1−q^m)^{−n}, and g = ch V(x) = 2^{n/4} q^{n/192} Π_{j odd}(1−q^{j/4})^{−n/2}.
+  - V(x) = S[x] ⊗ T_x, where T_x is the spinor module of Cl(n/2). By Barron–Dong–Mason, each signed 2-cycle of x on the frame contributes one Majorana zero mode.
+  - V(x) has weights in h_x + ¼ℤ, h_x = 3n/64.
+- F = q^{n/48} Π_{r odd}(1+q^r)^{−n/2}, the trace of x on the Fock space S[θ].
+
+**Lemma 8.5.1 (modular covariance, exact) [P; V].**
+- (i) e|S = E.
+- (ii) f|S = g.
+- (iii) f|S T² S = N·F, with N = (√2·e^{2πi/48})^{n/2} = 2^{3k}·e^{2πik/8}.
+
+*Proof.*
+- (i) and (ii): η(−1/z) = √(−iz) η(z).
+- (iii): with u = 2τ and τ′ = τ/(1−2τ), 2τ′ = γ₁u and 4τ′ = γ₂(τ−½), where γ₁ = (−1 0; 1 −1) and γ₂ = (−2 −1; 1 0).
+  - Both eta multipliers exp(πi((a+d)/12c − s(d,c))) equal e^{−πi/6}, so they cancel.
+  - The square roots give √(−i(2τ−1))/√(−i(τ−½)) = √2.
+  - η(τ−½) = e^{−2πi/48} η(2τ)³/(η(τ)η(4τ)), by Euler's identity for Π(1 − (−q)^m).
+  - Hence η(2τ′)/η(4τ′) = √2·e^{2πi/48}·η(τ)η(4τ)/η(2τ)². Also F = (η(τ)η(4τ)/η(2τ)²)^{n/2}. □
+- [V] The multipliers are computed exactly (Dedekind sums), and every step is checked numerically to 10⁻¹⁴.
+
+**Proposition 8.5.2 (the trivial-phase fact, as needed) [P, given T: GJF Thm 4.2; modular invariance of the NS character of a holomorphic SVOA (Dong–Zhao 2005, van Ekeren 2013); lattice twisted modules (FLM, Dong–Lepowsky, Barron–Dong–Mason)].** If Q₈ acts non-anomalously on V_{Λ(C)} with 4 | k, then ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8} for some ψ ∈ Hom(Q₈, ±1). Hence 8 | k and ψ = 1, which is exactly μ = 1.
+
+*Proof.*
+1. **The orbifold and its sectors.** A trivialisation gives the holomorphic SVOA W = V//Q₈ = ⊕_{[g]} V(g)^{C(g)} (GJF Thm 4.2), where V(g) is the unique g-twisted module. Regauge the parities of the V(g) by a cochain β with dβ = ω₂. Then all fusion maps are even, and so are the centraliser actions, which are genuine representations. The remaining choices (β ↦ β + ψ′, ψ′ ∈ H¹(Q₈;ℤ₂)) flip the parities of V(g) with ψ′(g) = 1. That never affects V(−1), and it changes the J-sector only by ε ↦ −ε.
+2. **The (−1)-sector.** C(−1) = Q₈. By Schur and Lemma 8.3 the action is ψ ⊗ ρ̃. Its traces are ψ(h)·t_h·F for h = ±x, where t_x = Tr_T ρ̃(x) = 2^{3k} (Clifford computation), and 0 for h = −1, since Tr_T ρ̃(−1) = Tr zΓ = 0.
+3. **The x-sectors.** C(x) = ⟨x⟩. e^{2πiL₀} implements x(−1)^F, so ρ_x(x) = ε·e^{2πiL₀}P.
+   - Odd powers have trace 0, since sdim T_x = 0.
+   - ε⁴ = 1 because ρ_x(x)⁴ = 1 and the weights lie in h_x + ¼ℤ.
+   - ε = ±1 because W is an SVOA: e^{2πiL₀} = parity on W_x ≠ 0.
+   - So the sector contributes (1/4)(g + g(τ+2)).
+4. **The character.** ch W = Z(1,1)/8 + e/8 + (6/8)f + E/8 + (1/4)T_ψ·F + (3/4)(g + g(τ+2)), where T_ψ = Σ_x ψ(x) t_x. Z(1,1) is S-invariant because V is holomorphic.
+5. **S-invariance.** ch W is S-invariant, since holomorphic SVOA characters are. By Lemma 8.5.1, ch W|S − ch W = ¼(3N − T_ψ)·(F − g(τ+2)/N). F and g(τ+2) have different leading exponents (n/48 and n/192), so T_ψ = 3N, i.e. Σψ(x) = 3e^{2πik/8}. The left side is 3 or −1, so e^{2πik/8} = 1. □
+- [V] For k = 4, 8, 12, 16 and all four ψ, the reduced S-defect vanishes exactly for (8 | k, ψ = 1). At k = 4 and 8 the t_x come from the Clifford computation on the chain codes.
+
+**Consequences.**
+- For k ≡ 4 mod 8 the anomaly is nonzero; this now rests on standard theorems only.
+- §8.4 therefore goes through with (TP) replaced by Prop 8.5.2: non-anomaly for 8 | k, and α_C = 3k·a for all k. Neither the gauging lemma nor a general trivial-phase theorem is used.
+- Remaining inputs, all cited:
+  - GJF Thm 4.2 and Ex 4.4;
+  - the rSH³ layer bound;
+  - additivity of anomalies;
+  - uniqueness and explicit form of twisted modules of lattice (S)VOAs;
+  - S-invariance of holomorphic SVOA characters;
+  - free-fermion eta values (only to count classes in §8.4).
 
 --------------------------------------------------------------------------------------------
 
@@ -508,4 +566,4 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).
 - gcd = 8: the Q₈-chain (Cor 8.2).
 - gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
-- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on Thm 8.1, and on [I] (not yet independently read). Thm 8.1 has two proofs: via the coprime-gauging lemma (§8.2), and via the twisted sector and rSH³(Q₈) (§8.4), which needs modular covariance of twisted–twining traces and trivial phases for non-anomalous orbifolds. It still needs a literature check and a second reader.
+- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on Thm 8.1, and on [I] (not yet independently read). Thm 8.1 has two proofs. One uses the coprime-gauging lemma (§8.2). The other (§8.4–8.5) uses only cited standard theorems: S-invariance of holomorphic SVOA characters, lattice twisted modules, the rSH³ layer bound, and additivity of anomalies.
