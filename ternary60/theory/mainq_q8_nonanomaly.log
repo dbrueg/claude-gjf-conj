@@ -1,0 +1,14 @@
+1 free fermions with w₁ = 0 realise 32 distinct invariant values (bound |rSH³(Q₈)| ≤ 32): they exhaust rSH³(Q₈) and the invariants separate it: True
+1 classes with all cyclic restrictions 0: 2: S³/Q₈ values 0/0/0/0 (e.g. (n_i,n_j,n_k,n_H) = (0, 0, 0, 0)); S³/Q₈ values 1/2/1/2/1/2/1/2 (e.g. (n_i,n_j,n_k,n_H) = (0, 0, 0, 4))
+2 q8chain_len48: n = 48 (k = 4); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = -1 ⇒ α ∈ {0, κ} and α = κ
+2 q8chain_len96: n = 96 (k = 8); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = +1 ⇒ α ∈ {0, κ} and μ = 1
+2 tetracode sum D48: n = 48 (k = 4); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = -1 ⇒ α ∈ {0, κ} and α = κ
+2 tetracode sum D96: n = 96 (k = 8); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = +1 ⇒ α ∈ {0, κ} and μ = 1
+2 q8chain_len96 ⊕ q8chain_len48: n = 144 (k = 12); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = -1 ⇒ α ∈ {0, κ} and α = κ
+2 q8chain_len96 ⊕ tetracode sum D48: n = 144 (k = 12); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = -1 ⇒ α ∈ {0, κ} and α = κ
+2 tetracode sum D96 ⊕ q8chain_len48: n = 144 (k = 12); self-dual True, Q₈-invariant True, relations True; Majorana layer 0 True; cyclic anomalies (GJF Ex 4.4) {'J': 0, 'K': 0, 'JK': 0, '−1': 0}; Pin lifts ok True; I·2^(3k) = 1.000000; μ = -1 ⇒ α ∈ {0, κ} and α = κ
+2 q8chain_len96 (μ = +1) ⊕ q8chain_len48 (μ = -1): μ(sum) = -1; α(q8chain_len96) = α(sum) − α(q8chain_len48) = κ − κ = 0
+2 q8chain_len96 (μ = +1) ⊕ tetracode sum D48 (μ = -1): μ(sum) = -1; α(q8chain_len96) = α(sum) − α(tetracode sum D48) = κ − κ = 0
+2 tetracode sum D96 (μ = +1) ⊕ q8chain_len48 (μ = -1): μ(sum) = -1; α(tetracode sum D96) = α(sum) − α(q8chain_len48) = κ − κ = 0
+3 δ(C) := α_C − 3k·a lies in {0, κ} (Part 1 and the cyclic comparison of mainq_q8_gauging.py), is additive under ⊕, and vanishes on tetracode sums (Step 2 of Thm 8.1). For 4 | k: α_C = (k/4 mod 2)·κ (Part 2), and 3k·a = (k/4)·12a = (k/4)·κ, since D48 has α = 12a (Step 2) and μ = −1. So δ = 0 for 4 | k. For any k add a tetracode sum with k_D ≡ −k mod 4: δ(C) = δ(C ⊕ D) − δ(D) = 0. Hence α_C = 3k·a for every k, and 4a = κ ≠ 0, so a has order 8.
+all checks pass: True

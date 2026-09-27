@@ -409,7 +409,18 @@ ones of the non-anomalous cyclic subgroups, and their trace on $T$ is $(-1)^{k/4
 $\hat J\hat K=\mu\,\widehat{JK}$ with $\mu=(-1)^{k/4}$. If $Q_8$ were non-anomalous, they would form a
 representation of $Q_8$. So for $k\equiv4\pmod8$ the $Q_8$-action is anomalous, independently of the reduction step.
 (For every $k$ the same computation gives $\mu=e^{-2\pi ik/8}=\exp(2\pi i\cdot3k\cdot\tfrac58)$, the value of $3k\cdot a$
-on $S^3/Q_8$.) The non-anomaly for $8\mid k$ rests on the reduction step. The values are also consistent with topological modular forms: when $4\mid k$ but
+on $S^3/Q_8$.)
+
+This also gives a second proof of Theorem~\ref{thm:q8}, without the reduction step. The anomaly of $Q_8$ lies in restricted
+supercohomology $r\mathrm{SH}^3(Q_8)$, since its Majorana layer vanishes, and this group has order at most
+$|H^3(Q_8;U(1))|\cdot|H^2(Q_8;\mathbb Z/2)|=32$. Free fermions $\mathrm{Fer}(\rho)$ with $w_1(\rho)=0$ realise $32$ classes
+that are distinguished by their restrictions to the three cyclic subgroups of order $4$ together with their eta
+invariants on $S^3/Q_8$. So only $0$ and $\kappa:=4a$ restrict to zero on all cyclic subgroups. For $4\mid k$ the anomaly
+of $V_{\Lambda(C)}$ has vanishing cyclic restrictions, so it lies in $\{0,\kappa\}$; it equals $\kappa$ when
+$k\equiv4\pmod8$, because $\mu=-1$. For $8\mid k$, pick any $Q_8$-invariant code $C'$ with $k'\equiv4\pmod8$. Then
+$V_{\Lambda(C\oplus C')}=V_{\Lambda(C)}\otimes V_{\Lambda(C')}$ and anomalies add. Both $C\oplus C'$ and $C'$ have
+anomaly $\kappa$, so the anomaly for $C$ is $\kappa-\kappa=0$. Adding sums of tetracodes, whose anomaly is $3k\cdot a$
+by the free-fermion step, extends this to $3k\cdot a$ for every $k$. The values are also consistent with topological modular forms: when $4\mid k$ but
 $8\nmid k$, a non-anomalous $Q_8$ would produce index $3$, which is not divisible by
 $24/\gcd(k,24)\in\{6,2\}$.
 \end{remark}
@@ -517,7 +528,8 @@ code; the identities $W\cap C=0$, $C\cap W^\perp=D$ and $C_0=D\oplus W$ of the r
 these codes and on random $Q_8$-invariant codes up to length $96$; the eta invariants and the cyclic anomalies of
 Remark~\ref{rem:cyc} (for $k\le48$) were evaluated in exact rational arithmetic. The Pin lifts on the frame Clifford
 module were checked on the $Q_8$-invariant codes of lengths $24$, $48$, $96$, and the modular normalisation was
-evaluated numerically, agreeing with $2^{3k}e^{2\pi ik/8}$ to $10^{-14}$. The good-plane enumeration of
+evaluated numerically, agreeing with $2^{3k}e^{2\pi ik/8}$ to $10^{-14}$. The count of $32$ free-fermion classes, and the direct-sum argument on
+the codes of lengths $48$, $96$ and $144$, were checked by computer. The good-plane enumeration of
 \S\ref{sec:morita} agrees sign-exactly with direct enumeration at lengths $12$, $24$, $36$, and in absolute
 value with an independent index algorithm at length $72$. For Theorem~D the chain was built explicitly to
 lengths $144$ and $288$: self-duality, invariance under $J,K,h$, the relations, and the cycle shape of $h$

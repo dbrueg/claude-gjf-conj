@@ -29,6 +29,10 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
   - Its ground states are the spinor module of the frame's Clifford algebra, so with its Q₈-action the sector does not depend on C.
   - Compare the Q₈-linearised lifts of J, K, JK there with their modular (ℤ₄-canonical) normalisation. This gives μ = e^{−2πik/8} = exp(2πi·3k·5/8), the S³/Q₈ value of Thm 8.1.
   - So for k ≡ 4 mod 8 Q₈ is proved anomalous (the class 4a) directly on V_{Λ(C)}, without the gauging lemma.
+- **Non-anomaly for 8 | k, proved directly** (§8.4, `mainq_q8_nonanomaly.py`).
+  - In rSH³(Q₈) ≅ ℤ₈ ⊕ ℤ₂², all of it realised by free fermions, the classes with zero cyclic restrictions are {0, κ}.
+  - μ = −1 identifies κ at k ≡ 4 mod 8. For 8 | k, α_C = α_{C⊕C′} − α_{C′} = κ − κ = 0.
+  - This gives a second proof of Thm 8.1 for all k. The Main Question no longer depends on the gauging lemma.
 - **Morita form** (§9): Q₈-invariant codes are F₃² ⊗ U with U Lagrangian in F₃^{2r}. Maximal words are SL₂(F₃)-blocks, and the index is a sum over "good planes" of U weighted by ψ: SL₂(F₃) → ℤ/3. This gives a sign-exact index at length 72 in seconds (`ternary60 sl2words`).
 
 --------------------------------------------------------------------------------------------
@@ -166,6 +170,7 @@ Verification [V]:
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
+- `mainq_q8_nonanomaly.py` (log): §8.4 (free fermions exhaust rSH³(Q₈), cyclic kernel {0, κ}; the codes at n = 48, 96 and their direct sums at n = 144: Majorana layer, cyclic anomalies, μ).
 - `mainq_q8_twisted.py` (log): §8.3 (the frame Clifford module T and the Pin lifts of J, K on the Q₈-chain codes; T ≅ (H ⊕ 2ψ)^{⊗3k}; the modular normalisation N = 2^{3k}e^{2πik/8}; μ against the S³/Q₈ eta values for k ≤ 48).
 - `mainq_q8_gauging.py` (log): §8.2 (the multi-neighbour data of Step 1 on the Q₈-chain codes and random Q₈-invariant codes; GJF's cyclic anomaly against 3k·a on ⟨J⟩, ⟨K⟩, ⟨JK⟩, ⟨−1⟩ in ℤ_{2m} and on lens spaces; w₁(Reg) = 0).
 - `mainq_automorphisms.py` (log, needs nauty): §3.
@@ -187,7 +192,7 @@ Verification [V]:
 
 Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-action on a 2d fermionic theory (for G acting by even automorphisms, symmetry G × ℤ₂^F). GJF's anomaly lies in extended supercohomology S̃H³(G) [GJF Thm 4.2], which is A(G): the spectrum of extended supercohomology is a connective cover of the Pontryagin dual of spin bordism [JF §2.4]. Restricted supercohomology rSH³(G) ⊂ S̃H³(G) is the part with vanishing Majorana layer; it contains all classes met here.
 
-**Theorem 8.1 [P, given T: GJF Thm 3.1 and the coprime-gauging lemma (§8.2, Lemma E); V].** Let C be self-dual of length n = 12k and Q₈ = ⟨J, K⟩ ⊂ Aut(C) with J² = K² = −1 (so the centre acts as −1). Then the anomaly of the Q₈-action on V_{Λ(C)} is **3k·a**, where a ∈ A(Q₈) is the anomaly of Q₈ acting on 8 Majorana fermions in the real regular representation. **a has order exactly 8.** So the action is non-anomalous iff **8 | k**.
+**Theorem 8.1 [P, given T: GJF Thm 3.1 and the coprime-gauging lemma (§8.2, Lemma E); V. Second proof without the gauging lemma: §8.4].** Let C be self-dual of length n = 12k and Q₈ = ⟨J, K⟩ ⊂ Aut(C) with J² = K² = −1 (so the centre acts as −1). Then the anomaly of the Q₈-action on V_{Λ(C)} is **3k·a**, where a ∈ A(Q₈) is the anomaly of Q₈ acting on 8 Majorana fermions in the real regular representation. **a has order exactly 8.** So the action is non-anomalous iff **8 | k**.
 
 *Proof.*
 - **Step 0 (orbits).** J² = −1 means J fixes no coordinate, and likewise K and JK. So V₄ = Q₈/±1 acts freely on coordinates: there are n/4 = 3k orbits of size 4.
@@ -218,7 +223,7 @@ Notation: A(G) := Hom(Ω₃^Spin(BG), U(1)), the group of anomalies of a G-actio
   - So a has order 8. 3k·a vanishes on these space forms exactly when 8 | k. Its restrictions vanish exactly when 2 | k (on ⟨−1⟩) and when 4 | k (on ℤ/4), which is GJF's anomaly clause "m | k" of Thm 5.6 for m = 2, 4: an independent check of the normalisation.
 - **TMF consistency.** When 8 ∤ k and 4 | k, a non-anomalous Q₈ would give index 3, but TMF demands 24/gcd(k,24) ∈ {6, 2} | index. The theorem says Q₈ is anomalous exactly there. □
 
-**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4), the coprime-gauging lemma of Thm 8.1 (§8.2), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
+**Corollary 8.2 (Main Question for k ≡ 8, 16 mod 24) [P, given T: GJF's orbifold theorem for non-anomalous finite groups (their §4), Thm 8.1 (by §8.2 or, without the gauging lemma, §8.4), and I Thm 5.9].** For every k ≡ 0 mod 8 there is a holomorphic N=1 SVOA of central charge 12k and index 3. In particular, the Main Question has a positive answer for gcd(k,24) = 8.
 - *Proof.* The Q₈-chain (`mainq_q8chain.py`) gives, for every k ≡ 0 mod 4, a self-dual C of length 12k with Index ±24 and Q₈ ⊂ Aut(C) of the kind in Theorem 8.1. For 8 | k the Q₈-action is non-anomalous, so V_{Λ(C)}//Q₈ exists; it is N=1 because Q₈ fixes the supercurrent. Every commuting pair in Q₈ generates a cyclic group, and every nontrivial one contains −1, which fixes no maximal codeword. So all twisted–twined RR terms vanish as in GJF's proof, and the index is 24/8 = 3. □
 - Checked explicitly at k = 8 (n = 96): Q₈-invariance, J² = K² = −1, JK = −KJ, self-duality; Index = 24 by [I Lemma 5.8].
 
@@ -383,7 +388,46 @@ Setting: C, Q₈ = ⟨J, K⟩ as in Thm 8.1, with GJF's lift (Lemma C of §8.2).
 **Agreement with the eta invariants [V: Part 3].** μ = exp(2πi·3k·A_Reg(S³/Q₈)) with A_Reg(S³/Q₈) = 5/8 (all four spin structures), for every k = 1..48, e.g. μ = e^{2πi·7/8} at k = 1. So this twisted-sector computation reproduces the S³/Q₈ value of Thm 8.1 Step 4, including the order-8 generator.
 - For 4 ∤ k the chain lifts are not canonical, so there the agreement is an observation, not an invariant statement.
 
-**What remains.** For 8 | k, μ = 1 is necessary for non-anomaly but not sufficient. Non-anomaly there still rests on Step 1 (§8.2) together with the eta invariants.
+**What remains.** For 8 | k, μ = 1 alone is necessary but not sufficient. §8.4 closes this: with the structure of rSH³(Q₈) and a direct sum, non-anomaly follows.
+
+### 8.4 Non-anomaly for 8 | k, proved directly: a second proof of Thm 8.1 (2026-09-27) [P, T; V: `mainq_q8_nonanomaly.py`, log beside it]
+
+**Theorem 8.4.** For every Q₈-invariant self-dual C of length 12k (J² = K² = −1), the anomaly of Q₈ on V_{Λ(C)} is 3k·a. In particular it vanishes iff 8 | k. The proof uses neither the coprime-gauging lemma (Step 1, §8.2) nor eta invariants of V_{Λ(C)}.
+
+Inputs:
+- [T] the layer sequence of GJF §4: |rSH³(Q₈)| ≤ |H³(Q₈;U(1))|·|H²(Q₈;ℤ₂)| = 8·4 = 32.
+- [T] GJF Ex 4.4 for cyclic subgroups.
+- [T] additivity of anomalies under tensor products. V_{Λ(C⊕C′)} = V_{Λ(C)} ⊗ V_{Λ(C′)}, and GJF's lift for C ⊕ C′ is the tensor product of the lifts up to conjugation (Lemma C of §8.2).
+- [T] the anomaly of free fermions on S³/Q₈ is given by eta invariants. This is used only to count classes, in step 1.
+- [P, given T] the invariant μ of §8.3, with "non-anomalous ⇒ μ = 1".
+
+*Proof.*
+1. **The cyclic kernel of rSH³(Q₈) is {0, κ}** [V: Part 1]. Free fermions Fer(ρ), with ρ = n_iχ_i + n_jχ_j + n_kχ_k + n_H H and w₁(ρ) = 0, realise 32 distinct values of two sets of invariants:
+   - the restrictions to ⟨i⟩, ⟨j⟩, ⟨k⟩, each in rSH³(ℤ₄) = ℤ₈ (the q² rule of GJF Ex 4.4);
+   - the values on S³/Q₈ for its 4 spin structures.
+   All of these invariants are homomorphisms. With the bound 32, free-fermion classes are therefore all of rSH³(Q₈), and the invariants separate it. The classes with all cyclic restrictions zero are exactly 0 and κ := A(Fer(4H)), which takes the value ½ on S³/Q₈.
+   - By hand: a class with nonzero Gu–Wen layer is b_χ + h, where b_χ = A(Fer(2χ)) restricts to 4 on the two ℤ₄'s with χ = −1, and h ∈ H³(Q₈;U(1)) = ℤ₈ restricts to the same element on all three ℤ₄'s. So its restrictions cannot all vanish. On H³ the kernel of restriction to ℤ₄ is {0, 4·gen}.
+2. **α_C ∈ {0, κ} when 4 | k.**
+   - The Majorana layer vanishes: J and K are products of n/2 transpositions of sign product −1, so ⟨χ,(1−g)χ⟩ = 3n ∈ 4ℤ. Hence α_C ∈ rSH³(Q₈).
+   - GJF Ex 4.4 gives α_J = α_K = α_{JK} = 2k ≡ 0 mod 8 and α_{−1} = 2k ≡ 0 mod 4.
+3. **k ≡ 4 mod 8 ⇒ α_C = κ.** μ(C) = −1 (§8.3), and a non-anomalous action has μ = 1, so α_C ≠ 0.
+4. **8 | k ⇒ α_C = 0.** Take any Q₈-code C′ with k′ ≡ 4 mod 8 (e.g. `q8chain_len48`). Then k + k′ ≡ 4 mod 8, so α_{C⊕C′} = κ = α_{C′} by step 3, and α_C = α_{C⊕C′} − α_{C′} = 0.
+5. **All k.** δ(C) := α_C − 3k·a lies in {0, κ} by step 1, since the cyclic restrictions agree (§8.2, Part 2 of `mainq_q8_gauging.py`).
+   - δ is additive under ⊕.
+   - δ vanishes on tetracode sums, whose V is Fer(Reg)^{⊗3k} equivariantly (Step 2).
+   - For 4 | k: steps 3–4 give α_C = (k/4 mod 2)·κ. Also 3k·a = (k/4)·12a = (k/4)·κ, since the tetracode sum at k = 4 has anomaly 12a (Step 2) and μ = −1. So δ = 0.
+   - In general, add a tetracode sum D with k_D ≡ −k mod 4: δ(C) = δ(C ⊕ D) − δ(D) = 0.
+   - Finally 4a = κ ≠ 0, so a has order 8. □
+
+[V: Part 2]
+- The Q₈-chain codes at n = 48 and 96, the tetracode sums at n = 48 and 96, and three direct sums at n = 144 were each checked for self-duality, Q₈-invariance, the relations, the Majorana layer and all cyclic anomalies (all 0).
+- μ: +1 at k = 8 and −1 at k = 4 and 12. For example, α(`q8chain_len96`) = α(`q8chain_len96` ⊕ `q8chain_len48`) − α(`q8chain_len48`) = κ − κ = 0.
+
+**Status.**
+- Theorem 8.1 now has two independent proofs:
+  - §8.2, via Step 1 (the gauging lemma) and eta invariants;
+  - §8.4, via the twisted sector (μ) and the structure of rSH³(Q₈).
+- The Main Question consequences (Cor 8.2, Thm 10.1) now need only GJF's orbifold theorem for non-anomalous groups, plus the standard orbifold facts behind μ: modular covariance of twisted–twining traces, and trivial phases for a non-anomalous orbifold. They no longer need the gauging lemma.
 
 --------------------------------------------------------------------------------------------
 
@@ -464,4 +508,4 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).
 - gcd = 8: the Q₈-chain (Cor 8.2).
 - gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
-- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on the coprime-gauging lemma used in Step 1 of Thm 8.1 (§8.2, Lemma E: standard, [T]), and on [I] (not yet independently read). It still needs a literature check and a second reader.
+- *Caveats.* This relies on GJF's orbifold and anomaly theorems, on Thm 8.1, and on [I] (not yet independently read). Thm 8.1 has two proofs: via the coprime-gauging lemma (§8.2), and via the twisted sector and rSH³(Q₈) (§8.4), which needs modular covariance of twisted–twining traces and trivial phases for non-anomalous orbifolds. It still needs a literature check and a second reader.
