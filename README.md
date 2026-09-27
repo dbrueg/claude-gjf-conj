@@ -26,7 +26,7 @@ paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 
 paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k (Theorems A–D), and the obstruction
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 notes/tmf-context.md          TMF background
-lean/                         Lean 4 + Mathlib: both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
+lean/                         Lean 4 + Mathlib (see lean/README.md): both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`
