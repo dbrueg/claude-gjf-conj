@@ -1,12 +1,13 @@
-1 selftest ok: F3 arithmetic; 200 random codes against brute force (52 with R != 0, 106 with information coordinates in blocks), Gray-walk depth 0, 1, 3, 10
+1 selftest ok: F3 arithmetic; 252 codes against brute force (200 random, 52 random self-dual of length 12 and 24), each at outer split depth 0, 1, 3, 10 and with 1 and 3 threads: 109 with R != 0, 119 with information coordinates in blocks, 79 rank-deficient, 12 with a Gray walk under the production split
 2 40 random linear codes (n = 12…20), Python brute force = rsigma_is: True (12 with R ≠ 0, 18 with information coordinates in blocks)
 3 4 random h-invariant Lagrangians U (n = 36) × 6 systems (∅, 3, 6, 3, 4, 9 orbit blocks): rsigma_is = sl2words = rsigma (full enumeration): True; values [[240, 1344, -432, 768, 624, -39168], [-192, 912, 1152, -720, -1440, 17712], [-1512, -216, 40824, 3240, 7128, 5832], [0, -1584, 7488, 1872, 0, -46512]]
 4 q8z3_seed72.txt spans F₃² ⊗ U (dimension 36): True; h-triples [1, 2, 0, 4, 5, 3] (h on blocks 0–5)
-4   R_σ(E₇₂), σ = h-triples 0, 1: rsigma_is +24 (2^36*3^0 patterns, 72s), sl2words +24: True
-4   Index(E₇₂): rsigma_is -1608 (2^36*3^0 patterns, 75s), sl2words -1608: True
-4   R for blocks [0, 1, 2, 6, 7, 8]: rsigma_is -7944 (2^36*3^0 patterns, 72s), sl2words -7944: True
-4   R for blocks [3, 4, 5, 6, 7, 8]: rsigma_is +132792 (2^36*3^0 patterns, 72s), sl2words +132792: True
-4   R for blocks [0, 3, 6, 9, 12, 15]: rsigma_is +68664 (2^36*3^0 patterns, 72s), sl2words +68664: True
-4   R for blocks [0, 1, 2]: rsigma_is -7896 (2^36*3^0 patterns, 71s), sl2words -7896: True
+4   R_σ(E₇₂), σ = h-triples 0, 1: rsigma_is +24 (2^36*3^0 patterns, 59s), sl2words +24: True
+4   Index(E₇₂): rsigma_is -1608 (2^36*3^0 patterns, 56s), sl2words -1608: True
+4   R for blocks [0, 1, 2, 6, 7, 8]: rsigma_is -7944 (2^36*3^0 patterns, 59s), sl2words -7944: True
+4   R for blocks [3, 4, 5, 6, 7, 8]: rsigma_is +132792 (2^36*3^0 patterns, 59s), sl2words +132792: True
+4   R for blocks [0, 3, 6, 9, 12, 15]: rsigma_is +68664 (2^36*3^0 patterns, 60s), sl2words +68664: True
+4   R for blocks [0, 1, 2]: rsigma_is -7896 (2^36*3^0 patterns, 56s), sl2words -7896: True
 5 random monomial copy dPE₇₂, σ transported: rsigma_is -24, expected Π_(i∉σ) d_i · 24 = -24: True
-parts pass: 1 True, 2 True, 3 True, 4 True, 5 True; all checks pass: True [679s]
+6 rsigma_mitm: 40 random codes against Python brute force: True (9 with R ≠ 0); R_σ(E₇₂) = +24, Index(E₇₂) = -1608: True [95s]
+parts pass: 1 True, 2 True, 3 True, 4 True, 5 True, 6 True; all checks pass: True [711s]
