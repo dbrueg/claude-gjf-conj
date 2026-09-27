@@ -25,6 +25,10 @@ GJF = Gaiotto, Johnson-Freyd, *Holomorphic SCFTs with small index*, arXiv:1811.0
   - Its only non-elementary input is the standard coprime-gauging lemma (Naidu, Uribe; Tachikawa; Johnson-Freyd). That lemma is a theorem for fusion categories and follows from known results for bosonic VOAs with solvable group. It reaches the super case through the bosonic shadow.
   - One gap is closed: the 3-primary part of the anomaly of Ŵ ⋊ Q₈ vanishes.
   - GJF's cyclic formula, applied directly to V_{Λ(C)}, confirms Thm 8.1 on all cyclic subgroups (`mainq_q8_gauging.py`). The order-2 part 4a is invisible there.
+- **The (−1)-twisted sector, computed directly** (§8.3, `mainq_q8_twisted.py`).
+  - Its ground states are the spinor module of the frame's Clifford algebra, so with its Q₈-action the sector does not depend on C.
+  - Compare the Q₈-linearised lifts of J, K, JK there with their modular (ℤ₄-canonical) normalisation. This gives μ = e^{−2πik/8} = exp(2πi·3k·5/8), the S³/Q₈ value of Thm 8.1.
+  - So for k ≡ 4 mod 8 Q₈ is proved anomalous (the class 4a) directly on V_{Λ(C)}, without the gauging lemma.
 - **Morita form** (§9): Q₈-invariant codes are F₃² ⊗ U with U Lagrangian in F₃^{2r}. Maximal words are SL₂(F₃)-blocks, and the index is a sum over "good planes" of U weighted by ψ: SL₂(F₃) → ℤ/3. This gives a sign-exact index at length 72 in seconds (`ternary60 sl2words`).
 
 --------------------------------------------------------------------------------------------
@@ -162,6 +166,7 @@ Verification [V]:
 - `mainq_obstruction.py` (log): Theorem 5.1 and (◇).
 - `mainq_q8chain.py` (log): the Q₈ chain n = 24, 48, 96.
 - `mainq_q8_anomaly.py` (log): Theorem 8.1 (the reduction checks on the Q₈-chain codes; eta invariants).
+- `mainq_q8_twisted.py` (log): §8.3 (the frame Clifford module T and the Pin lifts of J, K on the Q₈-chain codes; T ≅ (H ⊕ 2ψ)^{⊗3k}; the modular normalisation N = 2^{3k}e^{2πik/8}; μ against the S³/Q₈ eta values for k ≤ 48).
 - `mainq_q8_gauging.py` (log): §8.2 (the multi-neighbour data of Step 1 on the Q₈-chain codes and random Q₈-invariant codes; GJF's cyclic anomaly against 3k·a on ⟨J⟩, ⟨K⟩, ⟨JK⟩, ⟨−1⟩ in ℤ_{2m} and on lens spaces; w₁(Reg) = 0).
 - `mainq_automorphisms.py` (log, needs nauty): §3.
 - `mainq_72rule.py` (log): §9 (sl2words vs rsigma; the exact laws at n = 12, 24, 36; counterexamples to the 72-rule at n = 72).
@@ -330,9 +335,8 @@ Sources and status:
 - **Limitation.** 4a restricts to 0 on every cyclic subgroup (4·A_Reg ∈ ℤ on S³/⟨i⟩ and RP³), and every abelian subgroup of Q₈ is cyclic, yet 4a ≠ 0 (4·5/8 ≡ 1/2 on S³/Q₈).
   - So no check done one cyclic subgroup at a time can distinguish 3k·a from 3k·a + 4a. This includes GJF's Frame-shape formula, the lens-space values, and each twisted–twining function Z(g, h) normalised within ⟨g, h⟩.
   - For 8 | k versus k ≡ 4 mod 8 the argument therefore rests on Step 1.
-  - [H] 4a should be visible in the Q₈-action on the (−1)-twisted sector as a whole: whether the Q₈-linearised lift of −1 agrees with the lift normalised by ⟨−1⟩ alone.
-  - [open] A direct computation of that action (θ-twisted module of V_{Λ(C)}, extraspecial group of Λ/2Λ) at n = 48 and 96 would be a fully independent check of Thm 8.1.
-- **2-local picture [H].** Λ(C) ⊗ ℤ₍₂₎ = √3ℤ₍₂₎ⁿ = Λ(C₀) ⊗ ℤ₍₂₎ Q₈-equivariantly, since √3ℤⁿ has odd index in both. The 2-primary anomaly should depend only on this 2-local data; Step 1 proves that in the case at hand.
+  - The (−1)-twisted sector does see 4a, once the Q₈-linearised lifts of J, K, JK there are compared with their modular (ℤ₄-canonical) normalisation. This is done in §8.3: for k ≡ 4 mod 8 the class 4a is proved nonzero directly on V_{Λ(C)}. (An earlier guess here, comparing lifts of −1, was wrong: the Q₈-module structure of the (−1)-twisted sector alone carries no such information.)
+- **2-local picture [H].** Λ(C) ⊗ ℤ₍₂₎ = √3ℤ₍₂₎ⁿ = Λ(C₀) ⊗ ℤ₍₂₎ Q₈-equivariantly, since √3ℤⁿ has odd index in both. The 2-primary anomaly should depend only on this 2-local data; Step 1 proves that in the case at hand. §8.3 makes it precise for the (−1)-twisted sector (Lemma 8.3).
 
 References:
 - [Naidu] D. Naidu, Categorical Morita equivalence for group-theoretical categories, Comm. Algebra 35 (2007) 3544–3565, arXiv:math/0605530.
@@ -341,6 +345,45 @@ References:
 - [JF] T. Johnson-Freyd, The moonshine anomaly, Comm. Math. Phys. 365 (2019) 943–970, arXiv:1707.08388.
 - [Carnahan–Miyamoto] S. Carnahan, M. Miyamoto, Regularity of fixed-point vertex operator subalgebras, arXiv:1603.05645.
 - [BGK] L. Bhardwaj, D. Gaiotto, A. Kapustin, State sum constructions of spin-TFTs and string net constructions of fermionic phases of matter, JHEP 04 (2017) 096, arXiv:1605.01640.
+
+### 8.3 The Q₈-action on the (−1)-twisted sector, computed directly (2026-09-27) [P, T; V: `mainq_q8_twisted.py`, log beside it]
+
+**Result.** For k ≡ 4 mod 8 the Q₈-action on V_{Λ(C)} is anomalous. This is proved here directly on V_{Λ(C)}, without Step 1 (the gauging lemma) and without the free-fermion eta invariants. It is exactly the class 4a of Thm 8.1, invisible to every cyclic check (§8.2). The invariant μ used for this equals exp(2πi·3k·5/8) for every k, the value of 3k·a on S³/Q₈ from Thm 8.1 Step 4.
+
+Setting: C, Q₈ = ⟨J, K⟩ as in Thm 8.1, with GJF's lift (Lemma C of §8.2). The lift of −1 is the lattice involution θ. The (−1)-twisted module is V_{−1} = S[θ] ⊗ T, where S[θ] is the Fock space of the Heisenberg modes α(m), m ∈ ½ + ℤ, and T holds the ground states (weight n/16).
+
+**Lemma 8.3 (the twisted sector depends only on the frame) [P, given T: FLM/Dong–Lepowsky twisted modules, GJF Thm 3.1; V].**
+- Each V_{√3ℤ} has a Majorana-type θ-twisted module. For L = √3ℤ, L/2L = F₂ is spanned by the odd vector √3, so the zero-mode algebra is Cl(1): one odd zero mode γ_i with γ_i² = 1.
+- The frame F = V_{√3ℤ}^{⊗n} therefore has a unique irreducible θ-twisted module S[θ] ⊗ S_n, where S_n (dim 2^{n/2}) is the spinor module of the Clifford algebra Cl(n) = ⟨γ_1, …, γ_n⟩.
+- V_{−1} has the same character, so as an F-module it is this irreducible module, and T = S_n.
+  - [V] Consistently, the commutator form ⟨α,β⟩ + |α|²|β|² mod 2 on Λ(C)/2Λ(C) is nondegenerate (rank n on the chain codes).
+- g ∈ Q₈ acts on F by the standard signed permutation (GJF Thm 3.1). By Schur, its action on V_{−1} is determined up to a scalar by that: on T it is the Pin(n)-element φ_g with φ_g γ_i φ_g⁻¹ = s_i γ_{p(i)}.
+- **So V_{−1}, with its projective Q₈-action, does not depend on C.** It is the same for C and the model C₀ = ⊕ tetracodes. This is the 2-local picture made precise.
+
+**The ground states [V: Part 1].** Q₈ acts on ℝⁿ = 3k·H (one H per orbit), so T = ⊗_O S_4 with S_4 = S⁺ ⊕ S⁻ for Spin(4) = SU(2)_L × SU(2)_R.
+- Linearised, T ≅ (H ⊕ 2ψ)^{⊗3k}: on each orbit H in one parity and one 1-dim character ψ, twice, in the other.
+- ρ̃(−1) = ±(parity), as it must be for the lift of θ on its own twisted sector.
+- The traces t_x = Tr_T ρ̃(x) are t_J = t_K = t_{JK} = 2^{3k}·(a character), so I := t_{JK}/(t_J t_K) = 2^{−3k}. I does not depend on the linearisation.
+- Checked on the Q₈-chain codes at n = 24, 48, 96, with the actual J, K: Pin lifts per transposition, the conjugation action, the Q₈ relations after linearisation, and the per-orbit decomposition. At n = 24 the traces were also computed on the full Cl(24).
+
+**Modular normalisation [V: Part 2].** Z(1, J) = Tr_V J q^{L₀−c/24} = η(2τ)^{6k}/η(4τ)^{6k} (only λ = 0 contributes; the same for every C). The chain S T² S (in Γ_θ, so NS-NS throughout) carries it to Z(−1, J^{±1}). This fixes a lift of J^{±1} on V_{−1} with all phases trivial; its trace on T is
+
+  N = Z(1,J)(τ/(1−2τ)) / (q^{n/48} Π_{r odd}(1 + q^r)^{−n/2}) = 2^{3k}·e^{2πik/8}.
+
+- N is constant in τ to 10⁻¹⁴ at four points, and exact for all k, since both sides are k-th powers of the n = 12 case.
+- The chain S T^{−2} S gives 2^{3k}·e^{−2πik/8}, the same iff 4 | k. So for 4 | k (where ⟨J⟩ is non-anomalous, §8.2) this is the canonical ℤ₄-lift, and N = (−1)^{k/4}·2^{3k}.
+- Convention check: Z(−1, 1) = Z(1,−1)(−1/τ) equals dim T × the Fock character.
+
+**The invariant μ [P, given T: modular covariance of twisted–twining traces (Dong–Li–Mason; van Ekeren for SVOAs), and trivial phases for a non-anomalous orbifold].**
+- Write the canonical lifts on V_{−1} as x̂ = λ_x ρ̃(x) for x = J, K, JK (the same N for all three). Then Ĵ K̂ = μ·(JK)^ with μ = λ_J λ_K/λ_{JK} = 1/(N·I).
+- If Q₈ were non-anomalous, the lifts of V_{Λ(C)}//Q₈ on V_{−1} would form a genuine Q₈-representation. Their restrictions to each ⟨x⟩ are trivial-phase ℤ₄-structures, i.e. the canonical lifts. Hence μ = 1.
+- Here **μ = e^{−2πik/8}**: μ = −1 for k ≡ 4 mod 8, and μ = 1 for 8 | k.
+- So for k ≡ 4 mod 8 the canonical lifts of J, K, JK do not multiply correctly, and Q₈ is anomalous, although all cyclic restrictions vanish (§8.2). This is the 4a part of Thm 8.1, obtained on V_{Λ(C)} directly.
+
+**Agreement with the eta invariants [V: Part 3].** μ = exp(2πi·3k·A_Reg(S³/Q₈)) with A_Reg(S³/Q₈) = 5/8 (all four spin structures), for every k = 1..48, e.g. μ = e^{2πi·7/8} at k = 1. So this twisted-sector computation reproduces the S³/Q₈ value of Thm 8.1 Step 4, including the order-8 generator.
+- For 4 ∤ k the chain lifts are not canonical, so there the agreement is an observation, not an invariant statement.
+
+**What remains.** For 8 | k, μ = 1 is necessary for non-anomaly but not sufficient. Non-anomaly there still rests on Step 1 (§8.2) together with the eta invariants.
 
 --------------------------------------------------------------------------------------------
 

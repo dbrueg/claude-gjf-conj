@@ -395,8 +395,21 @@ $\langle i\rangle$ (two planes of angle $\pi/2$ and one of angle $\pi$) gives $6
 invariants on the lens spaces and $\mathbb{RP}^3$ agree as well, and reproduce the anomaly clause of
 Theorem~\ref{thm:gjf}: on $\mathbb Z/4$ and $\mathbb Z/2$ the anomaly vanishes exactly when $4\mid k$ and $2\mid k$.
 This check cannot see $4a$. That class restricts to zero on every cyclic subgroup, and every abelian subgroup of
-$Q_8$ is cyclic, but it is nonzero on $S^3/Q_8$. So the dichotomy between $8\mid k$ and $k\equiv4\pmod8$ rests on
-the reduction step. The values are also consistent with topological modular forms: when $4\mid k$ but
+$Q_8$ is cyclic, but it is nonzero on $S^3/Q_8$.
+
+The class $4a$ can be seen on $V_{\Lambda(C)}$ itself, through the $(-1)$-twisted sector. Each $V_{\sqrt3\mathbb Z}$ has
+a $\theta$-twisted module with one odd zero mode $\gamma_i$. Comparing characters, the $\theta$-twisted
+$V_{\Lambda(C)}$-module is the unique irreducible $\theta$-twisted module of the frame, with ground states the spinor
+module $T$ of the Clifford algebra $\langle\gamma_1,\dots,\gamma_{12k}\rangle$. By Schur's lemma, $Q_8$ therefore acts on
+it through $Q_8\subseteq SO(12k)\to\mathrm{Pin}(12k)$. In particular this action does not depend on $C$, and
+$T\cong(\mathbb H\oplus2\psi)^{\otimes3k}$, with $\operatorname{Tr}_T(JK)/(\operatorname{Tr}_TJ\cdot\operatorname{Tr}_TK)=2^{-3k}$.
+Now normalise the lifts of $J$, $K$ and $JK$ on the $(-1)$-twisted sector by modular covariance: apply
+$ST^2S$ to the twining character $\eta(2\tau)^{6k}/\eta(4\tau)^{6k}$. For $4\mid k$ these lifts are the canonical
+ones of the non-anomalous cyclic subgroups, and their trace on $T$ is $(-1)^{k/4}2^{3k}$. They satisfy
+$\hat J\hat K=\mu\,\widehat{JK}$ with $\mu=(-1)^{k/4}$. If $Q_8$ were non-anomalous, they would form a
+representation of $Q_8$. So for $k\equiv4\pmod8$ the $Q_8$-action is anomalous, independently of the reduction step.
+(For every $k$ the same computation gives $\mu=e^{-2\pi ik/8}=\exp(2\pi i\cdot3k\cdot\tfrac58)$, the value of $3k\cdot a$
+on $S^3/Q_8$.) The non-anomaly for $8\mid k$ rests on the reduction step. The values are also consistent with topological modular forms: when $4\mid k$ but
 $8\nmid k$, a non-anomalous $Q_8$ would produce index $3$, which is not divisible by
 $24/\gcd(k,24)\in\{6,2\}$.
 \end{remark}
@@ -502,7 +515,9 @@ $J^2=-1$. For Theorem~\ref{thm:q8}: on the $Q_8$-invariant codes of lengths $24$
 every coordinate orbit carries an invariant tetracode and their sum is a $Q_8$-invariant self-dual
 code; the identities $W\cap C=0$, $C\cap W^\perp=D$ and $C_0=D\oplus W$ of the reduction step hold on
 these codes and on random $Q_8$-invariant codes up to length $96$; the eta invariants and the cyclic anomalies of
-Remark~\ref{rem:cyc} (for $k\le48$) were evaluated in exact rational arithmetic. The good-plane enumeration of
+Remark~\ref{rem:cyc} (for $k\le48$) were evaluated in exact rational arithmetic. The Pin lifts on the frame Clifford
+module were checked on the $Q_8$-invariant codes of lengths $24$, $48$, $96$, and the modular normalisation was
+evaluated numerically, agreeing with $2^{3k}e^{2\pi ik/8}$ to $10^{-14}$. The good-plane enumeration of
 \S\ref{sec:morita} agrees sign-exactly with direct enumeration at lengths $12$, $24$, $36$, and in absolute
 value with an independent index algorithm at length $72$. For Theorem~D the chain was built explicitly to
 lengths $144$ and $288$: self-duality, invariance under $J,K,h$, the relations, and the cycle shape of $h$

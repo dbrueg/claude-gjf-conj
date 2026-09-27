@@ -1,0 +1,14 @@
+1 q8chain_len24 (k = 2): basis of Λ(C) found True; F₂-rank of the commutator form on Λ/2Λ = 24 (of 24), so dim T = 2^12; 6 orbits; Pin lifts φ_J, φ_K conjugate γ_i to s_i γ_p(i): True; linearised Q₈ relations: True
+1   per orbit: T_O = H ⊕ (two 1-dim characters) in opposite parities: True; on T: character on (1,−1,±J,±K,±JK) = [4096, 0, 64].., supercharacter at −1 = 4096; I = t_JK/(t_J t_K) = 1.562e-02 = 2^-6: True; on the full Cl(24): I·2^6 = 1.000000
+1 q8chain_len48 (k = 4): basis of Λ(C) found True; F₂-rank of the commutator form on Λ/2Λ = 48 (of 48), so dim T = 2^24; 12 orbits; Pin lifts φ_J, φ_K conjugate γ_i to s_i γ_p(i): True; linearised Q₈ relations: True
+1   per orbit: T_O = H ⊕ (two 1-dim characters) in opposite parities: True; on T: character on (1,−1,±J,±K,±JK) = [16777216, 0, 4096].., supercharacter at −1 = 16777216; I = t_JK/(t_J t_K) = 2.441e-04 = 2^-12: True
+1 q8chain_len96 (k = 8): basis of Λ(C) found True; F₂-rank of the commutator form on Λ/2Λ = 96 (of 96), so dim T = 2^48; 24 orbits; Pin lifts φ_J, φ_K conjugate γ_i to s_i γ_p(i): True; linearised Q₈ relations: True
+1   per orbit: T_O = H ⊕ (two 1-dim characters) in opposite parities: True; on T: character on (1,−1,±J,±K,±JK) = [281474976710656, 0, 16777216].., supercharacter at −1 = 281474976710656; I = t_JK/(t_J t_K) = 5.960e-08 = 2^-24: True
+2 N(τ) = Z(1,J)(τ/(1−2τ)) / Fock(τ) at 4 points τ, n = 12k, k = 1..8: N = 2^(3k)·e^(2πik/8) (max relative deviation 8.8e-15); chain S T^(−2) S gives 2^(3k)·e^(−2πik/8) (deviation 7.4e-15), the same as S T² S iff 4 | k (<J> non-anomalous iff 4 | k); Z(−1,1) = dim T × Fock character (deviation 5.1e-14). Z(1,J) and the Fock factor are k-th powers of their n = 12 values, so N = (8·e^(2πi/8))^k exactly for every k.
+3 q8chain_len24 (k = 2): μ = 1/(N·I) = +0.000000-1.000000i
+3 q8chain_len48 (k = 4): μ = 1/(N·I) = -1.000000-0.000000i
+3 q8chain_len96 (k = 8): μ = 1/(N·I) = +1.000000+0.000000i
+3 A_Reg(S³/Q₈) = 5/8 (all 4 spin structures); k=1: μ = e^(2πi·7/8); k=2: μ = e^(2πi·3/4); k=3: μ = e^(2πi·5/8); k=4: μ = e^(2πi·1/2) = −1; k=5: μ = e^(2πi·3/8); k=6: μ = e^(2πi·1/4); k=7: μ = e^(2πi·1/8); k=8: μ = e^(2πi·0) = 1
+3 μ = exp(2πi·3k·A_Reg(S³/Q₈)) for every k = 1..48: True
+3 For 4 | k the chain lifts are the canonical ℤ₄-lifts, and μ = (−1)^(k/4). For k ≡ 4 mod 8, μ = −1: the canonical lifts of J, K, JK on V_(−1) do not form a Q₈-representation, so Q₈ is anomalous on V_Λ(C), although every cyclic restriction vanishes. For 8 | k, μ = 1.
+all checks pass: True
