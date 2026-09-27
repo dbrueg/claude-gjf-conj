@@ -45,6 +45,9 @@ namespace SM
 
 variable {S B Rr Uu : Type*} [Fintype S] [DecidableEq S] [Fintype B] [DecidableEq B]
 
+instance [DecidableEq (SP S)] [Fintype B] [DecidableEq B] : DecidableEq (SM S B) := fun g h =>
+  decidable_of_iff (g.gS = h.gS ∧ g.π = h.π ∧ g.μ = h.μ) (by rw [SM.ext_iff])
+
 /-- The signed permutation of `Blk S B`. -/
 def toSP (g : SM S B) : SP (Blk S B) := SP.sum g.gS (SP.blk g.π (fun β => lsp (g.μ β)))
 
