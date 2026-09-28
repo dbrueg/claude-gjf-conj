@@ -1,0 +1,10 @@
+(i) e|S = E, (ii) f|S = g, (iii') g(τ+2) = N·F|S, (iii) f(τ/(1−2τ)) = N·F, and the q-products of E, g, F: n = 12, 48, 96 at 4 points; max relative error 5.9e-14
+k = 4, ψ = 1   : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 3.1e-03)
+k = 4, ψ = χ_i : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 1.0e-03)
+k = 4, ψ = χ_j : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 1.0e-03)
+k = 4, ψ = χ_k : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 1.0e-03)
+k = 8, ψ = 1   : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: True (relative defect 4.9e-14)
+k = 8, ψ = χ_i : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 3.7e-06)
+k = 8, ψ = χ_j : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 3.7e-06)
+k = 8, ψ = χ_k : ch W|S − ch W = ¼(3N − T_ψ)(F − F|S) holds; S-invariant: False (relative defect 3.7e-06)
+all checks passed

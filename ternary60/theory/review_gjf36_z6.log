@@ -1,0 +1,91 @@
+THREADS = 2, SAMPLES6 = 2000
+== Part 1: the seed E = gjf_ex57_len36 (GJF Ex 5.7, k = 3)
+1 E: 18 rows, self-dual True
+1 h = shift by 12 (plain permutation, all signs +1): h ∈ Aut(E) True, ord h = 3, cycle shape (3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3), fixed coordinates 0
+1 g = −h: g ∈ Aut(E) True, ord g = 6, g³ = −1 True, g⁴ = h True, g² = h² True
+1 Index(E) = 24 (ternary60 rsigma, full enumeration of 3^18 words) = 24 (rsigma_is, 2^18 information-set patterns): sign-exact
+1 h-fixed subcode: dim 6; T_h(E) = 0 (3^6 fixed words enumerated)
+1 collapsed fixed code D (coordinate j = orbit {j, j+12, j+24}): length 12, dim 6, self-dual True; equals GJF's printed fixed code (gjf_ex57_len36_fixed12.txt, same RREF) True; maximal words: 8 even, 8 odd, Index(D) = 0
+
+== Part 2: all h-stable 3-block systems {β, hβ, h²β}
+2 13365 distinct systems from all 495·81 blocks β; normal forms (a₀ = 0): 13365, distinct 13365, the same set True; blocks disjoint True
+2 R_σ̄(D) on the 495 orbit 4-sets: {-48: 36, 0: 414, 48: 45}
+2 R_σ(E) on all 13365 systems (47s, rsigma_is): all ≡ 24 mod 48 True; min -2184, max 2712
+2 systems with R_σ(E) = ±24, by R_σ̄(D): {-48: 38, 0: 803, 48: 44}
+2 admissible (R_σ̄(D) = 0): 11178 systems = 414 orbit sets × 27
+2 R_σ(E) on the admissible systems: 86 values, min -2136, max 2712; histogram {-2136: 1, -1992: 2, -1896: 3, -1848: 2, -1800: 1, -1752: 1, -1704: 7, -1656: 9, -1608: 5, -1560: 11, -1512: 12, -1464: 14, -1416: 23, -1368: 17, -1320: 21, -1272: 28, -1224: 37, -1176: 32, -1128: 49, -1080: 65, -1032: 73, -984: 114, -936: 80, -888: 106, -840: 124, -792: 133, -744: 145, -696: 194, -648: 161, -600: 195, -552: 271, -504: 258, -456: 277, -408: 335, -360: 292, -312: 323, -264: 387, -216: 346, -168: 398, -120: 415, -72: 363, -24: 396, 24: 407, 72: 334, 120: 373, 168: 419, 216: 319, 264: 359, 312: 378, 360: 285, 408: 289, 456: 292, 504: 210, 552: 194, 600: 212, 648: 175, 696: 159, 744: 153, 792: 107, 840: 138, 888: 89, 936: 74, 984: 84, 1032: 70, 1080: 44, 1128: 50, 1176: 41, 1224: 41, 1272: 28, 1320: 25, 1368: 19, 1416: 16, 1464: 14, 1512: 13, 1560: 12, 1608: 5, 1656: 5, 1704: 4, 1752: 1, 1800: 1, 1848: 1, 1896: 5, 1992: 2, 2040: 3, 2232: 1, 2712: 1}
+2 good (R_σ = ±24, R_σ̄(D) = 0): 803 of 11178 (7.2%): R_σ = −24: 396, R_σ = +24: 407; orbit 4-sets with a good system: 336 of 414
+2 cross-check with ternary60 rsigma (full enumeration) on 5 systems (first +24, first −24, 3 random): agree True
+2 chosen for chain A: orbit set (0, 1, 2, 5), a = (2, 0, 0): σ_A = [(0, 25, 2, 5), (12, 1, 14, 17), (24, 13, 26, 29)], R_σ(E) = +24, R_σ̄(D) = 0
+
+== Part 3: h-stable 6-block systems (two block orbits on disjoint orbit 4-sets)
+3 17325 orbit pairs × 729 point choices = 12629925 systems; R_σ̄(D) on the pairs (3s): {-96: 504, -48: 2196, 0: 11979, 48: 2178, 96: 468}; admissible: 11979 pairs = 8732691 systems (69.1%)
+3 uniform sample of 2000 admissible systems (random.Random(6)); R_σ(E) by rsigma_is (524s): all ≡ 24 mod 48 True; 310 values, min -11640, max 10632; |R| ≤ 120: {-120: 10, -72: 8, -24: 15, 24: 15, 72: 12, 120: 12}
+3 |R_σ(E)| quartiles 984, 1944, 3336
+3 good (R_σ = ±24): 30 of 2000 = 1.50% (95% Wilson interval 1.05–2.13%): −24: 15, +24: 15
+3   R_σ = +24: orbit sets (2, 3, 4, 9), (5, 6, 7, 10); a = (1, 2, 1), (0, 2, 0)
+3   R_σ = +24: orbit sets (0, 1, 3, 10), (4, 6, 7, 11); a = (0, 1, 2), (0, 2, 1)
+3   R_σ = +24: orbit sets (3, 4, 7, 9), (6, 8, 10, 11); a = (0, 1, 1), (1, 2, 0)
+3   R_σ = +24: orbit sets (0, 3, 6, 10), (1, 4, 8, 11); a = (2, 1, 0), (1, 0, 2)
+3   R_σ = +24: orbit sets (0, 3, 5, 11), (4, 7, 8, 9); a = (2, 2, 1), (2, 2, 0)
+3   R_σ = -24: orbit sets (0, 4, 7, 8), (1, 2, 5, 10); a = (1, 2, 2), (0, 0, 1)
+3   R_σ = +24: orbit sets (0, 2, 6, 7), (4, 8, 9, 10); a = (0, 0, 2), (0, 2, 2)
+3   R_σ = -24: orbit sets (1, 6, 9, 10), (3, 4, 7, 11); a = (1, 1, 1), (0, 1, 0)
+3   R_σ = -24: orbit sets (2, 5, 7, 9), (3, 4, 6, 11); a = (1, 2, 1), (0, 1, 0)
+3   R_σ = -24: orbit sets (0, 4, 6, 10), (3, 5, 8, 11); a = (2, 1, 0), (1, 2, 0)
+3   R_σ = -24: orbit sets (0, 1, 2, 5), (6, 8, 9, 10); a = (1, 1, 1), (2, 2, 0)
+3   R_σ = +24: orbit sets (1, 2, 5, 7), (3, 4, 8, 10); a = (1, 1, 1), (1, 0, 1)
+3   R_σ = -24: orbit sets (1, 6, 7, 9), (3, 4, 8, 11); a = (2, 0, 0), (2, 0, 2)
+3   R_σ = +24: orbit sets (0, 5, 8, 9), (2, 3, 6, 10); a = (0, 1, 0), (2, 0, 1)
+3   R_σ = -24: orbit sets (0, 2, 6, 7), (3, 4, 5, 11); a = (1, 0, 1), (2, 1, 2)
+3   R_σ = -24: orbit sets (1, 2, 9, 10), (5, 6, 7, 11); a = (0, 1, 1), (1, 0, 0)
+3   R_σ = +24: orbit sets (0, 1, 2, 3), (4, 6, 8, 10); a = (1, 0, 0), (0, 2, 1)
+3   R_σ = -24: orbit sets (1, 2, 5, 8), (4, 7, 9, 10); a = (2, 1, 2), (0, 2, 0)
+3   R_σ = -24: orbit sets (0, 3, 5, 8), (1, 2, 7, 11); a = (0, 1, 1), (1, 2, 1)
+3   R_σ = -24: orbit sets (0, 4, 9, 10), (2, 7, 8, 11); a = (1, 0, 0), (2, 0, 0)
+3   R_σ = -24: orbit sets (3, 8, 9, 10), (4, 5, 7, 11); a = (1, 0, 2), (2, 2, 1)
+3   R_σ = +24: orbit sets (0, 6, 8, 11), (1, 2, 4, 10); a = (2, 0, 0), (1, 1, 1)
+3   R_σ = +24: orbit sets (0, 4, 10, 11), (1, 6, 7, 9); a = (1, 0, 0), (0, 2, 0)
+3   R_σ = +24: orbit sets (1, 4, 5, 6), (2, 7, 8, 11); a = (0, 0, 0), (2, 0, 2)
+3   R_σ = +24: orbit sets (0, 1, 3, 11), (4, 6, 9, 10); a = (0, 0, 1), (0, 2, 1)
+3   R_σ = +24: orbit sets (1, 7, 8, 11), (2, 5, 9, 10); a = (0, 0, 2), (2, 2, 2)
+3   R_σ = -24: orbit sets (0, 1, 5, 10), (2, 6, 8, 9); a = (1, 2, 1), (0, 0, 1)
+3   R_σ = +24: orbit sets (2, 6, 9, 10), (3, 4, 5, 8); a = (1, 1, 2), (2, 1, 1)
+3   R_σ = -24: orbit sets (0, 3, 7, 11), (2, 5, 6, 10); a = (0, 1, 1), (2, 0, 0)
+3   R_σ = -24: orbit sets (0, 3, 5, 6), (1, 7, 9, 11); a = (0, 2, 2), (0, 1, 1)
+3 chosen for chain B (first R_σ = +24 in the sample): σ_B = [(2, 15, 28, 21), (14, 27, 4, 33), (26, 3, 16, 9), (5, 6, 31, 10), (17, 18, 7, 22), (29, 30, 19, 34)]; ternary60 rsigma (full enumeration) R_σ(E) = 24, R_σ̄(D) = 0
+
+== Part 4: the Z/6-chains (quad_eq, gens [g = −h])
+4 chain A (σ_A, b = 3): length 36 → 72 (k = 6); σ = [(0, 2, 5, 25), (12, 14, 17, 1), (24, 26, 29, 13)]; block stabilisers in <g> = {±1}: σ True, next σ″ True (b = 6): σ″ = [(0, 2, 48, 50), (36, 37, 49, 51), (12, 14, 56, 58), (40, 41, 57, 59), (24, 26, 64, 66), (44, 45, 65, 67)]
+4 chain A n = 72: self-dual True; g ∈ Aut True, ord g = 6 True, g³ = −1 True; h = g⁴ a permutation of shape 3^24 (no fixed coordinate) True, h ∈ Aut True; −1 ∈ Aut True
+4 chain A n = 72: collapsed h-fixed code: length 24, dim 12, self-dual True; T_h = 0 (Python enumeration of 3^12 words)
+4 chain A n = 72: |Index| = 24 (ternary60 index, 77s); Index = 24 sign-exact (rsigma_is, 2^36*3^0 patterns, 172s); R_σ_A(E) = +24 (Lemma 5.8)
+4   GJF Thm 5.6 at k = 6: m = 6: g (order 6, g³ = −1, g² = h² of shape 3^24, T_(h²) = T_h = 0)
+4 control (orbit set (0, 1, 2, 6), a = (0, 0, 0), R_σ̄(D) = -48): length 36 → 72 (k = 6); σ = [(0, 1, 2, 6), (12, 13, 14, 18), (24, 25, 26, 30)]; block stabilisers in <g> = {±1}: σ True, next σ″ True (b = 6): σ″ = [(0, 1, 48, 50), (36, 37, 49, 51), (12, 13, 56, 58), (40, 41, 57, 59), (24, 25, 64, 66), (44, 45, 65, 67)]
+4 control n = 72: g ∈ Aut True; T_h = -48 (Python enumeration) = R_σ̄(D) = -48: True (Lemma 4.3, sign-exact)
+4 chain B (σ_B, b = 6): length 36 → 108 (k = 9); σ = [(2, 15, 21, 28), (14, 27, 33, 4), (26, 3, 9, 16), (5, 6, 10, 31), (17, 18, 22, 7), (29, 30, 34, 19)]; block stabilisers in <g> = {±1}: σ True, next σ″ True (b = 6): σ″ = [(2, 15, 60, 62), (36, 37, 61, 63), (14, 27, 68, 70), (40, 41, 69, 71), (26, 3, 76, 78), (44, 45, 77, 79)]
+4 chain B n = 108: self-dual True; g ∈ Aut True, ord g = 6 True, g³ = −1 True; h = g⁴ a permutation of shape 3^36 (no fixed coordinate) True, h ∈ Aut True; −1 ∈ Aut True
+4 chain B n = 108: collapsed h-fixed code: length 36, dim 18, self-dual True; T_h = 0 (rsigma_is, 2^18*3^0 patterns, 0.0s; = 0 by ternary60 rsigma, full enumeration of 3^18 words)
+4 chain B n = 108: Index = R_σ_B(E) = +24 by Lemma 5.8 (not computed: 2^54 patterns)
+4   GJF Thm 5.6 at k = 9: m = 3: h (order 3, shape 3^36, T_h = 0)
+
+== Part 5: one more chain step (codes not saved)
+5 chain A step 2: length 72 → 144 (k = 12); σ = [(0, 2, 48, 50), (36, 37, 49, 51), (12, 14, 56, 58), (40, 41, 57, 59), (24, 26, 64, 66), (44, 45, 65, 67)]; block stabilisers in <g> = {±1}: σ True, next σ″ True (b = 6): σ″ = [(0, 2, 96, 98), (72, 73, 97, 99), (12, 14, 112, 114), (80, 81, 113, 115), (24, 26, 128, 130), (88, 89, 129, 131)]
+5 chain A n = 144: self-dual True; g ∈ Aut True, ord g = 6 True, g³ = −1 True; h = g⁴ a permutation of shape 3^48 (no fixed coordinate) True, h ∈ Aut True; −1 ∈ Aut True
+5 chain A n = 144: collapsed h-fixed code: length 48, dim 24, self-dual True; T_h = 0 (rsigma_is, 2^24*3^0 patterns, 0.0s)
+5 chain A n = 144: Index = +24 by Lemma 5.8 (not computed); 0s
+5   GJF Thm 5.6 at k = 12: m = 12: NOT served by <g> ≅ Z/6 (needs an element of order 12)
+5 chain B step 2: length 108 → 180 (k = 15); σ = [(2, 15, 60, 62), (36, 37, 61, 63), (14, 27, 68, 70), (40, 41, 69, 71), (26, 3, 76, 78), (44, 45, 77, 79)]; block stabilisers in <g> = {±1}: σ True, next σ″ True (b = 6): σ″ = [(2, 15, 132, 134), (108, 109, 133, 135), (14, 27, 148, 150), (116, 117, 149, 151), (26, 3, 164, 166), (124, 125, 165, 167)]
+5 chain B n = 180: self-dual True; g ∈ Aut True, ord g = 6 True, g³ = −1 True; h = g⁴ a permutation of shape 3^60 (no fixed coordinate) True, h ∈ Aut True; −1 ∈ Aut True
+5 chain B n = 180: collapsed h-fixed code: length 60, dim 30, self-dual True; T_h = 0 (rsigma_is, 2^30*3^0 patterns, 2.3s)
+5 chain B n = 180: Index = +24 by Lemma 5.8 (not computed); 3s
+5   GJF Thm 5.6 at k = 15: m = 3: h (order 3, shape 3^60, T_h = 0)
+
+== Summary
+  n = 72 (k = 6): checks True, T_h = 0, |Index| = 24, Index = 24
+  n = 108 (k = 9): checks True, T_h = 0, Index = +24 (Lemma 5.8)
+  n = 144 (k = 12): checks True, T_h = 0, Index = +24 (Lemma 5.8)
+  n = 180 (k = 15): checks True, T_h = 0, Index = +24 (Lemma 5.8)
+  <g> = <−h> ≅ Z/6 serves gcd(k,24) = 3 (h) and 6 (g) along both chains; gcd(k,24) = 12 (k ≡ 12 mod 24) needs an element of order 12 with g⁶ = −1, which <g> does not contain (and Aut(E) = <−1, h>, mainq_automorphisms.log).
+
+total 834s

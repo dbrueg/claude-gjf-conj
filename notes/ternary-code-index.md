@@ -439,7 +439,12 @@ The seed search above is unnecessary: doubling only *some* coordinates, twice, c
 - *Engine.* Suppose (E, σ) has length m, |σ| = 2, and R_σ(E) = ±24. Q_σ(E) has length m + 24 and Index ±24. It has 4 step-1 blocks; refining exactly one gives σ″ with |σ″| = 2 and R_{σ″}(Q_σ(E)) = ±24 (Lemma 5.8). So the pair propagates, (m, 2) → (m + 24, 2).
 - *Odd k.* Over all partial systems on Golay with b = 2, R_σ(Golay) ∈ {±24, ±72}, and 13,365 of the 17,325 give ±24. Starting from one of them, the engine gives index-24 codes at lengths 12 + 24j = 12(2j+1) for all j ≥ 1, and Golay covers k = 1.
 - *Even k.* For every single block β, R_β(Golay) = ±24 (all 495). Q_β(Golay) has length 24, Index ±24, and 2 step-1 blocks; refining one gives a pair (24, 2) with R = ±24. The engine gives lengths 24 + 24j. □
-- By Theorem 5.4's argument, R_σ(E) ≡ Index(E) mod 48 is expected as well (Λ = φ^s λ^b is again a Fourier eigenfunction supported on isotropic vectors), but it is not needed.
+- **R_σ(E) ≡ Index(E) (mod 48)** for every self-dual E of length m ≡ 0 mod 12 and every partial system σ [P; V: `review_rsigma_mod48.py`, log beside it] (2026-09-28, review `paper/review-2026-09-28.md` §2.3). Not needed for Theorem 5.9.
+  - Λ = φ^{⊗s} ⊗ λ^{⊗b} has Λ̂ = (i√3)^s 9^b Λ = i^s 3^{m/2} Λ, and s = m − 4b ≡ 0 mod 4, so Λ̂ = 3^{m/2}Λ.
+  - Λ ≠ 0 only on words of weight s + Σ_β w_β with w_β ∈ {1, 4}, ≡ s + b = m − 3b ≡ 0 mod 3: isotropic. Λ(−x) = Λ(x).
+  - Then the proof of Theorem 5.4 applies verbatim (Λ − f even, ±x pairing, tetracode base, connectivity), giving ≡ mod 16; both sides lie in 24ℤ (R_σ(E) = Index(Q_σE)).
+  - Consequences: R_σ(Golay) ∈ {±24, ±72} are all ≡ 24 mod 48; a seed (E, σ) with |R_σ| = 24 needs Index(E) ≡ 24 mod 48.
+  - [V] exact on 480 + 84 random (code, partial system) pairs at m = 12, 24 (both residues occur) and on all 17,820 Golay systems with 1 or 2 blocks.
 - [V: `existence_quadruple.py` parts 2–3] The R-distributions on Golay above, and the explicit chains (12,1) → 24 → 48 → 72 and (12,2) → 36 → 60 → 84, each step with b″ = 2. Every code is self-dual and has |Index| = 24 (brute force at n = 24; Rust at n ≥ 36). n = 72 and n = 84 were the first open cases.
 - The codes are explicit: Golay plus tetracodes, glued by coordinate-pair Hadamard maps. Generator matrices: `ternary60/codes/quad_index24_len{24,36,48,60,72,84}.txt`.
 - **Status.** Proved here, but not yet checked by a second reader. The proof uses only the λ-formula of (f) and the local computation of Lemma 5.6, both elementary and verified numerically.

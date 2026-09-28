@@ -1,0 +1,19 @@
+Part 1: local identities
+  Lemma A: 648 cases (8 placements x 81 u), all equal λ(wt u)
+  Lemma B: 1944 cases (8 placements x 81 u x 3 splits), all equal λ(wt u)
+Part 2: main lemma (Lemma 8 of paper/index24.tex) by enumeration
+  m = 12, b = 1: 30/30 random (E, σ, placements, splits): Q_σ(E) self-dual, Index(Q_σE) = R_σ(E) and R_σ''(Q_σE) = R_σ(E) for all 4 choices of σ''; R ≠ 0 in 10 cases
+  m = 8, b = 1: 20/20 random (E, σ, placements, splits): Q_σ(E) self-dual, Index(Q_σE) = R_σ(E) and R_σ''(Q_σE) = R_σ(E) for all 4 choices of σ''; R ≠ 0 in 0 cases
+Part 3: the Golay base (paper/index24.tex Prop. 10)
+  self-dual; weight distribution {0: 1, 6: 264, 9: 440, 12: 24}; even 24, odd 0, Index = 24
+  R_σ1 = 24, R_σ2 = 24 (paper: 24, 24)
+  all 495 single blocks: {-24: 165, 24: 330}
+  all 17325 two-block systems: {-72: 1320, -24: 4950, 24: 8415, 72: 2640}
+Part 4: J of paper/main-question.tex §4.2 and the J-invariant tetracode of §3
+  J ∈ Aut(G): yes; J² = −1 on F_3^12: True
+  R_β(G) for β = {0,1}⊔{2,3}: 24 (paper: 24)
+  <(1,1,1,0),(0,1,2,2)>: weights [0, 3, 3, 3, 3, 3, 3, 3, 3], self-dual True, J-invariant True
+Part 5: route C (signed 2-design) on random self-dual codes
+  m = 12: 20 codes, G_ij(C) = 0 for all i < j and 24 | Index; Index ≠ 0 in 7
+  m = 24: 4 codes, G_ij(C) = 0 for all i < j and 24 | Index; Index ≠ 0 in 2
+all checks passed (464 s)

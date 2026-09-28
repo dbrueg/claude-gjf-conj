@@ -27,6 +27,8 @@ notes/blueprint/              Lean blueprint for the Main Question (README.md: d
 paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 12k (pdflatex, 2 passes)
 paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k (Theorems A–D), and the obstruction
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
+paper/review-2026-09-28.md    review of both halves of Conj 1.4 and of the Main Question: verdict, issues, simplifications, proposed two-paper structure
+                              (paper/review-2026-09-26.md: the earlier line-by-line review of index24.tex)
 notes/tmf-context.md          TMF background
 lean/                         Lean 4 + Mathlib (see lean/README.md): both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
@@ -43,6 +45,8 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               the older .J.txt/.g.txt files, row 1 permutation without separators, row 2 signs 1/2, are ambiguous and kept for old logs)
                               q8z3_len72_T0 (+ .U.txt): Q₈ × ℤ/3-invariant code with T_h = 0 and Index −3840 ≢ 0 mod 72 (refutes the 72-rule)
                               q8z3_seed72 (+ .U.txt), q8z3_chain_len{144,288} (+ .gens.txt): the Q₈ × ℤ/3 chain for k ≡ 0 mod 24 (index 24, T_h = 0)
+                              gjf36_z6chain_len{72,108} (+ .gens.txt): ℤ/6-chains from GJF's own k = 3 code (notes main-question §11.1)
+                              golay_q8chain_len{48,96} (+ .gens.txt): the Q₈-chain seeded by Golay with the mixed block system (notes main-question §11.2)
   runs/                       logs of the Rust runs cited in notes §4; seeds.txt is written by the seed search
   theory/                     stdlib Python: invariant theory, q-series checks, and the existence_*.py experiments (each with .log)
                               divisibility_check.py: critical check of the finite proof (log beside it)
@@ -69,6 +73,12 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               mainq_q8z3_seed72.py: search for length-72 seeds of a Q₈ × ℤ/3 chain to k ≡ 0 mod 24 (log beside it)
                               mainq_q8z3_chain24.py: the seed and its chain to n = 144, 288 (Main Question for k ≡ 0 mod 24; log beside it)
                               lean_seed_data.py: Lean literals of the Tier A seeds (bitmask rows, block orderings with local maps in LM, evaluation trees), each seed value recomputed (log per seed)
+                              review_conj14_check.py: review of 2026-09-28, fresh code: Lemmas A, B (all placements, splits), the main lemma by enumeration, the Golay base, the printed J, route C (log beside it)
+                              review_q8_character.py: review of 2026-09-28: eta identities behind μ (incl. the short proof of (iii)) and the S-defect of the would-be Q₈-orbifold character (log beside it)
+                              review_rsigma_mod48.py: R_σ(E) ≡ Index(E) mod 48 (notes §5.1(f‴)), on random codes and all Golay systems with ≤ 2 blocks (log beside it)
+                              review_gjf36_z6.py: GJF's k = 3 code as a ℤ/6 = <−h> seed: all 3-block systems, sampled 6-block systems, chains to n = 180 (log beside it)
+                              review_golay_q8.py: the 1320 Q₈ ⊂ Aut(Golay); orbit systems give R = 72, mixed systems −24; the Q₈-chain from Golay to n = 96 (log beside it)
+                              review_seed_verify.py: fresh-code check (information-set R_σ) of the printed E₃₆ claims and of both new seeds and their first chain codes (log beside it)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
 scripts/build_nauty.sh        builds nauty's dreadnaut into tools/ (gitignored), for mainq_automorphisms.py

@@ -471,6 +471,10 @@ Both are now proved in the form needed. (MC) becomes three exact identities. (TP
   - η(τ−½) = e^{−2πi/48} η(2τ)³/(η(τ)η(4τ)), by Euler's identity for Π(1 − (−q)^m).
   - Hence η(2τ′)/η(4τ′) = √2·e^{2πi/48}·η(τ)η(4τ)/η(2τ)². Also F = (η(τ)η(4τ)/η(2τ)²)^{n/2}. □
 - [V] The multipliers are computed exactly (Dedekind sums), and every step is checked numerically to 10⁻¹⁴.
+- *Shorter proof of (iii), no Dedekind sums (review 2026-09-28, `paper/review-2026-09-28.md` S1) [P; V: `review_q8_character.py`, log beside it].* Put w = τ/4. From g = 2^{n/4}(η(τ/2)/η(τ/4))^{n/2} (this is (ii)), the T-law η(z+1) = e^{2πi/24}η(z) and Euler's η(w+½) = e^{2πi/48}η(2w)³/(η(w)η(4w)):
+  - η(τ/2+1)/η(τ/4+½) = e^{2πi/48} η(τ)η(τ/4)/η(τ/2)², so g(τ+2) = N·(η(τ)η(τ/4)/η(τ/2)²)^{n/2} = N·F(−1/τ) (the last step is the S-law of η; the factors √(−iτ) cancel);
+  - hence f|ST²S = (g|T²)|S = N·F|S² = N·F.
+  - In this form the S-defect of Prop 8.5.2 reads ch W|S − ch W = ¼(3N − T_ψ)(F − F|S).
 
 **Proposition 8.5.2 (the trivial-phase fact, as needed) [P, given T*: GJF Thm 4.2 (fermionic), in the form (A11) of `notes/blueprint/anomalies.md` / ORB; T: modular invariance of the NS character of a holomorphic SVOA (Dong–Zhao 2005 Thms 4.12, 7.7 and positivity at τ = i, cf. `notes/blueprint/orbifold-foundations.md` Prop 4.8(c)); twisted modules of odd lattice SVOAs (Bakalov–Kac 2004 Thm 4.2, Rem 4.4; the FLM/Dong–Lepowsky references treat even lattices)].** If Q₈ acts non-anomalously on V_{Λ(C)} with 4 | k, then ψ(J)+ψ(K)+ψ(JK) = 3e^{2πik/8} for some ψ ∈ Hom(Q₈, ±1). Hence 8 | k and ψ = 1, which is exactly μ = 1.
 
@@ -579,3 +583,28 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - gcd = 8: the Q₈-chain (Cor 8.2).
 - gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
 - *Caveats.* This relies on GJF's orbifold and anomaly theorems, on Thm 8.1, and on [I] (not yet independently read). Thm 8.1 has two proofs. One uses the coprime-gauging lemma (§8.2). The other (§8.4–8.5) uses only cited standard theorems: S-invariance of holomorphic SVOA characters, lattice twisted modules, the rSH³ layer bound, and additivity of anomalies.
+
+--------------------------------------------------------------------------------------------
+
+## 11. Simpler seeds (review of 2026-09-28, `paper/review-2026-09-28.md` §5 S4)
+
+Two experiments of the review; every number below was re-checked with fresh code in `ternary60/theory/review_seed_verify.py` (log beside it).
+
+**11.1 gcd(k,24) ∈ {3, 6} from GJF's own k = 3 code [V: `review_gjf36_z6.py`, `review_seed_verify.py`].** E = `gjf_ex57_len36` (GJF Ex 5.7), h = the plain shift by 12, G = ℤ/6 = ⟨−h⟩ (Aut(E) = ⟨−1, h⟩ exactly, §3).
+- Index(E) = +24, T_h(E) = 0, dim E^h = 6; the collapsed fixed code is GJF's printed length-12 code (self-dual, index 0).
+- h moves every block, so every block stabiliser in ⟨−h⟩ is {±1} (type τ₀ of [EQ] Lemma 4.11): placements and splits are transported along h-orbits, and no split rule is needed.
+- 3-block systems {β, hβ, h²β}: all 13,365 enumerated; 803 have R_σ(E) = ±24 and R_σ̄(D) = 0 (7.2%; seed 3 of §4 had 2 of 45). 6-block systems: 1.50% of a uniform sample of 2,000 admissible ones.
+- σ_A = {(0,25|2,5), (12,1|14,17), (24,13|26,29)}: R = +24, twined 0; chain A (k = 6, 12, 18, …), Index +24 with no sign flip. At n = 72: self-dual, −h ∈ Aut, T_h = 0 (enumeration), Index = +24 sign-exact. A control system with R_σ̄(D) = −48 gives T_h = −48 at n = 72 (Lemma 4.3, sign-exact).
+- σ_B = {(2,15|28,21), (14,27|4,33), (26,3|16,9), (5,6|31,10), (17,18|7,22), (29,30|19,34)}: R = +24, twined 0; chain B (k = 9, 15, 21, …). At n = 108: self-dual, invariant, T_h = 0.
+- Both chains checked one step further (n = 144, 180). Codes: `ternary60/codes/gjf36_z6chain_len{72,108}.txt` (+ `.gens.txt`).
+- m = 3 uses h, m = 6 uses −h. **gcd(k,24) = 12 then comes from the Q₈ × ℤ/3-chain of §10 with g = Jh**: order 12, g⁶ = J² = −1, g⁴ = h (shape 3^{n/3}, T_h = 0), Index +24, so GJF Thm 5.6 applies as it stands. So the searched ℤ/12 seeds (`z12seed_len36_*`) are not needed.
+
+**11.2 gcd(k,24) ∈ {4, 8} from the Golay code [V: `review_golay_q8.py`, `review_seed_verify.py`].**
+- Aut(Golay) has 792 elements J with J² = −1 and 1320 subgroups Q₈ = ⟨J, K⟩ (J² = K² = −1, KJ = −JK), one conjugacy class; each acts through a free Klein four-group with three coordinate orbits of size 4.
+- **The three Q₈-orbits never work: R_σ(Golay) = +72 for every Q₈** [P]. For a partition into three 4-sets, R_σ = 24 − 48 + 8H (weight 12: +24; weight 9: each 3-set is the zero set of two words, −2·2·12 = −48; weight 6: +8 per hexad containing one block and meeting the others once). A hexad through an orbit meeting another orbit in {x, y} would be stable under the t ∈ Q₈ swapping x, y, so t·c = ±c and t² = −1 gives c = −c. Hence H = 12. (The 1320 orbit partitions are exactly the R = 72 class among the 5775 partitions, cf. §5.1(f″) of [I].)
+- **A mixed system works:** σ = {(0,1|2,3), (4,5|11,10), (6,7|8,9)} with J = ((1,0,3,2,5,4,7,6,9,8,11,10), (−,+,−,+,+,−,−,+,+,−,−,+)) (the J of §4) and K = ((2,3,0,1,6,7,4,5,11,10,9,8), (−,+,+,−,−,−,+,+,+,−,+,−)): one orbit block (type τ_Q) and two blocks made of a J-pair from each remaining orbit (type τ_J, swapped by K). Q₈-stable, R_σ(Golay) = −24.
+- The Q₈-chain from it: n = 48 (k = 4) self-dual, Q₈-invariant, Index = −24 sign-exact, next system R = −24; n = 96 (k = 8) passes the structural checks; it continues through all k ≡ 0 mod 4. One diagonal sign change gives +24. Codes: `ternary60/codes/golay_q8chain_len{48,96}.txt` (+ `.gens.txt`).
+- This replaces the random length-24 seed of §5 and, since J ∈ Q₈, the J-chain of Thm 4.2.
+- The centraliser of each Q₈ in Aut(Golay) is S₃ × ⟨−1⟩ and contains h of order 3 without fixed coordinate, T_h = 0: Golay carries Q₈ × ℤ/3. Not usable for 24 | k (chains from Golay have k ≡ 1 mod 3, and h preserves no mixed system).
+
+**11.3 Consequence.** Seeds: Golay (gcd 1, 2, 4, 8), GJF's k = 3 code (gcd 3, 6), E₇₂ (gcd 12, 24). Only E₇₂ comes from our own search. The Lean formalization (Tier A) uses the older seeds and need not change; the certificates for GJF's code would be larger than those of seed 6.

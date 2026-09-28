@@ -1,0 +1,7 @@
+selftest: information-set R_σ agrees with full enumeration on Golay (4 systems)
+E36 (paper App. A = z12seed_len36_3): self-dual, g ∈ Aut, g^6 = −1, g^12 = 1, h = g^4 fixed-point-free; Index = 24, T_h = 0 (dim E^h = 6); R_σ3 = -24, R_σ6 = -24; twined R^h_σ3 = 0, R^h_σ6 = 0 (paper: 24, 0, −24, −24, 0, 0)
+GJF k = 3 code: self-dual, h = shift by 12 ∈ Aut (unsigned, fixed-point-free); Index = 24, T_h = 0 (dim E^h = 6); σ_A (3 blocks): R = 24, R^h = 0; σ_B (6 blocks): R = 24, R^h = 0
+chain code n = 72 (from σ_A): self-dual True; 2 generators read, all automorphisms True; h of order 3 without fixed coordinate found: True; T_h = 0 (dim fixed code 12); Index = R_σA(E) = +24 by the main lemma
+Golay with Q₈ = <J, K>: J, K ∈ Aut, J² = K² = −1, KJ = −JK, |<J,K>| = 8; the three Q₈-orbits give R = 72; the mixed system [(0, 1, 2, 3), (4, 5, 11, 10), (6, 7, 8, 9)]: Q₈-stable with splits True, block stabilisers of orders [8, 4, 4], R_σ(Golay) = -24
+Golay-seeded Q₈-chain, n = 48: self-dual True; J, K ∈ Aut True; relations True; V₄ free on coordinates True; Index = -24 (sign-exact, 2^24 patterns); next system [(1, 0, 26, 24), (13, 12, 27, 25), (2, 3, 28, 30), (14, 15, 29, 31)]: Q₈-stable with splits True, R = -24
+all checks passed

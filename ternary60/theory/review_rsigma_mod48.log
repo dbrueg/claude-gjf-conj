@@ -1,0 +1,5 @@
+φ̂ = i√3·φ on F_3 and λ̂ = 9·λ on F_3^4, exactly in Z[ω]
+m = 12: 480 (code, partial system) pairs, 24 | R_σ(E) and R_σ(E) ≡ Index(E) mod 48; (Index mod 48, R mod 48) counts {(0, 0): 372, (24, 24): 108}
+m = 24: 84 (code, partial system) pairs, 24 | R_σ(E) and R_σ(E) ≡ Index(E) mod 48; (Index mod 48, R mod 48) counts {(0, 0): 56, (24, 24): 28}
+Golay: all 17820 systems with 1 or 2 blocks have R_σ ≡ Index = 24 mod 48 (failures: 0)
+all checks passed
