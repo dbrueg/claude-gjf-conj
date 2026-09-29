@@ -1,0 +1,40 @@
+conj14_paper_check.py: claims of paper/conj14.tex; Rust rsigma_is: used
+Part 1 (§2): tetracode, Fourier facts, (2.1)
+  T = span[[1, 1, 1, 0], [0, 1, 2, 1]]: self-dual, weights 0/3, each 3-set the support of two words; exactly 8 self-dual codes of length 4, = the 8 monomial images of T; φ̂ = √−3·φ, ι̂ = 3[b=0] − 1, f̂ = 3^(n/2) f (n = 4, 8); f(gx) = ε(g) f(x) on 200 random (g, x)  [0s]
+Part 2 (§3): signed 2-design, Remark 3.4
+  Golay: Σ s ε_i ε_j = 24 δ_ij; the 12 maximal words up to sign form a Hadamard matrix; the 4-point identity Σ s ε_aε_bε_cε_d = −Σ_u Π_(k∉K) φ(u_k) on all 495 K, with values [-8, 8]; Theorem 3.1 and the 4-point identity (5 K each) on 4 random self-dual codes (n = 12, 12, 24, 24; indices [-24, 0, 0, -24])  [1s]
+Part 3 (§4): local identities, main lemma, gadget
+  ψ, κ as stated; Lemmas 4.1, 4.2 for all 8 tetracodes × 81 u (× 3 splits); λ̂ = 9λ on F_3^4; Lemmas 4.5, 4.6 by enumeration on 20 (E, σ) (5 self-dual of length 12, 15 arbitrary of dimension 3; R_σ(E) ≠ 0 on 10), random tetracodes and splits, all subsets 𝓑; gadget: Γ self-orthogonal of dimension 6, u ↦ H(u) + Γ an isometry of F_3^4 onto Γ^⊥/Γ, coset counts λ(wt u)  [4s]
+Part 4 (§5): Golay, Proposition 5.1, Lemma 5.4, Theorem B
+  G12 as printed: self-dual, weight enumerator {0: 1, 6: 264, 9: 440, 12: 24}, 132 hexads (a Steiner system S(5,6,12), every 4-set in 4 hexads), two words ±c per hexad, every 3-set the zero set of two weight-9 words, 24 maximal words, all even; R_σ1 = 24, R_σ2 = 24; single blocks {-24: 165, 24: 330}; two-block systems {-72: 1320, -24: 4950, 24: 8415, 72: 2640} (13365 with ±24); all 5775 partitions: R = 8H − 24, distribution {-24: 495, 24: 3960, 72: 1320}  [10s]
+  Thm B from σ1 E_1: n = 24, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_1| = 1
+  Thm B from σ1 E_2: n = 48, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_2| = 1
+  Thm B from σ1 E_3: n = 72, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_3| = 1
+  Thm B from σ2 E_1: n = 36, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_1| = 1
+  Thm B from σ2 E_2: n = 60, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_2| = 1
+  Thm B from σ2 E_3: n = 84, self-dual, m ∈ Aut, relations, fixed coordinates as on E_0, |G| = 2; next σ: 2 blocks of types ['τ0'], |𝓑_3| = 1
+  Theorem B: lengths [24, 36, 48, 60, 72, 84]; Index(E_24) = 24 (all 3^12 words), no nonzero words of weight < 6 (Remark 5.3 (1)); R_σ″(E_24) = 24; Index(E_36) = 24, R_σ″(E_36) = 24 (information sets); Index(E_48) = 24 (rsigma_is)  [11s]
+Part 5 (§6): Lemma 6.2 for all groups of the three types
+  τ_J groups: 2, invariant tetracodes per group [4]; τ_Q groups: 2, invariant tetracodes per group [4], all four = images of the left ideals under Θ; j, k, jk induce the three fixed-point-free involutions, ρ simply transitive on ±e_p; the τ_J tetracode of the proof is j-invariant; i² = j² = −1, ji = −ij in M_2(F_3) and the Morita coordinates invert the model; the swaps with square +1 and diag(1, −1) on a pair admit no invariant tetracode  [11s]
+Part 6 (§7.1): Q₈ on the Golay code
+  J, K as printed: in Aut(G12), J² = K² = −1, KJ = −JK, orbits {0..3}, {4..7}, {8..11}, free Klein group; 792 elements g ∈ Aut(G12) with g² = −1; 1320 subgroups ⟨J, K⟩ ≅ Q₈, one conjugacy class (orbit of the printed one under 12 conjugators); R(orbit partition) = 72 for all of them (Proposition 7.1); σ_Q: types ['τQ', 'τJ', 'τJ'], stabilisers [8, 4, 4], K swaps the τ_J blocks, R = -24, H = 0  [17s]
+  Q-chain E_1: n = 48, self-dual, J, K ∈ Aut, relations, fixed coordinates as on E_0, |G| = 8; next σ: 4 blocks of types ['τJ'], |𝓑_1| = 2
+  Q-chain E_2: n = 96, self-dual, J, K ∈ Aut, relations, fixed coordinates as on E_0, |G| = 8; next σ: 4 blocks of types ['τJ'], |𝓑_2| = 2
+  Q-chain: n_j = 48j (j = 1, 2), J♯, K♯, J♯K♯ fixed-point-free; Index(E_48) = -24 (rsigma_is), so +24 after re-signing one coordinate  [17s]
+Part 7 (§7.2): E36 with Z/6
+  E36 as printed = codes/gjf_ex57_len36.txt, self-dual; h = shift by 12 ∈ Aut, order 3, no fixed coordinate; |⟨−1, h⟩| = 6; Index = 24, T_h = 0 (dim E^h = 6); R_σA = 24, R_σB = 24, R^h_σA = 0, R^h_σB = 0  [22s]
+  13365 h-stable three-block systems, 11178 with R^h = 0; R_σ ≡ 24 mod 48 on all (Proposition 9.4); R = ±24 on 885, by R^h: {-48: 38, 0: 803, 48: 44}; good (R = ±24, R^h = 0): 803  [42s]
+  Z-chain A E_1: n = 72, self-dual, m, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 6; next σ: 6 blocks of types ['τ0'], |𝓑_1| = 3
+  Z-chain A E_2: n = 144, self-dual, m, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 6; next σ: 6 blocks of types ['τ0'], |𝓑_2| = 3
+  Z-chain B E_1: n = 108, self-dual, m, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 6; next σ: 6 blocks of types ['τ0'], |𝓑_1| = 3
+  Z-chain B E_2: n = 180, self-dual, m, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 6; next σ: 6 blocks of types ['τ0'], |𝓑_2| = 3
+  Z-chains: n = 72: T_h = 0 (Python, dim E^h = 12); n = 144: T_h = 0 (rsigma_is, dim E^h = 24); n = 108: T_h = 0 (Python, dim E^h = 18); n = 180: T_h = 0 (rsigma_is, dim E^h = 30); Index(E_72) = 24 (rsigma_is)  [113s]
+Part 8 (§7.3): E72 with Q₈ × Z/3
+  U as printed: Lagrangian for Σ(u_2b v_2b+1 − u_2b+1 v_2b), h-invariant; E72 from the Morita recipe: self-dual, = codes/q8z3_seed72.txt; J, K (as printed on each block), h ∈ Aut, J² = K² = −1, KJ = −JK, h³ = 1, hJ = Jh, hK = Kh, h fixed-point-free, |G| = 24; σ_QZ: Q₈-orbits, types τ_Q; R^h_σQZ = 0 (dim E^h = 12); R_σQZ = 24 (rsigma_is, 2^36 patterns)  [181s]
+  QZ-chain E_1: n = 144, self-dual, J, K, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 24; next σ: 12 blocks of types ['τJ'], |𝓑_1| = 6
+  QZ-chain E_2: n = 288, self-dual, J, K, h ∈ Aut, relations, fixed coordinates as on E_0, |G| = 24; next σ: 12 blocks of types ['τJ'], |𝓑_2| = 6
+  QZ-chain: n_j = 144j (j = 1, 2); T_h(E_144) = 0 (rsigma_is, dim E^h = 24)  [181s]
+Part 9 (§8, §9): Theorem D; neighbours and congruences
+  Theorem D on random g-invariant codes (g⁴ = −1; 7 sampled): [(12, 0), (12, 0), (24, 48, [-24, -24, 0, 48], 0), (24, 0, [0, 0, 0, 0], 0), (24, -48, [-48, 0, 24, 24], 0), (24, 48, [-24, -24, 0, 48], 0), (24, 48, [-24, -24, 0, 48], 0)] [(n, Index) for k = 1, and (n, Index, indices of the four codes through D, F(D)) for n = 24]; 48 | Index on all sampled codes; each time the four J-invariant codes through D are C, C_2 = D+ ⊕ D+° and two codes swapped by g with equal index, (8.1) holds, and Index(C) + Index(C_2) ≡ 0 mod 48  [188s]
+  on 4 random neighbour pairs (n = 12, 12, 24, 24): S(C) + S(C′) = 4S(D) for Λ = f and Λ = w_σ (Lemma 9.2, Remark 9.3); R_σ ≡ Index mod 48 on 8 (C, σ) (Proposition 9.4; (Index, R_σ) = [(0, -48), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (-48, 96), (-48, 96)]); (#even, #odd) = [(8, 8), (8, 8), (8, 8), (8, 8), (40, 40), (48, 48), (32, 80), (40, 64)], all divisible by 8 (Proposition 9.5)  [190s]
+all checks passed (total 191s)

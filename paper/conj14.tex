@@ -1,0 +1,1095 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\setcounter{MaxMatrixCols}{12}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{thmA}{Theorem A}
+\newtheorem*{thmB}{Theorem B}
+\newtheorem*{thmC}{Theorem C}
+\newtheorem*{thmD}{Theorem D}
+\newtheorem*{corC}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\F}{\mathbb{F}_3}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Index}{\operatorname{Index}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Mon}{\operatorname{Mon}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\isq}{\sqrt{-3}}
+
+\title{The index of self-dual ternary codes}
+\author{[Authors to be added]}
+\date{Draft, 29 September 2026}
+
+\begin{document}
+
+\begin{abstract}
+Gaiotto and Johnson-Freyd attached to every self-dual ternary code $C$ a holomorphic
+$\mathcal N=1$ superconformal vertex operator algebra whose supersymmetric index is the number of
+even minus the number of odd codewords of full weight, $\Index(C)$. They conjectured that
+$\Index(C)$ is always divisible by $24$ and that every length $12k$ carries a code of index~$24$, and
+they asked for a systematic construction of such codes. We prove both statements. Divisibility
+follows from a signed $2$-design property of the full-weight codewords, which we obtain from a
+single Poisson summation. For existence we introduce a block-weighted index and a \emph{partial
+quadrupling} of codes that preserves it; starting from the ternary Golay code it gives explicit
+codes of index $24$ in every length $12k$. The construction commutes with code automorphisms that
+permute its blocks. Starting from the Golay code, from the length-$36$ code of Gaiotto and
+Johnson-Freyd, and from one code of length $72$, we obtain for every $k$ a code of index $24$ whose
+automorphism group contains the groups for an orbifold construction of holomorphic $\mathcal N=1$
+vertex operator superalgebras of the minimal index $24/\gcd(k,24)$: the cyclic groups of Gaiotto and
+Johnson-Freyd when $8\nmid k$, and the quaternion group $Q_8$, resp.\ $Q_8\times\Z/3$, when $8\mid k$. Cyclic groups
+cannot work when $8\mid k$: an automorphism $g$ with $g^4=-1$ forces $48\mid\Index(C)$. The proofs
+of the two conjectured statements are formally verified in Lean.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A ternary code of length $n$ is a subspace $C\subseteq\F^n$. It is \emph{self-dual} if $C=C^\perp$
+for the standard form $\langle x,y\rangle=\sum_ix_iy_i$; self-dual ternary codes exist exactly when
+$4\mid n$. A codeword is \emph{maximal} if none of its entries is $0$, and it is \emph{even} or
+\emph{odd} according to the parity of the number of its entries equal to $1$. Following Gaiotto and
+Johnson-Freyd \cite[\S1]{GJF}, the \emph{index} of a self-dual ternary code is
+\[
+  \Index(C)=\#\{\text{even maximal codewords}\}-\#\{\text{odd maximal codewords}\}.
+\]
+They show that $C$ determines a holomorphic $\mathcal N=1$ vertex operator superalgebra
+$V_{\Lambda(C)}$ of central charge $n$, the lattice superalgebra of
+$\Lambda(C)=\{x/\sqrt3: x\in\Z^n,\ x\bmod3\in C\}$, whose supersymmetric (Ramond--Ramond) index is
+$\Index(C)$ \cite[Prop.~2.4]{GJF}. It vanishes unless $12\mid n$. The Stolz--Teichner programme
+predicts that the index of a holomorphic $\mathcal N=1$ superconformal field theory of central
+charge $12k$ is divisible by $24/\gcd(k,24)$, the smallest multiple of $\Delta^k$ in the image of
+$\pi_{24k}\mathrm{TMF}\to\mathrm{MF}_{12k}$ \cite[Prop.~4.6]{Hopkins}. For codes this led to:
+
+\begin{quote}
+\textbf{Conjecture} (\cite[Conj.~1.4]{GJF}\footnote{Numbering of statements in \cite{GJF} refers
+to the arXiv version.}). The index of any self-dual ternary code is divisible by $24$, even if the
+length is merely divisible by $12$. For all lengths $c=12k$, there exists a self-dual ternary code
+of index $24$.
+\end{quote}
+
+Gaiotto and Johnson-Freyd proved the first sentence when $24\mid n$, using Borcherds' theorem on
+theta series of even unimodular lattices; they deduced that $12\mid\Index(C)$ when $12\mid n$, and
+wrote that they did not know an elementary proof \cite[Thm.~1.3]{GJF}. With
+Elkies they found codes of index $24$ for $k\le5$ by computer search, and asked: \emph{is there a
+systematic construction of self-dual ternary codes of index $24$ which would avoid the use of
+intensive computation?} \cite[Question~0.1]{GJF}. We prove the conjecture and answer the question.
+
+\begin{thmA}
+For every self-dual ternary code $C$ of positive length, $24\mid\Index(C)$.
+\end{thmA}
+
+\begin{thmB}
+For every $k\ge1$ there is an explicit self-dual ternary code of length $12k$ and index $24$.
+\end{thmB}
+
+The length must be positive: the code of length $0$ has index $1$, the empty word being an even
+maximal codeword.
+
+Theorem~A follows from a \emph{signed $2$-design} property of the maximal codewords: lifting them
+to $\varepsilon\in\{\pm1\}^n$ with signs $s(\varepsilon)=\pm1$ (even/odd),
+$\sum_\varepsilon s(\varepsilon)\varepsilon_i\varepsilon_j=\Index(C)\,\delta_{ij}$
+(Theorem~\ref{thm:design}). This comes from one Poisson summation over $C$ with two marked
+coordinates, and the factors $8$ and $3$ of $24$ follow by short counting arguments. For
+Theorem~B we attach to a code $E$ and a set $\sigma$ of disjoint $4$-sets of coordinates a
+block-weighted index $R_\sigma(E)$, and we construct a self-dual code $Q_\sigma(E)$ of length
+$n+12|\sigma|$ by gluing tetracodes onto the blocks with the map $(x,y)\mapsto(x+y,x-y)$, twice.
+Its index is $R_\sigma(E)$, and it carries a new block system with the same value of $R$
+(Lemma~\ref{lem:main}). Starting from the Golay code, this reaches every length $12k$.
+
+\subsection*{Codes with symmetry}
+Gaiotto and Johnson-Freyd pose the \emph{Main Question}: is there, for each $k$, a holomorphic
+$\mathcal N=1$ vertex operator (super)algebra of central charge $12k$ and index $24/\gcd(k,24)$?
+They answer it for $k\le5$ with the following theorem, where $\Aut(C)$ is the group of signed
+coordinate permutations preserving $C$; it contains $-1$.
+
+\begin{quote}
+\textbf{Theorem} (\cite[Thm.~5.6]{GJF}). Let $C$ be self-dual of length $12k$ with $\Index(C)=24$,
+put $m=\gcd(24,k)$, and let $g\in\Aut(C)$ have order $m$. Suppose that (1) if $m$ is even,
+$g^{m/2}=-1$, and (2) if $3\mid m$, $g^{m/3}$ fixes as many even as odd maximal codewords and
+permutes the coordinates in $3$-cycles only. Then $g$ lifts to a non-anomalous automorphism of
+$V_{\Lambda(C)}$, and the orbifold $V_{\Lambda(C)}/\!\!/\langle g\rangle$ has index $24/m$.
+\end{quote}
+
+The partial quadrupling commutes with code automorphisms that permute its blocks, and the
+\emph{twined count} $T_h(C)=\sum_{x\in C,\,hx=x}f(x)$ of an automorphism $h$ of order $3$ (the
+signed count of $h$-fixed maximal codewords, $f$ as in \S\ref{sec:prelim}) is carried along as a
+block-weighted count on the $h$-fixed code (Lemma~\ref{lem:twined}). With three seeds---the Golay
+code, the code of length $36$ of \cite[Ex.~5.7]{GJF}, and one code of length $72$---we obtain:
+
+\begin{thmC}
+For every $k\ge1$ there is an explicit self-dual ternary code $C$ of length $12k$ with
+$\Index(C)=24$ whose automorphism group contains
+\begin{enumerate}
+\item[(a)] if $3\mid k$: an element $h$ of order $3$ without fixed coordinates and with $T_h(C)=0$;
+\item[(b)] if $4\mid k$: elements $J,K$ with $J^2=K^2=-1$ and $KJ=-JK$;
+\item[(c)] if $12\mid k$: elements $h,J,K$ as in (a) and (b) with $hJ=Jh$ and $hK=Kh$.
+\end{enumerate}
+\end{thmC}
+
+\begin{corC}
+Let $m=\gcd(k,24)$ with $8\nmid k$, and let $C$ be as in Theorem~C. For $m=1$, $2$, $3$, $4$, $6$,
+$12$ the element $g=1$, $-1$, $h$, $J$, $-h$, $Jh$ of $\Aut(C)$ satisfies the hypotheses of
+\cite[Thm.~5.6]{GJF}. Hence
+$V_{\Lambda(C)}/\!\!/\langle g\rangle$ is a holomorphic $\mathcal N=1$ vertex operator
+superalgebra of central charge $12k$ and index $24/\gcd(k,24)$.
+\end{corC}
+
+This answers the Main Question for all $k$ with $8\nmid k$, within the orbifold framework of
+\cite[\S4]{GJF} on which their Theorem~5.6 rests. For $8\mid k$ the cyclic route is closed:
+
+\begin{thmD}
+Let $C$ be a self-dual ternary code of length $12k$ and $g\in\Aut(C)$ with $g^4=-1$. Then
+$48\mid\Index(C)$, and $\Index(C)=0$ if $k$ is odd. In particular, if $8\mid k$, no self-dual code
+of length $12k$ and index $24$ has an automorphism $g$ as in \cite[Thm.~5.6]{GJF}.
+\end{thmD}
+
+Indeed, for $m\in\{8,24\}$ condition (1) gives $h=g^{m/8}$ with $h^4=-1$. The quaternion group
+$Q_8=\langle J,K\rangle$ of Theorem~C(b) has no element of order $8$, and every commuting pair in
+$Q_8$, or in $Q_8\times\Z/3$, generates a cyclic group. If the actions of these groups on
+$V_{\Lambda(C)}$ are non-anomalous, the orbifolds have index $24/8=3$ and $24/24=1$, the minimal values
+for $k\equiv8,16$ and $k\equiv0\pmod{24}$. Showing that they are non-anomalous for $8\mid k$ is an
+anomaly computation for $Q_8$, carried out in a companion paper \cite{II}; the present paper provides
+the codes.
+
+\subsection*{Formal verification}
+Theorems~A and~B are formalized in Lean~4 with Mathlib \cite{Lean,Mathlib}, as the single
+statement \texttt{GJF.conjecture\_1\_4} (\S\ref{sec:verify}). It uses only the standard axioms;
+the index is defined literally as $\#\{\text{even}\}-\#\{\text{odd}\}$ maximal codewords.
+
+\subsection*{Organisation}
+\S\ref{sec:prelim} collects notation. \S\ref{sec:design} proves Theorem~A. \S\ref{sec:Q}
+introduces partial quadrupling and \S\ref{sec:existence} proves Theorem~B.
+\S\ref{sec:sym} makes the construction equivariant and \S\ref{sec:families} proves Theorem~C.
+\S\ref{sec:obstruction} proves Theorem~D, \S\ref{sec:complements} adds two congruences
+(including $R_\sigma(E)\equiv\Index(E)\pmod{48}$), and \S\ref{sec:verify} describes the
+computations and the formalization. The seed data are in the appendix.
+
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Codes and the index}
+Let $\varphi\colon\F\to\{0,\pm1\}$ be $\varphi(0)=0$, $\varphi(1)=-1$, $\varphi(2)=1$, and
+$f(x)=\prod_i\varphi(x_i)$ for $x\in\F^n$. For $X\subseteq\F^n$ put $F(X)=\sum_{x\in X}f(x)$. The
+\emph{weight} $\wt(x)$ is the number of nonzero entries.
+
+\begin{lemma}\label{lem:basic}
+Let $C\subseteq\F^n$ be self-dual, $n\ge1$.
+\begin{enumerate}
+\item $4\mid n$, and every $u$ in a self-orthogonal code has $\wt(u)\equiv0\pmod3$.
+\item If $C$ has a maximal codeword, then $12\mid n$.
+\item $\Index(C)=F(C)$, and $f(-x)=f(x)$ for all $x\in\F^n$.
+\item If $C'$ is self-dual as well, then $\Index(C\oplus C')=\Index(C)\,\Index(C')$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) $C$ is a totally isotropic subspace of half dimension of the quadratic space $\F^n$, so $\F^n$
+is a sum of $n/2$ hyperbolic planes, and comparing discriminants in $\F^\times/(\F^\times)^2$ gives
+$(-1)^{n/2}=1$. Also $u\cdot u=\sum u_i^2=\wt(u)$ in $\F$. (2) A maximal codeword has weight $n$.
+(3) $f(x)=(-1)^{\#\{i:x_i=1\}}$ if $x$ is maximal and $0$ otherwise; $f(-x)=(-1)^nf(x)=f(x)$ as $n$ is
+even. (4) $f$ is multiplicative over direct sums.
+\end{proof}
+
+\subsection{Fourier analysis}
+Let $\omega=e^{2\pi i/3}$ and $\isq=\omega-\omega^2$. For $h\colon\F^n\to\mathbb C$ put
+$\hat h(u)=\sum_xh(x)\omega^{u\cdot x}$. We use three facts:
+\begin{enumerate}
+\item[(P)] \emph{Poisson summation:} for every subspace $D\subseteq\F^n$,
+  $\sum_{x\in D^\perp}h(x)=|D|^{-1}\sum_{u\in D}\hat h(u)$.
+\item[(M)] If $h(x)=\prod_ih_i(x_i)$, then $\hat h(u)=\prod_i\hat h_i(u_i)$.
+\item[(T)] $\hat\varphi=\isq\cdot\varphi$, and $\iota=[\,\cdot\neq0\,]$ has
+  $\hat\iota(b)=3[b=0]-1$. Hence $\hat f=(\isq)^nf=3^{n/2}f$ when $4\mid n$.
+\end{enumerate}
+(P) is $\sum_{u\in D}\omega^{u\cdot x}=|D|[x\in D^\perp]$; (T) is a one-line computation, with
+$(\isq)^2=-3$.
+
+\subsection{Signed permutations}
+$\Mon(n)=2^n{:}S_n$ acts on $\F^n$ by $(gx)_{\pi(i)}=s_ix_i$ for $g=(\pi,s)$, $\pi\in S_n$,
+$s\in\{\pm1\}^n$. We write $-1=(\mathrm{id},(-1,\dots,-1))$, $\varepsilon(g)=\prod_is_i$, and
+$\Aut(C)=\{g:gC=C\}$. Since $\varphi(-a)=-\varphi(a)$,
+\begin{equation}\label{eq:fsign}
+  f(gx)=\varepsilon(g)f(x)\qquad(g\in\Mon(n),\ x\in\F^n).
+\end{equation}
+Hence $\Index(dC)=-\Index(C)$ for a diagonal $d$ with one entry $-1$; conjugation by $d$ carries
+$\Aut(C)$ to $\Aut(dC)$, preserving relations, orders and cycle types, and
+$T_{dhd^{-1}}(dC)=-T_h(C)$. So a code of index $\pm24$ with some symmetry gives one of index $+24$
+with the same symmetry. Also, if some $g\in\Aut(C)$ has $\varepsilon(g)=-1$, then $\Index(C)=0$.
+
+\subsection{The tetracode}
+The \emph{tetracode} $T\subseteq\F^4$ is spanned by $(1,1,1,0)$ and $(0,1,2,1)$. It is self-dual,
+its nonzero words have weight $3$, and each $3$-subset of the coordinates is the support of exactly
+two words. A \emph{tetracode on} a $4$-set $Y$ is any self-dual code in $\F^Y$; these are the
+$8$ monomial images of $T$ and have the same properties.
+
+\section{The signed \texorpdfstring{$2$}{2}-design and the proof of Theorem A}\label{sec:design}
+
+For a maximal $x\in\F^n$ let $\varepsilon(x)\in\{\pm1\}^n$ be given by
+$\varepsilon_k=-\varphi(x_k)$ (so $\varepsilon\equiv x\bmod 3$), and $s(\varepsilon)=f(x)$. Let
+$\cF(C)$ be the set of these lifts of the maximal codewords. Then
+$\Index(C)=\sum_{\varepsilon\in\cF}s(\varepsilon)$; $\cF=-\cF$ and $s(-\varepsilon)=s(\varepsilon)$
+since $n$ is even; and $\varepsilon\cdot\varepsilon'\equiv0\pmod3$ for
+$\varepsilon,\varepsilon'\in\cF$.
+
+\begin{theorem}[signed $2$-design]\label{thm:design}
+For every self-dual ternary code $C$ and all coordinates $i,j$,
+\[
+  \sum_{\varepsilon\in\cF(C)}s(\varepsilon)\,\varepsilon_i\varepsilon_j=\Index(C)\,\delta_{ij}.
+\]
+Equivalently $\sum_{\varepsilon\in\cF}s(\varepsilon)(\varepsilon\cdot\mu)^2=\Index(C)|\mu|^2$ for
+all $\mu\in\mathbb R^n$.
+\end{theorem}
+
+The case $i=j$ is trivial. For $i\ne j$ put
+\[
+  g_{ij}(x)=\prod_{k\ne i,j}\varphi(x_k)\cdot[x_i\ne0][x_j\ne0],\qquad
+  G_{ij}(X)=\sum_{x\in X}g_{ij}(x).
+\]
+For maximal $x$ we have $s(\varepsilon)\varepsilon_i\varepsilon_j=f(x)\varphi(x_i)\varphi(x_j)
+=g_{ij}(x)$, and $g_{ij}$ vanishes on non-maximal words, so
+$G_{ij}(C)=\sum_{\cF}s(\varepsilon)\varepsilon_i\varepsilon_j$. By (M) and (T),
+\begin{equation}\label{eq:ghat}
+  \hat g_{ij}(u)=(\isq)^{n-2}\prod_{k\ne i,j}\varphi(u_k)\cdot(3[u_i=0]-1)(3[u_j=0]-1).
+\end{equation}
+
+\begin{lemma}\label{lem:pointwise}
+If $3\mid n$ and $D\subseteq\F^n$ is self-orthogonal, then $\hat g_{ij}(u)=(\isq)^{n-2}g_{ij}(u)$
+for every $u\in D$.
+\end{lemma}
+
+\begin{proof}
+If $u_k=0$ for some $k\ne i,j$, both sides vanish. Otherwise
+$\wt(u)=n-2+[u_i\ne0]+[u_j\ne0]$, which is $\equiv0\pmod3$ by Lemma~\ref{lem:basic}; as $3\mid n$
+this forces $u_i\ne0\ne u_j$. Then the last two factors of \eqref{eq:ghat} are $(-1)(-1)=1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:design}]
+If $3\nmid n$ there are no maximal codewords. Otherwise Poisson summation over $C=C^\perp$,
+$|C|=3^{n/2}$, and Lemma~\ref{lem:pointwise} give
+\[
+  G_{ij}(C)=3^{-n/2}\sum_{u\in C}\hat g_{ij}(u)=3^{-n/2}(\isq)^{n-2}G_{ij}(C)=\pm\tfrac13G_{ij}(C),
+\]
+so $G_{ij}(C)=0$.
+\end{proof}
+
+\begin{proposition}\label{prop:design-suffices}
+Theorem~\ref{thm:design} implies $8\mid\Index(C)$ and $3\mid\Index(C)$.
+\end{proposition}
+
+\begin{proof}
+Assume $C$ has maximal codewords, so $12\mid n$.
+\emph{The factor $8$.} For distinct $a,b,c$ and $\varepsilon\in\{\pm1\}^n$,
+$[\varepsilon_a=\varepsilon_b=\varepsilon_c]=\frac14(1+\varepsilon_a\varepsilon_b
++\varepsilon_a\varepsilon_c+\varepsilon_b\varepsilon_c)$, so
+$\sum_{\varepsilon\in\cF,\ \varepsilon_a=\varepsilon_b=\varepsilon_c}s(\varepsilon)
+=\frac14\Index(C)$. The summation set is stable under the fixed-point-free involution
+$\varepsilon\mapsto-\varepsilon$, which preserves $s$, so $\frac14\Index(C)$ is even.
+\emph{The factor $3$.} Fix $\varepsilon^0\in\cF$. For $x\in\Z^n$ with $x\equiv\varepsilon^0\pmod3$
+and $\varepsilon\in\cF$, $\varepsilon\cdot x\equiv\varepsilon\cdot\varepsilon^0\equiv0\pmod3$, so
+$9\mid\sum_\cF s(\varepsilon)(\varepsilon\cdot x)^2=\Index(C)|x|^2$. With $x=\varepsilon^0$
+($|x|^2=n$) and $x=\varepsilon^0+3\varepsilon^0_1e_1$ ($|x|^2=n+15$) we get $9\mid15\Index(C)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~A]
+Combine Theorem~\ref{thm:design} and Proposition~\ref{prop:design-suffices}.
+\end{proof}
+
+\begin{remark}\label{rem:design}
+(1) For the Golay code the $24$ maximal codewords are all even (\S\ref{sec:existence}), and
+Theorem~\ref{thm:design} says that the $12$ of them taken up to sign are the rows of a Hadamard
+matrix of order $12$ (cf.\ \cite{AHM}). (2) The same computation with four marked coordinates
+$K=\{a,b,c,d\}$ gives $\sum_\cF s(\varepsilon)\varepsilon_a\varepsilon_b\varepsilon_c\varepsilon_d
+=-\sum_u\prod_{k\notin K}\varphi(u_k)$, the sum over the codewords $u$ that vanish at exactly three
+points of $K$ and nowhere else; so the codewords of weight $n-3$ are exactly the obstruction to a
+signed $4$-design (for the Golay code the left side is $\pm8$ for every $K$). (3)
+Theorem~\ref{thm:design} can also be proved with modular forms: the theta series of the shadow of
+$\Lambda(C)$ with the harmonic coefficient $v_iv_j$, divided by $\eta^n$, is a holomorphic modular
+form of weight $2$ for $\mathrm{SL}_2(\Z)$, hence $0$; its leading coefficient is the left side of
+Theorem~\ref{thm:design}. That argument uses only the lattice, and gives
+$24\mid\sum_vs(v)$ over the shadow vectors of norm $k$ of every odd unimodular lattice of rank $12k$
+whose shadow has minimum $\ge k$. (4) A proof of $8\mid\Index(C)$ by Kneser neighbours is in
+Remark~\ref{rem:neighbour8}.
+\end{remark}
+
+\section{Partial quadrupling}\label{sec:Q}
+
+\subsection{Two local identities}
+For $a,b\in\F$ put $\psi(a,b)=\varphi(a+b)\varphi(a-b)$ and let $\kappa(a,b)$ be the number of
+nonzero entries of $(a+b,a-b)$. Then $\psi(a,b)\ne0$ iff exactly one of $a,b$ is nonzero, with
+$\psi(a,0)=1$ and $\psi(0,b)=-1$ for $a,b\ne0$; and $\kappa(a,b)$ is $2$ if exactly one of $a,b$ is
+nonzero, $1$ if both are, and $0$ if $a=b=0$. Define $\lambda\colon\{0,\dots,4\}\to\Z$ by
+\[
+  \lambda(0)=0,\quad\lambda(1)=-2,\quad\lambda(2)=\lambda(3)=0,\quad\lambda(4)=1.
+\]
+
+\begin{lemma}[doubling identity]\label{lem:A}
+For every tetracode $T'$ on $\{1,2,3,4\}$ and $u\in\F^4$,
+\[
+  \sum_{t\in T'}\prod_{i=1}^4\psi(u_i,t_i)=\lambda(\wt u).
+\]
+\end{lemma}
+
+\begin{proof}
+A term is nonzero only if $\supp t$ is the complement of $\supp u$, and then it is
+$(-1)^{\wt t}$. Since $T'$ has the weights $0$ and $3$, with two words on each $3$-set, the sum is
+$1$ if $\wt u=4$, $-2$ if $\wt u=1$, and $0$ otherwise.
+\end{proof}
+
+\begin{lemma}[refinement identity]\label{lem:B}
+Split $\{1,2,3,4\}$ into two pairs $\{p,q\}$, $\{r,s\}$. For every tetracode $T'$ and $u\in\F^4$,
+\[
+  \sum_{t\in T'}\lambda\bigl(\kappa(u_p,t_p)+\kappa(u_q,t_q)\bigr)\,
+  \lambda\bigl(\kappa(u_r,t_r)+\kappa(u_s,t_s)\bigr)=\lambda(\wt u).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $L(t)$ be the summand. Since $\kappa(u_i,0)=2[u_i\ne0]$, $L(0)=[\wt u=4]$. Let $t\ne0$, so $t$
+vanishes at exactly one coordinate $z$; let $z'$ be its partner and $\{x,y\}$ the other pair. On
+$\{x,y\}$ both $\kappa$'s lie in $\{1,2\}$ and their sum is $4$ iff $u_x=u_y=0$. On $\{z,z'\}$ the
+sum is $2[u_z\ne0]+\kappa(u_{z'},t_{z'})$; it is $4$ iff $u_z\ne0$, $u_{z'}=0$, and $1$ iff $u_z=0$,
+$u_{z'}\ne0$. Hence
+$L(t)=[u_x=u_y=0]\bigl([u_z\ne0,u_{z'}=0]-2[u_z=0,u_{z'}\ne0]\bigr)$, which vanishes unless
+$\wt u=1$. If $\supp u=\{w\}$, the two words vanishing at $w$ give $2\cdot1$, the two vanishing at
+the partner of $w$ give $2\cdot(-2)$, and the others $0$: in total $-2=\lambda(1)$. If $\wt u\ne1$,
+only $t=0$ contributes, and $[\wt u=4]=\lambda(\wt u)$.
+\end{proof}
+
+\subsection{Block systems}
+
+\begin{definition}\label{def:R}
+A \emph{block system} $\sigma$ on a coordinate set $X$ is a set of pairwise disjoint $4$-subsets
+(\emph{blocks}), each split into two pairs. The other coordinates are \emph{singletons}. For
+$x\in\F^X$ and a code $E\subseteq\F^X$ put
+\[
+  w_\sigma(x)=\prod_{i\text{ singleton}}\varphi(x_i)\prod_{\beta\in\sigma}\lambda(\wt(x|_\beta)),
+  \qquad R_\sigma(E)=\sum_{e\in E}w_\sigma(e).
+\]
+\end{definition}
+
+The splittings do not enter $R_\sigma$, and $R_\emptyset(E)=F(E)$.
+
+\begin{definition}[partial quadrupling]\label{def:Q}
+Let $E\subseteq\F^X$ be a code and $\sigma$ a block system with blocks $\beta_1,\dots,\beta_b$.
+\begin{enumerate}
+\item[(1)] For each coordinate $i$ of a block add a coordinate $i^*$, and choose a tetracode
+  $T_\beta$ on $\beta^*=\{i^*:i\in\beta\}$ for each block. Apply $h_1$, the map
+  $(x_i,x_{i^*})\mapsto(x_i+x_{i^*},x_i-x_{i^*})$ on every pair $\{i,i^*\}$. For a block
+  $\beta=\pi_1\sqcup\pi_2$ the \emph{step-one blocks} are $B_{\pi}=\pi\sqcup\pi^*$ for
+  $\pi\in\{\pi_1,\pi_2\}$; there are $2b$ of them, and each is split into two pairs.
+\item[(2)] For each coordinate $y$ of a step-one block add a coordinate $y^{**}$, choose a
+  tetracode $T_B$ on $B^{**}$ for each step-one block $B$, and apply $h_2$, the same map on every
+  pair $\{y,y^{**}\}$.
+\end{enumerate}
+Put $Q_\sigma(E)=h_2h_1\bigl(E\oplus\bigoplus_\beta T_\beta\oplus\bigoplus_BT_B\bigr)$, a code of
+length $|X|+12b$. Singletons are untouched. For a set $\cB$ of step-one blocks let $\sigma''$ be the
+block system on the coordinates of $Q_\sigma(E)$ consisting, for each $B=\varpi_1\sqcup\varpi_2\in\cB$
+split into its pairs, of the two blocks $\varpi_1\sqcup\varpi_1^{**}$ and
+$\varpi_2\sqcup\varpi_2^{**}$ (split in any way).
+\end{definition}
+
+The construction depends on the tetracodes and the splittings; by Lemmas~\ref{lem:A}
+and~\ref{lem:B} every choice works below.
+
+\begin{lemma}\label{lem:selfdual}
+If $E$ is self-dual, so is $Q_\sigma(E)$.
+\end{lemma}
+
+\begin{proof}
+On one pair, $(x+y)(x'+y')+(x-y)(x'-y')=2(xx'+yy')=-(xx'+yy')$, so $h_1$ and $h_2$ negate the form
+on the coordinates they pair. Write $v=(e,t_1,t_2)$ and $e=(e_S,e_B)$ (singleton and block parts).
+$h_1$ negates the form on $(e_B,t_1)$, and $h_2$ negates it on $(e_B,t_1,t_2)$: those are the
+coordinates of the step-one blocks and their partners. So
+$\langle h_2h_1v,h_2h_1v'\rangle=\langle e,e'\rangle+\langle t_1,t_1'\rangle-\langle t_2,t_2'\rangle=0$,
+and the image has dimension $|X|/2+2b+4b$, half the length.
+\end{proof}
+
+A single step would not suffice: $h_1$ negates the form on the blocks but not on the singletons.
+
+\begin{lemma}[main lemma]\label{lem:main}
+For every code $E$ (self-dual or not), every block system $\sigma$, all choices in
+Definition~\ref{def:Q}, and every set $\cB$ of step-one blocks,
+\[
+  F(Q_\sigma(E))=R_\sigma(E)\qquad\text{and}\qquad R_{\sigma''}(Q_\sigma(E))=R_\sigma(E).
+\]
+In particular $\Index(Q_\sigma(E))=R_\sigma(E)$ if $E$ is self-dual.
+\end{lemma}
+
+\begin{proof}
+The first identity is the case $\cB=\emptyset$ of the second. Write
+\[
+  R_{\sigma''}(Q_\sigma(E))=\sum_{e,t_1,t_2}w_{\sigma''}\bigl(h_2h_1(e,t_1,t_2)\bigr),
+\]
+put $u=h_1(e,t_1)$ and sum over $t_2=(t_B)_B$ first. The weight factors over the singletons of $\sigma$ and over the step-one
+blocks $B$ together with $B^{**}$, and $t_B$ enters only the factor of $B$. If $B\notin\cB$, its
+eight coordinates are singletons of $\sigma''$ and the factor is
+\[
+  \prod_{y\in B}\varphi(u_y+t_{B,y})\,\varphi(u_y-t_{B,y})=\prod_{y\in B}\psi(u_y,t_{B,y});
+\]
+summing over $t_B$ gives $\lambda(\wt(u|_B))$ by Lemma~\ref{lem:A}. If $B\in\cB$, the factor is
+\[
+  \lambda\Bigl(\sum_{y\in\varpi_1}\kappa(u_y,t_{B,y})\Bigr)\,
+  \lambda\Bigl(\sum_{y\in\varpi_2}\kappa(u_y,t_{B,y})\Bigr),
+\]
+since the weight of $h_2$ on a pair $(y,y^{**})$ is $\kappa(u_y,t_{B,y})$; summing over $t_B$ gives
+$\lambda(\wt(u|_B))$ by Lemma~\ref{lem:B}. Now sum over $t_1=(t_\beta)_\beta$.
+For $\beta=\pi_1\sqcup\pi_2$, $\wt(u|_{B_{\pi}})=\sum_{i\in\pi}\kappa(e_i,t_{\beta,i^*})$, so the two
+step-one blocks of $\beta$ give the summand of Lemma~\ref{lem:B}, and summing over $t_\beta$ gives
+$\lambda(\wt(e|_\beta))$. What remains is $\sum_{e\in E}w_\sigma(e)=R_\sigma(E)$.
+\end{proof}
+
+\begin{remark}[the gadget]\label{rem:gadget}
+Per block, $Q_\sigma$ glues in a fixed code of length $16$. Let
+$\Gamma=h_2h_1(0\oplus T_\beta\oplus T_{B_1}\oplus T_{B_2})$, a self-orthogonal code of dimension $6$ on
+the $16$ coordinates arising from $\beta$. The map $u\mapsto h_2h_1(u,0,0)+\Gamma$ is an isometry of
+$\F^4$ onto $\Gamma^\perp/\Gamma$ (two anti-isometries compose to an isometry), and the proof of
+Lemma~\ref{lem:main} shows that the coset of $u$ has signed full-weight count $\lambda(\wt u)$. So
+$Q_\sigma(E)$ is the gluing of $E$ with $|\sigma|$ copies of $\Gamma$, and ``$+12$ per block'' is
+$16-4$.
+\end{remark}
+
+\section{Index 24 in every length}\label{sec:existence}
+
+Let $G_{12}\subseteq\F^{12}$ be the extended ternary Golay code with generator matrix
+\[
+\begin{pmatrix}
+1&0&0&0&0&0&0&1&1&1&1&1\\
+0&1&0&0&0&0&2&0&1&2&2&1\\
+0&0&1&0&0&0&2&1&0&1&2&2\\
+0&0&0&1&0&0&2&2&1&0&1&2\\
+0&0&0&0&1&0&2&2&2&1&0&1\\
+0&0&0&0&0&1&2&1&2&2&1&0
+\end{pmatrix}
+\]
+\cite[Ex.~1.5]{GJF}, coordinates $0,\dots,11$. Its weight enumerator is
+$1+264y^6+440y^9+24y^{12}$, and the supports of the weight-$6$ words are the $132$ hexads of a
+Steiner system $S(5,6,12)$ \cite[Ch.~10, 11]{CS}. As the minimum weight is $6$, two words of weight
+$6$ (resp.\ $9$) with the same support are equal or opposite; so each hexad carries exactly two words
+$\pm c$, and, since $440=2\binom{12}{3}$, each $3$-set is the zero set of exactly two words of weight
+$9$. All $24$ maximal codewords are even, so $\Index(G_{12})=24$.
+
+\begin{proposition}\label{prop:base}
+Let $\sigma_1$ consist of the block $\{0,1,2,3\}$ and $\sigma_2$ of the blocks $\{0,1,2,3\}$ and
+$\{4,5,6,8\}$. Then $R_{\sigma_1}(G_{12})=R_{\sigma_2}(G_{12})=24$.
+\end{proposition}
+
+\begin{proof}
+Direct evaluation over the $729$ codewords. (More generally $R_\sigma(G_{12})=\pm24$ for all $495$
+single blocks, and for $13{,}365$ of the $17{,}325$ two-block systems; the others give $\pm72$.)
+\end{proof}
+
+\begin{lemma}[engine]\label{lem:engine}
+If $E$ is self-dual of length $m$ and $\sigma$ is a two-block system with $R_\sigma(E)=\pm24$, then
+$E'=Q_\sigma(E)$ is self-dual of length $m+24$ with $\Index(E')=\pm24$, and it carries a two-block
+system $\sigma'$ with $R_{\sigma'}(E')=R_\sigma(E)$.
+\end{lemma}
+
+\begin{proof}
+Lemmas~\ref{lem:selfdual} and~\ref{lem:main}, with $\cB$ a single step-one block.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~B]
+$k=1$: $G_{12}$. Odd $k=2j+1\ge3$: apply Lemma~\ref{lem:engine} $j$ times to $(G_{12},\sigma_2)$.
+Even $k=2j+2$: $Q_{\sigma_1}(G_{12})$ has length $24$ and index $24$, and refining one of its two
+step-one blocks gives a two-block system with $R=24$ (Lemma~\ref{lem:main}); apply
+Lemma~\ref{lem:engine} $j$ times. Finally re-sign one coordinate if the index is $-24$.
+\end{proof}
+
+\begin{remark}\label{rem:existence}
+(1) The codes have minimum distance at least $6$: if $w$ is a codeword of weight $3$ and $x$ is
+maximal, then $\langle x,w\rangle=0$ forces $x$ to agree with $w$ or with $-w$ on $\supp w$, so one of
+$x\pm w$ is maximal of the opposite parity, and $w$ pairs off the maximal codewords. (2) The codes are
+built from $G_{12}$ and tetracodes only, and a generator matrix is computable in time polynomial in
+$k$; no search is needed beyond the $729$-word check of Proposition~\ref{prop:base}. Lengths $72$ and
+$84$ are covered neither by the examples of \cite{GJF} ($k\le5$) nor by doubling ($k=2^j$, the case
+$\sigma$ without singletons). (3) Through \cite{GJF} the codes give holomorphic $\mathcal N=1$ vertex
+operator superalgebras of index $24$ in every central charge $12k$.
+\end{remark}
+
+For partitions of the Golay coordinates into three blocks the value of $R$ has a simple description,
+which we use in \S\ref{sec:families}.
+
+\begin{lemma}\label{lem:8H}
+Let $\sigma$ be a partition of $\{0,\dots,11\}$ into three blocks, and let $H(\sigma)$ be the number
+of hexads that contain one block of $\sigma$ and meet each of the other two in one point. Then
+$R_\sigma(G_{12})=8H(\sigma)-24$.
+\end{lemma}
+
+\begin{proof}
+There are no singletons, and $\prod_\beta\lambda(|\supp c\cap\beta|)\ne0$ requires every intersection
+to have $1$ or $4$ points. The $24$ words of weight $12$ contribute $1$ each. A word of weight $9$
+contributes iff its zero set lies in one block, and then $1\cdot1\cdot(-2)$; there are $3\cdot4$ such
+zero sets, each carrying two words, in total $-48$. A word of weight $6$ contributes iff its hexad
+contains one block and meets the others once, and then $1\cdot(-2)^2=4$; with two words per hexad this
+is $8H(\sigma)$.
+\end{proof}
+
+Over all $5775$ partitions, $R_\sigma(G_{12})$ takes the values $-24$, $24$, $72$ on $495$, $3960$ and
+$1320$ of them.
+
+\section{Codes with symmetry}\label{sec:sym}
+
+Throughout, $E\subseteq\F^X$ is a code on a finite set $X$, $\sigma$ a block system on $X$, and
+$\Mon(X)$ the group of signed permutations of $\F^X$. For a subset $Y$ preserved by $g$, $g|_Y$ is
+the restriction.
+
+\subsection{Compatible groups}
+
+\begin{definition}\label{def:compatible}
+A finite group $G\subseteq\Aut(E)$ with $-1\in G$ is \emph{$\sigma$-compatible} if every $g\in G$
+maps each block of $\sigma$ onto a block, and each pair of a block onto a pair of the image block.
+For $\beta\in\sigma$ let $G_\beta$ be its stabiliser and $\rho_\beta(G_\beta)=\{g|_\beta\}\subseteq
+\Mon(\beta)$. The block $\beta$ has \emph{type}
+\begin{itemize}
+\item $\tau_0$ if $\rho_\beta(G_\beta)=\{\pm1\}$;
+\item $\tau_J$ if $\rho_\beta(G_\beta)=\{\pm1,\pm j\}$ with $j^2=-1$ and $j$ mapping each pair of
+  $\beta$ onto itself;
+\item $\tau_Q$ if $\rho_\beta(G_\beta)=\{\pm1,\pm j,\pm k,\pm jk\}$ with $j^2=k^2=-1$, $kj=-jk$,
+  and the pairs of $\beta$ are the two orbits of $\langle j\rangle$ on $\beta$.
+\end{itemize}
+\end{definition}
+
+In type $\tau_J$, $j$ swaps the two points of each pair (a fixed point $p$ would give
+$j^2e_p=e_p$). In type $\tau_Q$, $j$, $k$ and $jk$ induce the three fixed-point-free involutions of
+$\beta$, and $\rho_\beta(G_\beta)$ permutes the eight vectors $\pm e_p$ ($p\in\beta$) simply
+transitively.
+
+\begin{lemma}[invariant tetracodes]\label{lem:invtetra}
+Let $Y$ be a $4$-set split into two pairs and $H\subseteq\Mon(Y)$ a group as in one of the three
+types. Then some tetracode on $Y$ is $H$-invariant.
+\end{lemma}
+
+\begin{proof}
+Type $\tau_0$: every code is invariant under $\pm1$. Type $\tau_J$: write the pairs as $\{p,q\}$,
+$\{r,s\}$ with $j(e_p)=ae_q$ and $j(e_r)=be_s$; then $j(e_q)=-ae_p$ and $j(e_s)=-be_r$. After the
+diagonal sign change $e_q\mapsto ae_q$, $e_s\mapsto be_s$, which permutes the tetracodes on $Y$, we may
+take $a=b=1$, so $j(x_p,x_q,x_r,x_s)=(-x_q,x_p,-x_s,x_r)$. It maps $(1,1,1,0)$ and $(0,1,2,2)$ to
+$(2,1,0,1)$ and $(2,0,1,2)$, which lie in their span; so that tetracode is $j$-invariant.
+Type $\tau_Q$: let $A=\F\langle i,j\rangle$ be the quaternion algebra with basis $1,i,j,k=ij$
+($i^2=j^2=-1$, $ji=-ij$) and $Q=\{\pm1,\pm i,\pm j,\pm k\}$. Fix $p\in Y$. By simple transitivity
+there is an isomorphism $\theta\colon Q\to H$, and $\Theta(x)=\theta(x)e_p$ for $x\in Q$ extends to a
+linear bijection $\Theta\colon A\to\F^Y$ with $\Theta(ya)=\theta(y)\Theta(a)$ ($y\in Q$, $a\in A$).
+So the $H$-invariant subspaces of $\F^Y$ are the images of the left ideals of $A$. As $\Theta$ maps
+$1,i,j,k$ to $\pm$ the standard basis, the standard form becomes (twice) the polar form of the reduced
+norm $a^2+b^2+c^2+d^2$. Under $A\cong M_2(\F)$ (e.g.\ $i\mapsto\left(\begin{smallmatrix}0&1\\-1&0
+\end{smallmatrix}\right)$, $j\mapsto\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$) the
+reduced norm is the determinant. The left ideal of matrices whose rows lie in a fixed line of $\F^2$
+is $2$-dimensional and consists of singular matrices, so its image is a totally isotropic code of
+dimension $2$ in $\F^Y$, i.e.\ an $H$-invariant tetracode.
+\end{proof}
+
+\subsection{Equivariant quadrupling}
+
+\begin{construction}\label{con:eq}
+Let $G$ be $\sigma$-compatible, with all blocks of types $\tau_0,\tau_J,\tau_Q$. Make the choices of
+Definition~\ref{def:Q} as follows.
+\begin{enumerate}
+\item[(i)] \emph{Extension.} For $g=(\pi,s)\in G$ let $g^\sharp$ act on the enlarged coordinate set
+  by $g$ on $X$ and by letting partners follow with the same sign:
+  $g^\sharp(e_{i^*})=s_ie_{\pi(i)^*}$ and $g^\sharp(e_{y^{**}})=s'_ye_{\pi'(y)^{**}}$, where
+  $(\pi',s')$ is $g^\sharp$ on the coordinates of step one.
+\item[(ii)] \emph{Splittings.} The step-one block $B_\pi=\pi\sqcup\pi^*$ is split into the pairs $\pi$
+  and $\pi^*$.
+\item[(iii)] \emph{Tetracodes.} On one block $\beta$ of each $G$-orbit choose a tetracode $T_\beta$
+  on $\beta^*$ invariant under $\{g^\sharp|_{\beta^*}:g\in G_\beta\}$ (a copy of
+  $\rho_\beta(G_\beta)$), and put $T_{g\beta}=g^\sharp T_\beta$. Likewise for step-one blocks, with
+  the stabiliser $G_B$ acting on $B^{**}$.
+\item[(iv)] \emph{Refinement.} $\cB$ is a $G^\sharp$-stable set of step-one blocks. By (ii) the
+  blocks of $\sigma''$ are $\pi\sqcup\pi^{**}$ and $\pi^*\sqcup\pi^{***}$ for $B_\pi\in\cB$ (where
+  $\pi^{***}=(\pi^*)^{**}$), and we split them into the pairs $\{\pi,\pi^{**}\}$ and
+  $\{\pi^*,\pi^{***}\}$.
+\end{enumerate}
+\end{construction}
+
+\begin{lemma}[equivariant quadrupling]\label{lem:eq}
+In Construction~\ref{con:eq}:
+\begin{enumerate}
+\item the tetracodes in (iii) exist and are well defined;
+\item $g\mapsto g^\sharp$ is an injective homomorphism $G\to\Aut(Q_\sigma(E))$ with $(-1)^\sharp=-1$,
+  and $g^\sharp$ has a fixed coordinate iff $g$ has one;
+\item $\sigma''$ is $G^\sharp$-compatible, and its blocks have type $\tau_0$ or $\tau_J$.
+\end{enumerate}
+In particular every relation among elements of $G$ holds among their extensions.
+\end{lemma}
+
+\begin{proof}
+The extension is multiplicative because partners follow partners with equal signs, and injective
+because $g^\sharp|_X=g$; a new coordinate is fixed iff its partner is. $g^\sharp$ preserves $X$, the
+starred and the double-starred coordinates, so the stabiliser of $B_\pi$ is the stabiliser $G_\pi$
+of the pair $\pi$. Let $\pi$ be a pair of a block $\beta$. Then $\rho_\pi(G_\pi)\subseteq\{\pm1,
+\pm j_\pi\}$ for a swap $j_\pi$ of $\pi$ with $j_\pi^2=-1$: this is clear for types $\tau_0$ and
+$\tau_J$, and in type $\tau_Q$ the elements of $\rho_\beta(G_\beta)$ preserving the
+$\langle j\rangle$-orbit $\pi$ are $\pm1,\pm j$. Hence $G_\pi$ acts on $B_\pi=\pi\sqcup\pi^*$ through
+$m\oplus m^*$ with $m\in\{\pm1,\pm j_\pi\}$, of type $\tau_0$ or $\tau_J$ for the pairs $\pi,\pi^*$.
+By Lemma~\ref{lem:invtetra} the tetracodes in (iii) exist, and $T_{g\beta}$ does not depend on $g$
+because $T_\beta$ is $G_\beta$-invariant; so $E\oplus\bigoplus T_\beta\oplus\bigoplus T_B$ is
+$G^\sharp$-invariant. On a pair $(i,i^*)$ the element $g^\sharp$ acts by the common sign $s_i$ and
+maps it to the pair $(\pi(i),\pi(i)^*)$; since $(x,y)\mapsto(x+y,x-y)$ commutes with a common sign,
+$h_1$ and $h_2$ commute with $G^\sharp$, and $Q_\sigma(E)$ is $G^\sharp$-invariant. For (3): the
+stabiliser of $\pi\sqcup\pi^{**}$ is $G_\pi$, acting through $m\oplus m^{**}$, of type $\tau_0$ or
+$\tau_J$ for the pairs $\pi,\pi^{**}$; similarly for $\pi^*\sqcup\pi^{***}$.
+\end{proof}
+
+The choice (ii) of splittings matters. With the splitting $\{p,p^*\}\sqcup\{q,q^*\}$ of $B_\pi$ the
+new blocks would have smaller stabilisers, the $G$-orbits of step-one blocks would double in size
+from the next step on, and the lengths reached in \S\ref{sec:families} would skip residue classes.
+And a stabiliser acting on a pair by an involutive swap or by $\operatorname{diag}(1,-1)$ would admit
+no invariant tetracode at step two; the three types exclude this.
+
+\subsection{Twined counts}
+Let $h\in G$ have order $3$ and no fixed coordinate. A permutation of order $3$ of a $4$-set has a
+fixed point, so $h$ moves every block and the $\langle h\rangle$-orbits on $\sigma$ have three
+elements. For $x$ fixed by $h$, $\wt(x|_\beta)$ is constant on each orbit. Put
+\[
+  R^h_\sigma(E)=\sum_{x\in E,\ hx=x}\ \prod_{i\text{ singleton}}\varphi(x_i)
+  \prod_{O\in\sigma/\langle h\rangle}\lambda\bigl(\wt(x|_{\beta_O})\bigr),
+\]
+with one factor per orbit $O$ ($\beta_O\in O$ arbitrary). Then $R^h_\emptyset(E)=T_h(E)$.
+
+\begin{lemma}[twined counts]\label{lem:twined}
+In Construction~\ref{con:eq} let $h\in G$ have order $3$ and no fixed coordinate. Then
+\[
+  T_{h^\sharp}(Q_\sigma(E))=R^h_\sigma(E)\qquad\text{and}\qquad R^{h^\sharp}_{\sigma''}(Q_\sigma(E))=
+  R^h_\sigma(E).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $V=E\oplus\bigoplus T_\beta\oplus\bigoplus T_B$ and $\mathsf H=h_2h_1$, so
+$Q_\sigma(E)^{h^\sharp}=\mathsf H(V^{h^\sharp})$. For an orbit $\{\beta,h\beta,h^2\beta\}$ the fixed
+vectors of $T_\beta\oplus T_{h\beta}\oplus T_{h^2\beta}$ are $(t,h^\sharp t,(h^\sharp)^2t)$ with
+$t\in T_\beta$, and likewise for step-one blocks. For $\beta\in\sigma$ let $\hat\beta$ be the $16$
+coordinates arising from $\beta$, and for $y\in Q_\sigma(E)$ let $W_\beta(y)$ be the product of the
+$\sigma''$-weights ($\varphi$ on singletons, $\lambda$ on blocks) over $\hat\beta$. For each
+$i\in\beta$ the four coordinates $i,i^*,i^{**},i^{***}$ are either all singletons of $\sigma''$ or all
+in blocks, and $h^\sharp$ has the same sign on all four. So for $h^\sharp$-fixed $y$ the
+$\varphi$-parts of $W_\beta,W_{h\beta},W_{h^2\beta}$ coincide, and the $\lambda$-parts depend only
+on supports. The weight in $R^{h^\sharp}_{\sigma''}$ ($\varphi$ on all singletons, one $\lambda$ per
+orbit of blocks) therefore gives each orbit of $\sigma$ the factor
+$(\varphi\text{-part})^3\cdot(\lambda\text{-part})=W_\beta(y)$, as the $\varphi$-part lies in
+$\{0,\pm1\}$. Hence
+\[
+  R^{h^\sharp}_{\sigma''}(Q_\sigma(E))=\sum_{x\in E^h}\prod_{i\text{ singleton}}\varphi(x_i)
+  \prod_O\ \sum_tW_{\beta_O}\bigl(\mathsf H(x,t)\bigr),
+\]
+where $t$ runs over the tetracode variables of $\beta_O$ and its two step-one blocks. The inner sum is
+the local sum computed in the proof of Lemma~\ref{lem:main}: it equals $\lambda(\wt(x|_{\beta_O}))$.
+The first identity is the case $\cB=\emptyset$.
+\end{proof}
+
+\subsection{Chains}
+
+\begin{proposition}\label{prop:chain}
+Let $E_0$ be self-dual of length $n_0$, and $G$ a $\sigma_0$-compatible group whose blocks have types
+$\tau_0,\tau_J,\tau_Q$. Put $E_1=Q_{\sigma_0}(E_0)$ (Construction~\ref{con:eq}) and, for $j\ge1$,
+let $\sigma_j$ be the refinement of the $G$-orbit $\cB_j$ of one step-one block of the construction
+of $E_j$, and $E_{j+1}=Q_{\sigma_j}(E_j)$. Then for all $j\ge1$:
+\begin{enumerate}
+\item $E_j$ is self-dual of length $n_j$, with $n_1=n_0+12|\sigma_0|$ and $n_{j+1}=n_j+24|\cB_j|$;
+\item $G$ acts faithfully on $E_j$ by the iterated extensions, with the same relations, and an
+  element has a fixed coordinate on $E_j$ iff it has one on $E_0$;
+\item $\Index(E_j)=R_{\sigma_0}(E_0)$;
+\item $T_h(E_j)=R^h_{\sigma_0}(E_0)$ for every $h\in G$ of order $3$ without fixed coordinates.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Induction on $j$, with Lemmas~\ref{lem:selfdual}, \ref{lem:main}, \ref{lem:eq}
+and~\ref{lem:twined}: by Lemma~\ref{lem:main}, $\Index(E_{j+1})=R_{\sigma_j}(E_j)$ and
+$R_{\sigma_j}(E_j)=R_{\sigma_{j-1}}(E_{j-1})$, and likewise for the twined counts. For $j\ge1$ the blocks of $\sigma_j$ have types $\tau_0$ or $\tau_J$, so
+Construction~\ref{con:eq} applies again.
+\end{proof}
+
+\section{Three families, and the proof of Theorem C}\label{sec:families}
+
+\subsection{The quaternion group on the Golay code}\label{sec:Qfamily}
+Let $J,K\in\Mon(12)$ be given by $J(e_i)=s_ie_{J(i)}$, $K(e_i)=t_ie_{K(i)}$ with
+\[
+\begin{aligned}
+J&=(0\,1)(2\,3)(4\,5)(6\,7)(8\,9)(10\,11), & s&=(-,+,-,+,+,-,-,+,+,-,-,+),\\
+K&=(0\,2)(1\,3)(4\,6)(5\,7)(8\,11)(9\,10), & t&=(-,+,+,-,-,-,+,+,+,-,+,-).
+\end{aligned}
+\]
+Then $J,K\in\Aut(G_{12})$, $J^2=K^2=-1$ and $KJ=-JK$; so $\langle J,K\rangle\cong Q_8$, and it acts
+on the coordinates through a fixed-point-free Klein group with the orbits $\{0,1,2,3\}$,
+$\{4,5,6,7\}$, $\{8,9,10,11\}$. (There are $1320$ such subgroups of $\Aut(G_{12})\cong2.M_{12}$, all
+conjugate.)
+
+The obvious block system does not work:
+
+\begin{proposition}\label{prop:orbits72}
+For every $Q_8=\langle J,K\rangle\subseteq\Aut(G_{12})$ with $J^2=K^2=-1$, the partition $\sigma$
+into its three coordinate orbits has $R_\sigma(G_{12})=72$.
+\end{proposition}
+
+\begin{proof}
+Every $4$-set lies in exactly four hexads, so by Lemma~\ref{lem:8H} it suffices to show that each
+hexad through an orbit $O$ meets the other two orbits once. If a hexad $X\supseteq O$ met another
+orbit in two points $x,y$, the involution $t$ of the Klein group with $t(x)=y$ would preserve $O$ and
+$\{x,y\}$, hence $X$. A lift $\tilde t\in Q_8$ of $t$ would map the word $c$ supported on $X$ to $\pm c$,
+and $\tilde t^2=-1$ would give $c=-c$.
+\end{proof}
+
+A mixed system does work. Let
+\[
+  \sigma_Q=\bigl\{\{0,1\}\sqcup\{2,3\},\ \{4,5\}\sqcup\{10,11\},\ \{6,7\}\sqcup\{8,9\}\bigr\}.
+\]
+The first block is an orbit, of type $\tau_Q$; the other two consist of one $J$-pair from each of the
+remaining orbits, have stabiliser $\langle J\rangle$ and type $\tau_J$, and are swapped by $K$. So
+$Q_8$ is $\sigma_Q$-compatible, and $R_{\sigma_Q}(G_{12})=-24$ (direct evaluation, or
+$H(\sigma_Q)=0$ in Lemma~\ref{lem:8H}).
+
+\begin{proposition}\label{prop:Qfamily}
+For every $k\equiv0\pmod4$ there is a self-dual code $\mathcal Q_k$ of length $12k$ with
+$\Index(\mathcal Q_k)=24$ and $J,K\in\Aut(\mathcal Q_k)$ with $J^2=K^2=-1$, $KJ=-JK$.
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:chain} to $(G_{12},\sigma_Q,Q_8)$. The step-one blocks have stabiliser
+$\langle J\rangle$ of order $4$, so $|\cB_j|=2$; the lengths are $n_1=12+36=48$ and $n_{j+1}=n_j+48$,
+i.e.\ $n_j=48j$. The index is $R_{\sigma_Q}(G_{12})=-24$; re-sign one coordinate
+(\S\ref{sec:prelim}).
+\end{proof}
+
+\subsection{The length-\texorpdfstring{$36$}{36} code of Gaiotto and Johnson-Freyd with \texorpdfstring{$\Z/6$}{Z/6}}
+Let $E_{36}$ be the self-dual code of length $36$ of \cite[Ex.~5.7(3)]{GJF} (Appendix~\ref{app:gjf}),
+and $h$ the coordinate permutation $i\mapsto i+12\pmod{36}$. Then $h\in\Aut(E_{36})$ has order $3$ and
+no fixed coordinate, $\Index(E_{36})=24$ and $T_h(E_{36})=0$ (\cite{GJF}; we have rechecked these
+facts), and $G=\langle-1,h\rangle\cong\Z/6$. Every block has an $h$-orbit of size $3$, so all blocks have type $\tau_0$, and any
+splittings, transported along $h$, make $G$ compatible. Put
+\[
+  \beta=\{0,2,5,25\},\qquad\beta_1=\{2,15,21,28\},\qquad\beta_2=\{5,6,10,31\},
+\]
+$\sigma_A=\{\beta,h\beta,h^2\beta\}$ and $\sigma_B=\{\beta_1,h\beta_1,h^2\beta_1,\beta_2,h\beta_2,
+h^2\beta_2\}$.
+
+\begin{proposition}\label{prop:Zfamily}
+$R_{\sigma_A}(E_{36})=R_{\sigma_B}(E_{36})=24$ and $R^h_{\sigma_A}(E_{36})=R^h_{\sigma_B}(E_{36})=0$.
+Consequently for every $k\equiv0\pmod3$ there is a self-dual code $\mathcal Z_k$ of length $12k$ with
+$\Index(\mathcal Z_k)=24$, and $h\in\Aut(\mathcal Z_k)$ of order $3$ without fixed coordinates and
+with $T_h(\mathcal Z_k)=0$.
+\end{proposition}
+
+\begin{proof}
+The four values are finite computations (\S\ref{sec:verify}). Put $\mathcal Z_3=E_{36}$ and apply
+Proposition~\ref{prop:chain} to $(E_{36},\sigma_A,G)$ and $(E_{36},\sigma_B,G)$. The step-one blocks
+have stabiliser $\{\pm1\}$, so $|\cB_j|=3$. From $\sigma_A$: $n_1=72$ and $n_{j+1}=n_j+72$, giving all
+$k\equiv0\pmod6$. From $\sigma_B$: $n_1=108$ and then $+72$, giving all odd $k\equiv0\pmod3$, $k\ge9$.
+\end{proof}
+
+Among the $13{,}365$ $h$-stable systems of three blocks, $803$ have $R=\pm24$ and $R^h=0$, so good
+choices are plentiful.
+
+\subsection{A code of length 72 with \texorpdfstring{$Q_8\times\Z/3$}{Q8 x Z/3}}
+Let $E_{72}$ be the code of Appendix~\ref{app:e72}: $72=18\cdot4$ coordinates in blocks
+$\{4b,\dots,4b+3\}$, $J,K$ acting on every block by left multiplication with the quaternions $i,j$,
+and $h$ permuting the blocks by $3s+r\mapsto3s+(r+1\bmod3)$. Then $E_{72}$ is self-dual,
+$J,K,h\in\Aut(E_{72})$, $J^2=K^2=-1$, $KJ=-JK$, $h^3=1$, $h$ commutes with $J,K$ and has no fixed
+coordinate; so $G=\langle J,K,h\rangle\cong Q_8\times\Z/3$. Let $\sigma_{QZ}$ consist of the blocks
+$\{4b,4b+1\}\sqcup\{4b+2,4b+3\}$, $0\le b\le5$ (two $h$-orbits). They are orbits of $Q_8$ on the
+coordinates, split into $\langle J\rangle$-orbits, so they have type $\tau_Q$.
+
+\begin{proposition}\label{prop:QZfamily}
+$R_{\sigma_{QZ}}(E_{72})=24$ and $R^h_{\sigma_{QZ}}(E_{72})=0$. Consequently for every
+$k\equiv0\pmod{12}$ there is a self-dual code $\mathcal{QZ}_k$ of length $12k$ with
+$\Index(\mathcal{QZ}_k)=24$ and $J,K,h\in\Aut(\mathcal{QZ}_k)$ with the relations above.
+\end{proposition}
+
+\begin{proof}
+The two values are computations (\S\ref{sec:verify}). In Proposition~\ref{prop:chain} the step-one
+blocks have stabiliser $\langle J\rangle$ of order $4$, so $|\cB_j|=6$, $n_1=144$ and
+$n_{j+1}=n_j+144$.
+\end{proof}
+
+\subsection{Proof of Theorem C}
+If $12\mid k$ take $\mathcal{QZ}_k$. If $4\mid k$ and $3\nmid k$ take $\mathcal Q_k$. If $3\mid k$ and
+$4\nmid k$ take $\mathcal Z_k$. Otherwise take a code from Theorem~B. \qed
+
+\begin{proof}[Proof of the Corollary]
+$m=1$ and $m=2$ are immediate ($-1\in\Aut(C)$ for every code). $m=3$: $g=h$. $m=4$: $g=J$ has order
+$4$ and $g^2=-1$. $m=6$: $g=-h$ has order $6$, $g^3=-1$, and $g^2=h^2$ permutes the coordinates in
+$3$-cycles with $T_{h^2}=T_h=0$. $m=12$: $g=Jh$ has order $12$, $g^6=J^2=-1$ and $g^4=h$. In each case
+$\Index(C)=24$ and the hypotheses of \cite[Thm.~5.6]{GJF} hold.
+\end{proof}
+
+\section{Automorphisms with \texorpdfstring{$g^4=-1$}{g4 = -1}: proof of Theorem D}\label{sec:obstruction}
+
+Let $g\in\Aut(C)$ with $g^4=-1$, $n=12k$. On a cycle of length $\ell$ with sign product $\epsilon$,
+$g^\ell$ acts as $\epsilon$; so $g^4=-1$ forces every cycle to have length $4$ and $\epsilon=-1$.
+There are $3k$ cycles, so $\varepsilon(g)=(-1)^{3k}$, and by \eqref{eq:fsign} $\Index(C)=0$ if $k$
+is odd. Let $k$ be even. Then $f\circ g=f$, and $\langle g\rangle\cong\Z/8$ acts freely on
+$\F^n\setminus\{0\}$ (every nontrivial subgroup contains $g^4=-1$), so $F(X)\in8\Z$ for every
+$g$-invariant $X\subseteq\F^n$.
+
+\emph{Structure.} Over $\F$, $x^4+1=(x^2+x+2)(x^2+2x+2)$, and on each $4$-cycle the characteristic
+polynomial of $g$ is $x^4+1$. So $\F^n=V_+\oplus V_-$ with $V_\pm$ the kernels of the two factors at
+$g$, each the sum over the cycles of $2$-dimensional pieces. Since $g$ is an isometry and the roots of
+$x^2+x+2$ are inverse to those of $x^2+2x+2$, both $V_\pm$ are totally isotropic, and they are dually
+paired. Hence the $g$-invariant self-dual codes are $C=C_+\oplus C_-$ with $C_+\subseteq V_+$ any
+$g$-invariant subspace and $C_-$ its annihilator in $V_-$. On $V_+$, $g$ acts as a scalar
+$\lambda\in\mathbb F_9$ of order $8$, so $C_+$ is any $\mathbb F_9$-subspace. The element $J=g^2$
+acts on $\F^n$ as multiplication by $\lambda^2=\sqrt{-1}$; it is an isometry with $J^2=-1$, so
+$\F^n$ is an $\mathbb F_9$-vector space and the form is the trace of a Hermitian form.
+
+\emph{A four-code identity.} Let $D\subseteq C$ be $J$-invariant of codimension $2$. Then $D^\perp/D$
+is a nondegenerate Hermitian plane over $\mathbb F_9$. Its ternary form is hyperbolic, with $32$
+nonzero isotropic vectors, and these form exactly the $4$ isotropic $\mathbb F_9$-lines. So the
+$J$-invariant self-dual codes $C_1,\dots,C_4\supseteq D$ contain all isotropic vectors of $D^\perp$,
+each outside $D$ in exactly one of them. Maximal vectors are isotropic, and Poisson summation with
+$\hat f=3^{n/2}f$ gives $F(D^\perp)=9F(D)$. Hence
+\begin{equation}\label{eq:four}
+  \Index(C_1)+\Index(C_2)+\Index(C_3)+\Index(C_4)=12F(D).
+\end{equation}
+
+\emph{Induction.} If $C_+\ne0$, let $D_+\subset C_+$ be an $\mathbb F_9$-hyperplane and
+$D=D_+\oplus C_-$. Then $D^\perp/D=L_+\oplus L_-$ with $L_\pm$ the images of the $g$-eigenlines, on
+which $g$ acts by $\lambda$ and $-\lambda$. The four codes through $D$ are $C_1=C$,
+$C_2=D_+\oplus D_+^\circ$ ($D_+^\circ$ the annihilator of $D_+$ in $V_-$), and two codes $C_3,C_4$
+whose lines $\mathbb F_9(u+au')$ ($u\in L_+$, $u'\in L_-$, $a\ne0$) are exchanged by $g$. As $f\circ
+g=f$, $\Index(C_3)=\Index(C_4)$, which lies in $24\Z$ by Theorem~A; and $F(D)\in8\Z$ because $D$ is
+$g$-invariant. So \eqref{eq:four} gives $\Index(C)+\Index(C_2)\equiv0\pmod{48}$, and $\dim C_{2,+}<
+\dim C_+$. After finitely many steps $C_+=0$ and $C=V_-$, a sum of $3k$ self-dual codes of length $4$
+(tetracodes), which has no maximal codewords. Hence $48\mid\Index(C)$. \qed
+
+\section{Complements: neighbours and two congruences}\label{sec:complements}
+
+Two self-dual codes $C\ne C'$ of length $n$ are \emph{neighbours} if $\dim(C\cap C')=n/2-1$
+(Kneser \cite{Kneser}).
+
+\begin{lemma}\label{lem:connected}
+Any two self-dual codes of the same length are joined by a chain of neighbours.
+\end{lemma}
+
+\begin{proof}
+Let $C_1\ne C_2$ and $x\in C_2\setminus C_1$. Then $C'=(C_1\cap x^\perp)+\langle x\rangle$ is a
+self-dual neighbour of $C_1$, and $C'\cap C_2\supsetneq C_1\cap C_2$. Induct on
+$n/2-\dim(C_1\cap C_2)$.
+\end{proof}
+
+\begin{lemma}[neighbour identity]\label{lem:neighbour}
+Let $\Lambda\colon\F^n\to\Z$ satisfy $\hat\Lambda=3^{n/2}\Lambda$, vanish on anisotropic vectors, and
+put $S(X)=\sum_{x\in X}\Lambda(x)$. If $C,C'$ are neighbours with $D=C\cap C'$, then
+$S(C)+S(C')=4S(D)$.
+\end{lemma}
+
+\begin{proof}
+$D^\perp=C+C'$ by dimension. For $c\in C\setminus D$ and $c'\in C'\setminus D$, $c\cdot c'\ne0$, and
+the cosets $D+ac+bc'$ with $ab\ne0$ consist of anisotropic vectors ($x\cdot x=2ab\,c\cdot c'$). So
+$S(D^\perp)=S(C)+S(C')-S(D)$, and (P) gives $S(D^\perp)=3S(D)$.
+\end{proof}
+
+\begin{remark}\label{rem:neighbour8}
+With $\Lambda=f$ and $12\mid n$ this gives $\Index(C)+\Index(C')=4F(D)$, and $F(D)$ is even ($x\mapsto-x$), so
+$\Index(C')\equiv-\Index(C)\pmod8$. With Lemma~\ref{lem:connected} and a sum of tetracodes
+(index $0$) as base point, this is a second proof of $8\mid\Index(C)$.
+\end{remark}
+
+\begin{proposition}\label{prop:mod48}
+Let $E$ be self-dual of length $m\equiv0\pmod{12}$ and $\sigma$ any block system. Then
+$R_\sigma(E)\equiv\Index(E)\pmod{48}$.
+\end{proposition}
+
+\begin{proof}
+Let $\Lambda=w_\sigma$, with $s$ singletons and $b$ blocks. One checks
+$\hat\lambda=9\lambda$ on $\F^4$ (summing over the words of weight $1$ and $4$), so by (M) and (T)
+$\hat\Lambda=(\isq)^s9^b\Lambda=3^{m/2}\Lambda$, as $s=m-4b\equiv0\pmod4$. If $\Lambda(x)\ne0$, then
+$\wt(x)=s+\sum_\beta w_\beta$ with $w_\beta\in\{1,4\}$, so $\wt(x)\equiv s+b=m-3b\equiv0\pmod3$: $\Lambda$
+vanishes on anisotropic vectors. So Lemma~\ref{lem:neighbour} applies to $\Lambda$ and to $f$, and
+$\Psi=\sum(\Lambda-f)$ satisfies $\Psi(C)+\Psi(C')=4\Psi(D)$. Now $\Lambda-f$ is even on every vector
+(on maximal vectors both are $\pm1$; otherwise $f=0$ and $\Lambda$ has a factor $\lambda(1)=-2$ or
+vanishes), and $x\mapsto-x$ preserves it, so $\Psi(D)\in4\Z$ and $\Psi(C')\equiv-\Psi(C)\pmod{16}$.
+For the sum of tetracodes whose blocks include those of $\sigma$, $\Lambda=f=0$. By
+Lemma~\ref{lem:connected}, $R_\sigma(E)\equiv\Index(E)\pmod{16}$; both lie in $24\Z$, by Theorem~A for
+$\Index(E)$ and by Lemma~\ref{lem:main} and Theorem~A for $R_\sigma(E)=\Index(Q_\sigma(E))$.
+\end{proof}
+
+So a pair $(E,\sigma)$ can have $R_\sigma(E)=\pm24$ only if $\Index(E)\equiv24\pmod{48}$; the values
+$\pm24,\pm72$ of $R_\sigma(G_{12})$ in \S\ref{sec:existence} are all $\equiv24$.
+
+\begin{proposition}\label{prop:eo8}
+In every self-dual ternary code the numbers of even and of odd maximal codewords are both divisible
+by $8$.
+\end{proposition}
+
+\begin{proof}
+We may assume $12\mid n$ (Lemma~\ref{lem:basic}). Let $U(X)$ be the number of maximal vectors in $X$
+and $\Delta=U-F=2\cdot\#\{\text{odd}\}$. As in
+Lemma~\ref{lem:neighbour}, $\Delta(C)+\Delta(C')=\Delta(D^\perp)+\Delta(D)$ and $F(D^\perp)=3F(D)$.
+Poisson summation with $\hat\iota$ gives $3^{n/2-1}U(D^\perp)=\sum_{u\in D}2^{n-\wt u}(-1)^{\wt u}$.
+Modulo $16$ only $\wt u\in\{n,n-3\}$ survive, and the words of weight $n-3$ come in pairs $\pm u$, so
+$U(D^\perp)\equiv3^{1-n/2}U(D)\pmod{16}$. As $U(D)$ is even and $3^{1-n/2}\equiv3\pmod8$,
+$U(D^\perp)+U(D)\equiv4U(D)\pmod{16}$, and
+$\Delta(C)+\Delta(C')\equiv4\Delta(D)=8\#\{\text{odd in }D\}\equiv0\pmod{16}$, since odd vectors of
+$D$ come in pairs $\pm x$. A sum of tetracodes has $\Delta=0$, so $16\mid\Delta(C)$ for all $C$ by
+Lemma~\ref{lem:connected}; hence $8\mid\#\{\text{odd}\}$, and $8\mid\#\{\text{even}\}$ by Theorem~A.
+\end{proof}
+
+\section{Computations and formal verification}\label{sec:verify}
+
+\subsection*{Formal verification}
+The repository \cite{repo} contains a Lean~4/Mathlib formalization. Its theorem
+\texttt{GJF.conjecture\_1\_4} states, for codes $C$ given as \texttt{Submodule (ZMod 3) (Fin n $\to$ ZMod 3)},
+\[
+\begin{aligned}
+  &\forall n\ \forall C\subseteq\F^n:\quad \mathtt{IsSelfDual}\,C\ \wedge\ 0<n\ \Longrightarrow\
+    24\mid\mathtt{gjfIndex}\,C,\qquad\text{and}\\
+  &\forall k\ge1\ \exists C\subseteq\F^{12k}:\quad \mathtt{IsSelfDual}\,C\ \wedge\
+    \mathtt{gjfIndex}\,C=24,
+\end{aligned}
+\]
+i.e.\ Theorems~A and~B, with \texttt{IsSelfDual C} meaning $x\in C\iff x\perp C$ and
+\texttt{gjfIndex} the number of even minus the number of odd maximal codewords. It depends only on the
+axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}; finite checks (the local
+identities, the Golay values of Proposition~\ref{prop:base}) are done by the kernel. The divisibility
+proof follows \S\ref{sec:design}; $|C|^2=3^n$ is obtained by Poisson summation of the constant
+function, so no dimension theory is needed. The repository also formalizes the code-level
+consequences of Theorem~C that the Main Question uses, for all $k$ (\texttt{GJF.Ex.tierA}), with an
+earlier choice of seeds and with the value $R_\sigma(E_{72})=24$ as an explicit hypothesis.
+
+\subsection*{Computations}
+The finite facts used above are:
+\begin{itemize}
+\item Proposition~\ref{prop:base} and Lemma~\ref{lem:8H}: sums over the $729$ words of $G_{12}$.
+\item $J,K\in\Aut(G_{12})$ and $R_{\sigma_Q}(G_{12})=-24$: $729$ words.
+\item Proposition~\ref{prop:Zfamily}: a word contributing to $R_\sigma(E)$ is nonzero on every
+  singleton, hence determined by its signs on an information set of singletons (and its values on a
+  few block coordinates). This leaves $2^{18}$ candidates for $\sigma_A$ and $2^{12}\cdot3^6$ for
+  $\sigma_B$. The twined values are sums over the $3^6$ words of $E_{36}^h$.
+\item Proposition~\ref{prop:QZfamily}: $R_{\sigma_{QZ}}(E_{72})$ is a sum over $2^{36}$ sign patterns
+  on an information set outside $\sigma_{QZ}$. It was computed by three independent programs, one of
+  them via the description of $Q_8$-invariant codes as $\F^2\otimes U$. The twined value is a sum over
+  the $3^{12}$ words of $E_{72}^h$.
+\end{itemize}
+In addition, the codes of Theorems~B and~C were built explicitly to lengths $84$ (Theorem~B) and $96$,
+$180$, $288$ (the three families of Theorem~C). Self-duality, the group relations and the block types
+were checked on every code, sign-exact indices at lengths $24$, $36$, $48$, $72$, and vanishing twined
+counts at lengths $72$, $108$, $144$, $180$. Scripts and generator matrices are in \cite{repo}; one
+script re-derives every finite fact of this paper from the data printed in it, with its own
+implementation of Construction~\ref{con:eq}.
+
+\appendix
+
+\section{Seed data}\label{app:seeds}
+
+\subsection{The code \texorpdfstring{$E_{36}$}{E36}}\label{app:gjf}
+Generator matrix of the code of \cite[Ex.~5.7(3)]{GJF}, coordinates $0,\dots,35$; the automorphism is
+$h\colon e_i\mapsto e_{i+12}$ (indices mod $36$).
+{\footnotesize
+\begin{verbatim}
+100000000000000002202221002011111202
+010000000000000001200200200021000110
+001000000000000001000210122010210120
+000100000000000001000010211101220210
+000010000000000000201221022202011111
+000001000000000000202022200202110201
+000000100000000001001011021121100001
+000000010000000001200022201200120210
+000000001000000002102001011211121021
+000000000100000002101011110100212212
+000000000010000001200201102221112110
+000000000001000001001201001120002000
+000000000000100000002211111202221012
+000000000000010002200211212021221020
+000000000000001002000210110101001122
+000000000000000102202222102211221211
+000000000000000012101012011112210012
+000000000000000000012112012121111022
+\end{verbatim}
+}
+
+\subsection{The code \texorpdfstring{$E_{72}$}{E72}}\label{app:e72}
+Identify each block $\{4b,4b+1,4b+2,4b+3\}$ with the quaternion algebra $A=\F\langle i,j\rangle$, the
+four coordinates being those of $a+bi+cj+dk$ ($k=ij$), and $A$ with $M_2(\F)$ via
+$i\mapsto\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$,
+$j\mapsto\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$. Explicitly, the matrix
+$\left(\begin{smallmatrix}p&q\\r&s\end{smallmatrix}\right)$ has coordinates
+$p(2,0,1,1)+q(0,2,1,2)+r(0,1,1,2)+s(2,0,2,2)$. Let $U\subseteq\F^{36}$ be the span of the rows below,
+the coordinates $2b,2b+1$ belonging to block $b$. Then $E_{72}$ consists of the tuples
+$(X_0,\dots,X_{17})$ of matrices $X_b\in M_2(\F)$ such that the first rows of $X_0,\dots,X_{17}$,
+concatenated, form a vector of $U$, and so do the second rows.
+$J$ and $K$ are left multiplication by $i$ and $j$ on every $X_b$, i.e.\ on the coordinates of each
+block $J(e_0,e_1,e_2,e_3)=(e_1,-e_0,e_3,-e_2)$ and $K(e_0,e_1,e_2,e_3)=(e_2,-e_3,-e_0,e_1)$, and $h$
+maps block $3s+r$ to block $3s+(r+1\bmod3)$. $E_{72}$ is self-dual because $U$ is Lagrangian for
+$\sum_b(u_{2b}v_{2b+1}-u_{2b+1}v_{2b})$.
+{\footnotesize
+\begin{verbatim}
+100000000000000000122202220220200210
+010000000000000000112200100211122110
+001000000000000000021222202202102002
+000100000000000000001122111002101221
+000010000000000000220212022022021020
+000001000000000000220011021110211012
+000000100000000000220201112121211220
+000000010000000000202100021010022211
+000000001000000000012202211121202112
+000000000100000000002021100210110222
+000000000010000000020122212111122021
+000000000001000000210020101002221102
+000000000000100000211201100011101120
+000000000000010000111220200121000022
+000000000000001000012112111000201011
+000000000000000100201112212001220000
+000000000000000010120121001110112010
+000000000000000001122011012120002200
+\end{verbatim}
+}
+
+\begin{thebibliography}{99}
+\bibitem{AHM}
+M.~Araya, M.~Harada and K.~Momihara,
+\emph{Hadamard matrices related to a certain series of ternary self-dual codes},
+arXiv:2205.15498.
+
+\bibitem{II}
+[Authors], \emph{Holomorphic $\mathcal N=1$ superconformal field theories of minimal index},
+in preparation.
+
+\bibitem{CS}
+J.~H.~Conway and N.~J.~A.~Sloane,
+\emph{Sphere Packings, Lattices and Groups}, 3rd ed., Springer, 1999.
+
+\bibitem{GJF}
+D.~Gaiotto and T.~Johnson-Freyd,
+\emph{Holomorphic SCFTs with small index},
+Canad.\ J.\ Math.\ \textbf{74} (2022), no.~2, 573--601; arXiv:1811.00589.
+
+\bibitem{Hopkins}
+M.~J.~Hopkins,
+\emph{Algebraic topology and modular forms},
+Proc.\ ICM Beijing 2002, Vol.~I, 291--317.
+
+\bibitem{Kneser}
+M.~Kneser,
+\emph{Klassenzahlen definiter quadratischer Formen},
+Arch.\ Math.\ \textbf{8} (1957), 241--250.
+
+\bibitem{Lean}
+L.~de Moura and S.~Ullrich,
+\emph{The Lean~4 theorem prover and programming language},
+in: Automated Deduction -- CADE 28, Lecture Notes in Comput.\ Sci.\ \textbf{12699}, Springer, 2021,
+625--635.
+
+\bibitem{Mathlib}
+The mathlib Community,
+\emph{The Lean mathematical library},
+in: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs
+(CPP 2020), 367--381.
+
+\bibitem{repo}
+[Repository URL to be added].
+\end{thebibliography}
+
+\end{document}

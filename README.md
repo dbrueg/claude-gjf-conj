@@ -28,6 +28,8 @@ paper/index24.tex (+ .pdf)    short paper draft: index-24 codes in every length 
 paper/main-question.tex (+ .pdf)  second draft: the Main Question for all k (Theorems A–D), and the obstruction
 paper/divisibility.tex (+ .pdf) the divisibility proofs: GJF, Kneser neighbours, modular 2-design, finite Poisson 2-design
 paper/review-2026-09-28.md    review of both halves of Conj 1.4 and of the Main Question: verdict, issues, simplifications, proposed two-paper structure
+paper/conj14.tex (+ .pdf)     Paper I draft (2026-09-29): Theorems A (24 | Index), B (index 24 at every 12k), C (codes with the symmetry the Main
+                              Question needs, from the simpler seeds Golay/E₃₆/E₇₂), D (g⁴ = −1 ⇒ 48 | Index); checked by theory/conj14_paper_check.py
                               (paper/review-2026-09-26.md: the earlier line-by-line review of index24.tex)
 notes/tmf-context.md          TMF background
 lean/                         Lean 4 + Mathlib (see lean/README.md): both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
@@ -79,6 +81,7 @@ ternary60/                    Rust crate (std only): index computation, neighbou
                               review_gjf36_z6.py: GJF's k = 3 code as a ℤ/6 = <−h> seed: all 3-block systems, sampled 6-block systems, chains to n = 180 (log beside it)
                               review_golay_q8.py: the 1320 Q₈ ⊂ Aut(Golay); orbit systems give R = 72, mixed systems −24; the Q₈-chain from Golay to n = 96 (log beside it)
                               review_seed_verify.py: fresh-code check (information-set R_σ) of the printed E₃₆ claims and of both new seeds and their first chain codes (log beside it)
+                              conj14_paper_check.py: every computable claim of paper/conj14.tex from the data printed in it; rebuilds all chains of Thms B, C (log beside it)
 scratch/                      exploratory scripts (not canonical; cited in notes §5.1(e))
 scripts/fetch_gjf_source.sh   downloads GJF's arXiv TeX source into literature/ (gitignored)
 scripts/build_nauty.sh        builds nauty's dreadnaut into tools/ (gitignored), for mainq_automorphisms.py
@@ -96,6 +99,7 @@ python3 existence_quadruple.py       # Lemma 5.8 + Theorem 5.9: index 24 at ever
 python3 divisibility_check.py        # critical check of the finite proof, incl. four-point identity (≈ 5 min)
 python3 design_poisson.py            # finite Poisson proof of the signed 2-design (notes §2 Step 1′) (≈ 5 min)
 python3 paper_check.py               # every computable claim of paper/index24.tex, incl. a sign-exact Index at n = 36 (≈ 15 min)
+python3 conj14_paper_check.py        # every computable claim of paper/conj14.tex (Paper I); uses rsigma_is if built, --fast skips it
 python3 mainq_jchain.py              # J-chain: m = 4 (≈ 2 min)
 python3 mainq_z12chain.py            # ℤ/12 chains: m = 3, 6, 12 (≈ 30 min; the n = 144 twined count dominates)
 python3 mainq_obstruction.py         # g⁴ = −1 ⇒ 48 | Index, and the four-code identity (≈ 20 min)
