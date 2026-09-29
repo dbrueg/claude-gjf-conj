@@ -582,6 +582,7 @@ Consider a G-equivariant chain (Lemma 4.1 with G = Q₈ × ⟨h⟩) seeded at k 
 - gcd ∈ {3, 6, 12}: the ℤ/12-chains (Thm 4.4).
 - gcd = 8: the Q₈-chain (Cor 8.2).
 - gcd = 24: the Q₈ × ℤ/3-chain (Thm 10.1).
+- *TMF.* For k = 24 (c = 288, index ±1) the SVOA represents, under Stolz–Teichner, a unit of π₅₇₆TMF: the periodicity class Δ²⁴ up to torsion (`notes/tmf-context.md`, last section).
 - *Caveats.* This relies on GJF's orbifold and anomaly theorems, on Thm 8.1, and on [I] (not yet independently read). Thm 8.1 has two proofs. One uses the coprime-gauging lemma (§8.2). The other (§8.4–8.5) uses only cited standard theorems: S-invariance of holomorphic SVOA characters, lattice twisted modules, the rSH³ layer bound, and additivity of anomalies.
 
 --------------------------------------------------------------------------------------------
