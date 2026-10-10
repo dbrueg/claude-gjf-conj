@@ -70,6 +70,16 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
     - Pin lifts on all Q₈-orbits (Golay, E₇₂) and on the full Cl(12) spinor module;
     - the eta identities of Lemma 4.5, and the S-defect (numerically at k = 4, 8; the zero set exactly);
     - Donnelly eta invariants.
+- **Referee reports (2026-10-10): `paper/review-2026-10-10.md`.** Both papers were reviewed as a referee would: an own full read plus four independent fresh-context reads, every finding re-checked.
+  - No mathematical error in either paper. Recommendations: Paper I accept after minor revision; Paper II moderate revision.
+  - R_{σ_QZ}(E₇₂) = +24 was confirmed by a fourth, independent C program.
+  - Main issues:
+    - both abstracts overclaim that no cyclic group can work when 8 | k (Thm D only excludes GJF's construction);
+    - Paper II's input (A4) (additivity) is mis-cited although it carries the 8 | k case, and (A1)–(A3) are mis-attributed;
+    - Paper II uses non-faithful actions outside (A1);
+    - Paper II misses Albert–Kaidi–Lin (PTEP 2023, arXiv:2210.14923), who ask for a c = 288 theory with a unique vacuum and index ±1. Our k = 24 orbifold is one, conditional on ORB.
+    - Paper I: Prop 7.4 omits T_h = 0; three statements (Prop 3.3, Prop 9.5, Thm D) need "positive length".
+  - The suggested revision order is in the review's §4.
 
 ## Next steps
 
@@ -77,7 +87,7 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
 2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review is in `paper/review-2026-09-26.md`, and its wording edits are applied (author and repository placeholders remain). Still wanted: a reading by a second person.
 3. Optional: the [C] in §5.1(d). (R_σ(E) ≡ Index(E) mod 48 is now proved: notes §5.1(f‴), 2026-09-28.)
 3′. Papers: both are drafted. Paper I (`paper/conj14.tex`) supersedes `index24.tex` and the code half of `main-question.tex`; Paper II (`paper/minimal-index.tex`, 2026-10-10) supersedes the VOA half.
-  - Wanted for both: a second reader and the placeholders (authors, repository URL).
+  - Wanted for both: the revisions of `paper/review-2026-10-10.md` (its §4 gives the order), a second (human) reader, and the placeholders (authors, repository URL).
   - Paper I: decide whether §§6–8 stay in it. Paper II cites them (Thm C, Lemma 6.2, §7.3), so moving them means moving those citations too.
   - Paper II: an independent reading of the cited fermionic inputs (Hypothesis ORB, (A6)–(A7)), and a literature check.
 4. **Lean formalization of the Main Question**: Tier A is done (above). Open: (a) certify R_σ(E₇₂) = 24 (a new seed with a cheap certificate, or `native_decide` on the information-set sum, whose soundness is `Eval.fastT_eq` + [CS] Lemma 2.5); (b) speed up the ℤ/12 certificates (they dominate `lake build`); (c) Tier B (VOA side as a hypothesis structure), `notes/blueprint/README.md` §4.
