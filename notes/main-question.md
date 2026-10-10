@@ -135,7 +135,7 @@ so T_h is constant along an h-equivariant chain.
 
 ## 5. An obstruction for m ∈ {8, 24}, and what is left
 
-**Theorem 5.1 [P; V].** Let C be self-dual of length 12k and let g ∈ Aut(C) ⊂ 2^{12k}:S_{12k} satisfy g⁴ = −1. Then **48 | Index(C)**, and Index(C) = 0 if k is odd.
+**Theorem 5.1 [P; V; Lean].** Let C be self-dual of length 12k and let g ∈ Aut(C) ⊂ 2^{12k}:S_{12k} satisfy g⁴ = −1. Then **48 | Index(C)**, and Index(C) = 0 if k is odd.
 - g⁴ = −1 forces every coordinate cycle of g to have length 4 with an odd number of sign changes (a cycle of length 1 or 2 gives g⁴ = +1 there).
 - *k odd.* For a maximal word, f(gx) = (Π_i s_i) f(x) = (−1)^{#cycles} f(x) = (−1)^{3k} f(x). So Index = −Index = 0.
 - *k even.* Then f∘g = f, and ⟨g⟩ ≅ ℤ/8 acts freely on nonzero vectors (every nontrivial subgroup contains g⁴ = −1), so F(X) := Σ_X f ∈ 8ℤ for every g-invariant X ⊂ F₃ⁿ∖{0}.
@@ -146,6 +146,10 @@ so T_h is constant along an h-equivariant chain.
   - *Induction.* C₊ ↦ D₊ lowers dim C₊ by one, and C₊ = 0 gives C = V₋^{3k}, a sum of tetracodes (V₋ is a self-dual [4,2] code), with Index 0. □
 - [V: `mainq_obstruction.py`, log beside it] (◇) sign-exact on random J-invariant configurations at n = 24 (8 Lagrangians over D, exactly 4 J-invariant); g-neighbour configurations at n = 24, 48 (2 g-invariant + 2 swapped J-invariant codes, F(C) + F(C′) ≡ 0 mod 48, 8 | F(D)); random g-invariant codes at n = 24, 36, 48, 60, 72: |Index| ∈ 48ℤ always, and Index = 0 for k odd.
 - (◇) is a Hermitian analogue of the neighbour identity (★) of [I §1]; it holds for every J-invariant configuration, with no g.
+- **Formally verified in Lean 4 [Lean: `lean/GJF/Obstruction.lean`] (2026-10-10).** `GJF.Obs.theoremD : IsSelfDual C → 0 < n → g.Inv C → g ^ 4 = -1 → 4 ∣ n ∧ 48 ∣ gjfIndex C ∧ (Odd (n/4) → gjfIndex C = 0)` for a signed permutation g (`theoremD_twelve`: the form above). Standard axioms only.
+  - The formal proof needs no F₉ and no classification of Hermitian planes. V_± = ker(g² ± g − 1) are isotropic (from the isometry and the relation alone), and e₊ = g³ + g − 1 is the projector onto V₊ along V₋.
+  - For v ∈ C ∩ V₊, v ≠ 0, take w ∈ V₋ with v·w = 1 and W = ⟨w, gw⟩. Then D = C ∩ W^⊥ has D^⊥ = C ⊕ W. For c ∈ C ∖ D, c + y (y ∈ W) is isotropic only for y ∈ {0, ±L(c)}, where L(c) = (c·w)·gw − (c·gw)·w. So the four codes through D are C, C′ = D + W, and the graphs C₃, C₄ of ±L, with g·C₃ = C₄ because L∘g = −g∘L.
+  - The induction runs on |C ∩ V₊| and proves only 16 | Index (using 8 | Index(C₃) and 4 | F(D) from the free ⟨g²⟩ ≅ ℤ/4 action); Theorem A gives the 3. The base case C ⊆ V₋ has no maximal words, because on such a word g would act as −1. The cycle count gives 4 | n and f∘g = (−1)^{n/4} f.
 
 **Corollary 5.2 [P].** Theorem 5.6 of GJF never applies when 8 | gcd(k, 24), i.e. k ≡ 0 mod 8: condition 1 asks for g of order m ∈ {8, 24} with g^{m/2} = −1, so h = g^{m/8} has h⁴ = −1, and then 48 | Index(C), contradicting Index(C) = 24. The same holds for any cyclic orbifold whose twisted sectors are killed this way.
 

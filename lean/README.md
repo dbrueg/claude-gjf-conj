@@ -31,6 +31,19 @@ theorem GJF.Ex.tierA (hE : Q8Z3.E72Hyp) (k : ℕ) (hk : 1 ≤ k) : MQcode k
 that the kernel cannot do; it was checked by three independent programs
 (`../ternary60/theory/mainq_e72_infoset.py`). Every other seed fact is checked by the kernel.
 
+Theorem D of `../paper/conj14.tex` (an automorphism with `g⁴ = -1` forces `48 ∣ Index`) is
+formalized as well:
+
+```lean
+theorem GJF.Obs.theoremD (C : Submodule (ZMod 3) (Fin n → ZMod 3)) (hC : IsSelfDual C)
+    (hn : 0 < n) (g : Ex.SP (Fin n)) (hgC : g.Inv C) (h4 : g ^ 4 = -1) :
+    4 ∣ n ∧ (48 : ℤ) ∣ gjfIndex C ∧ (Odd (n / 4) → gjfIndex C = 0)
+```
+
+`g` is a signed permutation (a monomial map) with `g C ⊆ C`. `GJF.Obs.theoremD_twelve` is the
+paper's form (length `12k`, `Index = 0` for odd `k`), and `GJF.Obs.index_ne_24` the consequence
+that a code of index `±24` has no such `g`.
+
 Everything uses only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 There is no `sorry` and no `native_decide`: finite checks are done by the kernel with `decide`.
 
@@ -55,6 +68,7 @@ There is no `sorry` and no `native_decide`: finite checks are done by the kernel
 | `GJF/ChainZ12.lean` | The ℤ/12-chains A and B and the k = 3 seed (`exists_Z12`, m ∈ {3, 6, 12}). |
 | `GJF/ChainQ8Z3.lean` | The Q₈ × ℤ/3-chain (`exists_Q8Z3`, m = 24), given `E72Hyp`. |
 | `GJF/TierA.lean` | `MQcode` and `tierA`. |
+| `GJF/Obstruction.lean` | Theorem D (`GJF.Obs.theoremD`). The paper's proof without `𝔽₉`: `V₊ = ker(g² + g - 1)` and `V₋ = ker(g² - g - 1)` are isotropic with projector `g³ + g - 1`; for `v ∈ C ∩ V₊` and `w ∈ V₋` with `v·w = 1`, `D = C ∩ ⟨w, gw⟩^⊥` has `D^⊥ = C ⊕ ⟨w, gw⟩`, and the self-dual codes through `D` that carry maximal words are `C`, `D + ⟨w, gw⟩` and the graphs of `±L`, `L c = (c·w) gw - (c·gw) w` (`Setup.four_code`). Induction on `|C ∩ V₊|` gives `16 ∣ Index`; the cycle count (`orbit_count`) gives `4 ∣ n` and `f ∘ g = (-1)^(n/4) f`. A non-vacuity example: the tetracode with an element of order 8. |
 | `GJF/Basic.lean` | A toolchain check: M₂(SL₂ℤ) = 0 and the Jacobi theta law. The proofs above don't use them. |
 
 ## Building
@@ -68,6 +82,7 @@ To inspect the axioms, put this in a file that imports `GJF` and compile it with
 ```lean
 #print axioms GJF.conjecture_1_4
 #print axioms GJF.Ex.tierA
+#print axioms GJF.Obs.theoremD
 ```
 
 The toolchain is `leanprover/lean4:v4.35.0-rc3`, with Mathlib `master` pinned in `lake-manifest.json`.

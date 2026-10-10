@@ -168,7 +168,8 @@ the codes.
 
 \subsection*{Formal verification}
 Theorems~A and~B are formalized in Lean~4 with Mathlib \cite{Lean,Mathlib}, as the single
-statement \texttt{GJF.conjecture\_1\_4} (\S\ref{sec:verify}). It uses only the standard axioms;
+statement \texttt{GJF.conjecture\_1\_4} (\S\ref{sec:verify}), and so is Theorem~D
+(\texttt{GJF.Obs.theoremD}). They use only the standard axioms;
 the index is defined literally as $\#\{\text{even}\}-\#\{\text{odd}\}$ maximal codewords.
 
 \subsection*{Organisation}
@@ -955,7 +956,19 @@ i.e.\ Theorems~A and~B, with \texttt{IsSelfDual C} meaning $x\in C\iff x\perp C$
 axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}; finite checks (the local
 identities, the Golay values of Proposition~\ref{prop:base}) are done by the kernel. The divisibility
 proof follows \S\ref{sec:design}; $|C|^2=3^n$ is obtained by Poisson summation of the constant
-function, so no dimension theory is needed. The repository also formalizes the code-level
+function, so no dimension theory is needed.
+
+Theorem~D is formalized as \texttt{GJF.Obs.theoremD}, for a signed permutation $g$ with $gC\subseteq C$
+and $g^4=-1$: it gives $4\mid n$, $48\mid\Index(C)$, and $\Index(C)=0$ if $n/4$ is odd. The formal
+proof follows \S\ref{sec:obstruction} without the field $\mathbb F_9$. The projector onto $V_+$ along
+$V_-$ is $g^3+g-1$, so $C=(C\cap V_+)\oplus(C\cap V_-)$. For $v\in C\cap V_+$, $v\neq0$, choose
+$w\in V_-$ with $v\cdot w=1$, put $W=\langle w,gw\rangle$ and $D=C\cap W^\perp$. Then
+$D^\perp=C\oplus W$, and a word $c+y$ ($c\in C\setminus D$, $y\in W$) is isotropic only for
+$y\in\{0,\pm L(c)\}$, where $L(c)=(c\cdot w)\,gw-(c\cdot gw)\,w$. So the four codes through $D$ are $C$,
+$C_2=D+W$, and the graphs $C_3,C_4$ of $\pm L$, with $g\,C_3=C_4$; no classification of Hermitian
+planes is needed. The induction is on $|C\cap V_+|$ and proves $16\mid\Index(C)$, using
+$8\mid\Index(C_3)$ and $4\mid F(D)$ (the free action of $\langle g^2\rangle\cong\Z/4$); Theorem~A
+supplies the factor $3$. The repository also formalizes the code-level
 consequences of Theorem~C that the Main Question uses, for all $k$ (\texttt{GJF.Ex.tierA}), with an
 earlier choice of seeds and with the value $R_\sigma(E_{72})=24$ as an explicit hypothesis.
 

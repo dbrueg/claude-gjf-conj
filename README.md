@@ -32,7 +32,7 @@ paper/conj14.tex (+ .pdf)     Paper I draft (2026-09-29): Theorems A (24 | Index
                               Question needs, from the simpler seeds Golay/E₃₆/E₇₂), D (g⁴ = −1 ⇒ 48 | Index); checked by theory/conj14_paper_check.py
                               (paper/review-2026-09-26.md: the earlier line-by-line review of index24.tex)
 notes/tmf-context.md          TMF background
-lean/                         Lean 4 + Mathlib (see lean/README.md): both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥); setup in CLAUDE.md
+lean/                         Lean 4 + Mathlib (see lean/README.md): both halves formally verified (GJF.conjecture_1_4). Divisibility.lean (24 | Index), Existence.lean (index 24 at every 12k), Orthogonal.lean (link to Mathlib's C^⊥), Obstruction.lean (Theorem D: g⁴ = −1 ⇒ 48 | Index), TierA.lean (Main Question codes); setup in CLAUDE.md
 CLAUDE.md                     working instructions and handoff for Claude Code sessions
 ternary60/                    Rust crate (std only): index computation, neighbour walks, design checks
   src/main.rs                 `ternary60 selftest | index <file> | pless <q> | xqr <p> | random | walk | batch | nbr | design | allnbrs | dc`

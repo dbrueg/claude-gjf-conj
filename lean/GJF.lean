@@ -17,3 +17,4 @@ import GJF.ChainZ12
 import GJF.SeedQ8Z3Data
 import GJF.ChainQ8Z3
 import GJF.TierA
+import GJF.Obstruction
