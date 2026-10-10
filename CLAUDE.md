@@ -6,7 +6,7 @@ Read `notes/ternary-code-index.md` first: §0 for the results, then §5.1 for th
 
 Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code of index exactly ±24 at every length 12k. The divisibility half (24 | Index) is already proved (notes §1–2).
 
-## Where things stand (2026-09-29)
+## Where things stand (2026-10-10)
 
 **Both halves of Conj 1.4 are now proved here, and both are formally verified in Lean 4** (`GJF.conjecture_1_4`; pending literature check and independent reading).
 - **Theorem 5.9** (§5.1(f‴)): an index-±24 code exists at every length 12k. The tool is *partial quadrupling* Q_σ: Hadamard-double a partial 4-block system σ (b blocks) twice against tetracodes and leave the other coordinates alone. This gives length m + 12b and Index = R_σ(E), a block-weighted index (Lemma 5.8). Refining one step-1 block gives a 2-block system with the same R, so (m, 2) → (m + 24, 2). Start from Golay with b = 1 (even k) or b = 2 (odd k).
@@ -58,13 +58,28 @@ Prove or disprove the existence half of GJF Conj 1.4: a self-dual ternary code o
   - R_σ(E) ≡ Index(E) mod 48 proved (notes §5.1(f‴)); a Dedekind-sum-free proof of the eta identity (iii) (notes §8.5); the reduction of the Main Question to k ≤ 24 by tensor products; a proposed two-paper structure (Conj 1.4 alone; the Main Question separately).
 - **Paper I draft (2026-09-29): `paper/conj14.tex`** (+ .pdf, 15 pp.). One paper for all the combinatorics: Thm A (24 | Index, finite Poisson 2-design), Thm B (index 24 at every 12k), Thm C (codes with the symmetry GJF Thm 5.6 needs, from the simpler seeds Golay + Q₈ / E₃₆ + ℤ/6 / E₇₂ + Q₈ × ℤ/3; Construction 6.3 with transposed splits), Thm D (g⁴ = −1 ⇒ 48 | Index), complements (mod 48, 8 | #even, #odd), seed data in the appendix. §§6–8 can be split off if a shorter Paper I is wanted; Paper II would then be the VOA side only (anomaly of Q₈, Theorem O). Placeholders: authors, repository URL, companion paper [II].
   - `ternary60/theory/conj14_paper_check.py` (log beside it) checks every computable claim from the data *parsed from the .tex* and rebuilds all chains with a fresh implementation of Construction 6.3 (uses `rsigma_is` for the 2²⁴–2³⁶-pattern sums; `--fast` skips them).
+- **Paper II draft (2026-10-10): `paper/minimal-index.tex`** (+ .pdf, 15 pp.), the VOA side. It cites Paper I as [I] for the codes (Thms B, C, D, Lemma 6.2, App. A.2).
+  - Main Theorem: index 24/gcd(k,24) at c = 12k for every k, assuming Hypothesis ORB and the cited inputs (A1)–(A10), all listed in §2.
+  - Thm 1.2: Q₈ is non-anomalous iff 8 | k. Proof: cyclic restrictions, ker R = {0, κ}, the S-defect ¼(3N − T_ψ)(F − g|T²/N) of the would-be orbifold character at k ≡ 4 mod 8, and additivity with a tetracode sum. No gauging lemma is used.
+  - Thm 1.3: Q₈ × ℤ/3 is non-anomalous iff 24 | k (Sylow detection). Thm 1.4 = Theorem O: Index(W) = ±Index(C)/|G| under (i)–(iii).
+  - §3 reproves the anomaly half of GJF Ex 4.4 / Thm 5.6, with the misprints corrected and the even-lattice citation (Möller) replaced by a proof (Prop 3.3).
+  - Remarks: free fermions (α_C = 3k·a, a of order 8, 5/8 on S³/Q₈; the value of μ is stated as convention-dependent), reduction to k ≤ 24, the TMF unit at k = 24, formalisation.
+  - Placeholders: authors, repository URL.
+  - `ternary60/theory/minimal_index_paper_check.py` (log beside it, ≈ 1 s) checks the explicit claims, with the code data parsed from `conj14.tex`:
+    - Frame shapes and anomalies 2kν_m for every element of every group of Table 1, and the Q₈ cohomology count;
+    - Pin lifts on all Q₈-orbits (Golay, E₇₂) and on the full Cl(12) spinor module;
+    - the eta identities of Lemma 4.5, and the S-defect (numerically at k = 4, 8; the zero set exactly);
+    - Donnelly eta invariants.
 
 ## Next steps
 
 1. **Citation search** for GJF (Google Scholar "Cited by" / INSPIRE, by hand in a browser: Scholar shows a CAPTCHA to the cloud session, and INSPIRE/Semantic Scholar are blocked). A web-search check on 2026-09-26 found no prior solution (notes §5.1(f‴)). Then consider contacting Johnson-Freyd (notes §5 item 4).
 2. ~~An independent re-derivation of Lemma 5.8's local identities, and a sign-exact index check at n = 36~~ — done in `ternary60/theory/paper_check.py` (log beside it; notes §5.1(f‴) Status). The paper draft `paper/index24.tex` compiles cleanly and was checked line by line against the notes and GJF's source; the review is in `paper/review-2026-09-26.md`, and its wording edits are applied (author and repository placeholders remain). Still wanted: a reading by a second person.
 3. Optional: the [C] in §5.1(d). (R_σ(E) ≡ Index(E) mod 48 is now proved: notes §5.1(f‴), 2026-09-28.)
-3′. Papers: Paper I is drafted (`paper/conj14.tex`, supersedes `index24.tex` and the code half of `main-question.tex`); wanted: a second reader, the placeholders, and a decision whether §§6–8 stay in Paper I. Paper II (VOA side: Q₈ anomaly via the direct proof of notes §8.4–8.5, Theorem O, the orbifold statements) is not yet drafted; `paper/main-question.tex` and the review's issue list (§4) are its starting point.
+3′. Papers: both are drafted. Paper I (`paper/conj14.tex`) supersedes `index24.tex` and the code half of `main-question.tex`; Paper II (`paper/minimal-index.tex`, 2026-10-10) supersedes the VOA half.
+  - Wanted for both: a second reader and the placeholders (authors, repository URL).
+  - Paper I: decide whether §§6–8 stay in it. Paper II cites them (Thm C, Lemma 6.2, §7.3), so moving them means moving those citations too.
+  - Paper II: an independent reading of the cited fermionic inputs (Hypothesis ORB, (A6)–(A7)), and a literature check.
 4. **Lean formalization of the Main Question**: Tier A is done (above). Open: (a) certify R_σ(E₇₂) = 24 (a new seed with a cheap certificate, or `native_decide` on the information-set sum, whose soundness is `Eval.fastT_eq` + [CS] Lemma 2.5); (b) speed up the ℤ/12 certificates (they dominate `lake build`); (c) Tier B (VOA side as a hypothesis structure), `notes/blueprint/README.md` §4.
 5. Main Question: all classes answered (notes §10). Still wanted: an independent reading of GJF's anomaly analysis (Thm 5.6, the ℤ/3 Frame-shape part); (the gauging lemma is no longer needed: notes §8.4); a literature check; optionally a proof of the n = 36 law (notes §9.3) and of "β ≥ 1 ⇒ 72 | Index".
 

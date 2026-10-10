@@ -1,0 +1,1082 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{mainq}{Main Question}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\F}{\mathbb{F}_3}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\Index}{\operatorname{Index}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Mon}{\operatorname{Mon}}
+\newcommand{\Fer}{\operatorname{Fer}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\str}{\operatorname{str}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\maj}{\operatorname{maj}}
+\newcommand{\gw}{\operatorname{gw}}
+\newcommand{\Reg}{\mathrm{Reg}}
+\newcommand{\SH}{\widetilde{\mathrm{SH}}{}^3}
+\newcommand{\rSH}{\mathrm{rSH}^3}
+\newcommand{\Hc}{\mathrm{H}}
+\newcommand{\orb}{/\!\!/}
+
+\title{Holomorphic $\mathcal N=1$ vertex operator superalgebras of minimal index}
+\author{[Authors to be added]}
+\date{Draft, 10 October 2026}
+
+\begin{document}
+
+\begin{abstract}
+Gaiotto and Johnson-Freyd asked whether for every $k$ there is a holomorphic $\cN=1$ vertex operator
+superalgebra of central charge $12k$ whose supersymmetric index is $24/\gcd(k,24)$, the smallest value
+compatible with topological modular forms. They answered the question for $k\le5$ by orbifolding the
+lattice superalgebra of a self-dual ternary code of index $24$ by a cyclic group of code automorphisms.
+Using the codes of a companion paper we answer it for every $k$, within their orbifold framework.
+When $8\nmid k$ their cyclic construction applies. When $8\mid k$ no cyclic group can work, and we
+orbifold instead by the quaternion group $Q_8$ ($k\equiv8,16\pmod{24}$) or by $Q_8\times\Z/3$
+($k\equiv0\pmod{24}$). The main new input is the 't~Hooft anomaly of a quaternion group of code
+automorphisms: it vanishes if and only if $8\mid k$. Its restrictions to cyclic subgroups vanish already
+for $4\mid k$; one class of restricted supercohomology is invisible to all of them, and we detect it
+through the $(-1)$-twisted sector, by showing that the character of a would-be orbifold fails to be
+$S$-invariant when $k\equiv4\pmod8$. We also show that the orbifold has index $\Index(C)/|G|$ for every
+group $G$ of code automorphisms whose abelian subgroups are cyclic, whose only involution is $-1$, and
+whose elements of odd order form a central subgroup of order at most $3$ that fixes no coordinate and as
+many even as odd maximal codewords. For $k=24$ this gives a holomorphic
+$\cN=1$ vertex operator superalgebra of central charge $288$ and index $1$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+A self-dual ternary code $C\subseteq\F^n$ determines the odd unimodular lattice
+$\Lambda(C)=\{a/\sqrt3: a\in\Z^n,\ a\bmod3\in C\}$ and hence a holomorphic vertex operator
+superalgebra $V_{\Lambda(C)}$ of central charge $n$, which Gaiotto and Johnson-Freyd equip with an
+$\cN=1$ structure \cite[\S2]{GJF}. Its supersymmetric (Ramond--Ramond) index is the index of the code
+\cite[Prop.~2.4]{GJF},
+\[
+  \Index(C)=\#\{\text{even maximal codewords}\}-\#\{\text{odd maximal codewords}\},
+\]
+where a codeword is maximal if none of its entries is $0$, and even or odd according to the parity of
+the number of its entries equal to $1$. Under the Stolz--Teichner conjecture a holomorphic $\cN=1$
+vertex operator superalgebra of central charge $12k$ defines a class in $\pi_{24k}\mathrm{TMF}$ whose
+image in $\mathrm{MF}_{12k}$ is its index times $\Delta^k$ \cite[\S5]{GJF}, and the smallest multiple
+of $\Delta^k$ in the image of $\pi_{24k}\mathrm{TMF}\to\mathrm{MF}_{12k}$ is
+$\frac{24}{\gcd(k,24)}\Delta^k$ \cite[Prop.~4.6]{Hopkins}. Gaiotto and Johnson-Freyd ask whether these
+values are attained:
+
+\begin{mainq}[{\cite[\S0, \S5]{GJF}}]
+For each $k$, does there exist a holomorphic $\cN=1$ VOA with central charge $c=12k$ and
+supersymmetric index $\frac{24}{\gcd(k,24)}$?
+\end{mainq}
+
+The index is defined up to sign, the parity of the Ramond sector being a convention
+\cite[Rem.~5.3]{GJF}; ``index $m$'' means index $\pm m$ throughout. Gaiotto and Johnson-Freyd answered
+the question for $k\le5$ with the following theorem, found their codes by computer search, and asked for
+a systematic construction \cite[Question~0.1, Thm.~5.6, Ex.~5.7]{GJF}.
+
+\begin{quote}
+\textbf{Theorem} (\cite[Thm.~5.6]{GJF}). Let $C$ be self-dual of length $12k$ with $\Index(C)=24$,
+put $m=\gcd(24,k)$, and let $g\in\Aut(C)$ have order $m$. Suppose that (1) if $m$ is even,
+$g^{m/2}=-1$, and (2) if $3\mid m$, $g^{m/3}$ fixes as many even as odd maximal codewords and permutes
+the coordinates in $3$-cycles only. Then $V_{\Lambda(C)}\orb\langle g\rangle$ has index $24/m$.
+\end{quote}
+
+In a companion paper \cite{I} we constructed explicit self-dual codes of index $24$ in every length
+$12k$, with the automorphisms that this theorem and the present paper need, and we showed that for
+$8\mid k$ no cyclic group can work: an automorphism $g$ with $g^4=-1$ forces $48\mid\Index(C)$
+\cite[Thm.~D]{I}. Here we supply the vertex-algebra side.
+
+\begin{theorem}[Main Theorem]\label{thm:main}
+Assume Hypothesis~ORB (\S\ref{sec:orb}) and the cited inputs (A1)--(A10) of \S\ref{sec:setting}. For
+every $k\ge1$ there is a holomorphic $\cN=1$ vertex operator superalgebra of central charge $12k$ and
+index $24/\gcd(k,24)$, namely $V_{\Lambda(C)}\orb G$ for a code $C$ and a group $G\subseteq\Aut(C)$ as in
+Table~\ref{tab:main}.
+\end{theorem}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}cllcll@{}}
+\toprule
+$\gcd(k,24)$ & $k\bmod 24$ & index & $G$ & code & seed of the code \\
+\midrule
+$1$ & $\pm1,\pm5,\pm7,\pm11$ & $24$ & $1$ & \cite[Thm.~B]{I} & Golay \\
+$2$ & $\pm2,\pm10$ & $12$ & $\langle-1\rangle$ & \cite[Thm.~B]{I} & Golay \\
+$3$ & $\pm3,\pm9$ & $8$ & $\langle h\rangle\cong\Z/3$ & \cite[Thm.~C(a)]{I} & $E_{36}$ of \cite{GJF} \\
+$4$ & $\pm4$ & $6$ & $\langle J\rangle\cong\Z/4$ & \cite[Thm.~C(b)]{I} & Golay \\
+$6$ & $\pm6$ & $4$ & $\langle -h\rangle\cong\Z/6$ & \cite[Thm.~C(a)]{I} & $E_{36}$ of \cite{GJF} \\
+$8$ & $\pm8$ & $3$ & $Q_8=\langle J,K\rangle$ & \cite[Thm.~C(b)]{I} & Golay \\
+$12$ & $12$ & $2$ & $\langle Jh\rangle\cong\Z/12$ & \cite[Thm.~C(c)]{I} & $E_{72}$ of \cite[App.~A.2]{I} \\
+$24$ & $0$ & $1$ & $Q_8\times\langle h\rangle$ & \cite[Thm.~C(c)]{I} & $E_{72}$ of \cite[App.~A.2]{I} \\
+\bottomrule
+\end{tabular}
+\medskip
+\caption{The orbifolds of Theorem~\ref{thm:main}. Here $J^2=K^2=-1$, $KJ=-JK$, and $h$ has order $3$, no
+fixed coordinate, a vanishing twined count $T_h(C)=0$, and commutes with $J$ and $K$.}
+\label{tab:main}
+\end{table}
+
+For $8\nmid k$ this is \cite[Thm.~5.6]{GJF} applied to the codes of \cite{I}, as noted there.
+Sections~\ref{sec:cyclic} and~\ref{sec:index} reprove both halves of that theorem, the vanishing of the
+anomaly and the value of the index, from the same inputs and in a form that also covers the non-cyclic
+groups. For $8\mid k$ the new ingredients are the following three theorems. All automorphisms of codes
+act on $V_{\Lambda(C)}$ through the lift of \cite[Thm.~3.1]{GJF}.
+
+\begin{theorem}\label{thm:Q8}
+Assume (A1)--(A10) and Hypothesis~ORB. Let $C$ be a self-dual ternary code of length $12k$, and let $J,K\in\Aut(C)$ satisfy $J^2=K^2=-1$ and
+$KJ=-JK$. The action of $Q_8=\langle J,K\rangle$ on $V_{\Lambda(C)}$ is non-anomalous if and only if
+$8\mid k$.
+\end{theorem}
+
+\begin{theorem}\label{thm:Q8Z3}
+If moreover $h\in\Aut(C)$ has order $3$, no fixed coordinate, and commutes with $J$ and $K$, then
+$Q_8\times\langle h\rangle$ acts non-anomalously on $V_{\Lambda(C)}$ if and only if $24\mid k$.
+\end{theorem}
+
+\begin{theorem}\label{thm:index}
+Let $C$ be self-dual of length $12k$ and $G\subseteq\Aut(C)$ a subgroup such that
+\begin{enumerate}
+\item[(i)] every abelian subgroup of $G$ is cyclic;
+\item[(ii)] if $|G|$ is even, then $-1\in G$ is the only involution of $G$;
+\item[(iii)] the elements of odd order form a central subgroup of order $1$ or $3$, and in the second case
+  it is generated by an $h$ without fixed coordinate such that $T_h(C)=0$.
+\end{enumerate}
+If $G$ acts non-anomalously on $V_{\Lambda(C)}$, then, under Hypothesis~ORB, every orbifold
+$W=V_{\Lambda(C)}\orb G$ is a holomorphic $\cN=1$ vertex operator superalgebra with
+$\Index(W)=\pm\Index(C)/|G|$.
+\end{theorem}
+
+Here $T_h(C)=\sum_{x\in C,\,hx=x}f(x)$ is the signed count of $h$-fixed maximal codewords
+(\S\ref{sec:codes}); it vanishes iff $h$ fixes as many even as odd maximal codewords. All groups of
+Table~\ref{tab:main} satisfy (i)--(iii).
+
+\subsection*{The idea for \texorpdfstring{$Q_8$}{Q8}}
+The anomaly of a $Q_8$-action lies in the restricted supercohomology group $\rSH(Q_8)$, of order $32$.
+The Frame-shape computation of \cite[Ex.~4.4]{GJF} gives its restrictions to the cyclic subgroups, which
+vanish iff $4\mid k$. A count (Proposition~\ref{prop:kernel}) shows that exactly one nonzero class
+$\kappa$ restricts to zero on every cyclic subgroup. Since every abelian subgroup of $Q_8$ is cyclic, no
+twisted--twined partition function of a commuting pair can see $\kappa$. We detect it through the
+$(-1)$-twisted sector. As a projective $Q_8$-module this sector does not depend on $C$: it is the
+spinor module of the Clifford algebra of the frame's zero modes (Lemma~\ref{lem:minus}). So the
+character that a $Q_8$-orbifold would have can be written down, and three eta identities show that it
+is not $S$-invariant when $k\equiv4\pmod8$ (Proposition~\ref{prop:Sdefect}). For $8\mid k$, additivity
+of anomalies under direct sums of codes finishes the proof. For the record, the anomaly is $3k\cdot a$,
+where $a$ is the anomaly of eight Majorana fermions in the real regular representation of $Q_8$, a class
+of order $8$ that takes the value $\tfrac58$ on $S^3/Q_8$ (Remark~\ref{rem:freefermions}).
+
+\subsection*{What the results rest on}
+The fermionic case of the orbifold theorem \cite[Thm.~4.2]{GJF} is only sketched in \cite{GJF}; for
+bosonic vertex operator algebras it is a theorem \cite{Kirillov,DNR,McRae}. Hypothesis~ORB
+(\S\ref{sec:orb}) states what we use from it: existence of the orbifold for a non-anomalous group, and
+the decomposition of its NS and Ramond sectors into invariants of twisted sectors, with genuine actions
+of the centralisers. We also use the description of the Majorana layer and the multiplier principle for
+cyclic groups from \cite[\S4]{GJF}, which are stated there without proof, and standard theorems on lattice
+vertex superalgebras and their twisted modules \cite{BK,Li,DZ,DRY}. Gaiotto and Johnson-Freyd's own
+answers for $k\le5$ rest on the same inputs. On the code side we use \cite{I}; for $12\mid k$ one
+numerical input enters there, the value $24$ of a block-weighted sum over a code of length $72$, which
+was computed by three independent programs.
+
+\subsection*{Two remarks}
+Holomorphic $\cN=1$ vertex operator superalgebras are closed under tensor products, and for central
+charges divisible by $12$ the index is multiplicative. So the theory of central charge $288$ and index
+$1$ in Theorem~\ref{thm:main} reduces the Main Question to $k\le24$ (Remark~\ref{rem:reduction}). Under
+the Stolz--Teichner conjecture that theory represents a unit of $\pi_{576}\mathrm{TMF}$
+(Remark~\ref{rem:TMF}).
+
+\subsection*{Organisation}
+\S\ref{sec:setting} collects the setting and the cited inputs. \S\ref{sec:cyclic} treats cyclic groups,
+\S\ref{sec:Q8} proves Theorem~\ref{thm:Q8}, \S\ref{sec:Q8Z3} Theorem~\ref{thm:Q8Z3}, and
+\S\ref{sec:index} Theorem~\ref{thm:index}. \S\ref{sec:proof} proves the Main Theorem and adds remarks.
+The appendix lists the computations that check the explicit formulas.
+
+\section{Setting}\label{sec:setting}
+
+\subsection{Codes}\label{sec:codes}
+We follow \cite[\S2]{I}. Let $\varphi\colon\F\to\{0,\pm1\}$ be $\varphi(0)=0$, $\varphi(1)=-1$,
+$\varphi(2)=1$, let $f(x)=\prod_i\varphi(x_i)$, and $F(X)=\sum_{x\in X}f(x)$ for $X\subseteq\F^n$. Then
+$\Index(C)=F(C)$. The group $\Mon(n)=2^n{:}S_n$ acts on $\F^n$ and on $\R^n$ by $ge_i=s_ie_{p(i)}$ for
+$g=(p,s)$, and $\Aut(C)=\{g:gC=C\}$ contains $-1$. Put $N_-(g)=\#\{i:s_i=-1\}$ and
+$\varepsilon(g)=\prod_is_i$; then $\varepsilon$ is a character and $f(gx)=\varepsilon(g)f(x)$.
+
+A cycle of $p$ of length $\ell$ whose signs have product $\sigma$ is a \emph{signed cycle}; it
+contributes the factor $1-x^\ell$ ($\sigma=1$) or $1+x^\ell=(1-x^{2\ell})/(1-x^\ell)$ ($\sigma=-1$) to
+$\det(1-xg)=\prod_k(1-x^k)^{d_k}$. The formal product $\prod_kk^{d_k}$ is the \emph{Frame shape} of $g$,
+and we put $\eta_g(\tau)=\prod_k\eta(k\tau)^{d_k}$ and
+\[
+  \rho_g=\tfrac14\sum_j\theta_j(1-\theta_j)=\tfrac1{24}\sum_kd_k\bigl(k-\tfrac1k\bigr),
+\]
+where $e^{2\pi i\theta_j}$, $\theta_j\in[0,1)$, are the eigenvalues of $g$ on $\R^n$. The vector space
+$\R^n$ has no nonzero $g$-fixed vector iff every signed cycle has $\sigma=-1$, iff $\sum_kd_k=0$. We say
+that $g$ has \emph{no fixed coordinate} if $p$ has no fixed point; this is weaker (an element of order $3$
+without fixed coordinate fixes the vectors that are constant on its cycles). On a signed $\ell$-cycle,
+$g^j$ is diagonal iff $\ell\mid j$, and then it is $\sigma^{j/\ell}$. Hence
+\begin{equation}\label{eq:cycles}
+  g^j=-1\iff\text{every signed cycle has length }\ell\mid j\text{ with }j/\ell\text{ odd and }\sigma=-1.
+\end{equation}
+For example $J^2=-1$ means that $J$ consists of $n/2$ signed $2$-cycles with $\sigma=-1$, so
+$N_-(J)=n/2$, $J$ has no fixed vector, and its Frame shape is $2^{-n/2}4^{n/2}$.
+
+\subsection{The vertex superalgebra of a code}
+Let $C$ be self-dual of length $n=12k$, $\Lambda=\Lambda(C)$ and $V=V_\Lambda$. The \emph{frame} is the
+subalgebra $V_{\sqrt3\Z^n}=V_{\sqrt3\Z}^{\otimes n}\subseteq V$. The vector $\chi=\sqrt3(1,\dots,1)$ is
+characteristic: $\langle\chi,\lambda\rangle\equiv|\lambda|^2\pmod2$ for $\lambda\in\Lambda$. Let $\sigma$
+be the parity automorphism of $V$.
+
+\begin{proposition}[{\cite[\S2, Prop.~2.4]{GJF}; \cite{BK,Li,DZ}}]\label{prop:VC}
+\begin{enumerate}
+\item $V$ is a strongly rational holomorphic vertex operator superalgebra of central charge $n$.
+\item $\tau=\tfrac1{\sqrt3}\sum_i\bigl(e^{\sqrt3e_i}+e^{-\sqrt3e_i}\bigr)$, for a suitable cocycle, is an
+  $\cN=1$ supercurrent: $\tau_{(0)}\tau=2\omega$, $\tau_{(1)}\tau=0$, $\tau_{(2)}\tau=\tfrac{2n}3\mathbf 1$.
+\item The Ramond sector $V_R$, the unique $\sigma$-stable irreducible $\sigma$-twisted module, is
+  $V_{\Lambda+\chi/2}$, with parity $(-1)^{\langle\chi,\lambda\rangle}$ on $M(1)\otimes e^{\lambda+\chi/2}$.
+\item The states of $V_R$ of weight $c/24=n/24$ are the vectors $e^{\nu_w}$, one for each maximal
+  codeword $w$, with $\nu_w=\iota(w)/(2\sqrt3)$ and $\iota\colon\F\to\{0,1,-1\}$; the parity of
+  $e^{\nu_w}$ is $f(w)$.
+\item On every $g$-twisted $V$-module with $g\tau=-\tau$ the modes $G_r=\tau_{r+1/2}$, $r\in\Z$, satisfy
+  $G_0^2=L_0-c/24$. In particular $\str_{V_R}q^{L_0-c/24}=\Index(C)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Comments]
+(1) is \cite[\S2]{GJF} with \cite[Thm.~4.1]{BK} for odd lattices; (3) is \cite[Prop.~5.4]{Li} applied
+to $\chi/2$, with uniqueness from \cite[Thm.~7.7]{DZ}. (4): a Ramond momentum is
+$\nu=(2a+3\cdot\mathbf 1)/(2\sqrt3)$ with $a\in\Z^n$, $a\bmod3\in C$, so
+$|\nu|^2/2=\sum_i(2a_i+3)^2/24\ge n/24$, with equality iff every $a_i\in\{-1,-2\}$. Then $w=-(a\bmod3)$ is
+maximal, $\nu=\nu_w$, and the parity $(-1)^{\sum a_i}$ is $(-1)^{\#\{i:w_i=1\}}=f(w)$. (5) is the
+twisted commutator formula \cite[(M4)]{Li} with (2); if $G_0$ is odd, invertible on each weight space
+of weight $\ne c/24$, and commutes with an operator $A$, then $A$ has supertrace $0$ there. So
+supertraces of operators commuting with $G_0$ only see weight $c/24$, and (4) gives the last claim.
+\end{proof}
+
+\subsection{Automorphisms}
+By \cite[Thm.~3.1]{GJF} the extension $\widehat\Lambda[2].\Aut(C)$ of $\Aut(C)$ inside $\Aut(V)$
+splits. We write $s\colon\Aut(C)\to\Aut(V)$ for the splitting that restricts to the standard action of
+$\Mon(n)$ on the frame, $e^{\pm\sqrt3e_i}\mapsto e^{\pm s_i\sqrt3e_{p(i)}}$. It is unique: the restriction
+$\operatorname{Hom}(\Lambda,\pm1)\to\operatorname{Hom}(\sqrt3\Z^n,\pm1)$ is bijective, since
+$\sqrt3\Z^n$ has odd index in $\Lambda$. Consequently $s_{C\oplus C'}=s_C\otimes s_{C'}$ on
+$V_{\Lambda(C\oplus C')}=V_{\Lambda(C)}\otimes V_{\Lambda(C')}$. Every $s(g)$ fixes $\tau$, so $s(G)$
+acts by even automorphisms, faithfully, with $s(G)\cap\langle\sigma\rangle=1$; and $s(g)$ maps
+$M(1)\otimes e^\lambda$ to $M(1)\otimes e^{g\lambda}$ with a sign \cite[Prop.~4.1]{BK}. We usually write
+$g$ for $s(g)$.
+
+\begin{lemma}\label{lem:majnumber}
+For $g\in\Aut(C)$, $\langle\chi,(1-g)\chi\rangle=6N_-(g)$, and $s(g)$ maps the summand of $V_R$ with
+momentum $\lambda+\chi/2$ to the one with momentum $g(\lambda+\chi/2)$, multiplying the parity by
+$(-1)^{N_-(g)}=\varepsilon(g)$.
+\end{lemma}
+
+\begin{proof}
+$\langle\chi,\chi\rangle=3n$ and $\langle\chi,g\chi\rangle=3\sum_is_i=3(n-2N_-(g))$. The relative parity
+is $\tfrac12\langle\chi,(1-g)\chi\rangle=3N_-(g)$ modulo $2$ \cite[Ex.~4.4]{GJF}.
+\end{proof}
+
+If $g\in O(\Lambda)$ has no fixed vector, any two lifts of $g$ to $\widehat\Lambda.O(\Lambda)$ are
+conjugate by an element of the torus $\widehat\Lambda=\operatorname{Hom}(\Lambda,U(1))$
+\cite[Ex.~4.4]{GJF}: if $t\in\widehat\Lambda$, then $t\hat gt^{-1}=\hat g\cdot(t\circ(g-1))$, and
+$t\mapsto t\circ(g-1)$ is onto because $g-1$ is injective on $\Lambda$ and $U(1)$ is divisible. In
+particular every lift of such a $g$ has the same anomaly as $s(g)$, and $\hat g\sigma$ is conjugate to
+$\hat g$, since $\sigma=e^{2\pi i(\chi/2)(0)}$ lies in the torus.
+
+\subsection{Twisted modules}\label{sec:twisted}
+For an automorphism $g$ of finite order of a strongly rational holomorphic vertex operator
+superalgebra there is a unique $\sigma$-stable irreducible $g$-twisted module $V(g)$
+\cite[Thm.~7.7]{DZ}, \cite[Prop.~3.4]{DRY}. The \emph{$g$-twisted Ramond sector} is $V_{R,g}:=V(g\sigma)$.
+An \emph{$x$-intertwiner} on a $g$-twisted module $M$, for $x$ commuting with $g$, is an invertible $A$
+with $AY_M(v,z)A^{-1}=Y_M(xv,z)$; on $V(g)$ it exists and is unique up to a scalar when $V(g)$ is of
+$\C$-type, and then it is even or odd.
+
+\begin{proposition}[{\cite[Thm.~4.2, Rem.~4.4]{BK}, \cite{Li}}]\label{prop:fpf}
+Let $g\in\Aut(C)$ have no fixed vector and $\varepsilon(g)=1$. Then $V(g)$ is of $\C$-type,
+$V(g)\cong V(g\sigma)$ as graded spaces, and $V(g)=S[g]\otimes T_g$, where $S[g]$ is the $g$-twisted Fock
+space of the Heisenberg algebra and $T_g$ is a space of ground states of dimension
+$|\det(1-g)|^{1/2}=\prod_kk^{d_k/2}$. The lowest weight is $\rho_g$, and
+$\ch V(g)=|\det(1-g)|^{1/2}\prod_k\eta(\tau/k)^{-d_k}$. Moreover
+$Z(1,g):=\operatorname{tr}_Vg\,q^{L_0-c/24}=1/\eta_g(\tau)$.
+\end{proposition}
+
+\begin{proof}[Comments]
+Only $\lambda=0$ contributes to $Z(1,g)$, and the trace on the Fock space is $\prod_m\det(1-gq^m)^{-1}$.
+The number of irreducible $g$-twisted modules is $1$ or $2$ according as $\tfrac12\langle\chi,
+(1-g)\chi\rangle$ is even or odd \cite[Thm.~4.2]{BK}, i.e.\ according to $\varepsilon(g)$
+(Lemma~\ref{lem:majnumber}); the defect formula of \cite{BK} gives $\dim T_g$. The vacuum energy of
+$S[g]$ is $\rho_g$ \cite[Thm.~1.7.3]{FLM}, \cite{Lep,DL}; equivalently, $\ch V(g)$ is the
+$S$-transform of $Z(1,g)$ \cite[Thm.~7.1]{DZ}, whose leading exponent is $\rho_g-n/24$. Finally
+$V(g\sigma)\cong V(g)$ because $g\sigma$ is conjugate to $g$ in the torus.
+\end{proof}
+
+\subsection{Anomalies}\label{sec:anomalies}
+We use the following statements from \cite{GJF} and the literature it cites.
+\begin{itemize}
+\item[(A1)] \cite[Thm.~4.2]{GJF}. For a finite group $G$ acting faithfully by even automorphisms on a
+  holomorphic vertex operator superalgebra $V$ with $V^G$ regular there is an anomaly
+  $\alpha(V,G)\in\SH(G)$, in reduced extended supercohomology. Orbifolds $V\orb G$ exist iff
+  $\alpha=0$, and then correspond to trivialisations. For solvable $G$, regularity of $V^G$ follows from
+  \cite{CM} applied to the even part of $V$ \cite[\S4]{GJF}.
+\item[(A2)] The anomaly is natural: $\alpha(V,H)=\res^G_H\alpha(V,G)$ for $H\subseteq G$, and it is
+  transported along isomorphisms of groups.
+\item[(A3)] Conjugate actions have equal anomalies.
+\item[(A4)] Anomalies add under tensor products: $\alpha(V\otimes V',\rho\otimes\rho')=\alpha(V,\rho)+
+  \alpha(V',\rho')$ \cite[\S5]{GJF17}.
+\item[(A5)] There are exact sequences, natural in $G$,
+  \begin{gather*}
+    \Hc^3(G;U(1))\xrightarrow{\iota_1}\rSH(G)\xrightarrow{\gw}\Hc^2(G;\Z/2)\to\Hc^4(G;U(1)),\\
+    \rSH(G)\xrightarrow{\iota_2}\SH(G)\xrightarrow{\maj}\Hc^1(G;\Z/2),
+  \end{gather*}
+  with $\iota_1$ and $\iota_2$ injective \cite[\S4]{GJF}, \cite{WG}, \cite[\S5.4]{GJF17}. The maps
+  $\maj$ and $\gw$ are the Majorana and Gu--Wen layers.
+\item[(A6)] $\maj(\alpha)(g)=0$ iff an operator on $V_R$ implementing $g$ is even \cite[\S4]{GJF}. For
+  the free fermions $\Fer(\rho)$ in an orthogonal representation $\rho$ this gives $\maj=w_1(\rho)=\det
+  \rho$.
+\item[(A7)] (Multiplier principle \cite[\S4]{GJF}.) Let $G=\langle g\rangle\cong\Z/m$ act with
+  vanishing Majorana layer, and put $L=m$ for $m$ even, $L=2m$ for $m$ odd. Then $Z(1,g)/Z(1,1)$ is an
+  eigenfunction of $ST^LS^{-1}$, and its eigenvalue $e_m(\alpha)$ depends only on $\alpha\in\rSH(\Z/m)$,
+  through a homomorphism $e_m\colon\rSH(\Z/m)\to U(1)$.
+\end{itemize}
+For $G=\Z/m$ let $\nu_{m,r}\in\rSH(\Z/m)$ be the anomaly of the action on $\Fer(2)=V_{\Z}$ in which the
+generator rotates the two fermions through $2\pi r/m$, and $\nu_m=\nu_{m,1}$. Put $m'=2m$ for $m$ even
+and $m'=m$ for $m$ odd.
+
+\begin{lemma}\label{lem:calib}
+\begin{enumerate}
+\item $|\rSH(\Z/m)|=m'$, $|\rSH(Q_8)|=32$, and $\rSH(\Z/m)=\SH(\Z/m)$ for $m$ odd.
+\item $e_m(\nu_{m,r})=e^{2\pi ir^2/m'}$. Hence $e_m$ is injective, $\rSH(\Z/m)=\langle\nu_m\rangle\cong
+  \Z/m'$, and $\nu_{m,r}=r^2\nu_m$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) For $G$ cyclic or $Q_8$, $\Hc^3(G;U(1))\cong\Hc^4(G;\Z)\cong\Z/|G|$ and $\Hc^4(G;U(1))\cong
+\Hc^5(G;\Z)=0$ (periodic cohomology \cite[XII.7]{CE}, \cite[VI.9]{Brown}), so (A5) gives
+$0\to\Z/|G|\to\rSH(G)\to\Hc^2(G;\Z/2)\to0$; and $\Hc^2(\Z/m;\Z/2)$ is $\Z/2$ or $0$, $\Hc^2(Q_8;\Z/2)\cong
+(\Z/2)^2$, $\Hc^1(\Z/m;\Z/2)=0$ for $m$ odd. (2) The characters are $Z(1,1)=\sum_pq^{p^2/2}/\eta$ and
+$Z(1,g)=\sum_p\zeta^{pr}q^{p^2/2}/\eta$ with $\zeta=e^{2\pi i/m}$. Poisson summation gives
+$(Z(1,g)/Z(1,1))|S=\sum_pq^{(p+r/m)^2/2}/\sum_pq^{p^2/2}$, and $T^L$ multiplies $q^{(p+r/m)^2/2}$ by
+$e^{2\pi ir^2/m'}$ and fixes the denominator. As $e_m$ is a homomorphism, $\nu_m$ has order at least
+$m'=|\rSH(\Z/m)|$.
+\end{proof}
+
+\subsection{The orbifold}\label{sec:orb}
+For a non-anomalous $G$, \cite[Thm.~4.2]{GJF} constructs the orbifold from a trivialisation, and the
+proof of \cite[Thm.~5.6]{GJF} computes its Ramond--Ramond partition function as a sum over twisted
+sectors. For bosonic holomorphic vertex operator algebras the corresponding statements are theorems
+\cite{Kirillov,DNR,McRae}; in the super case their ingredients exist (\cite[Thms.~4.15,
+4.17]{McRae} for the $G\times\langle\sigma\rangle$-crossed structure, \cite{CM} for regularity), but
+their assembly is only sketched in \cite{GJF}. We state what we use as a hypothesis.
+
+\begin{hypothesis}[ORB]\label{hyp:orb}
+Let $V$ be a strongly rational holomorphic vertex operator superalgebra and $G$ a finite solvable group
+acting faithfully on $V$ by even automorphisms that fix the conformal vector, with
+$G\cap\langle\sigma\rangle=1$. If $\alpha(V,G)=0$, then every trivialisation determines a strongly
+rational holomorphic vertex operator superalgebra $W=V\orb G\supseteq V^G$ with the same conformal
+vector, such that, as $\Z/2$- and $L_0$-graded spaces,
+\[
+  W=\bigoplus_{[g]}V(g)^{C(g)},\qquad W_R=\bigoplus_{[g]}V(g\sigma)^{C(g)},
+\]
+the sums running over the conjugacy classes of $G$. Here, for each representative $g$, the centraliser
+$C(g)$ acts on $V(g)$ and on $V(g\sigma)$ by genuine representations $\rho_g$ through $x$-intertwiners
+($x\in C(g)$), and $\rho_1$ is the given action.
+\end{hypothesis}
+
+In Theorem~\ref{thm:index} only the following parts are used: for $g$ of even order, that the summand of
+$W_R$ belonging to $[g]$ is a graded subspace of $V(g\sigma)$; for $g$ of odd order, the formula
+$V(g\sigma)^{C(g)}$ with a genuine action. In Proposition~\ref{prop:Sdefect} the NS decomposition is used
+for a hypothetical orbifold. In both places the parities of the summands play no role.
+
+\subsection{Further standard inputs}\label{sec:standard}
+\begin{itemize}
+\item[(A8)] Lifts of lattice automorphisms \cite{Lep}, \cite[Ch.~10]{FLM}, \cite[Prop.~4.1]{BK}: the
+  automorphisms of $V_\Lambda$ preserving $M(1)$ and inducing $g$ on $\Lambda\otimes\C$ are the maps
+  $u\otimes e^\lambda\mapsto\eta(\lambda)\,gu\otimes e^{g\lambda}$, and $\widehat\Lambda[2].O(\Lambda)$
+  consists of those with $\eta(\lambda)=\pm1$.
+\item[(A9)] The NS character of a strongly rational holomorphic vertex operator superalgebra is
+  $S$-invariant: $\ch W(-1/\tau)=\ch W(\tau)$. Indeed it spans a one-dimensional space of trace functions
+  stable under $S$ \cite[Thms.~4.12, 7.7]{DZ}, and $\ch W(i)>0$.
+\item[(A10)] Twisted modules of lattice vertex superalgebras \cite[Thm.~4.2, Rem.~4.4]{BK}: existence,
+  structure and characters (Proposition~\ref{prop:fpf}); on a $g$-twisted module $e^{2\pi iL_0}$ times the
+  parity implements $g^{\pm1}$; and modular covariance of twisted--twined traces for commuting pairs that
+  generate a cyclic group \cite[Thms.~4.12, 7.7]{DZ}.
+\end{itemize}
+
+\section{Cyclic groups}\label{sec:cyclic}
+
+This section is \cite[Ex.~4.4]{GJF} and the anomaly half of the proof of \cite[Thm.~5.6]{GJF}, with two
+misprints corrected and one citation replaced by a proof (Remark~\ref{rem:GJFtypos}).
+
+\begin{proposition}\label{prop:maj}
+For every $G\subseteq\Aut(C)$, the Majorana layer of $\alpha(V,G)$ is the restriction of the character
+$\varepsilon$. In particular it vanishes for every group of Table~\ref{tab:main}.
+\end{proposition}
+
+\begin{proof}
+The first claim is (A6) with Lemma~\ref{lem:majnumber}. For the second, $\varepsilon$ is a character, so
+generators suffice: $N_-(-1)=n$; $N_-(J)=N_-(K)=n/2=6k$ by \eqref{eq:cycles}; elements of odd order have
+$\varepsilon=1$; and $Jh$, $-h$ are products of these.
+\end{proof}
+
+\begin{proposition}\label{prop:frame}
+Let $g\in\Aut(C)$ have order $m$, no fixed vector, and $\varepsilon(g)=1$. Then
+$\alpha(V,\langle g\rangle)=a\,\nu_m$ with $a/m'\equiv L\rho_g\pmod1$.
+\end{proposition}
+
+\begin{proof}
+$Z(1,1)=\Theta_\Lambda/\eta^n$ is invariant under $S$ and $T^L$ ($\Lambda$ is unimodular, $L$ is even,
+and $Ln/24=Lk/2\in\Z$), so by (A7) $e_m(\alpha)$ is the eigenvalue of $ST^LS^{-1}$ on
+$Z(1,g)=1/\eta_g$ (Proposition~\ref{prop:fpf}). Since $\eta(-1/\tau)=\sqrt{-i\tau}\,\eta(\tau)$ and
+$\sum_kd_k=0$, $(1/\eta_g)|S=\prod_kk^{d_k/2}\prod_k\eta(\tau/k)^{-d_k}$. Every $k$ with $d_k\ne0$
+divides $m$ and hence $L$, so $T^L$ multiplies this by
+$\exp(-2\pi i\frac L{24}\sum_kd_k/k)=e^{2\pi iL\rho_g}e^{-2\pi iLn/24}=e^{2\pi iL\rho_g}$. Conclude with
+Lemma~\ref{lem:calib}(2).
+\end{proof}
+
+\begin{proposition}\label{prop:odd}
+Let $g\in\Aut(C)$ have odd order $m$. Then $\alpha(V,\langle g\rangle)=a\,\nu_m$ with
+$a/m\equiv2m\rho_g\pmod1$. If $h\in\Aut(C)$ has order $3$ and no fixed coordinate, then
+$\alpha(V,\langle h\rangle)=2k\,\nu_3$.
+\end{proposition}
+
+\begin{proof}
+By (A8), $s(g)$ acts on $e^\lambda$ for $\lambda\in\Lambda^g$ by a sign $\eta(\lambda)$ with
+$\eta(\lambda)^m=1$, so $\eta=1$ on $\Lambda^g$ ($s(g)$ is \emph{standard} \cite{Lep}), and
+$Z(1,g)=\Theta_{\Lambda^g}/\eta_g$. Poisson summation gives
+$\Theta_{\Lambda^g}(-1/\tau)=(-i\tau)^{r/2}\operatorname{vol}(\Lambda^g)^{-1}\Theta_{(\Lambda^g)^*}(\tau)$,
+$r=\operatorname{rk}\Lambda^g$. As $\Lambda^g=\Lambda\cap(\Lambda\otimes\R)^g$ is primitive and $\Lambda$
+unimodular, $(\Lambda^g)^*=\pi_g(\Lambda)$ for the orthogonal projection
+$\pi_g=\frac1m\sum_jg^j$; and $m|\pi_g\lambda|^2=\sum_j\langle\lambda,g^j\lambda\rangle\in\Z$, so
+$T^{2m}$ fixes $\Theta_{(\Lambda^g)^*}$. The eta factor behaves as in Proposition~\ref{prop:frame}, the
+powers of $-i\tau$ cancel, and $Z(1,1)$ is invariant under $ST^{2m}S^{-1}$. This gives $a/m\equiv2m\rho_g$.
+For $h$ the cycles have length $3$ and $\sigma=1$ (as $h^3=1$), so the Frame shape is $3^{n/3}$,
+$\rho_h=n/27$, and $2m\rho_h=6n/27=8k/3$; hence $a\equiv8k\equiv2k\pmod3$. The Majorana layer vanishes
+since $m$ is odd.
+\end{proof}
+
+\begin{corollary}\label{cor:cyclic}
+For the elements used in Table~\ref{tab:main} the anomaly of the cyclic group they generate is $2k\,\nu_m$
+in $\rSH(\Z/m)\cong\Z/m'$; it vanishes iff $m\mid k$:
+\[
+\begin{array}{lccccc}
+\toprule
+\text{element} & m & \text{signed cycles} & \rho_g & m' & \alpha\\
+\midrule
+-1 & 2 & 1\text{-cycles},\ \sigma=-1 & 3k/4 & 4 & 2k\\
+x\text{ with }x^2=-1\ (J,K,JK) & 4 & 2\text{-cycles},\ \sigma=-1 & 9k/16 & 8 & 2k\\
+-h & 6 & 3\text{-cycles},\ \sigma=-1 & 19k/36 & 12 & 2k\\
+Jh & 12 & 6\text{-cycles},\ \sigma=-1 & 73k/144 & 24 & 2k\\
+h & 3 & 3\text{-cycles},\ \sigma=1 & 4k/9 & 3 & 2k\\
+\bottomrule
+\end{array}
+\]
+\end{corollary}
+
+\begin{proof}
+The cycle types follow from \eqref{eq:cycles}: $(-h)^3=-1$, where $1$-cycles are excluded because
+$(-h)^2=h^2$ has no fixed coordinate; and $(Jh)^6=-1$ with $(Jh)^4=h$, which excludes $2$-cycles of
+$Jh$ in the same way. For the even types all cycles have length
+$\ell=m/2$ and $\sigma=-1$, so $\rho_g=\frac n{24}(1+\frac1{2\ell^2})=\frac k2+\frac k{m^2}$, and
+Proposition~\ref{prop:frame} gives $a\equiv m^2k+2k\equiv2k\pmod{2m}$, as $mk$ is even. The last row is
+Proposition~\ref{prop:odd}.
+\end{proof}
+
+\begin{remark}[comparison with \cite{GJF}]\label{rem:GJFtypos}
+(1) For $m$ odd the exponent in \cite[Ex.~4.4]{GJF} should be $\frac{2\pi i}{24}\sum_kd_k\frac{2m}k(k^2-1)$
+(the operator is $ST^{2m}S^{-1}$); for $m=3$ the conclusion of \cite{GJF} is unaffected. (2) In the proof
+of \cite[Thm.~5.6]{GJF} each block contributes $6$ times its number of sign changes to
+$\langle\chi,(1-g)\chi\rangle$ (Lemma~\ref{lem:majnumber}), not $3(m/2)-2\times\mathrm{odd}$; the
+conclusion $\langle\chi,(1-g)\chi\rangle\in4\Z$ is unaffected. (3) For $m=3$, \cite{GJF} cite
+\cite[Ch.~5]{Moller} for the Frame-shape formula of a standard lift; that source treats even lattices,
+while $\Lambda(C)$ is odd. Proposition~\ref{prop:odd} covers every unimodular lattice. (4) The extra
+hypothesis of \cite[Ex.~4.4]{GJF} that the lift has order $m$ is automatic here, since all lifts of a
+$g$ without fixed vector are conjugate to $s(g)$.
+\end{remark}
+
+\section{The quaternion group}\label{sec:Q8}
+
+Throughout this section $C$, $J$, $K$ are as in Theorem~\ref{thm:Q8}, $n=12k$, and
+$\alpha_C:=\alpha(V_{\Lambda(C)},Q_8)\in\SH(Q_8)$. The six elements $\pm J,\pm K,\pm JK$ satisfy $x^2=-1$
+(note $(JK)^2=-J^2K^2=-1$), so none of them has a fixed coordinate or a fixed vector, and
+$Q_8/\langle-1\rangle$ acts freely on the coordinates, with $3k$ orbits of size $4$.
+
+\subsection{Restricted supercohomology of \texorpdfstring{$Q_8$}{Q8}}
+We use the following standard facts \cite[XII.7]{CE}, \cite[IV]{AM}, \cite[VI.9]{Brown}.
+
+\begin{lemma}\label{lem:cohQ8}
+\begin{enumerate}
+\item $\Hc^2(Q_8;\Z/2)\cong(\Z/2)^2$, and $\Hc^3(Q_8;U(1))\cong\Hc^4(Q_8;\Z)\cong\Z/8$, generated by
+  the second Chern class $e$ of the $2$-dimensional irreducible representation $\rho_2$.
+\item For $u\in\{i,j,k\}$ the restriction $\Hc^3(Q_8;U(1))\to\Hc^3(\langle u\rangle;U(1))\cong\Z/4$ is
+  onto. Under the identifications $u\mapsto1$, the three restrictions of $e$ are equal, because $e$ is
+  invariant under the automorphism $i\mapsto j\mapsto k\mapsto i$ ($\rho_2$ is the only $2$-dimensional
+  irreducible representation).
+\end{enumerate}
+\end{lemma}
+
+Identify each $\rSH(\langle u\rangle)$, $u\in\{i,j,k\}$, with $\Z/8$ through $\nu_4$ and $u\mapsto1$, and
+let $R=(\res_{\langle i\rangle},\res_{\langle j\rangle},\res_{\langle k\rangle})\colon\rSH(Q_8)\to
+(\Z/8)^3$.
+
+\begin{proposition}\label{prop:kernel}
+$\ker R=\{0,\kappa\}$ with $\kappa:=\iota_1(4e)\ne0$. The class $\kappa$ is fixed by every automorphism of
+$Q_8$.
+\end{proposition}
+
+\begin{proof}
+$|\rSH(Q_8)|=32$ (Lemma~\ref{lem:calib}). In $\rSH(\langle u\rangle)\cong\Z/8$ the image of $\iota_1$ is
+the subgroup $2\Z/8$ of order $4$, and by Lemma~\ref{lem:cohQ8} $R(\iota_1e)=(2c,2c,2c)$ for one odd $c$.
+For a character $\chi\colon Q_8\to\{\pm1\}$ let $b_\chi$ be the anomaly of $Q_8$ acting on $\Fer(2)$
+through $\chi$, i.e.\ by the rotation through $\pi$ where $\chi=-1$. It lies in $\rSH(Q_8)$ by (A6), and
+by Lemma~\ref{lem:calib}(2) its restriction to $\langle u\rangle$ is $0$ if $\chi(u)=1$ and
+$\nu_{4,2}=4\nu_4$ if $\chi(u)=-1$. So $R(b_{\chi_i})=(0,4,4)$, $R(b_{\chi_j})=(4,0,4)$,
+$R(b_{\chi_k})=(4,4,0)$, where $\chi_u$ has kernel $\langle u\rangle$. In $(2\Z/8)^3\cong(\Z/4)^3$ the
+element $(1,1,1)$ generates a subgroup of order $4$, $(0,2,2)$ is not in it, and $(2,0,2)$ is not of the
+form $(t,t+2s,t+2s)$; so these four elements generate a subgroup of order $16$, and $|\ker R|\le2$. Finally
+$\iota_1$ is injective, $4e\ne0$, and $R(\kappa)=4R(\iota_1e)=0$. The last claim holds because every
+automorphism of $Q_8$ fixes $e$.
+\end{proof}
+
+\begin{lemma}\label{lem:layers}
+$\alpha_C\in\rSH(Q_8)$; $\res_{\langle x\rangle}\alpha_C=2k\,\nu_4$ for $x\in\{\pm J,\pm K,\pm JK\}$, and
+$\res_{\langle-1\rangle}\alpha_C=2k\,\nu_2$. Hence $\alpha_C\ne0$ if $4\nmid k$, and $\alpha_C\in\{0,\kappa\}$
+if $4\mid k$.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:maj}, Corollary~\ref{cor:cyclic}, (A2) and (A5), and
+Proposition~\ref{prop:kernel}.
+\end{proof}
+
+\subsection{Twisted sectors}
+Let $\theta=s(-1)$; on each frame factor $V_{\sqrt3\Z}$ it is the reflection lift. We use the
+following $q$-series, all carrying $q^{L_0-c/24}$:
+\begin{gather*}
+  e(\tau)=\frac{\eta(\tau)^n}{\eta(2\tau)^n},\quad
+  f(\tau)=\frac{\eta(2\tau)^{n/2}}{\eta(4\tau)^{n/2}},\quad
+  E(\tau)=2^{n/2}q^{n/48}\prod_{j\text{ odd}}(1-q^{j/2})^{-n},\\
+  g(\tau)=2^{n/4}q^{n/192}\prod_{j\text{ odd}}(1-q^{j/4})^{-n/2},\quad
+  F(\tau)=q^{n/48}\prod_{r\text{ odd}}(1+q^r)^{-n/2}.
+\end{gather*}
+By Proposition~\ref{prop:fpf}, $e=Z(1,-1)$ and $f=Z(1,x)$ for every $x$ with $x^2=-1$ (Frame shapes
+$1^{-n}2^n$ and $2^{-n/2}4^{n/2}$).
+
+\begin{lemma}\label{lem:minus}
+\begin{enumerate}
+\item $V(-1)=S[\theta]\otimes T$, where $S[\theta]$ is the Fock space of the Heisenberg modes $\alpha(r)$,
+  $r\in\frac12+\Z$, and $T$ is the spinor module of the Clifford algebra $\mathrm{Cl}(n)$ generated by odd
+  zero modes $\gamma_1,\dots,\gamma_n$, one for each frame factor; $\dim T=2^{n/2}$, all of $T$ has weight
+  $n/16$, and $\ch V(-1)=E$. $V(-1)$ is irreducible already as a module over the frame.
+\item For $g\in Q_8$, every operator on $V(-1)$ implementing $g$ is a multiple of $S[g]\otimes\phi_g$,
+  where $S[g]$ is the action of $g$ on the Fock space and $\phi_g\in\mathrm{Pin}(n)$ satisfies
+  $\phi_g\gamma_i\phi_g^{-1}=s_i\gamma_{p(i)}$.
+\item There is a representation $\tilde\rho\colon Q_8\to GL(T)$ with $\tilde\rho(g)\in\C^\times\phi_g$ and
+  $T\cong(\rho_2\oplus2\cdot\mathbf 1)^{\otimes3k}$. Hence $t_x:=\Tr_T\tilde\rho(x)=2^{3k}$ for
+  $x\in\{\pm J,\pm K,\pm JK\}$ and $\Tr_T\tilde\rho(-1)=0$. Every representation $\rho$ with
+  $\rho(g)\in\C^\times\phi_g$ is $\psi\otimes\tilde\rho$ for a character $\psi\colon Q_8\to\{\pm1\}$.
+\item For $x\in\{\pm J,\pm K,\pm JK\}$, $V(x)=S[x]\otimes T_x$ with $T_x$ the spinor module of
+  $\mathrm{Cl}(n/2)$, one zero mode for each signed $2$-cycle of $x$; $\dim T_x=2^{n/4}$, the
+  superdimension of $T_x$ is $0$, the weights lie in $h_x+\frac14\Z_{\ge0}$ with $h_x=3n/64$, and
+  $\ch V(x)=g$.
+\item For $x\in\{\pm J,\pm K,\pm JK\}$ the trace of $S[x]$ on $S[\theta]$, weighted by
+  $q^{L_0-c/24}$ with $L_0$ including the vacuum energy $n/16$ of $V(-1)$, is $F$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) On the frame, $\sqrt3\Z^n$ has a unique irreducible $\theta$-twisted module, $S[\theta]\otimes T$ with
+$\dim T=|\sqrt3\Z^n/2\sqrt3\Z^n|^{1/2}=2^{n/2}$, since $n$ is even \cite[Thm.~4.2, Rem.~4.4]{BK}; its
+zero modes are generated by the $\gamma_i$, which anticommute. $\theta$-twisted frame modules are
+semisimple \cite[Thm.~4.2]{BK}, and $V(-1)$ has a ground-state space of dimension
+$|\det(1-(-1))|^{1/2}=2^{n/2}$ (Proposition~\ref{prop:fpf}, $\varepsilon(-1)=1$), so as a frame module it
+is this irreducible module. The vacuum energy is $\rho_{-1}=n/16$. (2) An implementing operator
+conjugates the Heisenberg modes by $g$ and the zero modes as stated; by Schur's lemma for the
+irreducible frame module it is unique up to a scalar. (3) On a $Q_8$-orbit $O$ of coordinates, $Q_8$ acts
+on $\R^4_O$ by signed permutations, permuting $\pm e_p$ simply transitively; sending $x\in Q_8$ to
+$xe_p$ for a fixed $p\in O$ identifies $\R^4_O$ with the quaternions, $Q_8$ acting by left
+multiplication. So $Q_8$ acts through $SU(2)_L\subset SO(4)$ (or $SU(2)_R$), which lifts isomorphically
+to $\mathrm{Spin}(4)=SU(2)_L\times SU(2)_R$; on the spinor module $S^+\oplus S^-=\C^2\oplus\C^2$ of
+$\mathrm{Cl}(4)$ the lift acts as $\rho_2\oplus2\cdot\mathbf 1$. The lifts are even Clifford elements,
+so they act factorwise on $T=\bigotimes_OS_O$ without Koszul signs, and their tensor product is a
+representation $\tilde\rho$. The character of $\rho_2$ is $0$ on elements of order $4$ and $-2$ at $-1$,
+so $t_x=2^{3k}$ and $\Tr\tilde\rho(-1)=0$. Two representations that agree up to scalars differ by a
+character of $Q_8$, which is $\pm1$-valued. (4) As in (1), with $\sqrt3\Z^n/(1-x)\sqrt3\Z^n\cong
+(\Z/2)^{n/2}$ generated by one $\sqrt3e_i$ for each $2$-cycle, and $|\det(1-x)|=2^{n/2}$; the vacuum energy
+is $\rho_x=3n/64$ and the Fock modes lie in $\pm\frac14+\Z$. (5) $x$ has the eigenvalues $\pm i$ on
+$\Lambda\otimes\C$, each $n/2$ times, so the Fock trace is $\prod_{r\in\frac12+\Z_{\ge0}}(1+q^{2r})^{-n/2}$,
+and $q^{n/16-n/24}=q^{n/48}$.
+\end{proof}
+
+\begin{lemma}\label{lem:eta}
+Write $(\phi|S)(\tau)=\phi(-1/\tau)$ and $(\phi|T)(\tau)=\phi(\tau+1)$. Then
+\[
+  e|S=E,\qquad f|S=g,\qquad (g|T^2)|S=N\cdot F,\quad\text{where }
+  N=\bigl(\sqrt2\,e^{2\pi i/48}\bigr)^{n/2}=2^{3k}e^{2\pi ik/8}.
+\]
+Equivalently $f(\tau/(1-2\tau))=N\cdot F(\tau)$.
+\end{lemma}
+
+\begin{proof}
+The first two follow from $\eta(-1/\tau)=\sqrt{-i\tau}\,\eta(\tau)$; for example
+\[
+  f(-1/\tau)=2^{n/4}\bigl(\eta(\tau/2)/\eta(\tau/4)\bigr)^{n/2}=g(\tau).
+\]
+For the third, use
+$\eta(z+1)=e^{2\pi i/24}\eta(z)$ and Euler's identity
+\[
+  \eta\bigl(w+\tfrac12\bigr)=e^{2\pi i/48}\,\frac{\eta(2w)^3}{\eta(w)\,\eta(4w)},\qquad\text{i.e.}\qquad
+  \prod_m\bigl(1-(-q)^m\bigr)=\frac{\prod_m(1-q^{2m})^3}{\prod_m(1-q^m)\prod_m(1-q^{4m})}.
+\]
+With $w=\tau/4$ they give
+\[
+  \frac{\eta(\tau/2+1)}{\eta(\tau/4+\frac12)}=e^{2\pi i/48}\,\frac{\eta(\tau)\eta(\tau/4)}{\eta(\tau/2)^2},
+  \qquad\text{so}\qquad
+  g(\tau+2)=N\Bigl(\frac{\eta(\tau)\eta(\tau/4)}{\eta(\tau/2)^2}\Bigr)^{n/2}=N\,F(-1/\tau),
+\]
+using $F=\bigl(\eta(\tau)\eta(4\tau)/\eta(2\tau)^2\bigr)^{n/2}$ and the $S$-law of $\eta$ (the factors
+$\sqrt{-i\tau}$ cancel). Applying $S$ gives $(g|T^2)|S=N\,F$, and $f|ST^2S=(g|T^2)|S$.
+\end{proof}
+
+\subsection{The character of a would-be orbifold}
+
+\begin{proposition}\label{prop:Sdefect}
+Assume (A1), (A9), (A10) and Hypothesis~ORB. If $4\mid k$ and the $Q_8$-action on $V_{\Lambda(C)}$ is
+non-anomalous, then $8\mid k$.
+\end{proposition}
+
+\begin{proof}
+Let $W=V\orb Q_8$ for some trivialisation. The conjugacy classes of $Q_8$ are $\{1\}$, $\{-1\}$,
+$\{\pm J\}$, $\{\pm K\}$, $\{\pm JK\}$, with $C(\pm1)=Q_8$ and $C(x)=\langle x\rangle$ otherwise. We
+compute the contribution of each class to $\ch W$.
+
+\emph{Untwisted sector.} $\frac18\sum_{g\in Q_8}Z(1,g)=\frac18\bigl(Z(1,1)+e+6f\bigr)$.
+
+\emph{The class of $-1$.} By Lemma~\ref{lem:minus}(2),(3) and genuineness,
+$\rho_{-1}(g)=\psi(g)\,S[g]\otimes\tilde\rho(g)$ for a character $\psi$. The trace of $\rho_{-1}(g)$ is
+$E$ for $g=1$, $0$ for $g=-1$, and $\psi(x)t_xF$ for $g=\pm x$ (note $\psi(-x)=\psi(x)$, since $-1$ is a
+commutator, and $t_{-x}=t_x$). So the contribution is $\frac18E+\frac14T_\psi F$ with
+$T_\psi=2^{3k}\bigl(\psi(J)+\psi(K)+\psi(JK)\bigr)$.
+
+\emph{The class of $x\in\{J,K,JK\}$.} By (A10) and Schur's lemma, $\rho_x(x)=\epsilon\,e^{2\pi iL_0}P$ for a
+scalar $\epsilon$, $P$ the parity. On the weight space of weight $h_x+j/4$, which is (Fock level $j/4$)
+$\otimes T_x$, odd powers of $\rho_x(x)$ have trace $0$ because $T_x$ has superdimension $0$, and
+$\rho_x(x)^2$ is the scalar $\epsilon^2e^{4\pi ih_x}(-1)^j$. So the projector onto the invariants has
+trace $\frac14(1+\epsilon^2e^{4\pi ih_x}(-1)^j)$ times the dimension, which is nonzero for $j=0$ or $j=1$;
+both levels are nonzero. Hence $W_x:=V(x)^{\langle x\rangle}\ne0$. On $W_x\subseteq W$ the operator
+$e^{2\pi iL_0}$ is $\pm P$ ($W$ is a vertex operator superalgebra) and $\rho_x(x)=1$, so $\epsilon=\pm1$
+and $\rho_x(x^2)=e^{4\pi iL_0}$, whose trace is $e^{4\pi ic/24}g(\tau+2)=g(\tau+2)$. The contribution is
+$\frac14\bigl(g(\tau)+g(\tau+2)\bigr)$.
+
+\emph{$S$-invariance.} Altogether
+\[
+  \ch W=\tfrac18Z(1,1)+\tfrac18e+\tfrac34f+\tfrac18E+\tfrac14T_\psi F+\tfrac34\bigl(g+g|T^2\bigr).
+\]
+$Z(1,1)=\Theta_\Lambda/\eta^n$ is $S$-invariant, and by Lemma~\ref{lem:eta} $e\leftrightarrow E$,
+$f\leftrightarrow g$, $g|T^2\mapsto NF$ and $F\mapsto(g|T^2)/N$ under $S$. Hence
+\[
+  \ch W|S-\ch W=\tfrac14\bigl(3N-T_\psi\bigr)\bigl(F-(g|T^2)/N\bigr).
+\]
+By (A9) the left side vanishes. The leading exponents of $F$ and $g|T^2$ are $n/48$ and $n/192$, so
+$F\ne(g|T^2)/N$ and $T_\psi=3N$, i.e.\ $\psi(J)+\psi(K)+\psi(JK)=3e^{2\pi ik/8}$. The left side is $3$
+($\psi=1$) or $-1$, so $\psi=1$ and $e^{2\pi ik/8}=1$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:Q8}}
+If $4\nmid k$, $\res_{\langle J\rangle}\alpha_C=2k\nu_4\ne0$ (Lemma~\ref{lem:layers}). If $k\equiv4\pmod8$,
+then $\alpha_C\in\{0,\kappa\}$ by Lemma~\ref{lem:layers}, and $\alpha_C=0$ is excluded by
+Proposition~\ref{prop:Sdefect}; so $\alpha_C=\kappa\ne0$. Let $8\mid k$. Let $D$ be a self-dual code of
+length $48$ with $J_D,K_D\in\Aut(D)$ satisfying the same relations; for instance the sum of twelve
+$Q_8$-invariant tetracodes, $Q_8$ acting on each $4$-set by left multiplication on quaternions
+\cite[Lemma~6.2]{I}. Then $Q_8$ acts on $C\oplus D$ through $(J,J_D)$ and $(K,K_D)$, and
+$s_{C\oplus D}=s_C\otimes s_D$, so $\alpha_{C\oplus D}=\alpha_C+\alpha_D$ by (A4). Both $C\oplus D$ and
+$D$ have $k\equiv4\pmod8$, so both anomalies equal $\kappa$, which does not depend on the identification
+of the groups with $Q_8$ (Proposition~\ref{prop:kernel}). Hence $\alpha_C=0$. \qed
+
+\medskip
+The proof shows more: $\alpha_C=(k/4)\,\kappa$ when $4\mid k$.
+
+\begin{remark}[free fermions]\label{rem:freefermions}
+For a $Q_8$-invariant sum $D_k$ of tetracodes of length $12k$ the lattice is $\Z^{12k}$ (the only odd
+unimodular lattice of rank $4$ is $\Z^4$), so $V_{\Lambda(D_k)}=\Fer(8)^{\otimes3k}$. The weight-$\frac12$
+space of each factor is spanned by the $e^{t/\sqrt3}$, $t$ a nonzero tetracode word, which $Q_8$ permutes
+up to sign and freely; so it is the real regular representation
+$\Reg=\mathbf 1\oplus\chi_i\oplus\chi_j\oplus\chi_k\oplus\mathbb H$. Let $a=\alpha(\Fer(\Reg))$. Then
+$\alpha_{D_k}=3k\,a$, so $12a=\kappa$ and $24a=0$ by the proof above; as $|\rSH(Q_8)|=32$, $a$ has order
+exactly $8$ and $4a=\kappa$. Moreover $\alpha_C=3k\,a$ for every $C$: the difference $\delta(C)=\alpha_C-
+3k\,a$ lies in $\ker R$ ($\Reg$ restricted to $\langle i\rangle$ rotates two planes through $\pi/2$ and one
+through $\pi$, so its anomaly there is $(1+1+4)\nu_4$, and $3k\cdot6\equiv2k\pmod8$), it is additive, it
+vanishes on the $D_k$, and it vanishes for $4\mid k$; adding a $D_j$ with $j\equiv-k\pmod4$ gives
+$\delta(C)=0$ in general.
+
+In spin-bordism terms the anomaly of fermions in a real representation $\rho$ on a spherical space form
+$S^3/\Gamma$ with spin structure $\epsilon\colon\Gamma\to\{\pm1\}$ is
+$\frac12(\eta(\rho)-\dim\rho\,\eta(\mathbf 1))\bmod1$, with Donnelly's
+$\eta(\rho)=-\frac1{|\Gamma|}\sum_{g\ne1}\epsilon(g)\chi_\rho(g)/(2-\operatorname{tr}g)$ \cite{Donnelly}. For
+$\rho=\Reg$ this is $\frac58$ on $S^3/Q_8$ for all four spin structures, $\frac14$ on $S^3/\langle
+i\rangle$ and $\frac12$ on $\mathbb{RP}^3$; one Majorana fermion odd under $\Z/2$ gives $\pm\frac18$ on
+$\mathbb{RP}^3$. This is consistent with $a$ of order $8$ and with $4a$ vanishing on all cyclic
+subgroups. We do not use these values.
+
+The twisted sector of Lemma~\ref{lem:minus} also gives a direct invariant. Normalise the lifts of $J$, $K$,
+$JK$ on $V(-1)$ by transporting their twining characters on $V$ along $ST^2S$ (Lemma~\ref{lem:eta}); for
+$4\mid k$ these are the canonical lifts of the non-anomalous cyclic subgroups. They differ from
+$\tilde\rho$ by scalars, and $\hat J\hat K=\mu\,\widehat{JK}$ for a scalar $\mu$; with the conventions of
+the computations in \cite{repo} one finds $\mu=e^{-2\pi ik/8}=\exp(2\pi i\cdot3k\cdot\frac58)$, the value of
+$3k\,a$ on $S^3/Q_8$. Finally, $\alpha_C=3k\,a$ can
+also be derived by gauging: a sum $C_0$ of $Q_8$-invariant tetracodes is a multi-neighbour of $C$, and
+$V_{\Lambda(C_0)}=V_{\Lambda(C)}\orb\widehat W$ for a $3$-group $\widehat W$ normalised by $Q_8$, so a
+coprime-gauging lemma \cite{Naidu,Uribe,Tachikawa} transports the anomaly from $C$ to $C_0$. That route
+needs the super version of the gauging lemma, which the proof above avoids.
+\end{remark}
+
+\begin{remark}
+For $k\equiv4\pmod8$ a non-anomalous $Q_8$ would produce an orbifold of index $3$, which is not divisible
+by $24/\gcd(k,24)\in\{6,2\}$. So Theorem~\ref{thm:Q8} is what the Stolz--Teichner conjecture predicts.
+\end{remark}
+
+\section{The group \texorpdfstring{$Q_8\times\Z/3$}{Q8 x Z/3}}\label{sec:Q8Z3}
+
+\begin{lemma}[{\cite[III.9--III.10]{Brown}}]\label{lem:sylow}
+Let $G$ be finite, $M$ a trivial $G$-module, $q\ge1$, and $P$ a Sylow $p$-subgroup. Then $\res^G_P$ is
+injective on the $p$-primary part of $\Hc^q(G;M)$, and on all of $\Hc^q(G;\Z/2)$ if $p=2$. Hence
+$\beta\in\Hc^q(G;M)$ vanishes iff all its Sylow restrictions vanish.
+\end{lemma}
+
+\begin{proposition}\label{prop:sylow}
+Let $G$ be finite and $\alpha\in\SH(G)$. Then $\alpha=0$ iff $\res^G_P\alpha=0$ for every Sylow subgroup
+$P$.
+\end{proposition}
+
+\begin{proof}
+Suppose all Sylow restrictions vanish, and let $P_2$ be a Sylow $2$-subgroup. By naturality
+$\res_{P_2}\maj(\alpha)=\maj(\res_{P_2}\alpha)=0$, so $\maj(\alpha)=0$ by Lemma~\ref{lem:sylow}, and
+$\alpha=\iota_2(\alpha')$ with $\alpha'\in\rSH(G)$; since $\iota_2$ is injective for every subgroup, all
+Sylow restrictions of $\alpha'$ vanish. In the same way $\gw(\alpha')=0$, so $\alpha'=\iota_1(\beta)$ with
+$\beta\in\Hc^3(G;U(1))$ whose Sylow restrictions vanish, and $\beta=0$ by Lemma~\ref{lem:sylow}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:Q8Z3}]
+The Sylow subgroups of $G=Q_8\times\langle h\rangle$ are $Q_8$ and $\langle h\rangle$, both normal. The
+restriction to $Q_8$ is $\alpha_C$, which vanishes iff $8\mid k$ (Theorem~\ref{thm:Q8}). An element of
+order $3$ without fixed coordinate consists of $3$-cycles, so the restriction to $\langle h\rangle$ is
+$2k\,\nu_3$ (Proposition~\ref{prop:odd}), which vanishes iff $3\mid k$. Conclude with
+Proposition~\ref{prop:sylow}.
+\end{proof}
+
+The same argument shows that $(\res_{Q_8},\res_{\Z/3})\colon\SH(Q_8\times\Z/3)\to\SH(Q_8)\oplus\SH(\Z/3)$
+is an isomorphism (inflations give the inverse): there are no mixed terms.
+
+\section{The orbifold index}\label{sec:index}
+
+Throughout, $C$ and $G$ are as in Theorem~\ref{thm:index}, $V=V_{\Lambda(C)}$, $G$ acts non-anomalously,
+and $W=V\orb G$ is an orbifold as in Hypothesis~ORB. Since the anomaly vanishes, so does its Majorana
+layer, hence $\varepsilon=1$ on $G$ (Proposition~\ref{prop:maj}).
+
+\begin{lemma}\label{lem:groups}
+\begin{enumerate}
+\item Every commuting pair in $G$ generates a cyclic subgroup.
+\item If $g\in G$ has even order $m$, then $g^{m/2}=-1$.
+\item Every $g\in G\setminus\{\pm1\}$ has no fixed coordinate; so $\operatorname{tr}_{\R^n}g=0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) is (i). (2) $\langle g\rangle$ contains exactly one involution, $g^{m/2}$, and it is $-1$ by (ii).
+(3) A coordinate fixed by $g$ is fixed by every power of $g$. By (iii) the order of $g$ is $2^a3^b$ with
+$b\le1$. If $b=1$, then $g^{2^a}$ is a nontrivial element of $\langle h\rangle$, which has no fixed
+coordinate. If $b=0$, then $a\ge2$, since $g\ne\pm1$ and $-1$ is the only involution; so
+$g^{2^{a-1}}=-1$ by (2), and a coordinate fixed by $g$, with $ge_i=\pm e_i$, would give
+$-e_i=g^{2^{a-1}}e_i=e_i$. A signed permutation matrix without fixed coordinate has trace $0$.
+\end{proof}
+
+\begin{lemma}\label{lem:vacuum}
+Let $g\in G$ have even order $m$. Then the eigenvalues of $g$ on $\R^n$ are $e^{2\pi is/m}$ with $s$ odd,
+each with multiplicity $2n/m$; $g$ has no fixed vector; and the lowest weight of $V(g\sigma)$ is
+\[
+  E_g=\rho_g=\frac n{24}+\frac n{12m^2}>\frac c{24}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:groups} the character of $\langle g\rangle$ on $\R^n$ is $n$ at $1$, $-n$ at
+$g^{m/2}=-1$, and $0$ elsewhere, so $e^{2\pi is/m}$ has multiplicity $\frac nm(1-(-1)^s)$. With $m=2p$,
+$\sum_{s\text{ odd}<m}\frac sm(1-\frac sm)=\frac{2p^2+1}{12p}$, so $\rho_g=\frac n4\cdot\frac
+2m\cdot\frac{2p^2+1}{12p}=\frac n{24}+\frac n{12m^2}$. By Proposition~\ref{prop:fpf} ($\varepsilon(g)=1$)
+the lowest weight of $V(g\sigma)\cong V(g)$ is $\rho_g$.
+\end{proof}
+
+\begin{lemma}\label{lem:evenness}
+Every $V(g)$ and $V(g\sigma)$, $g\in G$, is of $\C$-type. If $g$ has odd order and $x\in C(g)$, every
+$x$-intertwiner on $V(g\sigma)$ is even.
+\end{lemma}
+
+\begin{proof}
+The Majorana layer, which records which $V(g)$ are of Clifford type, is $\varepsilon=1$; and $V_R$ is of
+$\C$-type, with $V(g\sigma)\cong V(g)\boxtimes V_R$ in the $G\times\langle\sigma\rangle$-crossed
+supercategory of twisted modules \cite[Thms.~4.15, 4.17]{McRae}, in which each component has one simple
+object, invertible. For a $\C$-type simple object $M$ let $p(M,x)\in\Z/2$ be the parity of an
+$x$-intertwiner; it is well defined, $p(V,x)=0$, and $p$ is additive under $\boxtimes$ (an isomorphism
+$M\boxtimes N\cong P$ of either parity enters twice). So $a\mapsto p(V(g^a),x)$ is a homomorphism from
+$\Z/\operatorname{ord}(g)$ to $\Z/2$, trivial for odd order, and $p(V(g\sigma),x)=p(V_R,x)$. Finally
+$p(V_R,x)=0$: an $x$-intertwiner maps $e^{\nu_w}$ to a multiple of $e^{\nu_{xw}}$, whose parity is
+$f(xw)=\varepsilon(x)f(w)=f(w)$ (if $C$ has no maximal codeword, $\Index(C)=0$ and there is nothing to
+prove).
+\end{proof}
+
+\begin{lemma}\label{lem:untwisted}
+Let $A$ be an $x$-intertwiner on $V_R$, $x\in G$, and $Z_{RR}(1,A)=\str_{V_R}Aq^{L_0-c/24}$.
+\begin{enumerate}
+\item $Z_{RR}(1,A)=0$ if $x$ has even order.
+\item If $x$ has order $3$ and $A^3=1$, then $Z_{RR}(1,A)=\zeta\,T_x(C)$ for some $\zeta^3=1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{prop:VC}(5) only the ground states $e^{\nu_w}$ contribute, and $A$ maps
+$\C e^{\nu_w}$ onto $\C e^{\nu_{xw}}$, since it conjugates the Heisenberg zero modes by $x$. (1) A
+maximal codeword fixed by $x$ would be fixed by $x^{m/2}=-1$, but $-w\ne w$. (2) The lift $s(x)$ acts on
+$e^\alpha$, $\alpha\in\Lambda^x$, by a sign whose cube is $1$, hence trivially. Any two $x$-fixed ground
+states $e^{\nu_w},e^{\nu_{w'}}$ have momenta differing by some $\alpha\in\Lambda^x$, and the leading term
+of $Y_R(e^\alpha,z)e^{\nu_w}$ is a nonzero multiple of $e^{\nu_w+\alpha}$; since
+$AY_R(e^\alpha,z)A^{-1}=Y_R(e^\alpha,z)$, $A$ has one eigenvalue $\zeta$ on all $x$-fixed ground states,
+and $\zeta^3=1$. The parities are $f(w)$, so $Z_{RR}(1,A)=\zeta\sum_{xw=w}f(w)=\zeta\,T_x(C)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:index}]
+$W$ contains $V^G\ni\tau$ with the same conformal vector, so it is $\cN=1$ with the supercurrent $\tau$,
+and $G_0^2=L_0-c/24$ on $W_R$. Hence $\Index(W)=\str_{W_R}q^{L_0-c/24}$ is the superdimension of the
+weight-$c/24$ part of $W_R$, which is the sum of the contributions of the classes $[g]$.
+
+\emph{$g$ of even order.} The summand lies in $V(g\sigma)$, which has no states of weight $c/24$ by
+Lemma~\ref{lem:vacuum}; it contributes $0$.
+
+\emph{$g$ of odd order.} The summand is $V(g\sigma)^{C(g)}$, the image of the projector
+\[
+  e_g=\frac1{|C(g)|}\sum_{x\in C(g)}\rho_g(x),
+\]
+which is even by Lemma~\ref{lem:evenness}. Each $\rho_g(x)$ commutes with $G_0$,
+since $x$ fixes $\tau$, so the contribution is $\frac1{|C(g)|}\sum_{x\in C(g)}Z_{RR}(g,x)$ with
+$Z_{RR}(g,x)=\str_{V(g\sigma)}\rho_g(x)q^{L_0-c/24}$.
+
+For $g=1$ this is $\frac1{|G|}\sum_xZ_{RR}(1,x)=\Index(C)/|G|$, by Lemma~\ref{lem:untwisted}: elements of
+even order contribute $0$, and the elements of order $3$ are $h^{\pm1}$, with $T_{h^{\pm1}}=T_h=0$.
+
+Let $g\in\langle h\rangle\setminus\{1\}$; then $C(g)=G$ by (iii). If $x\in G$ has even order, then
+$\langle g,x\rangle$ is cyclic, and by modular covariance (A10) $Z_{RR}(g,x)$ is a multiple of the
+$S$-transform of $Z_{RR}(x,g^{-1})$, which vanishes because $V(x\sigma)$ has no states of weight $c/24$.
+If $x$ has odd order, then $x\in\langle g\rangle$; as $SL_2(\Z)\to SL_2(\Z/3)$ is onto and $SL_2(\Z/3)$
+acts transitively on $(\Z/3)^2\setminus0$, some $\gamma\in SL_2(\Z)$ carries the pair $(g,x)$ to $(1,y)$
+with $y\ne1$ in $\langle h\rangle$, and $Z_{RR}(1,y)=\zeta T_y(C)=0$. So all twisted classes contribute
+$0$, and $\Index(W)=\pm\Index(C)/|G|$, the sign being the convention for the parity of $W_R$.
+\end{proof}
+
+\begin{remark}
+For $G=Q_8$, and for cyclic $G$ of order $1$, $2$ or $4$, every class except $[1]$ has even order, so no
+modular transformation of twisted--twined traces is used. Changing the trivialisation can change
+individual twisted--twined terms by phases, but every term except $Z_{RR}(1,1)$ vanishes for every
+normalisation, so the index is the same for all orbifolds.
+\end{remark}
+
+\section{Proof of the Main Theorem, and remarks}\label{sec:proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let $m=\gcd(k,24)$. By \cite[Thms.~B, C]{I} there is a self-dual code $C$ of length $12k$ with
+$\Index(C)=24$ and the automorphisms of Table~\ref{tab:main}: for $m\in\{1,2\}$ any code of
+\cite[Thm.~B]{I}; for $3\mid k$ an $h$ of order $3$ without fixed coordinate and with $T_h(C)=0$
+\cite[Thm.~C(a)]{I}; for $4\mid k$ elements $J,K$ with $J^2=K^2=-1$, $KJ=-JK$ \cite[Thm.~C(b)]{I}; and
+for $12\mid k$ all three, commuting \cite[Thm.~C(c)]{I}. For $m\in\{1,2,3,4,6,12\}$ the group $G$ is cyclic,
+generated by $1$, $-1$, $h$, $J$, $-h$, $Jh$, of order $m$; by Corollary~\ref{cor:cyclic} its anomaly is
+$2k\nu_m=0$, as $m\mid k$. For $m=8$, $G=Q_8$ is non-anomalous by Theorem~\ref{thm:Q8}, and for $m=24$,
+$G=Q_8\times\langle h\rangle$ by Theorem~\ref{thm:Q8Z3}. Each $G$ satisfies (i)--(iii) of
+Theorem~\ref{thm:index}: its abelian subgroups are cyclic (for $Q_8\times\Z/3$ they are products of
+subgroups of coprime orders); $-1=g^{m/2}$ resp.\ the centre of $Q_8$ is its only involution; and its
+elements of odd order form $1$ or $\langle h\rangle$, central, with $T_h(C)=0$ ($T_{h^2}=T_h$, and
+$(Jh)^4=h$). By Hypothesis~ORB the orbifold $W=V_{\Lambda(C)}\orb G$ exists, and by
+Theorem~\ref{thm:index} it is a holomorphic $\cN=1$ vertex operator superalgebra of central charge
+$12k$ and index $24/|G|=24/m$.
+\end{proof}
+
+\begin{remark}[reduction to $k\le24$]\label{rem:reduction}
+If $W$ and $W'$ are holomorphic $\cN=1$ vertex operator superalgebras of central charges in $12\Z$, then
+so is $W\otimes W'$, with supercurrent $\tau\otimes\mathbf 1+\mathbf 1\otimes\tau'$; its Ramond sector is
+$W_R\otimes W'_R$, so $\Index(W\otimes W')=\pm\Index(W)\Index(W')$. With $W_{24}$ the orbifold of index $1$
+at $k=24$ and $W_r$ that of index $24/\gcd(r,24)$ at $k=r\le24$, the theory $W_{24}^{\otimes q}\otimes W_r$
+has central charge $12(24q+r)$ and index $24/\gcd(24q+r,24)$. So the Main Question needs only the codes
+of length at most $288$; the chains of \cite{I} are used for finitely many steps.
+\end{remark}
+
+\begin{remark}[$k=24$ and TMF]\label{rem:TMF}
+Let $W$ be the orbifold of index $1$ and central charge $288$. Under the Stolz--Teichner conjecture
+\cite[Conj.~5.4]{GJF} it defines a class $[W]\in\pi_{576}\mathrm{TMF}$ mapping to $\pm\Delta^{24}$ in
+$\mathrm{MF}_{288}$, so $[W]\mp\Delta^{24}$ lies in the kernel of $\pi_*\mathrm{TMF}\to\mathrm{MF}$, which
+is the torsion. Torsion elements of $\pi_*\mathrm{TMF}$ are nilpotent by the nilpotence theorem \cite{DHS},
+their images in $\mathrm{MU}_*\mathrm{TMF}$ being torsion in a torsion-free group. Hence
+$[W]=\pm\Delta^{24}(1+t)$ with $t$ nilpotent, a unit of $\pi_*\mathrm{TMF}$; and a theory of central
+charge $288$ can define a unit only if its index is $\pm1$. So at $k=24$ the Main Question asks for a
+holomorphic $\cN=1$ theory representing the periodicity class $\Delta^{24}$ up to torsion, and
+Theorem~\ref{thm:main} provides one.
+\end{remark}
+
+\begin{remark}[why the seed for $12\mid k$ has length $72$]
+The codes for $12\mid k$ need $Q_8\times\Z/3$ and are built from a seed of length $72$
+\cite[\S7.3]{I}. $Q_8$-invariant codes are $\F^2\otimes U$ with $U$ Lagrangian in $\F^{2r}$ for the
+symplectic form $\sum_b(u_{2b}v_{2b+1}-u_{2b+1}v_{2b})$ (cf.\ \cite[App.~A.2]{I}), which makes their index
+computable at length $72$. At length $36$, in all our samples, $Q_8\times\Z/3$-invariant codes with
+$T_h=0$ have index divisible by $72$, which rules out seeds of that length for chains with index $24$;
+at length $72$ this pattern fails, and a seed exists.
+\end{remark}
+
+\begin{remark}[formalisation]
+The code-level content of Theorem~\ref{thm:main}, i.e.\ for every $k$ a self-dual code of length $12k$ and
+index $24$ with the group data of Table~\ref{tab:main}, is formalised in Lean~4 with Mathlib in the
+repository of \cite{I}, with the value $24$ of the length-$72$ seed sum as an explicit hypothesis. The
+vertex-algebra side is not formalised.
+\end{remark}
+
+\appendix
+\section{Computations}\label{app:checks}
+
+The explicit identities of this paper were checked by computer, with the code data parsed from the
+source of \cite{I}; the script and its log are in \cite{repo}.
+\begin{itemize}
+\item The Ramond ground states of Proposition~\ref{prop:VC}(4) (the per-coordinate minima, and the signed
+  count $24$ on the Golay code), Lemma~\ref{lem:majnumber} and \eqref{eq:cycles} on random signed
+  permutations, and the two expressions for $\rho_g$.
+\item The calibration of Lemma~\ref{lem:calib} (theta quotients under $ST^LS^{-1}$, numerically); the
+  eigenvalues of Propositions~\ref{prop:frame} and~\ref{prop:odd} numerically (eta quotients for
+  $n=12,24$; the theta series of $\Lambda^h$ for an element $h$ of order $3$ without fixed coordinate on
+  the Golay code and on $E_{36}$); and the anomalies $2k\nu_m$ of
+  Corollary~\ref{cor:cyclic} exactly, for $k\le48$, and for every element of every group of
+  Table~\ref{tab:main} on the codes of \cite{I}, together with $\varepsilon=1$ and the Frame shapes.
+\item The cohomology of $Q_8$ in low degree over $\mathbb F_2$, and the order $16$ of the subgroup of
+  Proposition~\ref{prop:kernel}.
+\item Lemma~\ref{lem:minus}(3): explicit Pin lifts in $\mathrm{Cl}(4)$ on every $Q_8$-orbit of coordinates
+  of the Golay code and of $E_{72}$ (even, unique up to scalars, with exactly four
+  linearisations $\rho_2\oplus2\psi$), and on the whole spinor module of $\mathrm{Cl}(12)$ for the Golay
+  code (traces $8\psi(x)$ at elements of order $4$ and $0$ at $-1$).
+\item The three identities of Lemma~\ref{lem:eta} (numerically at several $\tau$, for $n=12,24,48$); the
+  formula for $\ch W|S-\ch W$ in Proposition~\ref{prop:Sdefect} numerically for $k=4,8$ and all four
+  $\psi$, and its zero set ($8\mid k$, $\psi=1$) exactly.
+\item The eta invariants of Remark~\ref{rem:freefermions}, in exact rational arithmetic.
+\item The eigenvalue multiplicities and the vacuum energies $E_g$ of Lemma~\ref{lem:vacuum} for every
+  element of even order, and the group theory of Lemma~\ref{lem:groups}, for every group of
+  Table~\ref{tab:main} on the codes of \cite{I}; and the arithmetic of Table~\ref{tab:main} and
+  Remark~\ref{rem:reduction}.
+\end{itemize}
+
+\begin{thebibliography}{99}
+
+\bibitem{AM}
+A.~Adem and R.~J.~Milgram, \emph{Cohomology of Finite Groups}, 2nd ed., Grundlehren Math.\ Wiss.\
+\textbf{309}, Springer, 2004.
+
+\bibitem{BK}
+B.~Bakalov and V.~G.~Kac, \emph{Twisted modules over lattice vertex algebras}, in: Lie Theory and Its
+Applications in Physics V, World Sci., 2004, 3--26; arXiv:math/0402315.
+
+\bibitem{Brown}
+K.~S.~Brown, \emph{Cohomology of Groups}, Grad.\ Texts in Math.\ \textbf{87}, Springer, 1982.
+
+\bibitem{CM}
+S.~Carnahan and M.~Miyamoto, \emph{Regularity of fixed-point vertex operator subalgebras},
+arXiv:1603.05645.
+
+\bibitem{CE}
+H.~Cartan and S.~Eilenberg, \emph{Homological Algebra}, Princeton Univ.\ Press, 1956.
+
+\bibitem{DHS}
+E.~S.~Devinatz, M.~J.~Hopkins and J.~H.~Smith, \emph{Nilpotence and stable homotopy theory I}, Ann.\ of
+Math.\ \textbf{128} (1988), 207--241.
+
+\bibitem{DL}
+C.~Dong and J.~Lepowsky, \emph{The algebraic structure of relative twisted vertex operators}, J.\ Pure
+Appl.\ Algebra \textbf{110} (1996), 259--295.
+
+\bibitem{DNR}
+C.~Dong, S.-H.~Ng and L.~Ren, \emph{Orbifolds and minimal modular extensions}, arXiv:2108.05225.
+
+\bibitem{DRY}
+C.~Dong, L.~Ren and M.~Yang, \emph{Super orbifold theory}, Adv.\ Math.\ \textbf{405} (2022), 108481;
+arXiv:2104.03533.
+
+\bibitem{DZ}
+C.~Dong and Z.~Zhao, \emph{Modularity in orbifold theory for vertex operator superalgebras}, Comm.\
+Math.\ Phys.\ \textbf{260} (2005), 227--256; arXiv:math/0411524.
+
+\bibitem{Donnelly}
+H.~Donnelly, \emph{Eta invariants for $G$-spaces}, Indiana Univ.\ Math.\ J.\ \textbf{27} (1978),
+889--918.
+
+\bibitem{FLM}
+I.~Frenkel, J.~Lepowsky and A.~Meurman, \emph{Vertex Operator Algebras and the Monster}, Pure Appl.\
+Math.\ \textbf{134}, Academic Press, 1988.
+
+\bibitem{GJF17}
+D.~Gaiotto and T.~Johnson-Freyd, \emph{Symmetry protected topological phases and generalized
+cohomology}, J.\ High Energy Phys.\ \textbf{2019}, no.~5, 007; arXiv:1712.07950.
+
+\bibitem{GJF}
+D.~Gaiotto and T.~Johnson-Freyd, \emph{Holomorphic SCFTs with small index}, Canad.\ J.\ Math.\
+\textbf{74} (2022), no.~2, 573--601; arXiv:1811.00589. (Numbering of statements refers to the arXiv
+version.)
+
+\bibitem{Hopkins}
+M.~J.~Hopkins, \emph{Algebraic topology and modular forms}, Proc.\ ICM Beijing 2002, Vol.~I, 291--317.
+
+\bibitem{I}
+[Authors], \emph{The index of self-dual ternary codes}, companion paper (draft, 2026).
+
+\bibitem{Kirillov}
+A.~Kirillov~Jr., \emph{Modular categories and orbifold models}, Comm.\ Math.\ Phys.\ \textbf{229} (2002),
+309--335.
+
+\bibitem{Lep}
+J.~Lepowsky, \emph{Calculus of twisted vertex operators}, Proc.\ Nat.\ Acad.\ Sci.\ USA \textbf{82}
+(1985), 8295--8299.
+
+\bibitem{Li}
+H.~Li, \emph{Local systems of twisted vertex operators, vertex operator superalgebras and twisted
+modules}, in: Moonshine, the Monster, and Related Topics, Contemp.\ Math.\ \textbf{193} (1996),
+203--236; arXiv:q-alg/9504022.
+
+\bibitem{McRae}
+R.~McRae, \emph{Twisted modules and $G$-equivariantization in logarithmic conformal field theory},
+Comm.\ Math.\ Phys.\ \textbf{383} (2021), 1939--2019; arXiv:1910.13226.
+
+\bibitem{Moller}
+S.~M\"oller, \emph{A cyclic orbifold theory for holomorphic vertex operator algebras and applications},
+PhD thesis, TU Darmstadt, 2016; arXiv:1611.09843.
+
+\bibitem{Naidu}
+D.~Naidu, \emph{Categorical Morita equivalence for group-theoretical categories}, Comm.\ Algebra
+\textbf{35} (2007), 3544--3565; arXiv:math/0605530.
+
+\bibitem{repo}
+[Repository URL to be added].
+
+\bibitem{Tachikawa}
+Y.~Tachikawa, \emph{On gauging finite subgroups}, SciPost Phys.\ \textbf{8} (2020), 015;
+arXiv:1712.09542.
+
+\bibitem{Uribe}
+B.~Uribe, \emph{On the classification of pointed fusion categories up to weak Morita equivalence},
+Pacific J.\ Math.\ \textbf{290} (2017), 437--466; arXiv:1511.05522.
+
+\bibitem{WG}
+Q.-R.~Wang and Z.-C.~Gu, \emph{Towards a complete classification of symmetry-protected topological
+phases for interacting fermions in three dimensions and a general group supercohomology theory}, Phys.\
+Rev.\ X \textbf{8} (2018), 011055; arXiv:1703.10937.
+
+\end{thebibliography}
+
+\end{document}
